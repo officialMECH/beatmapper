@@ -9,218 +9,184 @@
  * - The letter to the left of the array represents the initial light value,
  *   the value it held before the current frame started
  */
+
+import { describe, expect, it } from 'vitest';
 import { getBackgroundBoxes } from './BlockTrack.helpers';
 
 const LIGHTING_TRACK_ID = 'primaryLight';
 
 describe('BlockTrack helpers', () => {
-  describe('getBackgroundBoxes', () => {
-    it('exits early if it is not a lighting track', () => {
-      const trackId = 'laserSpeedLeft';
-      const events = [
-        // Technically these events are illegal; this is just testing that it
-        // doesn't even look at events when the trackId isn't lighting
-        {
-          trackId,
-          beatNum: 3,
-          id: 'a',
-          type: 'on',
-          colorType: 'red',
-        },
-        {
-          trackId,
-          beatNum: 4,
-          id: 'b',
-          type: 'off',
-        },
-      ];
-      const initialTrackLightingColorType = false;
-      const startBeat = 0;
-      const numOfBeatsToShow = 8;
+	describe('getBackgroundBoxes', () => {
+		it('exits early if it is not a lighting track', () => {
+			const trackId = 'laserSpeedLeft';
+			const events = [
+				// Technically these events are illegal; this is just testing that it
+				// doesn't even look at events when the trackId isn't lighting
+				{
+					trackId,
+					beatNum: 3,
+					id: 'a',
+					type: 'on',
+					colorType: 'red',
+				},
+				{
+					trackId,
+					beatNum: 4,
+					id: 'b',
+					type: 'off',
+				},
+			];
+			const initialTrackLightingColorType = false;
+			const startBeat = 0;
+			const numOfBeatsToShow = 8;
 
-      const expectedResult = [];
-      const actualResult = getBackgroundBoxes(
-        events,
-        trackId,
-        initialTrackLightingColorType,
-        startBeat,
-        numOfBeatsToShow
-      );
+			const expectedResult = [];
+			const actualResult = getBackgroundBoxes(events, trackId, initialTrackLightingColorType, startBeat, numOfBeatsToShow);
 
-      expect(actualResult).toEqual(expectedResult);
-    });
+			expect(actualResult).toEqual(expectedResult);
+		});
 
-    it('handles an empty set of events without initial lighting', () => {
-      //  0  [________]
-      const events = [];
-      const initialTrackLightingColorType = false;
-      const startBeat = 0;
-      const numOfBeatsToShow = 8;
+		it('handles an empty set of events without initial lighting', () => {
+			//  0  [________]
+			const events = [];
+			const initialTrackLightingColorType = false;
+			const startBeat = 0;
+			const numOfBeatsToShow = 8;
 
-      const expectedResult = [];
-      const actualResult = getBackgroundBoxes(
-        events,
-        LIGHTING_TRACK_ID,
-        initialTrackLightingColorType,
-        startBeat,
-        numOfBeatsToShow
-      );
+			const expectedResult = [];
+			const actualResult = getBackgroundBoxes(events, LIGHTING_TRACK_ID, initialTrackLightingColorType, startBeat, numOfBeatsToShow);
 
-      expect(actualResult).toEqual(expectedResult);
-    });
+			expect(actualResult).toEqual(expectedResult);
+		});
 
-    it('handles an empty set of events WITH initial lighting', () => {
-      //  R  [________]
-      const events = [];
-      const initialTrackLightingColorType = 'red';
-      const startBeat = 8;
-      const numOfBeatsToShow = 8;
+		it('handles an empty set of events WITH initial lighting', () => {
+			//  R  [________]
+			const events = [];
+			const initialTrackLightingColorType = 'red';
+			const startBeat = 8;
+			const numOfBeatsToShow = 8;
 
-      const expectedResult = [
-        {
-          id: 'initial-8-8',
-          beatNum: 8,
-          duration: 8,
-          colorType: 'red',
-        },
-      ];
-      const actualResult = getBackgroundBoxes(
-        events,
-        LIGHTING_TRACK_ID,
-        initialTrackLightingColorType,
-        startBeat,
-        numOfBeatsToShow
-      );
+			const expectedResult = [
+				{
+					id: 'initial-8-8',
+					beatNum: 8,
+					duration: 8,
+					colorType: 'red',
+				},
+			];
+			const actualResult = getBackgroundBoxes(events, LIGHTING_TRACK_ID, initialTrackLightingColorType, startBeat, numOfBeatsToShow);
 
-      expect(actualResult).toEqual(expectedResult);
-    });
+			expect(actualResult).toEqual(expectedResult);
+		});
 
-    it('handles a basic on-off case', () => {
-      //  0  [R___0___]
-      const events = [
-        {
-          id: 'a',
-          trackId: 'laserLeft',
-          beatNum: 8,
-          type: 'on',
-          colorType: 'red',
-        },
-        {
-          id: 'b',
-          trackId: 'laserLeft',
-          beatNum: 12,
-          type: 'off',
-        },
-      ];
-      const initialTrackLightingColorType = false;
-      const startBeat = 8;
-      const numOfBeatsToShow = 8;
+		it('handles a basic on-off case', () => {
+			//  0  [R___0___]
+			const events = [
+				{
+					id: 'a',
+					trackId: 'laserLeft',
+					beatNum: 8,
+					type: 'on',
+					colorType: 'red',
+				},
+				{
+					id: 'b',
+					trackId: 'laserLeft',
+					beatNum: 12,
+					type: 'off',
+				},
+			];
+			const initialTrackLightingColorType = false;
+			const startBeat = 8;
+			const numOfBeatsToShow = 8;
 
-      const expectedResult = [
-        {
-          id: 'a',
-          beatNum: 8,
-          duration: 4,
-          colorType: 'red',
-        },
-      ];
-      const actualResult = getBackgroundBoxes(
-        events,
-        LIGHTING_TRACK_ID,
-        initialTrackLightingColorType,
-        startBeat,
-        numOfBeatsToShow
-      );
+			const expectedResult = [
+				{
+					id: 'a',
+					beatNum: 8,
+					duration: 4,
+					colorType: 'red',
+				},
+			];
+			const actualResult = getBackgroundBoxes(events, LIGHTING_TRACK_ID, initialTrackLightingColorType, startBeat, numOfBeatsToShow);
 
-      expect(actualResult).toEqual(expectedResult);
-    });
+			expect(actualResult).toEqual(expectedResult);
+		});
 
-    it('handles turning on when already on', () => {
-      //  R  [____R___]
-      const events = [
-        {
-          id: 'a',
-          trackId: 'laserLeft',
-          beatNum: 12,
-          type: 'on',
-          colorType: 'red',
-        },
-      ];
-      const initialTrackLightingColorType = 'red';
-      const startBeat = 8;
-      const numOfBeatsToShow = 8;
+		it('handles turning on when already on', () => {
+			//  R  [____R___]
+			const events = [
+				{
+					id: 'a',
+					trackId: 'laserLeft',
+					beatNum: 12,
+					type: 'on',
+					colorType: 'red',
+				},
+			];
+			const initialTrackLightingColorType = 'red';
+			const startBeat = 8;
+			const numOfBeatsToShow = 8;
 
-      const expectedResult = [
-        // Should be a single box filling the available space.
-        {
-          id: 'initial-8-8',
-          beatNum: 8,
-          duration: 8,
-          colorType: 'red',
-        },
-      ];
-      const actualResult = getBackgroundBoxes(
-        events,
-        LIGHTING_TRACK_ID,
-        initialTrackLightingColorType,
-        startBeat,
-        numOfBeatsToShow
-      );
+			const expectedResult = [
+				// Should be a single box filling the available space.
+				{
+					id: 'initial-8-8',
+					beatNum: 8,
+					duration: 8,
+					colorType: 'red',
+				},
+			];
+			const actualResult = getBackgroundBoxes(events, LIGHTING_TRACK_ID, initialTrackLightingColorType, startBeat, numOfBeatsToShow);
 
-      expect(actualResult).toEqual(expectedResult);
-    });
+			expect(actualResult).toEqual(expectedResult);
+		});
 
-    it('handles color changes', () => {
-      //  0  [R___B_0_]
-      const events = [
-        {
-          id: 'a',
-          trackId: 'laserLeft',
-          beatNum: 8,
-          type: 'on',
-          colorType: 'red',
-        },
-        {
-          id: 'b',
-          trackId: 'laserLeft',
-          beatNum: 12,
-          type: 'on',
-          colorType: 'blue',
-        },
-        {
-          id: 'b',
-          trackId: 'laserLeft',
-          beatNum: 14,
-          type: 'off',
-        },
-      ];
-      const initialTrackLightingColorType = false;
-      const startBeat = 8;
-      const numOfBeatsToShow = 8;
+		it('handles color changes', () => {
+			//  0  [R___B_0_]
+			const events = [
+				{
+					id: 'a',
+					trackId: 'laserLeft',
+					beatNum: 8,
+					type: 'on',
+					colorType: 'red',
+				},
+				{
+					id: 'b',
+					trackId: 'laserLeft',
+					beatNum: 12,
+					type: 'on',
+					colorType: 'blue',
+				},
+				{
+					id: 'b',
+					trackId: 'laserLeft',
+					beatNum: 14,
+					type: 'off',
+				},
+			];
+			const initialTrackLightingColorType = false;
+			const startBeat = 8;
+			const numOfBeatsToShow = 8;
 
-      const expectedResult = [
-        {
-          id: 'a',
-          beatNum: 8,
-          duration: 4,
-          colorType: 'red',
-        },
-        {
-          id: 'b',
-          beatNum: 12,
-          duration: 2,
-          colorType: 'blue',
-        },
-      ];
-      const actualResult = getBackgroundBoxes(
-        events,
-        LIGHTING_TRACK_ID,
-        initialTrackLightingColorType,
-        startBeat,
-        numOfBeatsToShow
-      );
+			const expectedResult = [
+				{
+					id: 'a',
+					beatNum: 8,
+					duration: 4,
+					colorType: 'red',
+				},
+				{
+					id: 'b',
+					beatNum: 12,
+					duration: 2,
+					colorType: 'blue',
+				},
+			];
+			const actualResult = getBackgroundBoxes(events, LIGHTING_TRACK_ID, initialTrackLightingColorType, startBeat, numOfBeatsToShow);
 
-      expect(actualResult).toEqual(expectedResult);
-    });
-  });
+			expect(actualResult).toEqual(expectedResult);
+		});
+	});
 });

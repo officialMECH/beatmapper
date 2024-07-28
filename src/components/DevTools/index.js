@@ -1,10 +1,14 @@
-/* eslint-disable no-undef */
-const { DEVTOOLS_ENABLED_IN_DEV } = require('../../constants');
+import { DEVTOOLS_ENABLED_IN_DEV } from '../../constants';
+
+import { default as dev } from './index.dev.js';
+import { default as prod } from './index.prod.js';
+
+let instance;
 
 if (process.env.NODE_ENV === 'production' || !DEVTOOLS_ENABLED_IN_DEV) {
-  // eslint-disable-next-line global-require
-  module.exports = require('./index.prod.js');
+  instance = prod;
 } else {
-  // eslint-disable-next-line global-require
-  module.exports = require('./index.dev');
+  instance = dev;
 }
+
+export default instance;

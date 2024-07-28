@@ -1,7 +1,7 @@
+import { getDifficulty } from '../reducers/editor-entities.reducer';
+import { getSelectedSong } from '../reducers/songs.reducer';
 import { saveBeatmap } from '../services/file.service';
 import { createBeatmapContentsFromState } from '../services/packaging.service';
-import { getSelectedSong } from '../reducers/songs.reducer';
-import { getDifficulty } from '../reducers/editor-entities.reducer';
 
 // A mechanism already exists to back up the Redux state to our persistence
 // layer, so that the state can be rehydrated on return visits.
@@ -20,17 +20,21 @@ import { getDifficulty } from '../reducers/editor-entities.reducer';
 // indexeddb. It uses the same mechanism as Redux Storage, but it's treated
 // separately.)
 export function save(state) {
-  const song = getSelectedSong(state);
+	const song = getSelectedSong(state);
 
-  // We only want to autosave when a song is currently selected
-  if (!song) {
-    return;
-  }
+	// We only want to autosave when a song is currently selected
+	if (!song) {
+		return;
+	}
 
-  const difficulty = getDifficulty(state);
-  const beatmapContents = createBeatmapContentsFromState(state, song);
+	const difficulty = getDifficulty(state);
+	const beatmapContents = createBeatmapContentsFromState(state, song);
 
-  saveBeatmap(song.id, difficulty, beatmapContents).catch(err => {
-    console.error('Could not run backup for beatmap file', err);
-  });
+	saveBeatmap(song.id, difficulty, beatmapContents).catch((err) => {
+		console.error('Could not run backup for beatmap file', err);
+	});
 }
+
+export default () => {
+	save;
+};

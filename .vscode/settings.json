@@ -1,4 +1,7 @@
 {
+	"[markdown]": {
+		"editor.defaultFormatter": null
+	},
 	"editor.defaultFormatter": "esbenp.prettier-vscode",
 	"editor.formatOnSave": true,
 	"editor.formatOnSaveMode": "file",
@@ -19,5 +22,6 @@
 		"**/.yarn": true,
 		"**/node_modules": true,
 		"**/yarn.lock": true
-	}
+	},
+	"typescript.tsdk": "node_modules\\typescript\\lib"
 }

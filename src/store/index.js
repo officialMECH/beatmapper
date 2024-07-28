@@ -1,6 +1,14 @@
 /* eslint-disable */
+
+import { default as dev } from './store.dev.js';
+import { default as prod } from './store.prod.js';
+
+let instance;
+
 if (process.env.NODE_ENV === 'production') {
-  module.exports = require('./store.prod');
+  instance = prod;
 } else {
-  module.exports = require('./store.dev');
+  instance = dev;
 }
+
+export default instance;
