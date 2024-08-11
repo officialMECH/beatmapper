@@ -12,7 +12,7 @@
 		"*.jsx": "${capture}.js",
 		"*.tsx": "${capture}.ts",
 		".gitignore": "*ignore",
-		"package.json": "yarn.lock, .yarnrc.yml, biome.json",
+		"package.json": "yarn.lock, .yarnrc.yml, biome.json, lefthook.yml",
 		"README.md": "*.md, AUTHORS*, BACKERS*, CHANGELOG*, CODEOWNERS*, CONTRIBUTING*, CONTRIBUTORS*, CODE_OF_CONDUCT*, GOVERNANCE*, HISTORY*, LICENSE*, MAINTAINERS*, SECURITY*, SPONSORS*",
 		"tsconfig.json": "tsconfig.*.json",
 		"vite.config.ts": "*.config.js, *.config.cjs, *.config.mjs, *.config.ts"
