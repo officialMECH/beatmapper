@@ -1,16 +1,16 @@
-import { describe, expect, it } from 'vitest';
-import { convertEventsToExportableJson, convertEventsToRedux } from './events.helpers';
+import { describe, expect, it } from "vitest";
+import { convertEventsToExportableJson, convertEventsToRedux } from "./events.helpers";
 
-describe('Event helpers', () => {
-	describe('Converting from redux to v2 json', () => {
-		it('converts a lighting event', () => {
+describe("Event helpers", () => {
+	describe("Converting from redux to v2 json", () => {
+		it("converts a lighting event", () => {
 			const events = [
 				{
-					id: 'abc',
-					trackId: 'primaryLight',
+					id: "abc",
+					trackId: "primaryLight",
 					beatNum: 12,
-					type: 'on',
-					colorType: 'red',
+					type: "on",
+					colorType: "red",
 				},
 			];
 
@@ -26,33 +26,33 @@ describe('Event helpers', () => {
 			expect(actualResult).toEqual(expectedResult);
 		});
 
-		it('converts multiple lighting event', () => {
+		it("converts multiple lighting event", () => {
 			const events = [
 				{
-					id: 'abc',
-					trackId: 'laserLeft',
+					id: "abc",
+					trackId: "laserLeft",
 					beatNum: 1,
-					type: 'flash',
-					colorType: 'red',
+					type: "flash",
+					colorType: "red",
 				},
 				{
-					id: 'def',
-					trackId: 'laserLeft',
+					id: "def",
+					trackId: "laserLeft",
 					beatNum: 2,
-					type: 'off',
+					type: "off",
 				},
 				{
-					id: 'ghi',
-					trackId: 'laserRight',
+					id: "ghi",
+					trackId: "laserRight",
 					beatNum: 2,
-					type: 'flash',
-					colorType: 'blue',
+					type: "flash",
+					colorType: "blue",
 				},
 				{
-					id: 'jkl',
-					trackId: 'laserRight',
+					id: "jkl",
+					trackId: "laserRight",
 					beatNum: 3,
-					type: 'off',
+					type: "off",
 				},
 			];
 
@@ -67,27 +67,27 @@ describe('Event helpers', () => {
 			expect(actualResult).toEqual(expectedResult);
 		});
 
-		it('converts laser speed and rotation events', () => {
+		it("converts laser speed and rotation events", () => {
 			const events = [
 				{
-					id: 'abc',
-					trackId: 'smallRing',
+					id: "abc",
+					trackId: "smallRing",
 					beatNum: 1,
 				},
 				{
-					id: 'abc',
-					trackId: 'largeRing',
+					id: "abc",
+					trackId: "largeRing",
 					beatNum: 1,
 				},
 				{
-					id: 'abc',
-					trackId: 'laserSpeedLeft',
+					id: "abc",
+					trackId: "laserSpeedLeft",
 					beatNum: 2,
 					laserSpeed: 8,
 				},
 				{
-					id: 'abc',
-					trackId: 'laserSpeedRight',
+					id: "abc",
+					trackId: "laserSpeedRight",
 					beatNum: 2,
 					laserSpeed: 2,
 				},
@@ -107,21 +107,21 @@ describe('Event helpers', () => {
 	// generated within the method :/
 	const compareExceptId = (actual, expected) => {
 		const actualClone = actual.map((ev) => {
-			let clone = { ...ev };
-			delete clone.id;
+			const clone = { ...ev };
+			clone.id = undefined;
 			return clone;
 		});
 		const expectedClone = expected.map((ev) => {
-			let clone = { ...ev };
-			delete clone.id;
+			const clone = { ...ev };
+			clone.id = undefined;
 			return clone;
 		});
 
 		expect(actualClone).toEqual(expectedClone);
 	};
 
-	describe('Converting from v2 json to redux', () => {
-		it('converts a lighting event', () => {
+	describe("Converting from v2 json to redux", () => {
+		it("converts a lighting event", () => {
 			const events = [
 				{
 					_time: 12,
@@ -133,18 +133,18 @@ describe('Event helpers', () => {
 			const actualResult = convertEventsToRedux(events);
 			const expectedResult = [
 				{
-					id: 'abc',
-					trackId: 'primaryLight',
+					id: "abc",
+					trackId: "primaryLight",
 					beatNum: 12,
-					type: 'on',
-					colorType: 'red',
+					type: "on",
+					colorType: "red",
 				},
 			];
 
 			compareExceptId(actualResult, expectedResult);
 		});
 
-		it('converts multiple lighting event', () => {
+		it("converts multiple lighting event", () => {
 			const events = [
 				{ _time: 1, _type: 2, _value: 6 },
 				{ _time: 2, _type: 2, _value: 0 },
@@ -155,37 +155,37 @@ describe('Event helpers', () => {
 			const actualResult = convertEventsToRedux(events);
 			const expectedResult = [
 				{
-					id: 'abc',
-					trackId: 'laserLeft',
+					id: "abc",
+					trackId: "laserLeft",
 					beatNum: 1,
-					type: 'flash',
-					colorType: 'red',
+					type: "flash",
+					colorType: "red",
 				},
 				{
-					id: 'def',
-					trackId: 'laserLeft',
+					id: "def",
+					trackId: "laserLeft",
 					beatNum: 2,
-					type: 'off',
+					type: "off",
 				},
 				{
-					id: 'ghi',
-					trackId: 'laserRight',
+					id: "ghi",
+					trackId: "laserRight",
 					beatNum: 2,
-					type: 'flash',
-					colorType: 'blue',
+					type: "flash",
+					colorType: "blue",
 				},
 				{
-					id: 'jkl',
-					trackId: 'laserRight',
+					id: "jkl",
+					trackId: "laserRight",
 					beatNum: 3,
-					type: 'off',
+					type: "off",
 				},
 			];
 
 			compareExceptId(actualResult, expectedResult);
 		});
 
-		it('converts laser speed and rotation events', () => {
+		it("converts laser speed and rotation events", () => {
 			const events = [
 				{ _time: 1, _type: 9, _value: 0 },
 				{ _time: 1, _type: 8, _value: 0 },
@@ -196,26 +196,26 @@ describe('Event helpers', () => {
 			const actualResult = convertEventsToRedux(events);
 			const expectedResult = [
 				{
-					id: 'abc',
-					trackId: 'smallRing',
+					id: "abc",
+					trackId: "smallRing",
 					beatNum: 1,
-					type: 'rotate',
+					type: "rotate",
 				},
 				{
-					id: 'abc',
-					trackId: 'largeRing',
+					id: "abc",
+					trackId: "largeRing",
 					beatNum: 1,
-					type: 'rotate',
+					type: "rotate",
 				},
 				{
-					id: 'abc',
-					trackId: 'laserSpeedLeft',
+					id: "abc",
+					trackId: "laserSpeedLeft",
 					beatNum: 2,
 					laserSpeed: 8,
 				},
 				{
-					id: 'abc',
-					trackId: 'laserSpeedRight',
+					id: "abc",
+					trackId: "laserSpeedRight",
 					beatNum: 2,
 					laserSpeed: 2,
 				},

@@ -1,51 +1,51 @@
-import React from 'react';
-import styled from 'styled-components';
-import { withRouter } from 'react-router-dom';
-import { Helmet } from 'react-helmet';
+import React from "react";
+import { Helmet } from "react-helmet";
+import { withRouter } from "react-router-dom";
+import styled from "styled-components";
 
-import { UNIT, COLORS } from '../../constants';
+import { COLORS, UNIT } from "../../constants";
 
-import MdxWrapper from './MdxWrapper';
-import TableOfContents from './TableOfContents';
-import Spacer from '../Spacer';
+import Spacer from "../Spacer";
+import MdxWrapper from "./MdxWrapper";
+import TableOfContents from "./TableOfContents";
 
-import HorizontalRule from './HorizontalRule';
+import HorizontalRule from "./HorizontalRule";
 
 /**
  * When loading a new route, we want to scroll the user to the top of the page.
  * Unless a hash is explicitly provided, in which case we scroll them to the
  * appropriate section.
  */
-const useScrollOnLoad = location => {
-  React.useEffect(() => {
-    window.scrollTo({ top: 0 });
-  }, [location.pathname]);
+const useScrollOnLoad = (location) => {
+	React.useEffect(() => {
+		window.scrollTo({ top: 0 });
+	}, [location.pathname]);
 };
 
 const DocPage = ({ title, subtitle, tableOfContents, children, location }) => {
-  useScrollOnLoad(location);
+	useScrollOnLoad(location);
 
-  return (
-    <>
-      <Helmet>
-        <title>Beatmapper docs - {title}</title>
-      </Helmet>
-      <Wrapper>
-        <Title>{title}</Title>
-        {subtitle && <Subtitle>{subtitle}</Subtitle>}
+	return (
+		<>
+			<Helmet>
+				<title>Beatmapper docs - {title}</title>
+			</Helmet>
+			<Wrapper>
+				<Title>{title}</Title>
+				{subtitle && <Subtitle>{subtitle}</Subtitle>}
 
-        <HorizontalRule />
+				<HorizontalRule />
 
-        <Row>
-          <MainContent>
-            <MdxWrapper>{children}</MdxWrapper>
-            <Spacer size={UNIT * 8} />
-          </MainContent>
-          <TableOfContents toc={tableOfContents} location={location} />
-        </Row>
-      </Wrapper>
-    </>
-  );
+				<Row>
+					<MainContent>
+						<MdxWrapper>{children}</MdxWrapper>
+						<Spacer size={UNIT * 8} />
+					</MainContent>
+					<TableOfContents toc={tableOfContents} location={location} />
+				</Row>
+			</Wrapper>
+		</>
+	);
 };
 
 const Wrapper = styled.div`

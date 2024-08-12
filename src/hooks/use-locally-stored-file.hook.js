@@ -1,10 +1,10 @@
-import React from 'react';
-import { getFile } from '../services/file.service';
+import React from "react";
+import { getFile } from "../services/file.service";
 
-const getFileReaderMethodName = readAs => {
-  if (readAs === 'dataUrl') {
-    return 'readAsDataURL';
-  }
+const getFileReaderMethodName = (readAs) => {
+	if (readAs === "dataUrl") {
+		return "readAsDataURL";
+	}
 };
 
 // Create a simple cache for locally-retrieved files, so that files don't have
@@ -16,52 +16,52 @@ const getFileReaderMethodName = readAs => {
 // about stale caches?
 const cache = {};
 
-export default function useLocallyStoredFile(filename, readAs = 'dataUrl') {
-  const [output, setOutput] = React.useState(null);
-  const [loading, setLoading] = React.useState(true);
+export default function useLocallyStoredFile(filename, readAs = "dataUrl") {
+	const [output, setOutput] = React.useState(null);
+	const [loading, setLoading] = React.useState(true);
 
-  const fileReader = React.useRef(null);
+	const fileReader = React.useRef(null);
 
-  React.useEffect(() => {
-    if (!filename) {
-      return;
-    }
+	React.useEffect(() => {
+		if (!filename) {
+			return;
+		}
 
-    getFile(filename).then(file => {
-      fileReader.current = new FileReader();
+		getFile(filename).then((file) => {
+			fileReader.current = new FileReader();
 
-      fileReader.current.onload = function(e) {
-        setOutput(this.result);
-        setLoading(false);
+			fileReader.current.onload = function (e) {
+				setOutput(this.result);
+				setLoading(false);
 
-        cache[filename] = this.result;
-      };
+				cache[filename] = this.result;
+			};
 
-      const methodNameToCall = getFileReaderMethodName(readAs);
+			const methodNameToCall = getFileReaderMethodName(readAs);
 
-      try {
-        fileReader.current[methodNameToCall](file);
-      } catch (err) {
-        console.error('Could not call method', methodNameToCall, 'on', file);
-        throw new Error(err);
-      }
-    });
+			try {
+				fileReader.current[methodNameToCall](file);
+			} catch (err) {
+				console.error("Could not call method", methodNameToCall, "on", file);
+				throw new Error(err);
+			}
+		});
 
-    return () => {
-      if (fileReader.current) {
-        fileReader.current.abort();
-      }
-    };
-  }, [filename, readAs]);
+		return () => {
+			if (fileReader.current) {
+				fileReader.current.abort();
+			}
+		};
+	}, [filename, readAs]);
 
-  React.useEffect(() => {
-    if (!filename) {
-      return;
-    }
-    setLoading(true);
-  }, [filename]);
+	React.useEffect(() => {
+		if (!filename) {
+			return;
+		}
+		setLoading(true);
+	}, [filename]);
 
-  const returnedOutput = output || cache[filename];
+	const returnedOutput = output || cache[filename];
 
-  return [returnedOutput, loading];
+	return [returnedOutput, loading];
 }

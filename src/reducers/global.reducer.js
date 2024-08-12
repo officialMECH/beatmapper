@@ -5,21 +5,21 @@
  */
 
 const initialState = {
-  hasInitialized: false,
+	hasInitialized: false,
 };
 
-export default function global(state = initialState, action) {
-  switch (action.type) {
-    case 'REDUX_STORAGE_LOAD': {
-      return {
-        ...state,
-        hasInitialized: true,
-      };
-    }
+export default function global(state = initialState, action = undefined) {
+	switch (action.type) {
+		case "REDUX_STORAGE_LOAD": {
+			return {
+				...state,
+				hasInitialized: true,
+			};
+		}
 
-    default:
-      return state;
-  }
+		default:
+			return state;
+	}
 }
 
-export const getHasInitialized = state => state.global.hasInitialized;
+export const getHasInitialized = (state) => state.global.hasInitialized;

@@ -1,1 +1,1 @@
-export { default } from './EventGridTrack';
+export { default } from "./EventGridTrack";

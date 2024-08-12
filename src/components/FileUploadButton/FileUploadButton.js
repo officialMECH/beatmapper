@@ -1,29 +1,29 @@
-import React from 'react';
-import styled from 'styled-components';
+import React from "react";
+import styled from "styled-components";
 
-import Button from '../Button';
+import Button from "../Button";
 
 const FileUploadButton = ({ file, onSelectFile, ...delegated }) => {
-  const fileInputRef = React.useRef(null);
+	const fileInputRef = React.useRef(null);
 
-  const handleChange = () => {
-    if (!fileInputRef.current) {
-      return;
-    }
+	const handleChange = () => {
+		if (!fileInputRef.current) {
+			return;
+		}
 
-    const selectedFile = fileInputRef.current.files[0];
+		const selectedFile = fileInputRef.current.files[0];
 
-    if (selectedFile) {
-      onSelectFile(selectedFile);
-    }
-  };
+		if (selectedFile) {
+			onSelectFile(selectedFile);
+		}
+	};
 
-  return (
-    <Wrapper>
-      <Button {...delegated} />
-      <FileInput type="file" ref={fileInputRef} onChange={handleChange} />
-    </Wrapper>
-  );
+	return (
+		<Wrapper>
+			<Button {...delegated} />
+			<FileInput type="file" ref={fileInputRef} onChange={handleChange} />
+		</Wrapper>
+	);
 };
 
 const Wrapper = styled.div`

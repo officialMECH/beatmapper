@@ -1,1 +1,1 @@
-export { default } from './CreateDifficultyForm';
+export { default } from "./CreateDifficultyForm";

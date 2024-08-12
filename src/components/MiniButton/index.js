@@ -1,1 +1,1 @@
-export { default } from './MiniButton';
+export { default } from "./MiniButton";

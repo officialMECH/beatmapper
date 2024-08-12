@@ -1,5 +1,5 @@
 export function range(start, stop, step = 1) {
-	if (typeof stop == 'undefined') {
+	if (typeof stop === "undefined") {
 		// one param defined
 		stop = start;
 		start = 0;
@@ -9,8 +9,8 @@ export function range(start, stop, step = 1) {
 		return [];
 	}
 
-	var result = [];
-	for (var i = start; step > 0 ? i < stop : i > stop; i += step) {
+	const result = [];
+	for (let i = start; step > 0 ? i < stop : i > stop; i += step) {
 		result.push(i);
 	}
 
@@ -74,26 +74,27 @@ export const compose = (...fns) =>
 		(prevFn, nextFn) =>
 			(...args) =>
 				nextFn(prevFn(...args)),
-		(value) => value
+		(value) => value,
 	);
 
 export const throttle = (func, limit) => {
 	let lastFunc;
 	let lastRan;
-	return function () {
-		const context = this;
-		const args = arguments;
+	return function (...args) {
 		if (!lastRan) {
-			func.apply(context, args);
+			func.apply(this, args);
 			lastRan = Date.now();
 		} else {
 			clearTimeout(lastFunc);
-			lastFunc = setTimeout(function () {
-				if (Date.now() - lastRan >= limit) {
-					func.apply(context, args);
-					lastRan = Date.now();
-				}
-			}, limit - (Date.now() - lastRan));
+			lastFunc = setTimeout(
+				() => {
+					if (Date.now() - lastRan >= limit) {
+						func.apply(this, args);
+						lastRan = Date.now();
+					}
+				},
+				limit - (Date.now() - lastRan),
+			);
 		}
 	};
 };
@@ -110,24 +111,24 @@ export const getInterpolatedValue = (y1, y2, ratio) => {
 };
 
 export const pick = (obj, keys) => {
-	var o = {};
-	var i = 0;
-	var key;
+	const o = {};
+	let i = 0;
+	let key;
 
 	keys = Array.isArray(keys) ? keys : [keys];
 
 	while ((key = keys[i++])) {
-		if (typeof obj[key] !== 'undefined') {
+		if (typeof obj[key] !== "undefined") {
 			o[key] = obj[key];
 		}
 	}
 	return o;
 };
 
-export const omit = function (obj, key) {
-	var newObj = {};
+export const omit = (obj, key) => {
+	const newObj = {};
 
-	for (var name in obj) {
+	for (const name in obj) {
 		if (name !== key) {
 			newObj[name] = obj[name];
 		}
@@ -140,7 +141,7 @@ export const omit = function (obj, key) {
  * 1D flatten. Uses native Array#flat when available.
  */
 export const flatten = (list) => {
-	if (typeof list.flat === 'function') {
+	if (typeof list.flat === "function") {
 		return list.flat();
 	}
 
@@ -161,7 +162,7 @@ export const convertArrayToMap = (list) =>
 			...acc,
 			[item.id]: item,
 		}),
-		{}
+		{},
 	);
 
 const uniqPredicate = (value, index, self) => self.indexOf(value) === index;
@@ -210,14 +211,14 @@ export const deleteCookie = (key) => {
 };
 
 export const convertHexToRGBA = (hex, alpha = 1) => {
-	const r = parseInt(hex.slice(1, 3), 16);
-	const g = parseInt(hex.slice(3, 5), 16);
-	const b = parseInt(hex.slice(5, 7), 16);
+	const r = Number.parseInt(hex.slice(1, 3), 16);
+	const g = Number.parseInt(hex.slice(3, 5), 16);
+	const b = Number.parseInt(hex.slice(5, 7), 16);
 
 	return `rgba(${r}, ${g}, ${b}, ${alpha})`;
 };
 
-export const hyphenate = (str) => str.replace(/([A-Z])/g, '-$1').toLowerCase();
+export const hyphenate = (str) => str.replace(/([A-Z])/g, "-$1").toLowerCase();
 
 export const delay = (duration) => new Promise((resolve) => window.setTimeout(resolve, duration));
 
@@ -240,15 +241,17 @@ export const convertDegreesToRadians = (angle) => (angle * Math.PI) / 180;
 export const getQuadrantForPoint = ({ x, y }) => {
 	if (x >= 0 && y >= 0) {
 		return 1;
-	} else if (x < 0 && y >= 0) {
-		return 2;
-	} else if (x < 0 && y < 0) {
-		return 3;
-	} else if (x >= 0 && y < 0) {
-		return 4;
-	} else {
-		throw new Error(`Invalid coordinates: ${x} and ${y}`);
 	}
+	if (x < 0 && y >= 0) {
+		return 2;
+	}
+	if (x < 0 && y < 0) {
+		return 3;
+	}
+	if (x >= 0 && y < 0) {
+		return 4;
+	}
+	throw new Error(`Invalid coordinates: ${x} and ${y}`);
 };
 
 export const convertCartesianToPolar = (point, centerPoint) => {
@@ -271,7 +274,7 @@ export const convertCartesianToPolar = (point, centerPoint) => {
 	}
 
 	const radius = Math.sqrt(x ** 2 + y ** 2);
-	let theta = Math.atan(y / x) + radiansOffset;
+	const theta = Math.atan(y / x) + radiansOffset;
 
 	return [theta, radius];
 };
@@ -291,6 +294,7 @@ export const mix = (v1, v2, ratio = 0.5) => v1 * ratio + v2 * (1 - ratio);
 
 export const extractTypeFromObject = (obj, type) => {
 	return Object.entries(obj).reduce((acc, [key, val]) => {
+		// biome-ignore lint/suspicious/useValidTypeof: valid usage
 		if (typeof val === type) {
 			acc[key] = val;
 		}
@@ -331,11 +335,11 @@ export const smoothScrollTo = (selector) => {
 			window.scrollTo({
 				top: verticalOffset + window.pageYOffset,
 				left: 0,
-				behavior: 'smooth',
+				behavior: "smooth",
 			});
 		});
 	} catch (err) {
-		console.error('Could not find element');
+		console.error("Could not find element");
 	}
 };
 
@@ -352,10 +356,10 @@ export const isMetaKeyPressed = (ev) => {
 };
 
 export const getMetaKeyLabel = () => {
-	return getIsMac() ? '⌘' : 'ctrl';
+	return getIsMac() ? "⌘" : "ctrl";
 };
 export const getOptionKeyLabel = () => {
-	return getIsMac() ? '⌥' : 'alt';
+	return getIsMac() ? "⌥" : "alt";
 };
 
 export const interleave = (arr, delimiter) => {
@@ -378,10 +382,10 @@ export const pluralize = (num, string) => {
 
 export function slugify(str) {
 	return String(str)
-		.normalize('NFKD')
-		.replace(/[\u0300-\u036f]/g, '')
+		.normalize("NFKD")
+		.replace(/[u0300-u036f]/g, "")
 		.trim()
 		.toLowerCase()
-		.replace(/[^a-z0-9 -]/g, '')
-		.replace(/\s+/g, '-');
+		.replace(/[^a-z0-9 -]/g, "")
+		.replace(/\s+/g, "-");
 }

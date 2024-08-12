@@ -1,54 +1,52 @@
-import React from 'react';
-import styled from 'styled-components';
+import React from "react";
+import styled from "styled-components";
 
-import { COLORS } from '../../constants';
+import { COLORS } from "../../constants";
 
-import BaseLink from '../BaseLink';
-import Spacer from '../Spacer';
-import HorizontalRule from './HorizontalRule';
+import BaseLink from "../BaseLink";
+import Spacer from "../Spacer";
+import HorizontalRule from "./HorizontalRule";
 
 const pages = [
-  { id: 'getting-started', title: 'Getting started' },
-  { id: 'navigating-the-editor', title: 'Navigating the Editor' },
-  { id: 'notes-view', title: 'Notes View' },
-  { id: 'events-view', title: 'Events View' },
-  { id: 'demo-view', title: 'Demo View' },
-  { id: 'publishing', title: 'Downloading and publishing' },
+	{ id: "getting-started", title: "Getting started" },
+	{ id: "navigating-the-editor", title: "Navigating the Editor" },
+	{ id: "notes-view", title: "Notes View" },
+	{ id: "events-view", title: "Events View" },
+	{ id: "demo-view", title: "Demo View" },
+	{ id: "publishing", title: "Downloading and publishing" },
 ];
 
 const NavigationBlock = ({ direction, item }) => {
-  const formattedSubtitle = direction === 'previous' ? `« PREVIOUS` : `NEXT »`;
+	const formattedSubtitle = direction === "previous" ? "« PREVIOUS" : "NEXT »";
 
-  return (
-    <NavBlockWrapper
-      style={{
-        alignItems: direction === 'previous' ? 'flex-start' : 'flex-end',
-      }}
-    >
-      <Subtitle>{formattedSubtitle}</Subtitle>
-      <BaseLink to={`/docs/manual/${item.id}`}>{item.title}</BaseLink>
-    </NavBlockWrapper>
-  );
+	return (
+		<NavBlockWrapper
+			style={{
+				alignItems: direction === "previous" ? "flex-start" : "flex-end",
+			}}
+		>
+			<Subtitle>{formattedSubtitle}</Subtitle>
+			<BaseLink to={`/docs/manual/${item.id}`}>{item.title}</BaseLink>
+		</NavBlockWrapper>
+	);
 };
 
 const PreviousNextBar = ({ currentPageId }) => {
-  const currentIndex = pages.findIndex(page => page.id === currentPageId);
+	const currentIndex = pages.findIndex((page) => page.id === currentPageId);
 
-  const previous = pages[currentIndex - 1];
-  const next = pages[currentIndex + 1];
+	const previous = pages[currentIndex - 1];
+	const next = pages[currentIndex + 1];
 
-  return (
-    <>
-      <Spacer size={40} />
-      <HorizontalRule />
-      <Wrapper>
-        <Side>
-          {previous && <NavigationBlock direction="previous" item={previous} />}
-        </Side>
-        <Side>{next && <NavigationBlock direction="next" item={next} />}</Side>
-      </Wrapper>
-    </>
-  );
+	return (
+		<>
+			<Spacer size={40} />
+			<HorizontalRule />
+			<Wrapper>
+				<Side>{previous && <NavigationBlock direction="previous" item={previous} />}</Side>
+				<Side>{next && <NavigationBlock direction="next" item={next} />}</Side>
+			</Wrapper>
+		</>
+	);
 };
 
 const Wrapper = styled.div`

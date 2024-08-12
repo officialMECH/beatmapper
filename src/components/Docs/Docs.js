@@ -1,22 +1,22 @@
-import React from 'react';
-import { Route, Switch } from 'react-router-dom';
+import React from "react";
+import { Route, Switch } from "react-router-dom";
 
-import Layout from './Layout';
-import ContentPolicy from './pages/ContentPolicy';
-import FastWalls from './pages/FastWalls';
-import Intro from './pages/Intro';
-import ManualDemo from './pages/ManualDemo';
-import ManualPublishing from './pages/ManualDownloadingPublishing';
-import ManualEvents from './pages/ManualEvents';
-import ManualGettingStarted from './pages/ManualGettingStarted';
-import ManualNavigatingTheEditor from './pages/ManualNavigatingTheEditor';
-import ManualNotes from './pages/ManualNotes';
-import Migrating from './pages/Migrating';
-import Mods from './pages/Mods';
-import Privacy from './pages/Privacy';
-import ReleaseNotes from './pages/ReleaseNotes';
-import RunningLocally from './pages/RunningLocally';
-import SongPrep from './pages/SongPrep';
+import Layout from "./Layout";
+import ContentPolicy from "./pages/ContentPolicy";
+import FastWalls from "./pages/FastWalls";
+import Intro from "./pages/Intro";
+import ManualDemo from "./pages/ManualDemo";
+import ManualPublishing from "./pages/ManualDownloadingPublishing";
+import ManualEvents from "./pages/ManualEvents";
+import ManualGettingStarted from "./pages/ManualGettingStarted";
+import ManualNavigatingTheEditor from "./pages/ManualNavigatingTheEditor";
+import ManualNotes from "./pages/ManualNotes";
+import Migrating from "./pages/Migrating";
+import Mods from "./pages/Mods";
+import Privacy from "./pages/Privacy";
+import ReleaseNotes from "./pages/ReleaseNotes";
+import RunningLocally from "./pages/RunningLocally";
+import SongPrep from "./pages/SongPrep";
 
 const Docs = () => {
 	return (

@@ -1,54 +1,50 @@
-import React from 'react';
-import styled from 'styled-components';
-import { Icon } from 'react-icons-kit';
-import { plus } from 'react-icons-kit/feather/plus';
+import React from "react";
+import { Icon } from "react-icons-kit";
+import { plus } from "react-icons-kit/feather/plus";
+import styled from "styled-components";
 
-import { COLORS } from '../../constants';
-import { getMetaKeyLabel, getOptionKeyLabel } from '../../utils';
+import { COLORS } from "../../constants";
+import { getMetaKeyLabel, getOptionKeyLabel } from "../../utils";
 
-export const KeyIcon = ({ size = 'medium', type, children }) => {
-  const componentTypeMap = {
-    square: SquareKey,
-    'slightly-wide': SlightlyWideKey,
-    wide: WideKey,
-    spacebar: UltraWideKey,
-  };
+export const KeyIcon = ({ size = "medium", type, children }) => {
+	const componentTypeMap = {
+		square: SquareKey,
+		"slightly-wide": SlightlyWideKey,
+		wide: WideKey,
+		spacebar: UltraWideKey,
+	};
 
-  let derivedType = type;
-  if (!derivedType) {
-    // prettier-ignore
-    derivedType = children === 'Space'
-      ? 'spacebar'
-      : children.length > 1 || typeof children !== 'string'
-        ? 'wide'
-        : 'square'
-  }
+	let derivedType = type;
+	if (!derivedType) {
+		// prettier-ignore
+		derivedType = children === "Space" ? "spacebar" : children.length > 1 || typeof children !== "string" ? "wide" : "square";
+	}
 
-  let Component = componentTypeMap[derivedType];
+	const Component = componentTypeMap[derivedType];
 
-  let shrinkRatio = 1;
-  if (type === 'square' && children.length > 2) {
-    shrinkRatio = 0.75;
-  }
+	let shrinkRatio = 1;
+	if (type === "square" && children.length > 2) {
+		shrinkRatio = 0.75;
+	}
 
-  return (
-    <Component size={size}>
-      <div style={{ transform: `scale(${shrinkRatio})` }}>{children}</div>
-    </Component>
-  );
+	return (
+		<Component size={size}>
+			<div style={{ transform: `scale(${shrinkRatio})` }}>{children}</div>
+		</Component>
+	);
 };
 
 export const Plus = () => (
-  <PlusWrapper>
-    <Icon icon={plus} size={16} />
-  </PlusWrapper>
+	<PlusWrapper>
+		<Icon icon={plus} size={16} />
+	</PlusWrapper>
 );
 
 export const MetaKey = () => {
-  return getMetaKeyLabel();
+	return getMetaKeyLabel();
 };
 export const OptionKey = () => {
-  return getOptionKeyLabel();
+	return getOptionKeyLabel();
 };
 
 export const IconRow = styled.div`
@@ -84,9 +80,7 @@ export const Sidenote = styled.div`
   line-height: 1.3;
 `;
 
-export const Or = ({ children = 'or' }) => (
-  <OrWrapper>— {children} —</OrWrapper>
-);
+export const Or = ({ children = "or" }) => <OrWrapper>— {children} —</OrWrapper>;
 
 export const OrWrapper = styled.div`
   display: flex;
@@ -105,7 +99,7 @@ const PlusWrapper = styled.div`
 `;
 
 const Key = styled.div`
-  height: ${props => (props.size === 'medium' ? 27 : 18)}px;
+  height: ${(props) => (props.size === "medium" ? 27 : 18)}px;
   display: inline-flex;
   justify-content: center;
   align-items: center;
@@ -114,13 +108,13 @@ const Key = styled.div`
   background: ${COLORS.blueGray[100]};
   border-bottom: 3px solid ${COLORS.blueGray[300]};
   border-radius: 3px;
-  font-size: ${props => (props.size === 'medium' ? 12 : 10)}px;
+  font-size: ${(props) => (props.size === "medium" ? 12 : 10)}px;
   color: ${COLORS.gray[900]};
   cursor: default;
 `;
 
 const SquareKey = styled(Key)`
-  width: ${props => (props.size === 'medium' ? 24 : 15)}px;
+  width: ${(props) => (props.size === "medium" ? 24 : 15)}px;
 `;
 
 const SlightlyWideKey = styled(Key)`

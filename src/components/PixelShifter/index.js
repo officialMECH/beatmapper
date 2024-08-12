@@ -1,1 +1,1 @@
-export { default } from './PixelShifter';
+export { default } from "./PixelShifter";

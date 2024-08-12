@@ -1,7 +1,7 @@
-import { getDifficulty } from '../reducers/editor-entities.reducer';
-import { getSelectedSong } from '../reducers/songs.reducer';
-import { saveBeatmap } from '../services/file.service';
-import { createBeatmapContentsFromState } from '../services/packaging.service';
+import { getDifficulty } from "../reducers/editor-entities.reducer";
+import { getSelectedSong } from "../reducers/songs.reducer";
+import { saveBeatmap } from "../services/file.service";
+import { createBeatmapContentsFromState } from "../services/packaging.service";
 
 // A mechanism already exists to back up the Redux state to our persistence
 // layer, so that the state can be rehydrated on return visits.
@@ -31,7 +31,7 @@ export function save(state) {
 	const beatmapContents = createBeatmapContentsFromState(state, song);
 
 	saveBeatmap(song.id, difficulty, beatmapContents).catch((err) => {
-		console.error('Could not run backup for beatmap file', err);
+		console.error("Could not run backup for beatmap file", err);
 	});
 }
 

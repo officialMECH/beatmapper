@@ -1,10 +1,10 @@
-import React from 'react';
-import styled from 'styled-components';
+import React from "react";
+import styled from "styled-components";
 
-import { UNIT } from '../../constants';
+import { UNIT } from "../../constants";
 
 const MaxWidthWrapper = ({ children, maxWidth = 1000 }) => {
-  return <Wrapper style={{ maxWidth }}>{children}</Wrapper>;
+	return <Wrapper style={{ maxWidth }}>{children}</Wrapper>;
 };
 
 const Wrapper = styled.div`

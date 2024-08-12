@@ -1,36 +1,30 @@
 /*
   A Select, styled to look like our TextInput component
 */
-import React from 'react';
-import styled from 'styled-components';
-import { Icon } from 'react-icons-kit';
-import { chevronDown } from 'react-icons-kit/feather/chevronDown';
+import React from "react";
+import { Icon } from "react-icons-kit";
+import { chevronDown } from "react-icons-kit/feather/chevronDown";
+import styled from "styled-components";
 
-import { COLORS } from '../../constants';
+import { COLORS } from "../../constants";
 
-const DropdownInput = ({
-  label,
-  children,
-  value,
-  displayValue,
-  ...delegated
-}) => {
-  const displayedText = displayValue || value;
+const DropdownInput = ({ label, children, value, displayValue, ...delegated }) => {
+	const displayedText = displayValue || value;
 
-  return (
-    <Label>
-      <LabelText>{label}</LabelText>
-      <Input value={displayedText} onChange={() => {}} />
+	return (
+		<Label>
+			<LabelText>{label}</LabelText>
+			<Input value={displayedText} onChange={() => {}} />
 
-      <Caret>
-        <Icon icon={chevronDown} size={16} />
-      </Caret>
+			<Caret>
+				<Icon icon={chevronDown} size={16} />
+			</Caret>
 
-      <Select value={value} {...delegated}>
-        {children}
-      </Select>
-    </Label>
-  );
+			<Select value={value} {...delegated}>
+				{children}
+			</Select>
+		</Label>
+	);
 };
 
 const Input = styled.input`

@@ -1,7 +1,7 @@
 {
 	"$schema": "https://biomejs.dev/schemas/1.8.3/schema.json",
 	"files": {
-		"ignore": ["**/dist"],
+		"ignore": ["**/dist", "src/vendor/**"],
 		"ignoreUnknown": true
 	},
 	"vcs": {
@@ -12,11 +12,37 @@
 	"linter": {
 		"enabled": true,
 		"rules": {
-			"recommended": true
+			"recommended": true,
+			"a11y": {
+				"noSvgWithoutTitle": "warn",
+				"useKeyWithClickEvents": "info",
+				"useKeyWithMouseEvents": "info"
+			},
+			"complexity": {
+				"noForEach": "warn"
+			},
+			"correctness": {
+				"useExhaustiveDependencies": "warn"
+			},
+			"performance": {
+				"noAccumulatingSpread": "warn"
+			},
+			"style": {
+				"noParameterAssign": "warn",
+				"useConst": "warn"
+			},
+			"suspicious": {
+				"noArrayIndexKey": "warn",
+				"noAssignInExpressions": "warn",
+				"noExplicitAny": "warn",
+				"noShadowRestrictedNames": "warn",
+				"useDefaultSwitchClauseLast": "warn"
+			}
 		}
 	},
 	"formatter": {
 		"enabled": true,
+		"lineEnding": "lf",
 		"lineWidth": 320
 	},
 	"organizeImports": {

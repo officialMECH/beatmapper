@@ -1,9 +1,9 @@
-import { describe, expect, it } from 'vitest';
-import { convertBeatsToMilliseconds, convertMillisecondsToBeats } from './audio.helpers';
+import { describe, expect, it } from "vitest";
+import { convertBeatsToMilliseconds, convertMillisecondsToBeats } from "./audio.helpers";
 
-describe('Audio helpers', () => {
-	describe('converting between audio and beats', () => {
-		it('converts 1000ms with convertMillisecondsToBeats', () => {
+describe("Audio helpers", () => {
+	describe("converting between audio and beats", () => {
+		it("converts 1000ms with convertMillisecondsToBeats", () => {
 			const ms = 1000;
 			const bpm = 120;
 
@@ -13,7 +13,7 @@ describe('Audio helpers', () => {
 			expect(actualResult).toEqual(expectedResult);
 		});
 
-		it('does not produce 2.999999999 results', () => {
+		it("does not produce 2.999999999 results", () => {
 			const ms = 1028.5714285714284;
 			const bpm = 175;
 
@@ -23,7 +23,7 @@ describe('Audio helpers', () => {
 			expect(actualResult).toEqual(expectedResult);
 		});
 
-		it('converts 8 beats with convertBeatsToMilliseconds', () => {
+		it("converts 8 beats with convertBeatsToMilliseconds", () => {
 			const beats = 8;
 			const bpm = 60;
 
@@ -32,7 +32,7 @@ describe('Audio helpers', () => {
 
 			expect(actualResult).toEqual(expectedResult);
 		});
-		it('converts in both directions', () => {
+		it("converts in both directions", () => {
 			const ms = 250;
 			const bpm = 90;
 

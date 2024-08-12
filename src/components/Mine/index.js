@@ -1,1 +1,1 @@
-export { default } from './Mine';
+export { default } from "./Mine";

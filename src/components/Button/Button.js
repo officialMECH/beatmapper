@@ -1,22 +1,22 @@
-import React from 'react';
-import styled from 'styled-components';
+import React from "react";
+import styled from "styled-components";
 
-import { UNIT, COLORS } from '../../constants';
-import UnstyledButton from '../UnstyledButton';
+import { COLORS, UNIT } from "../../constants";
+import UnstyledButton from "../UnstyledButton";
 
 const Button = ({ children, disabled, color, ...delegated }) => {
-  return (
-    <ButtonElem disabled={disabled} color={color || ''} {...delegated}>
-      <ChildWrapper>{children}</ChildWrapper>
-    </ButtonElem>
-  );
+	return (
+		<ButtonElem disabled={disabled} color={color || ""} {...delegated}>
+			<ChildWrapper>{children}</ChildWrapper>
+		</ButtonElem>
+	);
 };
 
 const ButtonElem = styled(UnstyledButton)`
   position: relative;
   padding: ${UNIT}px ${UNIT * 6}px;
   border-radius: 100px; /* More than enough for rounded corners */
-  background: ${props => props.color || COLORS.pink[700]};
+  background: ${(props) => props.color || COLORS.pink[700]};
   border: none;
   font-size: 16px;
   text-align: center;
@@ -35,7 +35,7 @@ const ButtonElem = styled(UnstyledButton)`
     right: -6px;
     bottom: -6px;
     border-radius: 100px;
-    border: 2px solid ${props => props.color || COLORS.pink[700]};
+    border: 2px solid ${(props) => props.color || COLORS.pink[700]};
     opacity: 0;
     transition: opacity 500ms;
   }

@@ -1,23 +1,23 @@
-import React from 'react';
-import styled from 'styled-components';
-import BaseLink from '../BaseLink';
+import React from "react";
+import styled from "styled-components";
+import BaseLink from "../BaseLink";
 
-import { COLORS, HEADER_HEIGHT } from '../../constants';
+import { COLORS, HEADER_HEIGHT } from "../../constants";
 
-import MaxWidthWrapper from '../MaxWidthWrapper';
-import Logo from '../Logo';
+import Logo from "../Logo";
+import MaxWidthWrapper from "../MaxWidthWrapper";
 
 const Header = () => {
-  return (
-    <Wrapper>
-      <MaxWidthWrapper>
-        <Contents>
-          <Logo />
-          <DocLink to="/docs">Documentation</DocLink>
-        </Contents>
-      </MaxWidthWrapper>
-    </Wrapper>
-  );
+	return (
+		<Wrapper>
+			<MaxWidthWrapper>
+				<Contents>
+					<Logo />
+					<DocLink to="/docs">Documentation</DocLink>
+				</Contents>
+			</MaxWidthWrapper>
+		</Wrapper>
+	);
 };
 
 const Wrapper = styled.div`

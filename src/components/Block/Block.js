@@ -1,9 +1,9 @@
-import React from 'react';
+import React from "react";
 
-import blockCenterUrl from '../../assets/obj/block-center.obj?url';
-import blockDirectionalUrl from '../../assets/obj/block-directional.obj?url';
-import useObject from '../../hooks/use-object.hook';
-import { convertDegreesToRadians } from '../../utils';
+import blockCenterUrl from "../../assets/obj/block-center.obj?url";
+import blockDirectionalUrl from "../../assets/obj/block-directional.obj?url";
+import useObject from "../../hooks/use-object.hook";
+import { convertDegreesToRadians } from "../../utils";
 
 const getBlockUrlForDirection = (direction) => {
 	// If the direction is >=1000, that means it's a MappingExtensions thing.
@@ -27,7 +27,7 @@ const getBlockUrlForDirection = (direction) => {
 			return blockCenterUrl;
 
 		default:
-			throw new Error('Unrecognized direction: ' + direction);
+			throw new Error(`Unrecognized direction: ${direction}`);
 	}
 };
 
@@ -74,7 +74,7 @@ const getRotationForDirection = (direction) => {
 			return 0;
 
 		default:
-			throw new Error('Unrecognized direction: ' + direction);
+			throw new Error(`Unrecognized direction: ${direction}`);
 	}
 };
 
@@ -105,12 +105,12 @@ const Block = React.memo(({ x, y, z, time, lineLayer, lineIndex, direction, size
 		// and dragging the cursor across the field.
 		let newSelectionMode;
 		if (ev.button === 0) {
-			newSelectionMode = isSelected ? 'deselect' : 'select';
+			newSelectionMode = isSelected ? "deselect" : "select";
 		} else if (ev.button === 1) {
 			// Middle clicks shouldnt affect selections
 			newSelectionMode = null;
 		} else if (ev.button === 2) {
-			newSelectionMode = 'delete';
+			newSelectionMode = "delete";
 		}
 
 		if (newSelectionMode) {
@@ -118,13 +118,7 @@ const Block = React.memo(({ x, y, z, time, lineLayer, lineIndex, direction, size
 		}
 
 		// prettier-ignore
-		const clickType = ev.button === 0
-        ? 'left'
-        : ev.button === 1
-          ? 'middle'
-          : ev.button === 2
-            ? 'right'
-            : undefined;
+		const clickType = ev.button === 0 ? "left" : ev.button === 1 ? "middle" : ev.button === 2 ? "right" : undefined;
 
 		if (clickType) {
 			handleClick(clickType, time, lineLayer, lineIndex);
@@ -144,7 +138,7 @@ const Block = React.memo(({ x, y, z, time, lineLayer, lineIndex, direction, size
 		<group>
 			<mesh castShadow position={position} scale={[scaleFactor, scaleFactor, scaleFactor]} rotation={rotation} onClick={onClick} onPointerDown={onPointerDown} onPointerOver={onPointerOver}>
 				<primitive object={geometry} attach="geometry" />
-				<meshStandardMaterial attach="material" metalness={0.5} roughness={0.4} color={color} transparent={isTransparent} emissive={'yellow'} emissiveIntensity={isSelected ? 0.5 : 0} opacity={isTransparent ? 0.25 : 1} />
+				<meshStandardMaterial attach="material" metalness={0.5} roughness={0.4} color={color} transparent={isTransparent} emissive={"yellow"} emissiveIntensity={isSelected ? 0.5 : 0} opacity={isTransparent ? 0.25 : 1} />
 			</mesh>
 
 			{/* Fake flowing light from within */}

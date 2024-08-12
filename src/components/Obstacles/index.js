@@ -1,1 +1,1 @@
-export { default } from './Obstacles';
+export { default } from "./Obstacles";

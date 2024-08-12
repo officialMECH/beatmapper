@@ -1,1 +1,1 @@
-export { default } from './CenteredSpinner';
+export { default } from "./CenteredSpinner";

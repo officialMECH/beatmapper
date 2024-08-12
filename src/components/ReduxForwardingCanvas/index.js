@@ -1,1 +1,1 @@
-export { default } from './ReduxForwardingCanvas';
+export { default } from "./ReduxForwardingCanvas";

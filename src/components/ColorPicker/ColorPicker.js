@@ -1,43 +1,35 @@
-import React from 'react';
-import { ChromePicker } from 'react-color';
-import OutsideClickHandler from 'react-outside-click-handler';
-import styled from 'styled-components';
+import React from "react";
+import { ChromePicker } from "react-color";
+import OutsideClickHandler from "react-outside-click-handler";
+import styled from "styled-components";
 
-import { COLORS } from '../../constants';
+import { COLORS } from "../../constants";
 
-import UnstyledButton from '../UnstyledButton';
+import UnstyledButton from "../UnstyledButton";
 
 const PREVIEW_SIZE = 30;
 const BORDER_WIDTH = 2;
 
 const ColorPicker = ({ colorId, color, updateColor, overdrive }) => {
-  const [showPicker, setShowPicker] = React.useState(false);
+	const [showPicker, setShowPicker] = React.useState(false);
 
-  return (
-    <Wrapper>
-      <ColorPreview
-        style={{ backgroundColor: color }}
-        onClick={() => setShowPicker(true)}
-      />
+	return (
+		<Wrapper>
+			<ColorPreview style={{ backgroundColor: color }} onClick={() => setShowPicker(true)} />
 
-      <ColorPreviewBorder />
+			<ColorPreviewBorder />
 
-      <ColorPreviewGlow
-        style={{ backgroundColor: color, opacity: overdrive }}
-      />
+			<ColorPreviewGlow style={{ backgroundColor: color, opacity: overdrive }} />
 
-      {showPicker && (
-        <OutsideClickHandler onOutsideClick={() => setShowPicker(false)}>
-          <PickerWrapper>
-            <ChromePicker
-              color={color}
-              onChange={colorInfo => updateColor(colorId, colorInfo.hex)}
-            />
-          </PickerWrapper>
-        </OutsideClickHandler>
-      )}
-    </Wrapper>
-  );
+			{showPicker && (
+				<OutsideClickHandler onOutsideClick={() => setShowPicker(false)}>
+					<PickerWrapper>
+						<ChromePicker color={color} onChange={(colorInfo) => updateColor(colorId, colorInfo.hex)} />
+					</PickerWrapper>
+				</OutsideClickHandler>
+			)}
+		</Wrapper>
+	);
 };
 
 const Wrapper = styled.div`

@@ -1,24 +1,24 @@
-import React from 'react';
-import styled from 'styled-components';
+import React from "react";
+import styled from "styled-components";
 
-import { COLORS } from '../../constants';
+import { COLORS } from "../../constants";
 
-import Sidebar from './Sidebar';
-import SearchHeader from './SearchHeader';
+import SearchHeader from "./SearchHeader";
+import Sidebar from "./Sidebar";
 
 const Layout = ({ children }) => {
-  return (
-    <Wrapper>
-      <SidebarWrapper>
-        <Sidebar />
-      </SidebarWrapper>
+	return (
+		<Wrapper>
+			<SidebarWrapper>
+				<Sidebar />
+			</SidebarWrapper>
 
-      <MainContent>
-        <SearchHeader />
-        {children}
-      </MainContent>
-    </Wrapper>
-  );
+			<MainContent>
+				<SearchHeader />
+				{children}
+			</MainContent>
+		</Wrapper>
+	);
 };
 
 const Wrapper = styled.div`

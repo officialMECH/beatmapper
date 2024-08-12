@@ -1,37 +1,34 @@
-import React from 'react';
-import styled from 'styled-components';
+import React from "react";
+import styled from "styled-components";
 
-import { UNIT, EVENTS_VIEW } from '../../constants';
+import { EVENTS_VIEW, UNIT } from "../../constants";
 
-import EditorNavigationControls from '../EditorNavigationControls';
-import EditorWaveform from '../EditorWaveform';
-import EditorStatusBar from '../EditorStatusBar';
+import EditorNavigationControls from "../EditorNavigationControls";
+import EditorStatusBar from "../EditorStatusBar";
+import EditorWaveform from "../EditorWaveform";
 
 const PADDING = UNIT * 2;
 
 const EventsBottomPanel = ({ contentWidth }) => {
-  // This is a known size because IconButton is always 36px squared, and it's
-  // the tallest thing in this child.
-  // TODO: Make this relationship explicit, share a constant or something
-  const playbackControlsHeight = 36;
-  const statusBarHeight = 30;
+	// This is a known size because IconButton is always 36px squared, and it's
+	// the tallest thing in this child.
+	// TODO: Make this relationship explicit, share a constant or something
+	const playbackControlsHeight = 36;
+	const statusBarHeight = 30;
 
-  const waveformHeight = 80;
+	const waveformHeight = 80;
 
-  return (
-    <Wrapper style={{ width: contentWidth }}>
-      <SubWrapper>
-        <EditorNavigationControls
-          height={playbackControlsHeight}
-          view={EVENTS_VIEW}
-        />
-      </SubWrapper>
-      <SubWrapper>
-        <EditorWaveform height={waveformHeight} />
-      </SubWrapper>
-      <EditorStatusBar height={statusBarHeight} />
-    </Wrapper>
-  );
+	return (
+		<Wrapper style={{ width: contentWidth }}>
+			<SubWrapper>
+				<EditorNavigationControls height={playbackControlsHeight} view={EVENTS_VIEW} />
+			</SubWrapper>
+			<SubWrapper>
+				<EditorWaveform height={waveformHeight} />
+			</SubWrapper>
+			<EditorStatusBar height={statusBarHeight} />
+		</Wrapper>
+	);
 };
 
 const Wrapper = styled.div`

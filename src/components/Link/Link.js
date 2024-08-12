@@ -1,8 +1,8 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
-import { COLORS } from '../../constants';
+import { COLORS } from "../../constants";
 
-import BaseLink from '../BaseLink';
+import BaseLink from "../BaseLink";
 
 export default styled(BaseLink)`
   color: ${COLORS.yellow[500]};

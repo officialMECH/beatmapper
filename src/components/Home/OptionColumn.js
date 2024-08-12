@@ -1,35 +1,28 @@
-import React from 'react';
-import styled from 'styled-components';
-import { Icon } from 'react-icons-kit';
+import React from "react";
+import { Icon } from "react-icons-kit";
+import styled from "styled-components";
 
-import { COLORS, UNIT } from '../../constants';
+import { COLORS, UNIT } from "../../constants";
 
-import Heading from '../Heading';
-import Button from '../Button';
-import Spacer from '../Spacer';
-import Paragraph from '../Paragraph';
+import Button from "../Button";
+import Heading from "../Heading";
+import Paragraph from "../Paragraph";
+import Spacer from "../Spacer";
 
-const OptionColumn = ({
-  icon,
-  title,
-  disabled,
-  description,
-  buttonText,
-  handleClick,
-}) => {
-  return (
-    <Wrapper>
-      <Icon icon={icon} size={24} />
-      <Spacer size={UNIT * 4} />
-      <Title size={3}>{title}</Title>
-      <Spacer size={UNIT * 2} />
-      <Description>{description}</Description>
-      <Spacer size={UNIT * 4} />
-      <Button onClick={handleClick} disabled={disabled}>
-        {buttonText}
-      </Button>
-    </Wrapper>
-  );
+const OptionColumn = ({ icon, title, disabled, description, buttonText, handleClick }) => {
+	return (
+		<Wrapper>
+			<Icon icon={icon} size={24} />
+			<Spacer size={UNIT * 4} />
+			<Title size={3}>{title}</Title>
+			<Spacer size={UNIT * 2} />
+			<Description>{description}</Description>
+			<Spacer size={UNIT * 4} />
+			<Button onClick={handleClick} disabled={disabled}>
+				{buttonText}
+			</Button>
+		</Wrapper>
+	);
 };
 
 const Wrapper = styled.div`

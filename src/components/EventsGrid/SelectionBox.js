@@ -1,22 +1,22 @@
-import React from 'react';
-import styled from 'styled-components';
+import React from "react";
+import styled from "styled-components";
 
-import { COLORS } from '../../constants';
+import { COLORS } from "../../constants";
 
 const SelectionBox = ({ box }) => {
-  const width = box.right - box.left;
-  const height = box.bottom - box.top;
+	const width = box.right - box.left;
+	const height = box.bottom - box.top;
 
-  return (
-    <Box
-      style={{
-        width,
-        height,
-        top: box.top,
-        left: box.left,
-      }}
-    />
-  );
+	return (
+		<Box
+			style={{
+				width,
+				height,
+				top: box.top,
+				left: box.left,
+			}}
+		/>
+	);
 };
 
 const Box = styled.div`

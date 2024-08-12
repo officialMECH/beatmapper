@@ -1,1 +1,1 @@
-export { default } from './LabeledCheckbox';
+export { default } from "./LabeledCheckbox";

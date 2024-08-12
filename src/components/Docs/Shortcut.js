@@ -1,18 +1,18 @@
-import React from 'react';
-import styled from 'styled-components';
-import { COLORS } from '../../constants';
+import React from "react";
+import styled from "styled-components";
+import { COLORS } from "../../constants";
 
 export const Shortcut = ({ keys, children }) => {
-  return (
-    <ShortcutWrapper>
-      <Keys>{keys}</Keys>
-      <Children>{children}</Children>
-    </ShortcutWrapper>
-  );
+	return (
+		<ShortcutWrapper>
+			<Keys>{keys}</Keys>
+			<Children>{children}</Children>
+		</ShortcutWrapper>
+	);
 };
 
 export const ShortcutTable = ({ children }) => {
-  return <TableWrapper>{children}</TableWrapper>;
+	return <TableWrapper>{children}</TableWrapper>;
 };
 
 const TableWrapper = styled.div`

@@ -1,1 +1,1 @@
-export { default } from './Center';
+export { default } from "./Center";

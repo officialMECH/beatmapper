@@ -1,45 +1,39 @@
-import React from 'react';
-import styled from 'styled-components';
+import React from "react";
+import styled from "styled-components";
 
-import { UNIT } from '../../constants';
+import { UNIT } from "../../constants";
 
-import Button from '../Button';
-import Spacer from '../Spacer';
-import MaxWidthWrapper from '../MaxWidthWrapper';
+import Button from "../Button";
+import MaxWidthWrapper from "../MaxWidthWrapper";
+import Spacer from "../Spacer";
 
-import SongsTable from './SongsTable';
-import Heading from '../Heading';
+import Heading from "../Heading";
+import SongsTable from "./SongsTable";
 
 const ReturningHome = ({ songs, isProcessingImport, setModal }) => {
-  return (
-    <MaxWidthWrapper>
-      <Spacer size={UNIT * 8} />
-      <Heading size={1}>Select map to edit</Heading>
-      <Spacer size={UNIT * 2} />
-      <Row>
-        <MainColumn flex={6}>
-          <SongsTable songs={songs} isLoading={isProcessingImport} />
-        </MainColumn>
-        <Spacer size={UNIT * 2} />
+	return (
+		<MaxWidthWrapper>
+			<Spacer size={UNIT * 8} />
+			<Heading size={1}>Select map to edit</Heading>
+			<Spacer size={UNIT * 2} />
+			<Row>
+				<MainColumn flex={6}>
+					<SongsTable songs={songs} isLoading={isProcessingImport} />
+				</MainColumn>
+				<Spacer size={UNIT * 2} />
 
-        <SideColumn flex={2}>
-          <Button
-            style={{ width: '100%' }}
-            onClick={() => setModal('create-new-song')}
-          >
-            Create new song
-          </Button>
-          <Spacer size={UNIT * 2} />
-          <Button
-            style={{ width: '100%' }}
-            onClick={() => setModal('import-map')}
-          >
-            Import existing map
-          </Button>
-        </SideColumn>
-      </Row>
-    </MaxWidthWrapper>
-  );
+				<SideColumn flex={2}>
+					<Button style={{ width: "100%" }} onClick={() => setModal("create-new-song")}>
+						Create new song
+					</Button>
+					<Spacer size={UNIT * 2} />
+					<Button style={{ width: "100%" }} onClick={() => setModal("import-map")}>
+						Import existing map
+					</Button>
+				</SideColumn>
+			</Row>
+		</MaxWidthWrapper>
+	);
 };
 
 const Row = styled.div`
@@ -47,7 +41,7 @@ const Row = styled.div`
 `;
 
 const Column = styled.div`
-  flex: ${props => props.flex};
+  flex: ${(props) => props.flex};
   padding: ${UNIT * 2}px;
 `;
 

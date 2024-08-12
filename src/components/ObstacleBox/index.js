@@ -1,1 +1,1 @@
-export { default } from './ObstacleBox';
+export { default } from "./ObstacleBox";

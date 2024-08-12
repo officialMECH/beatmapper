@@ -1,1 +1,1 @@
-export { default } from './UnobtrusivePrompt';
+export { default } from "./UnobtrusivePrompt";

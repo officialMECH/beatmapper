@@ -1,14 +1,14 @@
-import React from 'react';
-import styled from 'styled-components';
+import React from "react";
+import styled from "styled-components";
 
-import Spinner from '../Spinner';
+import Spinner from "../Spinner";
 
-const CenteredSpinner = props => {
-  return (
-    <Wrapper>
-      <Spinner {...props} />
-    </Wrapper>
-  );
+const CenteredSpinner = (props) => {
+	return (
+		<Wrapper>
+			<Spinner {...props} />
+		</Wrapper>
+	);
 };
 
 const Wrapper = styled.div`

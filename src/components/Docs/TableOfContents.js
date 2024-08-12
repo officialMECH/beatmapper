@@ -1,13 +1,13 @@
-import React from 'react';
-import Icon from 'react-icons-kit';
-import { externalLink } from 'react-icons-kit/feather/externalLink';
-import styled from 'styled-components';
+import React from "react";
+import Icon from "react-icons-kit";
+import { externalLink } from "react-icons-kit/feather/externalLink";
+import styled from "styled-components";
 
-import { COLORS } from '../../constants';
-import { slugify, throttle } from '../../utils';
+import { COLORS } from "../../constants";
+import { slugify, throttle } from "../../utils";
 
-import BaseLink from '../BaseLink';
-import Spacer from '../Spacer';
+import BaseLink from "../BaseLink";
+import Spacer from "../Spacer";
 
 const useActiveHeading = (headings) => {
 	const [activeHeadingId, setActiveHeading] = React.useState(null);
@@ -33,7 +33,7 @@ const useActiveHeading = (headings) => {
 			// If neither condition is met, I'll assume I'm still in the intro,
 			// although this would have to be a VERY long intro to ever be true.
 
-			let headingBoxes = headings.map(({ value: title }) => {
+			const headingBoxes = headings.map(({ value: title }) => {
 				const id = slugify(title);
 				const elem = document.querySelector(`#${id}`);
 				return { id, box: elem.getBoundingClientRect() };
@@ -61,10 +61,10 @@ const useActiveHeading = (headings) => {
 			}
 		}, 500);
 
-		window.addEventListener('scroll', handleScroll);
+		window.addEventListener("scroll", handleScroll);
 
 		return () => {
-			window.removeEventListener('scroll', handleScroll);
+			window.removeEventListener("scroll", handleScroll);
 		};
 	}, [activeHeadingId, headings]);
 
@@ -72,13 +72,13 @@ const useActiveHeading = (headings) => {
 };
 
 const getGithubLink = (pathname) => {
-	const prefix = 'https://github.com/bsmg/beatmapper/edit/master/src';
+	const prefix = "https://github.com/bsmg/beatmapper/edit/master/src";
 
-	if (pathname === '/docs') {
-		return prefix + pathname + '/intro.mdx';
+	if (pathname === "/docs") {
+		return `${prefix + pathname}/intro.mdx`;
 	}
 
-	return prefix + pathname + '.mdx';
+	return `${prefix + pathname}.mdx`;
 };
 
 const TableOfContents = ({ toc, location }) => {

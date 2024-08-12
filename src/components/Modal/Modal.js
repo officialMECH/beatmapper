@@ -6,145 +6,118 @@
  * TODO: Use a portal to render this at the top-level, to avoid any z-index
  * issues?
  */
-import React, { PureComponent } from 'react';
-import { Spring } from 'react-spring/renderprops';
-import Transition from 'react-transition-group/Transition';
-import styled from 'styled-components';
-import Icon from 'react-icons-kit';
-import { x } from 'react-icons-kit/feather/x';
+import React, { PureComponent } from "react";
+import Icon from "react-icons-kit";
+import { x } from "react-icons-kit/feather/x";
+import { Spring } from "react-spring/renderprops";
+import Transition from "react-transition-group/Transition";
+import styled from "styled-components";
 
-import { COLORS } from '../../constants';
-import { hasPropChanged } from '../../utils';
+import { COLORS } from "../../constants";
+import { hasPropChanged } from "../../utils";
 
-import ScrollDisabler from '../ScrollDisabler';
-import UnstyledButton from '../UnstyledButton';
+import ScrollDisabler from "../ScrollDisabler";
+import UnstyledButton from "../UnstyledButton";
 
 class Modal extends PureComponent {
-  static defaultProps = {
-    width: 750,
-    alignment: 'center', // top | center
-    clickBackdropToDismiss: true,
-  };
+	static defaultProps = {
+		width: 750,
+		alignment: "center", // top | center
+		clickBackdropToDismiss: true,
+	};
 
-  state = {
-    outdatedChildren: null,
-    showBackdropX: false,
-  };
+	state = {
+		outdatedChildren: null,
+		showBackdropX: false,
+	};
 
-  componentDidMount() {
-    window.addEventListener('keydown', this.handleKeydown);
-  }
+	componentDidMount() {
+		window.addEventListener("keydown", this.handleKeydown);
+	}
 
-  componentWillReceiveProps(nextProps) {
-    // When the modal is dismissed, we want to render the "stale" children for
-    // a couple hundred milliseconds, until the modal has fully closed.
-    // This is to prevent the underlying component from changing as it fades
-    // away.
-    if (hasPropChanged(this.props, nextProps, 'isVisible')) {
-      if (nextProps.isVisible) {
-        this.setState({ outdatedChildren: null });
-      } else {
-        this.setState({ outdatedChildren: this.props.children });
-      }
-    }
-  }
+	componentWillReceiveProps(nextProps) {
+		// When the modal is dismissed, we want to render the "stale" children for
+		// a couple hundred milliseconds, until the modal has fully closed.
+		// This is to prevent the underlying component from changing as it fades
+		// away.
+		if (hasPropChanged(this.props, nextProps, "isVisible")) {
+			if (nextProps.isVisible) {
+				this.setState({ outdatedChildren: null });
+			} else {
+				this.setState({ outdatedChildren: this.props.children });
+			}
+		}
+	}
 
-  componentWillUnmount() {
-    window.removeEventListener('keydown', this.handleKeydown);
-  }
+	componentWillUnmount() {
+		window.removeEventListener("keydown", this.handleKeydown);
+	}
 
-  handleKeydown = ev => {
-    if (ev.code !== 'Escape') {
-      return;
-    }
+	handleKeydown = (ev) => {
+		if (ev.code !== "Escape") {
+			return;
+		}
 
-    ev.stopPropagation();
+		ev.stopPropagation();
 
-    this.props.onDismiss();
-  };
+		this.props.onDismiss();
+	};
 
-  render() {
-    const {
-      isVisible,
-      width,
-      height,
-      alignment,
-      onDismiss,
-      clickBackdropToDismiss,
-      children,
-    } = this.props;
-    const { outdatedChildren, showBackdropX } = this.state;
+	render() {
+		const { isVisible, width, height, alignment, onDismiss, clickBackdropToDismiss, children } = this.props;
+		const { outdatedChildren, showBackdropX } = this.state;
 
-    return (
-      <>
-        {isVisible && <ScrollDisabler />}
+		return (
+			<>
+				{isVisible && <ScrollDisabler />}
 
-        <Transition in={isVisible} timeout={300}>
-          {transitionState => {
-            if (transitionState === 'exited') {
-              return null;
-            }
+				<Transition in={isVisible} timeout={300}>
+					{(transitionState) => {
+						if (transitionState === "exited") {
+							return null;
+						}
 
-            const inTransit =
-              transitionState === 'entering' || transitionState === 'exiting';
+						const inTransit = transitionState === "entering" || transitionState === "exiting";
 
-            const translateY = transitionState === 'entered' ? 0 : 50;
-            return (
-              <Spring
-                to={{
-                  translateY,
-                  opacity: inTransit ? 0 : 1,
-                }}
-              >
-                {interpolated => (
-                  <Wrapper
-                    opacity={interpolated.opacity}
-                    clickable={!inTransit}
-                    alignment={alignment}
-                  >
-                    <Backdrop
-                      onClick={clickBackdropToDismiss ? onDismiss : undefined}
-                    />
+						const translateY = transitionState === "entered" ? 0 : 50;
+						return (
+							<Spring
+								to={{
+									translateY,
+									opacity: inTransit ? 0 : 1,
+								}}
+							>
+								{(interpolated) => (
+									<Wrapper opacity={interpolated.opacity} clickable={!inTransit} alignment={alignment}>
+										<Backdrop onClick={clickBackdropToDismiss ? onDismiss : undefined} />
 
-                    <PaneWrapper
-                      width={width}
-                      height={height}
-                      alignment={alignment}
-                      translateY={interpolated.translateY}
-                    >
-                      <div
-                        onMouseLeave={() =>
-                          this.setState({ showBackdropX: true })
-                        }
-                        onMouseEnter={() =>
-                          this.setState({ showBackdropX: false })
-                        }
-                      >
-                        {outdatedChildren || children}
-                      </div>
-                      {showBackdropX && (
-                        <ManualDismiss onClick={onDismiss}>
-                          <Icon icon={x} size={32} />
-                        </ManualDismiss>
-                      )}
-                    </PaneWrapper>
-                  </Wrapper>
-                )}
-              </Spring>
-            );
-          }}
-        </Transition>
-      </>
-    );
-  }
+										<PaneWrapper width={width} height={height} alignment={alignment} translateY={interpolated.translateY}>
+											<div onMouseLeave={() => this.setState({ showBackdropX: true })} onMouseEnter={() => this.setState({ showBackdropX: false })}>
+												{outdatedChildren || children}
+											</div>
+											{showBackdropX && (
+												<ManualDismiss onClick={onDismiss}>
+													<Icon icon={x} size={32} />
+												</ManualDismiss>
+											)}
+										</PaneWrapper>
+									</Wrapper>
+								)}
+							</Spring>
+						);
+					}}
+				</Transition>
+			</>
+		);
+	}
 }
 
-const Wrapper = styled.div.attrs(props => ({
-  style: {
-    opacity: props.opacity,
-    pointerEvents: props.clickable ? 'auto' : 'none',
-    alignItems: props.alignment === 'center' ? 'center' : 'flex-start',
-  },
+const Wrapper = styled.div.attrs((props) => ({
+	style: {
+		opacity: props.opacity,
+		pointerEvents: props.clickable ? "auto" : "none",
+		alignItems: props.alignment === "center" ? "center" : "flex-start",
+	},
 }))`
   position: fixed;
   z-index: 1000;
@@ -173,13 +146,13 @@ const Backdrop = styled.div`
   background: rgba(0, 0, 0, 0.8);
 `;
 
-const PaneWrapper = styled.div.attrs(props => ({
-  style: {
-    width: props.width,
-    height: props.height,
-    transform: `translateY(${props.translateY}px)`,
-    top: props.alignment === 'top' && '20%',
-  },
+const PaneWrapper = styled.div.attrs((props) => ({
+	style: {
+		width: props.width,
+		height: props.height,
+		transform: `translateY(${props.translateY}px)`,
+		top: props.alignment === "top" && "20%",
+	},
 }))`
   position: relative;
   z-index: 2;

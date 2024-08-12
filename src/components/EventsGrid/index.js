@@ -1,1 +1,1 @@
-export { default } from './EventsGrid';
+export { default } from "./EventsGrid";

@@ -1,34 +1,22 @@
-import React from 'react';
-import styled from 'styled-components';
-import { connect } from 'react-redux';
+import React from "react";
+import { connect } from "react-redux";
+import styled from "styled-components";
 
-import { COLORS } from '../../constants';
-import { normalize } from '../../utils';
-import { getCursorPositionInBeats } from '../../reducers/navigation.reducer';
+import { COLORS } from "../../constants";
+import { getCursorPositionInBeats } from "../../reducers/navigation.reducer";
+import { normalize } from "../../utils";
 
-const CursorPositionIndicator = ({
-  gridWidth,
-  cursorPositionInBeats,
-  startBeat,
-  endBeat,
-  zIndex,
-}) => {
-  const cursorOffsetInWindow = normalize(
-    cursorPositionInBeats,
-    startBeat,
-    endBeat,
-    0,
-    gridWidth
-  );
+const CursorPositionIndicator = ({ gridWidth, cursorPositionInBeats, startBeat, endBeat, zIndex }) => {
+	const cursorOffsetInWindow = normalize(cursorPositionInBeats, startBeat, endBeat, 0, gridWidth);
 
-  return (
-    <Elem
-      style={{
-        transform: `translateX(${cursorOffsetInWindow}px)`,
-        zIndex,
-      }}
-    />
-  );
+	return (
+		<Elem
+			style={{
+				transform: `translateX(${cursorOffsetInWindow}px)`,
+				zIndex,
+			}}
+		/>
+	);
 };
 
 const Elem = styled.div`
@@ -42,10 +30,10 @@ const Elem = styled.div`
   pointer-events: none;
 `;
 
-const mapStateToProps = state => {
-  return {
-    cursorPositionInBeats: getCursorPositionInBeats(state),
-  };
+const mapStateToProps = (state) => {
+	return {
+		cursorPositionInBeats: getCursorPositionInBeats(state),
+	};
 };
 
 export default connect(mapStateToProps)(CursorPositionIndicator);

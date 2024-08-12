@@ -13,22 +13,22 @@
  * mouse to navigate. Although this assumption may be wrong, and I may revisit
  * this idea in the future.
  */
-import React from 'react';
+import React from "react";
 
-import UnstyledButton from '../UnstyledButton';
+import UnstyledButton from "../UnstyledButton";
 
 const UnfocusedButton = ({ onClick, ...delegated }) => {
-  return (
-    <UnstyledButton
-      {...delegated}
-      onClick={ev => {
-        if (typeof onClick === 'function') {
-          ev.currentTarget.blur();
-          onClick(ev);
-        }
-      }}
-    />
-  );
+	return (
+		<UnstyledButton
+			{...delegated}
+			onClick={(ev) => {
+				if (typeof onClick === "function") {
+					ev.currentTarget.blur();
+					onClick(ev);
+				}
+			}}
+		/>
+	);
 };
 
 export default UnfocusedButton;

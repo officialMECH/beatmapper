@@ -1,1 +1,1 @@
-export { default } from './CoverArtSelector';
+export { default } from "./CoverArtSelector";

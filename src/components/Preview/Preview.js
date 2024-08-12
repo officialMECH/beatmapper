@@ -1,29 +1,29 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import styled from 'styled-components';
+import React from "react";
+import { connect } from "react-redux";
+import styled from "styled-components";
 
-import * as actions from '../../actions';
-import { PREVIEW_VIEW } from '../../constants';
+import * as actions from "../../actions";
+import { PREVIEW_VIEW } from "../../constants";
 
-import ReduxForwardingCanvas from '../ReduxForwardingCanvas';
-import EditorBottomPanel from '../EditorBottomPanel';
+import EditorBottomPanel from "../EditorBottomPanel";
+import ReduxForwardingCanvas from "../ReduxForwardingCanvas";
 
+import GlobalShortcuts from "../GlobalShortcuts";
 // import KeyboardShortcuts from './KeyboardShortcuts';
-import LightingPreview from './LightingPreview';
-import GlobalShortcuts from '../GlobalShortcuts';
+import LightingPreview from "./LightingPreview";
 
 const Preview = ({ isPlaying, scrollThroughSong }) => {
-  return (
-    <Wrapper>
-      <ReduxForwardingCanvas>
-        <LightingPreview />
-      </ReduxForwardingCanvas>
+	return (
+		<Wrapper>
+			<ReduxForwardingCanvas>
+				<LightingPreview />
+			</ReduxForwardingCanvas>
 
-      <EditorBottomPanel />
+			<EditorBottomPanel />
 
-      <GlobalShortcuts view={PREVIEW_VIEW} />
-    </Wrapper>
-  );
+			<GlobalShortcuts view={PREVIEW_VIEW} />
+		</Wrapper>
+	);
 };
 
 const Wrapper = styled.div`
@@ -32,15 +32,12 @@ const Wrapper = styled.div`
   height: 100%;
 `;
 
-const mapStateToProps = state => ({
-  isPlaying: state.navigation.isPlaying,
+const mapStateToProps = (state) => ({
+	isPlaying: state.navigation.isPlaying,
 });
 
 const mapDispatchToProps = {
-  scrollThroughSong: actions.scrollThroughSong,
+	scrollThroughSong: actions.scrollThroughSong,
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Preview);
+export default connect(mapStateToProps, mapDispatchToProps)(Preview);

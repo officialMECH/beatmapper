@@ -1,1 +1,1 @@
-export { default } from './StrikethroughOnHover';
+export { default } from "./StrikethroughOnHover";

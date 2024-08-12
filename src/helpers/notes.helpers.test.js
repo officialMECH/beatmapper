@@ -1,9 +1,9 @@
-import { describe, expect, it } from 'vitest';
-import { calculateNoteDensity, convertBlocksToExportableJson, convertBlocksToRedux, convertNotesFromMappingExtensions, convertNotesToMappingExtensions } from './notes.helpers';
+import { describe, expect, it } from "vitest";
+import { calculateNoteDensity, convertBlocksToExportableJson, convertBlocksToRedux, convertNotesFromMappingExtensions, convertNotesToMappingExtensions } from "./notes.helpers";
 
-describe('Notes helpers', () => {
-	describe('convertBlocksToRedux', () => {
-		it('converts', () => {
+describe("Notes helpers", () => {
+	describe("convertBlocksToRedux", () => {
+		it("converts", () => {
 			const blocks = [
 				{
 					_time: 2,
@@ -26,16 +26,16 @@ describe('Notes helpers', () => {
 			const expectedResult = [
 				{
 					id: actualResult[0].id, // Randomly generated so I have to cheat
-					color: 'blue',
-					direction: 'down',
+					color: "blue",
+					direction: "down",
 					beatNum: 2,
 					rowIndex: 0,
 					colIndex: 2,
 				},
 				{
 					id: actualResult[1].id,
-					color: 'red',
-					direction: 'up',
+					color: "red",
+					direction: "up",
 					beatNum: 3.5,
 					rowIndex: 0,
 					colIndex: 3,
@@ -45,21 +45,21 @@ describe('Notes helpers', () => {
 		});
 	});
 
-	describe('convertBlocksToExportableJson', () => {
-		it('converts', () => {
+	describe("convertBlocksToExportableJson", () => {
+		it("converts", () => {
 			const blocks = [
 				{
-					id: 'a',
-					color: 'blue',
-					direction: 'down',
+					id: "a",
+					color: "blue",
+					direction: "down",
 					beatNum: 2,
 					rowIndex: 0,
 					colIndex: 2,
 				},
 				{
-					id: 'b',
-					color: 'red',
-					direction: 'up',
+					id: "b",
+					color: "red",
+					direction: "up",
 					beatNum: 3.5,
 					rowIndex: 0,
 					colIndex: 3,
@@ -87,7 +87,7 @@ describe('Notes helpers', () => {
 			expect(actualResult).toEqual(expectedResult);
 		});
 
-		it('converts full-circle', () => {
+		it("converts full-circle", () => {
 			const blocks = [
 				{
 					_time: 2,
@@ -112,8 +112,8 @@ describe('Notes helpers', () => {
 		});
 	});
 
-	describe('calculateNoteDensity', () => {
-		it('gets note density for a simple case', () => {
+	describe("calculateNoteDensity", () => {
+		it("gets note density for a simple case", () => {
 			const numOfNotes = 10;
 			const segmentLengthInBeats = 10;
 			const bpm = 60;
@@ -124,7 +124,7 @@ describe('Notes helpers', () => {
 			expect(actualResult).toEqual(expectedResult);
 		});
 
-		it('gets note density for a slightly less simple case', () => {
+		it("gets note density for a slightly less simple case", () => {
 			const numOfNotes = 15;
 			const segmentLengthInBeats = 10;
 			const bpm = 100;
@@ -135,7 +135,7 @@ describe('Notes helpers', () => {
 			expect(actualResult).toEqual(expectedResult);
 		});
 
-		it('handles 0 notes', () => {
+		it("handles 0 notes", () => {
 			const numOfNotes = 0;
 			const segmentLengthInBeats = 12;
 			const bpm = 100;
@@ -147,8 +147,8 @@ describe('Notes helpers', () => {
 		});
 	});
 
-	describe('Mapping Extensions conversions', () => {
-		it('converts to MapEx format', () => {
+	describe("Mapping Extensions conversions", () => {
+		it("converts to MapEx format", () => {
 			const notes = [
 				{ _time: 4, _lineIndex: 0, _lineLayer: 0 },
 				{ _time: 4, _lineIndex: 1.5, _lineLayer: 2 },
@@ -167,7 +167,7 @@ describe('Notes helpers', () => {
 			expect(actualResult).toEqual(expectedResult);
 		});
 
-		it('converts from MapEx format', () => {
+		it("converts from MapEx format", () => {
 			const notes = [
 				{ _time: 4, _lineIndex: 1000, _lineLayer: 1000 },
 				{ _time: 4, _lineIndex: 2500, _lineLayer: 3000 },

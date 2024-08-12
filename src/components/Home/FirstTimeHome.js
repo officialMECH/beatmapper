@@ -1,91 +1,77 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import styled from 'styled-components';
-import { withRouter } from 'react-router-dom';
-import { filePlus } from 'react-icons-kit/feather/filePlus';
-import { download } from 'react-icons-kit/feather/download';
-import { box } from 'react-icons-kit/feather/box';
+import React from "react";
+import { box } from "react-icons-kit/feather/box";
+import { download } from "react-icons-kit/feather/download";
+import { filePlus } from "react-icons-kit/feather/filePlus";
+import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
+import styled from "styled-components";
 
-import * as actions from '../../actions';
-import { COLORS, UNIT } from '../../constants';
-import useWindowDimensions from '../../hooks/use-window-dimensions.hook';
-import { getDemoSong } from '../../reducers/songs.reducer';
-import heroVideo from '../../assets/videos/hero-video.mp4';
+import * as actions from "../../actions";
+import heroVideo from "../../assets/videos/hero-video.mp4";
+import { COLORS, UNIT } from "../../constants";
+import useWindowDimensions from "../../hooks/use-window-dimensions.hook";
+import { getDemoSong } from "../../reducers/songs.reducer";
 
-import Spacer from '../Spacer';
-import Heading from '../Heading';
-import Center from '../Center';
+import Center from "../Center";
+import Heading from "../Heading";
+import Spacer from "../Spacer";
 
-import OptionColumn from './OptionColumn';
+import OptionColumn from "./OptionColumn";
 
 const WRAPPER_MAX_WIDTH = 850;
 const WRAPPER_PADDING = UNIT * 2;
 
 const FirstTimeHome = ({ loadDemoMap, setModal, demoSong, history }) => {
-  const { width: windowWidth } = useWindowDimensions();
+	const { width: windowWidth } = useWindowDimensions();
 
-  const [isLoadingDemo, setIsLoadingDemo] = React.useState(false);
+	const [isLoadingDemo, setIsLoadingDemo] = React.useState(false);
 
-  const videoWidth = Math.min(WRAPPER_MAX_WIDTH, windowWidth);
+	const videoWidth = Math.min(WRAPPER_MAX_WIDTH, windowWidth);
 
-  return (
-    <MainContent>
-      <Center>
-        <Title size={1}>
-          Beatmapper is an unofficial web-based editor for Beat Saber™
-        </Title>
-        <Spacer size={UNIT * 4} />
-        <video
-          src={heroVideo}
-          autoPlay
-          muted
-          loop
-          controls
-          style={{
-            width: videoWidth,
-            marginLeft: -WRAPPER_PADDING,
-            marginRight: -WRAPPER_PADDING,
-          }}
-        />
+	return (
+		<MainContent>
+			<Center>
+				<Title size={1}>Beatmapper is an unofficial web-based editor for Beat Saber™</Title>
+				<Spacer size={UNIT * 4} />
+				<video
+					src={heroVideo}
+					autoPlay
+					muted
+					loop
+					controls
+					style={{
+						width: videoWidth,
+						marginLeft: -WRAPPER_PADDING,
+						marginRight: -WRAPPER_PADDING,
+					}}
+				/>
 
-        <Spacer size={UNIT * 10} />
-        <Heading size={2}>Get started now</Heading>
-      </Center>
-      <Spacer size={UNIT * 6} />
-      <Row>
-        <OptionColumn
-          icon={box}
-          title="Try a demo map"
-          description="Take the editor for a test-drive with some surprisingly good public-domain dubstep"
-          buttonText={isLoadingDemo ? 'Loading…' : 'Start editing'}
-          handleClick={() => {
-            if (!demoSong) {
-              setIsLoadingDemo(true);
-              loadDemoMap();
-            }
-          }}
-        />
-        <Divider />
-        <OptionColumn
-          icon={filePlus}
-          title="Create new song"
-          description="Build a new map from scratch, using music from your computer"
-          buttonText="Create from scratch"
-          handleClick={() => setModal('create-new-song')}
-        />
-        <Divider />
-        <OptionColumn
-          icon={download}
-          title="Import existing map"
-          description="Edit an existing map by selecting it from your computer"
-          buttonText="Import map"
-          handleClick={() => setModal('import-map')}
-        />
-      </Row>
+				<Spacer size={UNIT * 10} />
+				<Heading size={2}>Get started now</Heading>
+			</Center>
+			<Spacer size={UNIT * 6} />
+			<Row>
+				<OptionColumn
+					icon={box}
+					title="Try a demo map"
+					description="Take the editor for a test-drive with some surprisingly good public-domain dubstep"
+					buttonText={isLoadingDemo ? "Loading…" : "Start editing"}
+					handleClick={() => {
+						if (!demoSong) {
+							setIsLoadingDemo(true);
+							loadDemoMap();
+						}
+					}}
+				/>
+				<Divider />
+				<OptionColumn icon={filePlus} title="Create new song" description="Build a new map from scratch, using music from your computer" buttonText="Create from scratch" handleClick={() => setModal("create-new-song")} />
+				<Divider />
+				<OptionColumn icon={download} title="Import existing map" description="Edit an existing map by selecting it from your computer" buttonText="Import map" handleClick={() => setModal("import-map")} />
+			</Row>
 
-      <Spacer size={UNIT * 10} />
-    </MainContent>
-  );
+			<Spacer size={UNIT * 10} />
+		</MainContent>
+	);
 };
 
 const MainContent = styled.div`
@@ -120,13 +106,11 @@ const Divider = styled.div`
 `;
 
 const mapStateToProps = (state) => ({
-  demoSong: getDemoSong(state),
+	demoSong: getDemoSong(state),
 });
 
 const mapDispatchToProps = {
-  loadDemoMap: actions.loadDemoMap,
+	loadDemoMap: actions.loadDemoMap,
 };
 
-export default withRouter(
-  connect(mapStateToProps, mapDispatchToProps)(FirstTimeHome)
-);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(FirstTimeHome));

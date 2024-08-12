@@ -1,19 +1,19 @@
-import React from 'react';
-import styled from 'styled-components';
-import IconBase from 'react-icons-kit';
-import { arrowRightC } from 'react-icons-kit/ionicons/arrowRightC';
+import React from "react";
+import IconBase from "react-icons-kit";
+import { arrowRightC } from "react-icons-kit/ionicons/arrowRightC";
+import styled from "styled-components";
 
-import { COLORS } from '../../constants';
+import { COLORS } from "../../constants";
 
 const List = ({ children }) => <ListElem>{children}</ListElem>;
 
 List.ListItem = ({ children }) => (
-  <ListItemElem>
-    <IconWrapper>
-      <IconBase size={16} icon={arrowRightC} />
-    </IconWrapper>
-    <Children>{children}</Children>
-  </ListItemElem>
+	<ListItemElem>
+		<IconWrapper>
+			<IconBase size={16} icon={arrowRightC} />
+		</IconWrapper>
+		<Children>{children}</Children>
+	</ListItemElem>
 );
 
 const ListElem = styled.ul`

@@ -1,36 +1,36 @@
-import React from 'react';
-import styled from 'styled-components';
+import React from "react";
+import styled from "styled-components";
 
-import SongsTableRow from './SongsTableRow';
-import { COLORS, UNIT } from '../../constants';
-import CenteredSpinner from '../CenteredSpinner';
+import { COLORS, UNIT } from "../../constants";
+import CenteredSpinner from "../CenteredSpinner";
+import SongsTableRow from "./SongsTableRow";
 
 const SongsTable = ({ songs, isLoading }) => {
-  return (
-    <Wrapper>
-      <Table>
-        <thead>
-          <tr>
-            <th />
-            <th>Title</th>
-            <th>Difficulties</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {songs.map(song => (
-            <SongsTableRow key={song.id} song={song} />
-          ))}
-        </tbody>
-      </Table>
+	return (
+		<Wrapper>
+			<Table>
+				<thead>
+					<tr>
+						<th />
+						<th>Title</th>
+						<th>Difficulties</th>
+						<th>Actions</th>
+					</tr>
+				</thead>
+				<tbody>
+					{songs.map((song) => (
+						<SongsTableRow key={song.id} song={song} />
+					))}
+				</tbody>
+			</Table>
 
-      {isLoading && (
-        <LoadingBlocker>
-          <CenteredSpinner />
-        </LoadingBlocker>
-      )}
-    </Wrapper>
-  );
+			{isLoading && (
+				<LoadingBlocker>
+					<CenteredSpinner />
+				</LoadingBlocker>
+			)}
+		</Wrapper>
+	);
 };
 
 const Wrapper = styled.div`

@@ -1,11 +1,11 @@
-import React from 'react';
-import styled from 'styled-components';
+import React from "react";
+import styled from "styled-components";
 
-import { COLORS } from '../../constants';
+import { COLORS } from "../../constants";
 
 const Heading = ({ size, ...delegated }) => {
-  const Elem = HeadingArr[size];
-  return <Elem {...delegated} />;
+	const Elem = HeadingArr[size];
+	return <Elem {...delegated} />;
 };
 
 const HeadingBase = styled.h4`

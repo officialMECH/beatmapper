@@ -1,1 +1,1 @@
-export { default } from './GlobalShortcuts';
+export { default } from "./GlobalShortcuts";

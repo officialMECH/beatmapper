@@ -1,72 +1,62 @@
-import React from 'react';
-import styled from 'styled-components';
-import { chevronDown } from 'react-icons-kit/feather/chevronDown';
+import React from "react";
+import { chevronDown } from "react-icons-kit/feather/chevronDown";
+import styled from "styled-components";
 
-import { COLORS, UNIT } from '../../constants';
+import { COLORS, UNIT } from "../../constants";
 
-import Spacer from '../Spacer';
-import Icon from 'react-icons-kit';
+import Icon from "react-icons-kit";
+import Spacer from "../Spacer";
 
-const Dropdown = ({
-  label,
-  value,
-  onChange,
-  width,
-  height = 36,
-  disabled,
-  children,
-}) => {
-  // HACK: So, we receive a `value` which isn't meant to be human-readable,
-  // like `0.5`. We also have a set of children, <option>s, which have props
-  // for value (0.5) and children (1/2 Beat). Find the display text by matching
-  // against the children's values, and use the labels found in `children`.
-  // This is a weird pattern, and it should probably be redone.
-  const selectedChild = React.Children.toArray(children).find(child => {
-    return child.props.value === value;
-  });
+const Dropdown = ({ label, value, onChange, width, height = 36, disabled, children }) => {
+	// HACK: So, we receive a `value` which isn't meant to be human-readable,
+	// like `0.5`. We also have a set of children, <option>s, which have props
+	// for value (0.5) and children (1/2 Beat). Find the display text by matching
+	// against the children's values, and use the labels found in `children`.
+	// This is a weird pattern, and it should probably be redone.
+	const selectedChild = React.Children.toArray(children).find((child) => {
+		return child.props.value === value;
+	});
 
-  if (!selectedChild) {
-    console.error('Could not find child with value', value, children);
-  }
+	if (!selectedChild) {
+		console.error("Could not find child with value", value, children);
+	}
 
-  const displayedValue = selectedChild
-    ? selectedChild.props['when-selected']
-    : 'Error';
+	const displayedValue = selectedChild ? selectedChild.props["when-selected"] : "Error";
 
-  return (
-    <Wrapper
-      style={{
-        width,
-        height,
-        lineHeight: height,
-        opacity: disabled ? 0.35 : 1,
-      }}
-    >
-      {label && (
-        <>
-          <Label>{label}</Label>
-          <Spacer size={6} />
-        </>
-      )}
-      <Value>
-        <DisplayedValue>{displayedValue}</DisplayedValue>
-        <Caret>
-          <Icon icon={chevronDown} size={16} />
-        </Caret>
-      </Value>
-      <Select
-        value={value}
-        disabled={disabled}
-        onChange={ev => {
-          onChange(ev);
+	return (
+		<Wrapper
+			style={{
+				width,
+				height,
+				lineHeight: height,
+				opacity: disabled ? 0.35 : 1,
+			}}
+		>
+			{label && (
+				<>
+					<Label>{label}</Label>
+					<Spacer size={6} />
+				</>
+			)}
+			<Value>
+				<DisplayedValue>{displayedValue}</DisplayedValue>
+				<Caret>
+					<Icon icon={chevronDown} size={16} />
+				</Caret>
+			</Value>
+			<Select
+				value={value}
+				disabled={disabled}
+				onChange={(ev) => {
+					onChange(ev);
 
-          ev.target.blur();
-        }}
-      >
-        {children}
-      </Select>
-    </Wrapper>
-  );
+					ev.target.blur();
+				}}
+			>
+				{children}
+			</Select>
+		</Wrapper>
+	);
 };
 
 const Wrapper = styled.div`

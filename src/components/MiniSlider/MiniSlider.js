@@ -1,32 +1,26 @@
 /**
  * Building a Slider component from scratch because
  */
-import React from 'react';
-import styled from 'styled-components';
+import React from "react";
+import styled from "styled-components";
 
-import { COLORS } from '../../constants';
+import { COLORS } from "../../constants";
 
-const MiniSlider = ({
-  width,
-  height,
-  style = {},
-  includeMidpointTick,
-  ...delegated
-}) => {
-  return (
-    <Wrapper style={{ width, height }}>
-      {includeMidpointTick && <Tick />}
-      <Input
-        type="range"
-        style={{
-          width,
-          height,
-          ...style,
-        }}
-        {...delegated}
-      />
-    </Wrapper>
-  );
+const MiniSlider = ({ width, height, style = {}, includeMidpointTick, ...delegated }) => {
+	return (
+		<Wrapper style={{ width, height }}>
+			{includeMidpointTick && <Tick />}
+			<Input
+				type="range"
+				style={{
+					width,
+					height,
+					...style,
+				}}
+				{...delegated}
+			/>
+		</Wrapper>
+	);
 };
 
 const Wrapper = styled.div`

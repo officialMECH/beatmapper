@@ -6,32 +6,32 @@
  * map (or, perhaps periodically in the future), I'll want to save this data to
  * indexeddb as a text file, and I need to know which difficulty we're editing.
  */
-import { combineReducers } from 'redux';
+import { combineReducers } from "redux";
 
-import { EVENTS_VIEW, NOTES_VIEW } from '../../constants';
-import notesView, { getSelectedNotesAndObstacles } from './notes-view.reducer';
-import eventsView, { getSelectedEvents } from './events-view.reducer';
+import { EVENTS_VIEW, NOTES_VIEW } from "../../constants";
+import eventsView, { getSelectedEvents } from "./events-view.reducer";
+import notesView, { getSelectedNotesAndObstacles } from "./notes-view.reducer";
 
 const initialState = {
-  difficulty: null,
-  // Controlled by child reducers:
-  notesView: {},
-  eventsView: {},
+	difficulty: null,
+	// Controlled by child reducers:
+	notesView: {},
+	eventsView: {},
 };
 
-const difficulty = (state = initialState.difficulty, action) => {
-  switch (action.type) {
-    case 'CREATE_NEW_SONG': {
-      return action.selectedDifficulty;
-    }
+const difficulty = (state = initialState, action = undefined) => {
+	switch (action.type) {
+		case "CREATE_NEW_SONG": {
+			return action.selectedDifficulty;
+		}
 
-    case 'START_LOADING_SONG': {
-      return action.difficulty;
-    }
+		case "START_LOADING_SONG": {
+			return action.difficulty;
+		}
 
-    default:
-      return state;
-  }
+		default:
+			return state;
+	}
 };
 
 export default combineReducers({ difficulty, notesView, eventsView });
@@ -40,12 +40,13 @@ export default combineReducers({ difficulty, notesView, eventsView });
 //
 // Selectors
 //
-export const getDifficulty = state => state.editorEntities.difficulty;
+export const getDifficulty = (state) => state.editorEntities.difficulty;
 
 export const getSelection = (state, view) => {
-  if (view === EVENTS_VIEW) {
-    return getSelectedEvents(state);
-  } else if (view === NOTES_VIEW) {
-    return getSelectedNotesAndObstacles(state);
-  }
+	if (view === EVENTS_VIEW) {
+		return getSelectedEvents(state);
+	}
+	if (view === NOTES_VIEW) {
+		return getSelectedNotesAndObstacles(state);
+	}
 };

@@ -1,1 +1,1 @@
-export { default } from './ScrubbableWaveform';
+export { default } from "./ScrubbableWaveform";

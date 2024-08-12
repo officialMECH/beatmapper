@@ -1,48 +1,30 @@
-import React from 'react';
-import styled from 'styled-components';
-import { Tooltip } from 'react-tippy';
-import Icon from 'react-icons-kit';
+import React from "react";
+import Icon from "react-icons-kit";
+import { Tooltip } from "react-tippy";
+import styled from "styled-components";
 
-import { COLORS, UNIT, SIDEBAR_WIDTH } from '../../constants';
+import { COLORS, SIDEBAR_WIDTH, UNIT } from "../../constants";
 
-import BaseLink from '../BaseLink';
+import BaseLink from "../BaseLink";
 
-const SidebarNavItem = ({
-  isActive,
-  title,
-  icon,
-  to,
-  onClick,
-  ...delegated
-}) => {
-  return (
-    <Tooltip
-      disabled={!title}
-      title={title}
-      position="right"
-      delay={[500, 0]}
-      distance={UNIT * 2}
-      animateFill={false}
-    >
-      <Wrapper>
-        <ActiveIndicator
-          style={{ transform: isActive ? 'translateX(0)' : 'translateX(-4px)' }}
-        />
-        <LinkElem
-          to={to}
-          style={{
-            color: isActive
-              ? 'rgba(255, 255, 255, 1)'
-              : 'rgba(255, 255, 255, 0.65)',
-          }}
-          onClick={onClick}
-          {...delegated}
-        >
-          <Icon icon={icon} size={20} />
-        </LinkElem>
-      </Wrapper>
-    </Tooltip>
-  );
+const SidebarNavItem = ({ isActive, title, icon, to, onClick, ...delegated }) => {
+	return (
+		<Tooltip disabled={!title} title={title} position="right" delay={[500, 0]} distance={UNIT * 2} animateFill={false}>
+			<Wrapper>
+				<ActiveIndicator style={{ transform: isActive ? "translateX(0)" : "translateX(-4px)" }} />
+				<LinkElem
+					to={to}
+					style={{
+						color: isActive ? "rgba(255, 255, 255, 1)" : "rgba(255, 255, 255, 0.65)",
+					}}
+					onClick={onClick}
+					{...delegated}
+				>
+					<Icon icon={icon} size={20} />
+				</LinkElem>
+			</Wrapper>
+		</Tooltip>
+	);
 };
 
 const SIZE = SIDEBAR_WIDTH - UNIT * 2;

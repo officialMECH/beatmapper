@@ -36,22 +36,22 @@
  * So the first argument to this hook is whether or not we're currently in
  * a state where we want to fire the callback upon pointerup.
  */
-import React from 'react';
+import React from "react";
 
 const usePointerUpHandler = (shouldFire, callback) => {
-  const savedCallback = React.useRef(callback);
+	const savedCallback = React.useRef(callback);
 
-  React.useEffect(() => {
-    if (shouldFire) {
-      window.addEventListener('pointerup', callback);
-    }
+	React.useEffect(() => {
+		if (shouldFire) {
+			window.addEventListener("pointerup", callback);
+		}
 
-    savedCallback.current = callback;
+		savedCallback.current = callback;
 
-    return () => {
-      window.removeEventListener('pointerup', callback);
-    };
-  }, [shouldFire, callback]);
+		return () => {
+			window.removeEventListener("pointerup", callback);
+		};
+	}, [shouldFire, callback]);
 };
 
 export default usePointerUpHandler;

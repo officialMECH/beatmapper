@@ -1,61 +1,56 @@
-import React from 'react';
-import styled from 'styled-components';
+import React from "react";
+import styled from "styled-components";
 
-import { UNIT } from '../../constants';
+import { UNIT } from "../../constants";
 
-import UnfocusedButton from '../UnfocusedButton';
+import UnfocusedButton from "../UnfocusedButton";
 
 const TOP_SPILLOVER = 15;
 const BOTTOM_SPILLOVER = UNIT;
 
-const BookmarkFlag = ({
-  bookmark,
-  offsetPercentage,
-  handleJump,
-  handleDelete,
-}) => {
-  // We want to return two sibling pieces:
-  // - A thin vertical line that shows where the flag lives in the beat, which
-  //   ignores pointer events so that the waveform remains scrubbable
-  // - The flag above the waveform, which displays the beatNum/name, and is
-  //   clickable to jump the user to that moment in time.
+const BookmarkFlag = ({ bookmark, offsetPercentage, handleJump, handleDelete }) => {
+	// We want to return two sibling pieces:
+	// - A thin vertical line that shows where the flag lives in the beat, which
+	//   ignores pointer events so that the waveform remains scrubbable
+	// - The flag above the waveform, which displays the beatNum/name, and is
+	//   clickable to jump the user to that moment in time.
 
-  const sharedStyles = {
-    left: offsetPercentage + '%',
-    color: bookmark.color.text,
-    backgroundColor: bookmark.color.background,
-  };
+	const sharedStyles = {
+		left: `${offsetPercentage}%`,
+		color: bookmark.color.text,
+		backgroundColor: bookmark.color.background,
+	};
 
-  const handleMouseUp = ev => {
-    ev.preventDefault();
+	const handleMouseUp = (ev) => {
+		ev.preventDefault();
 
-    // Handle right-clicks
-    if (ev.button === 2) {
-      handleDelete();
-    } else {
-      handleJump();
-    }
-  };
+		// Handle right-clicks
+		if (ev.button === 2) {
+			handleDelete();
+		} else {
+			handleJump();
+		}
+	};
 
-  return (
-    <>
-      <ThinStrip style={sharedStyles} />
-      <Flag
-        style={sharedStyles}
-        onMouseUp={handleMouseUp}
-        onContextMenu={ev => {
-          // Don't allow context menu to pop on right click.
-          ev.preventDefault();
-        }}
-      >
-        <BeatNum>{bookmark.beatNum} </BeatNum>
-        <Name>{bookmark.name}</Name>
-        <FlagDecoration viewBox="0 0 5 10">
-          <polygon fill={bookmark.color.background} points="0,0 5,5 0,10" />
-        </FlagDecoration>
-      </Flag>
-    </>
-  );
+	return (
+		<>
+			<ThinStrip style={sharedStyles} />
+			<Flag
+				style={sharedStyles}
+				onMouseUp={handleMouseUp}
+				onContextMenu={(ev) => {
+					// Don't allow context menu to pop on right click.
+					ev.preventDefault();
+				}}
+			>
+				<BeatNum>{bookmark.beatNum} </BeatNum>
+				<Name>{bookmark.name}</Name>
+				<FlagDecoration viewBox="0 0 5 10">
+					<polygon fill={bookmark.color.background} points="0,0 5,5 0,10" />
+				</FlagDecoration>
+			</Flag>
+		</>
+	);
 };
 
 const ThinStrip = styled.div`

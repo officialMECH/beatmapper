@@ -1,50 +1,50 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import styled from 'styled-components';
-import { Icon } from 'react-icons-kit';
-import { chevronDown } from 'react-icons-kit/feather/chevronDown';
+import React from "react";
+import { Icon } from "react-icons-kit";
+import { chevronDown } from "react-icons-kit/feather/chevronDown";
+import { connect } from "react-redux";
+import styled from "styled-components";
 
-import * as actions from '../../actions';
+import * as actions from "../../actions";
 
-import MiniButton from '../MiniButton';
+import MiniButton from "../MiniButton";
 
 const SongRowActions = ({ songId, size, deleteSong, downloadMapFiles }) => {
-  const handleDelete = () => {
-    if (window.confirm('Are you sure? This action cannot be undone 😱')) {
-      deleteSong(songId);
-    }
-  };
+	const handleDelete = () => {
+		if (window.confirm("Are you sure? This action cannot be undone 😱")) {
+			deleteSong(songId);
+		}
+	};
 
-  const handleCopy = () => {
-    window.alert('This feature does not exist yet. Sorry! Coming soon.');
-  };
+	const handleCopy = () => {
+		window.alert("This feature does not exist yet. Sorry! Coming soon.");
+	};
 
-  return (
-    <MiniButton as="div" style={{ height: size, width: size }}>
-      <Icon icon={chevronDown} />
-      <Select
-        style={{ height: size, width: size }}
-        value=""
-        onChange={ev => {
-          switch (ev.target.value) {
-            case 'copy':
-              return handleCopy();
-            case 'delete':
-              return handleDelete();
-            case 'download':
-              return downloadMapFiles({ songId });
-            default:
-              throw new Error('Unrecognized action: ' + ev.target.value);
-          }
-        }}
-      >
-        <option />
-        <option value="copy">Copy</option>
-        <option value="delete">Delete</option>
-        <option value="download">Download</option>
-      </Select>
-    </MiniButton>
-  );
+	return (
+		<MiniButton as="div" style={{ height: size, width: size }}>
+			<Icon icon={chevronDown} />
+			<Select
+				style={{ height: size, width: size }}
+				value=""
+				onChange={(ev) => {
+					switch (ev.target.value) {
+						case "copy":
+							return handleCopy();
+						case "delete":
+							return handleDelete();
+						case "download":
+							return downloadMapFiles({ songId });
+						default:
+							throw new Error(`Unrecognized action: ${ev.target.value}`);
+					}
+				}}
+			>
+				<option />
+				<option value="copy">Copy</option>
+				<option value="delete">Delete</option>
+				<option value="download">Download</option>
+			</Select>
+		</MiniButton>
+	);
 };
 
 const Select = styled.select`
@@ -68,7 +68,4 @@ const Select = styled.select`
   }
 `;
 
-export default connect(
-  null,
-  { deleteSong: actions.deleteSong, downloadMapFiles: actions.downloadMapFiles }
-)(SongRowActions);
+export default connect(null, { deleteSong: actions.deleteSong, downloadMapFiles: actions.downloadMapFiles })(SongRowActions);

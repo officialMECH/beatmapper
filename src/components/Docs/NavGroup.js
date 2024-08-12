@@ -1,41 +1,39 @@
-import React from 'react';
-import styled, { keyframes } from 'styled-components';
-import Icon from 'react-icons-kit';
-import { chevronDown } from 'react-icons-kit/feather/chevronDown';
+import React from "react";
+import Icon from "react-icons-kit";
+import { chevronDown } from "react-icons-kit/feather/chevronDown";
+import styled, { keyframes } from "styled-components";
 
-import { COLORS } from '../../constants';
+import { COLORS } from "../../constants";
 
-import UnstyledButton from '../UnstyledButton';
+import UnstyledButton from "../UnstyledButton";
 
 const NavGroup = ({ title, showByDefault, children }) => {
-  const hasTitle = !!title;
-  const alwaysShowChildren = !hasTitle;
+	const hasTitle = !!title;
+	const alwaysShowChildren = !hasTitle;
 
-  const [isToggled, setIsToggled] = React.useState(
-    alwaysShowChildren || showByDefault
-  );
+	const [isToggled, setIsToggled] = React.useState(alwaysShowChildren || showByDefault);
 
-  const iconRotateAmount = isToggled ? 180 : 0;
+	const iconRotateAmount = isToggled ? 180 : 0;
 
-  return (
-    <Wrapper>
-      {hasTitle && (
-        <Trigger onClick={() => setIsToggled(!isToggled)}>
-          <Title>{title}</Title>
-          <IconWrapper
-            style={{
-              transform: `rotateX(${iconRotateAmount}deg)`,
-            }}
-          >
-            <Icon icon={chevronDown} size={18} />
-          </IconWrapper>
-          <Highlight />
-        </Trigger>
-      )}
+	return (
+		<Wrapper>
+			{hasTitle && (
+				<Trigger onClick={() => setIsToggled(!isToggled)}>
+					<Title>{title}</Title>
+					<IconWrapper
+						style={{
+							transform: `rotateX(${iconRotateAmount}deg)`,
+						}}
+					>
+						<Icon icon={chevronDown} size={18} />
+					</IconWrapper>
+					<Highlight />
+				</Trigger>
+			)}
 
-      {isToggled && <ChildLinks animated={hasTitle}>{children}</ChildLinks>}
-    </Wrapper>
-  );
+			{isToggled && <ChildLinks animated={hasTitle}>{children}</ChildLinks>}
+		</Wrapper>
+	);
 };
 
 const Wrapper = styled.div`
@@ -95,7 +93,7 @@ from {
 `;
 
 const ChildLinks = styled.div`
-  animation: ${p => (p.animated ? accordionKeyframes : '')} 200ms;
+  animation: ${(p) => (p.animated ? accordionKeyframes : "")} 200ms;
 `;
 
 export default NavGroup;

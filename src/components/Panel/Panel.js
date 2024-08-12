@@ -1,6 +1,6 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
-import { COLORS, UNIT } from '../../constants';
+import { COLORS, UNIT } from "../../constants";
 
 const Panel = styled.div`
   background: ${COLORS.gray[700]};

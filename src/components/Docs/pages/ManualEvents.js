@@ -1,7 +1,7 @@
-import React from 'react';
-import Doc, { frontMatter, tableOfContents } from '../../../docs/manual/events-view.mdx';
+import React from "react";
+import Doc, { frontMatter, tableOfContents } from "../../../docs/manual/events-view.mdx";
 
-import DocPage from '../DocPage';
+import DocPage from "../DocPage";
 
 const Page = () => {
 	return (

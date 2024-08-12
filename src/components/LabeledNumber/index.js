@@ -1,1 +1,1 @@
-export { default } from './LabeledNumber';
+export { default } from "./LabeledNumber";

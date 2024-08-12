@@ -1,23 +1,23 @@
-import React from 'react';
-import styled from 'styled-components';
+import React from "react";
+import styled from "styled-components";
 
-import { COLORS } from '../../constants';
+import { COLORS } from "../../constants";
 
-import QuestionTooltip from '../QuestionTooltip';
+import QuestionTooltip from "../QuestionTooltip";
 
 const TextInput = ({ label, required, moreInfo, ...delegated }) => {
-  return (
-    <Label>
-      <LabelText>
-        <span>
-          {label}
-          {required && <Asterisk />}
-        </span>
-        {moreInfo && <QuestionTooltip>{moreInfo}</QuestionTooltip>}
-      </LabelText>
-      <Input required={required} {...delegated} />
-    </Label>
-  );
+	return (
+		<Label>
+			<LabelText>
+				<span>
+					{label}
+					{required && <Asterisk />}
+				</span>
+				{moreInfo && <QuestionTooltip>{moreInfo}</QuestionTooltip>}
+			</LabelText>
+			<Input required={required} {...delegated} />
+		</Label>
+	);
 };
 
 const Input = styled.input`

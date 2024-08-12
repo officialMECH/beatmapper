@@ -1,1 +1,1 @@
-export { default } from './BarMarkers';
+export { default } from "./BarMarkers";

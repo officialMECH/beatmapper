@@ -1,1 +1,1 @@
-export { default } from './CopyDifficultyForm';
+export { default } from "./CopyDifficultyForm";

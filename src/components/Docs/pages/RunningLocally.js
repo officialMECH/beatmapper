@@ -1,7 +1,7 @@
-import React from 'react';
-import Doc, { frontMatter, tableOfContents } from '../../../docs/running-locally.mdx';
+import React from "react";
+import Doc, { frontMatter, tableOfContents } from "../../../docs/running-locally.mdx";
 
-import DocPage from '../DocPage';
+import DocPage from "../DocPage";
 
 const Page = () => {
 	return (

@@ -1,23 +1,19 @@
-import React from 'react';
-import { Icon } from 'react-icons-kit';
-import { helpCircle } from 'react-icons-kit/feather/helpCircle';
-import { Tooltip } from 'react-tippy';
-import styled from 'styled-components';
+import React from "react";
+import { Icon } from "react-icons-kit";
+import { helpCircle } from "react-icons-kit/feather/helpCircle";
+import { Tooltip } from "react-tippy";
+import styled from "styled-components";
 
 const QuestionTooltip = ({ children, ...delegated }) => {
-  return (
-    <Wrapper>
-      <Tooltip
-        interactive
-        html={<HelpWrapper>{children}</HelpWrapper>}
-        {...delegated}
-      >
-        <IconWrapper>
-          <Icon size={14} icon={helpCircle} />
-        </IconWrapper>
-      </Tooltip>
-    </Wrapper>
-  );
+	return (
+		<Wrapper>
+			<Tooltip interactive html={<HelpWrapper>{children}</HelpWrapper>} {...delegated}>
+				<IconWrapper>
+					<Icon size={14} icon={helpCircle} />
+				</IconWrapper>
+			</Tooltip>
+		</Wrapper>
+	);
 };
 
 const Wrapper = styled.div`

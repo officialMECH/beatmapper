@@ -4,93 +4,77 @@
  */
 
 export const promptQuickSelect = (view, wrappedAction) => {
-  let beatStr = window.prompt(
-    'Quick-select all entities in a given range of beats. Eg. "16-32" will select everything from beat 16 to 32.'
-  );
+	let beatStr = window.prompt('Quick-select all entities in a given range of beats. Eg. "16-32" will select everything from beat 16 to 32.');
 
-  if (!beatStr) {
-    return;
-  }
+	if (!beatStr) {
+		return;
+	}
 
-  beatStr = beatStr.replace(/\s/g, ''); // Remove whitespace
+	beatStr = beatStr.replace(/\s/g, ""); // Remove whitespace
 
-  const startAndEnd = beatStr.split('-');
-  let [start, end] = startAndEnd.map(Number);
+	const startAndEnd = beatStr.split("-");
+	let [start, end] = startAndEnd.map(Number);
 
-  if (typeof end !== 'number') {
-    end = Infinity;
-  }
+	if (typeof end !== "number") {
+		end = Number.POSITIVE_INFINITY;
+	}
 
-  wrappedAction(view, start, end);
+	wrappedAction(view, start, end);
 };
 
 export const promptJumpToBeat = (wrappedAction, ...additionalArgs) => {
-  const beatNum = window.prompt(
-    'Enter the beat number you wish to jump to (eg. 16)'
-  );
+	const beatNum = window.prompt("Enter the beat number you wish to jump to (eg. 16)");
 
-  if (beatNum === null || beatNum === '') {
-    return;
-  }
+	if (beatNum === null || beatNum === "") {
+		return;
+	}
 
-  return wrappedAction(Number(beatNum), ...additionalArgs);
+	return wrappedAction(Number(beatNum), ...additionalArgs);
 };
 
 export const promptChangeObstacleDuration = (obstacles, wrappedAction) => {
-  const { beatDuration } = obstacles[0];
+	const { beatDuration } = obstacles[0];
 
-  const promptCopy =
-    obstacles.length === 1
-      ? 'Enter the new duration for this wall, in beats'
-      : 'Enter the new duration for all selected walls';
+	const promptCopy = obstacles.length === 1 ? "Enter the new duration for this wall, in beats" : "Enter the new duration for all selected walls";
 
-  const newDuration = window.prompt(promptCopy, beatDuration);
+	const newDuration = window.prompt(promptCopy, beatDuration);
 
-  if (newDuration === null || newDuration === '') {
-    return;
-  }
+	if (newDuration === null || newDuration === "") {
+		return;
+	}
 
-  const selectedObstacleDurations = {};
-  obstacles.forEach(obstacle => {
-    selectedObstacleDurations[obstacle.beatDuration] = true;
-  });
-  const numOfDifferentDurations = Object.keys(selectedObstacleDurations).length;
+	const selectedObstacleDurations = {};
+	obstacles.forEach((obstacle) => {
+		selectedObstacleDurations[obstacle.beatDuration] = true;
+	});
+	const numOfDifferentDurations = Object.keys(selectedObstacleDurations).length;
 
-  if (numOfDifferentDurations > 1) {
-    const hasConfirmed = window.confirm(
-      `Warning: You've selected obstacles with different durations. This will set all selected obstacles to ${newDuration} ${
-        newDuration === 1 ? 'beat' : 'beats'
-      }. Is this what you want?`
-    );
+	if (numOfDifferentDurations > 1) {
+		const hasConfirmed = window.confirm(`Warning: You've selected obstacles with different durations. This will set all selected obstacles to ${newDuration} ${newDuration === 1 ? "beat" : "beats"}. Is this what you want?`);
 
-    if (!hasConfirmed) {
-      return;
-    }
-  }
+		if (!hasConfirmed) {
+			return;
+		}
+	}
 
-  return wrappedAction(Number(newDuration));
+	return wrappedAction(Number(newDuration));
 };
 
 export const promptSaveGridPreset = (gridPresets, wrappedAction) => {
-  const presetSlots = ['1', '2', '3', '4'];
-  const suggestedPreset = presetSlots.find(n => !gridPresets[n]);
+	const presetSlots = ["1", "2", "3", "4"];
+	const suggestedPreset = presetSlots.find((n) => !gridPresets[n]);
 
-  const providedValue = window.prompt(
-    'Select a number from 1 to 4 to store this preset',
-    suggestedPreset
-  );
+	const providedValue = window.prompt("Select a number from 1 to 4 to store this preset", suggestedPreset);
 
-  if (!providedValue) {
-    return;
-  }
+	if (!providedValue) {
+		return;
+	}
 
-  const isValidInput = presetSlots.some(n => n === providedValue);
+	const isValidInput = presetSlots.some((n) => n === providedValue);
 
-  if (!isValidInput) {
-    window.alert(
-      'The value you provided was not accepted. Please enter 1, 2, 3, or 4.'
-    );
-  }
+	if (!isValidInput) {
+		window.alert("The value you provided was not accepted. Please enter 1, 2, 3, or 4.");
+	}
 
-  return wrappedAction(providedValue);
+	return wrappedAction(providedValue);
 };

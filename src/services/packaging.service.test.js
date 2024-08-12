@@ -1,34 +1,34 @@
-import { describe, expect, it } from 'vitest';
-import { createInfoContent } from './packaging.service';
-import { getDifficultyRankForDifficulty } from './packaging.service.nitty-gritty';
+import { describe, expect, it } from "vitest";
+import { createInfoContent } from "./packaging.service";
+import { getDifficultyRankForDifficulty } from "./packaging.service.nitty-gritty";
 
 const DEFAULT_SONG = {
 	name: "Ghosts 'n Stuff",
-	subName: 'Original Mix',
-	artistName: 'deadmau5',
-	mapAuthorName: 'Josh',
+	subName: "Original Mix",
+	artistName: "deadmau5",
+	mapAuthorName: "Josh",
 	bpm: 130,
 	offset: 0,
 	previewStartTime: 12,
 	previewDuration: 10,
-	environment: 'NiceEnvironment',
+	environment: "NiceEnvironment",
 	difficultiesById: {
 		Hard: {
-			id: 'Hard',
+			id: "Hard",
 			noteJumpSpeed: 14,
 			startBeatOffset: 0,
 		},
 		Expert: {
-			id: 'Expert',
+			id: "Expert",
 			noteJumpSpeed: 18,
 			startBeatOffset: 0,
 		},
 	},
 };
 
-describe('packaging.service', () => {
-	describe('createInfoContent', () => {
-		it('Creates appropriate v1 json for default song', () => {
+describe("packaging.service", () => {
+	describe("createInfoContent", () => {
+		it("Creates appropriate v1 json for default song", () => {
 			const actualResult = createInfoContent(DEFAULT_SONG, { version: 1 });
 			const expectedResultObj = {
 				songName: DEFAULT_SONG.name,
@@ -37,22 +37,22 @@ describe('packaging.service', () => {
 				beatsPerMinute: DEFAULT_SONG.bpm,
 				previewStartTime: DEFAULT_SONG.previewStartTime,
 				previewDuration: DEFAULT_SONG.previewDuration,
-				coverImagePath: 'cover.jpg',
+				coverImagePath: "cover.jpg",
 				environmentName: DEFAULT_SONG.environment,
 				difficultyLevels: [
 					{
-						difficulty: 'Hard',
-						difficultyRank: getDifficultyRankForDifficulty({ id: 'Hard' }),
-						audioPath: 'song.ogg',
-						jsonPath: 'Hard.json',
+						difficulty: "Hard",
+						difficultyRank: getDifficultyRankForDifficulty({ id: "Hard" }),
+						audioPath: "song.ogg",
+						jsonPath: "Hard.json",
 						offset: DEFAULT_SONG.offset,
 						oldOffset: DEFAULT_SONG.offset,
 					},
 					{
-						difficulty: 'Expert',
-						difficultyRank: getDifficultyRankForDifficulty({ id: 'Expert' }),
-						audioPath: 'song.ogg',
-						jsonPath: 'Expert.json',
+						difficulty: "Expert",
+						difficultyRank: getDifficultyRankForDifficulty({ id: "Expert" }),
+						audioPath: "song.ogg",
+						jsonPath: "Expert.json",
 						offset: DEFAULT_SONG.offset,
 						oldOffset: DEFAULT_SONG.offset,
 					},
@@ -63,10 +63,10 @@ describe('packaging.service', () => {
 			expect(actualResult).toEqual(expectedResult);
 		});
 
-		it('Creates appropriate v2 json for default song', () => {
+		it("Creates appropriate v2 json for default song", () => {
 			const actualResult = createInfoContent(DEFAULT_SONG, { version: 2 });
 			const expectedResultObj = {
-				_version: '2.0.0',
+				_version: "2.0.0",
 				_songName: DEFAULT_SONG.name,
 				_songSubName: DEFAULT_SONG.subName,
 				_songAuthorName: DEFAULT_SONG.artistName,
@@ -77,18 +77,18 @@ describe('packaging.service', () => {
 				_shufflePeriod: 0.5,
 				_previewStartTime: DEFAULT_SONG.previewStartTime,
 				_previewDuration: DEFAULT_SONG.previewDuration,
-				_songFilename: 'song.egg',
-				_coverImageFilename: 'cover.jpg',
+				_songFilename: "song.egg",
+				_coverImageFilename: "cover.jpg",
 				_environmentName: DEFAULT_SONG.environment,
-				_customData: { _editor: 'beatmapper' },
+				_customData: { _editor: "beatmapper" },
 				_difficultyBeatmapSets: [
 					{
-						_beatmapCharacteristicName: 'Standard',
+						_beatmapCharacteristicName: "Standard",
 						_difficultyBeatmaps: [
 							{
-								_difficulty: 'Hard',
-								_difficultyRank: getDifficultyRankForDifficulty({ id: 'Hard' }),
-								_beatmapFilename: 'Hard.dat',
+								_difficulty: "Hard",
+								_difficultyRank: getDifficultyRankForDifficulty({ id: "Hard" }),
+								_beatmapFilename: "Hard.dat",
 								_noteJumpMovementSpeed: DEFAULT_SONG.difficultiesById.Hard.noteJumpSpeed,
 								_noteJumpStartBeatOffset: DEFAULT_SONG.difficultiesById.Hard.startBeatOffset,
 								_customData: {
@@ -97,11 +97,11 @@ describe('packaging.service', () => {
 								},
 							},
 							{
-								_difficulty: 'Expert',
+								_difficulty: "Expert",
 								_difficultyRank: getDifficultyRankForDifficulty({
-									id: 'Expert',
+									id: "Expert",
 								}),
-								_beatmapFilename: 'Expert.dat',
+								_beatmapFilename: "Expert.dat",
 								_noteJumpMovementSpeed: DEFAULT_SONG.difficultiesById.Expert.noteJumpSpeed,
 								_noteJumpStartBeatOffset: DEFAULT_SONG.difficultiesById.Expert.startBeatOffset,
 								_customData: {
@@ -118,17 +118,17 @@ describe('packaging.service', () => {
 			expect(actualResult).toEqual(expectedResult);
 		});
 
-		it('updates custom colors correctly', () => {
+		it("updates custom colors correctly", () => {
 			const moddedSong = {
 				...DEFAULT_SONG,
 				modSettings: {
 					customColors: {
 						isEnabled: true,
-						colorLeft: '#00FFFF',
-						colorRight: '#FF00FF',
-						envColorLeft: '#00FF00',
-						envColorRight: '#FFFF00',
-						obstacleColor: '#FF0000',
+						colorLeft: "#00FFFF",
+						colorRight: "#FF00FF",
+						envColorLeft: "#00FF00",
+						envColorRight: "#FFFF00",
+						obstacleColor: "#FF0000",
 					},
 				},
 			};
@@ -150,17 +150,17 @@ describe('packaging.service', () => {
 			});
 		});
 
-		it('Does not update colors when explicitly disabled', () => {
+		it("Does not update colors when explicitly disabled", () => {
 			const moddedSong = {
 				...DEFAULT_SONG,
 				modSettings: {
 					customColors: {
 						isEnabled: false,
-						colorLeft: '#00FFFF',
-						colorRight: '#FF00FF',
-						envColorLeft: '#00FF00',
-						envColorRight: '#FFFF00',
-						obstacleColor: '#FF0000',
+						colorLeft: "#00FFFF",
+						colorRight: "#FF00FF",
+						envColorLeft: "#00FF00",
+						envColorRight: "#FFFF00",
+						obstacleColor: "#FF0000",
 					},
 				},
 			};

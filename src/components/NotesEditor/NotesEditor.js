@@ -1,32 +1,32 @@
-import React from 'react';
-import styled from 'styled-components';
+import React from "react";
+import styled from "styled-components";
 
-import ReduxForwardingCanvas from '../ReduxForwardingCanvas';
-import MapVisualization from '../MapVisualization';
-import EditorBottomPanel from '../EditorBottomPanel';
-import EditorRightPanel from '../EditorRightPanel';
-import SongInfo from '../SongInfo';
-import GlobalShortcuts from '../GlobalShortcuts';
+import EditorBottomPanel from "../EditorBottomPanel";
+import EditorRightPanel from "../EditorRightPanel";
+import GlobalShortcuts from "../GlobalShortcuts";
+import MapVisualization from "../MapVisualization";
+import ReduxForwardingCanvas from "../ReduxForwardingCanvas";
+import SongInfo from "../SongInfo";
 
-import KeyboardShortcuts from './KeyboardShortcuts';
-import { NOTES_VIEW } from '../../constants';
+import { NOTES_VIEW } from "../../constants";
+import KeyboardShortcuts from "./KeyboardShortcuts";
 
 const NotesEditor = () => {
-  return (
-    <Wrapper>
-      <SongInfo showDifficultySelector />
+	return (
+		<Wrapper>
+			<SongInfo showDifficultySelector />
 
-      <ReduxForwardingCanvas>
-        <MapVisualization />
-      </ReduxForwardingCanvas>
+			<ReduxForwardingCanvas>
+				<MapVisualization />
+			</ReduxForwardingCanvas>
 
-      <EditorBottomPanel />
-      <EditorRightPanel />
+			<EditorBottomPanel />
+			<EditorRightPanel />
 
-      <GlobalShortcuts view={NOTES_VIEW} />
-      <KeyboardShortcuts />
-    </Wrapper>
-  );
+			<GlobalShortcuts view={NOTES_VIEW} />
+			<KeyboardShortcuts />
+		</Wrapper>
+	);
 };
 
 const Wrapper = styled.div`

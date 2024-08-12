@@ -1,24 +1,24 @@
-import React from 'react';
+import React from "react";
 
 class EditorErrors extends React.Component {
-  state = {
-    error: null,
-  };
+	state = {
+		error: null,
+	};
 
-  componentDidCatch(error, info) {
-    console.error('Error in editor', error, info);
-    this.setState({
-      error,
-    });
-  }
+	componentDidCatch(error, info) {
+		console.error("Error in editor", error, info);
+		this.setState({
+			error,
+		});
+	}
 
-  render() {
-    if (!this.state.error) {
-      return this.props.children;
-    }
+	render() {
+		if (!this.state.error) {
+			return this.props.children;
+		}
 
-    return <div>An error has occurred :(</div>;
-  }
+		return <div>An error has occurred :(</div>;
+	}
 }
 
 export default EditorErrors;

@@ -1,21 +1,17 @@
-import React from 'react';
-import styled from 'styled-components';
-import Icon from 'react-icons-kit';
-import { x as checkedIcon } from 'react-icons-kit/feather/x';
+import React from "react";
+import Icon from "react-icons-kit";
+import { x as checkedIcon } from "react-icons-kit/feather/x";
+import styled from "styled-components";
 
 const Checkbox = ({ checked, onChange, ...delegated }) => {
-  return (
-    <Wrapper>
-      <RealCheckbox checked={checked} onChange={onChange} {...delegated} />
-      <FakeCheckbox>
-        <CheckIcon
-          icon={checkedIcon}
-          size={16}
-          style={{ opacity: checked ? 1 : 0 }}
-        />
-      </FakeCheckbox>
-    </Wrapper>
-  );
+	return (
+		<Wrapper>
+			<RealCheckbox checked={checked} onChange={onChange} {...delegated} />
+			<FakeCheckbox>
+				<CheckIcon icon={checkedIcon} size={16} style={{ opacity: checked ? 1 : 0 }} />
+			</FakeCheckbox>
+		</Wrapper>
+	);
 };
 
 const Wrapper = styled.span`
@@ -25,7 +21,7 @@ const Wrapper = styled.span`
 `;
 
 const RealCheckbox = styled.input.attrs({
-  type: 'checkbox',
+	type: "checkbox",
 })`
   position: absolute;
   z-index: 2;

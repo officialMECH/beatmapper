@@ -1,1 +1,1 @@
-export { default } from './EditorPrompts';
+export { default } from "./EditorPrompts";

@@ -1,26 +1,26 @@
-import React from 'react';
-import styled, { keyframes } from 'styled-components';
-import Icon from 'react-icons-kit';
-import { x } from 'react-icons-kit/feather/x';
-import Color from 'color';
+import Color from "color";
+import React from "react";
+import Icon from "react-icons-kit";
+import { x } from "react-icons-kit/feather/x";
+import styled, { keyframes } from "styled-components";
 
-import { UNIT, COLORS } from '../../constants';
+import { COLORS, UNIT } from "../../constants";
 
-import Heading from '../Heading';
-import Spacer from '../Spacer';
-import UnstyledButton from '../UnstyledButton';
+import Heading from "../Heading";
+import Spacer from "../Spacer";
+import UnstyledButton from "../UnstyledButton";
 
 const UnobtrusivePrompt = ({ title, children, onDismiss }) => {
-  return (
-    <Wrapper>
-      <CloseButton onClick={onDismiss}>
-        <Icon icon={x} size={24} />
-      </CloseButton>
-      <Heading size={2}>{title}</Heading>
-      <Spacer size={UNIT * 3} />
-      <Contents>{children}</Contents>
-    </Wrapper>
-  );
+	return (
+		<Wrapper>
+			<CloseButton onClick={onDismiss}>
+				<Icon icon={x} size={24} />
+			</CloseButton>
+			<Heading size={2}>{title}</Heading>
+			<Spacer size={UNIT * 3} />
+			<Contents>{children}</Contents>
+		</Wrapper>
+	);
 };
 
 const enterAnimation = keyframes`
@@ -38,9 +38,7 @@ const Wrapper = styled.div`
   position: absolute;
   z-index: 999;
   max-width: 400px;
-  background: ${Color(COLORS.blueGray[900])
-    .fade(0.1)
-    .string()};
+  background: ${Color(COLORS.blueGray[900]).fade(0.1).string()};
   top: ${UNIT * 2}px;
   right: ${UNIT * 2}px;
   padding: ${UNIT * 3}px;

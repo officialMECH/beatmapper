@@ -1,49 +1,48 @@
-import React from 'react';
-import styled from 'styled-components';
-import { connect } from 'react-redux';
+import React from "react";
+import { connect } from "react-redux";
+import styled from "styled-components";
 
-import { COLORS } from '../../constants';
-import * as actions from '../../actions';
+import * as actions from "../../actions";
+import { COLORS } from "../../constants";
 
 const GridHeader = ({ height, beatNums, selectedBeat, scrubEventsHeader }) => {
-  const [isScrubbing, setIsScrubbing] = React.useState(false);
-  const lastActionDispatchedFor = React.useRef(null);
+	const [isScrubbing, setIsScrubbing] = React.useState(false);
+	const lastActionDispatchedFor = React.useRef(null);
 
-  return (
-    <Header
-      style={{ height }}
-      onPointerDown={() => {
-        setIsScrubbing(true);
-        scrubEventsHeader(selectedBeat);
-        lastActionDispatchedFor.current = selectedBeat;
-      }}
-      onPointerUp={() => {
-        setIsScrubbing(false);
-        lastActionDispatchedFor.current = null;
-      }}
-      onPointerMove={() => {
-        if (!isScrubbing) {
-          return;
-        }
+	return (
+		<Header
+			style={{ height }}
+			onPointerDown={() => {
+				setIsScrubbing(true);
+				scrubEventsHeader(selectedBeat);
+				lastActionDispatchedFor.current = selectedBeat;
+			}}
+			onPointerUp={() => {
+				setIsScrubbing(false);
+				lastActionDispatchedFor.current = null;
+			}}
+			onPointerMove={() => {
+				if (!isScrubbing) {
+					return;
+				}
 
-        // If this is our very first scrub of this pointer-down, we should use
-        // it by default.
-        const shouldDispatchAction =
-          lastActionDispatchedFor.current !== selectedBeat;
+				// If this is our very first scrub of this pointer-down, we should use
+				// it by default.
+				const shouldDispatchAction = lastActionDispatchedFor.current !== selectedBeat;
 
-        if (shouldDispatchAction) {
-          scrubEventsHeader(selectedBeat);
-          lastActionDispatchedFor.current = selectedBeat;
-        }
-      }}
-    >
-      {beatNums.map(num => (
-        <HeaderCell key={num}>
-          <BeatNums>{num}</BeatNums>
-        </HeaderCell>
-      ))}
-    </Header>
-  );
+				if (shouldDispatchAction) {
+					scrubEventsHeader(selectedBeat);
+					lastActionDispatchedFor.current = selectedBeat;
+				}
+			}}
+		>
+			{beatNums.map((num) => (
+				<HeaderCell key={num}>
+					<BeatNums>{num}</BeatNums>
+				</HeaderCell>
+			))}
+		</Header>
+	);
 };
 
 const Header = styled.div`
@@ -70,10 +69,7 @@ const BeatNums = styled.span`
 `;
 
 const mapDispatchToProps = {
-  scrubEventsHeader: actions.scrubEventsHeader,
+	scrubEventsHeader: actions.scrubEventsHeader,
 };
 
-export default connect(
-  null,
-  mapDispatchToProps
-)(GridHeader);
+export default connect(null, mapDispatchToProps)(GridHeader);

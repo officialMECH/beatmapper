@@ -1,39 +1,20 @@
-import React from 'react';
-import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import React from "react";
+import { Link } from "react-router-dom";
+import styled from "styled-components";
 
-import { UNIT, COLORS } from '../../constants';
+import { COLORS, UNIT } from "../../constants";
 
-import UnfocusedButton from '../UnfocusedButton';
-import PixelShifter from '../PixelShifter';
+import PixelShifter from "../PixelShifter";
+import UnfocusedButton from "../UnfocusedButton";
 
-const MiniButton = ({
-  children,
-  color,
-  hoverColor,
-  as,
-  width,
-  style = {},
-  ...delegated
-}) => {
-  let renderAs =
-    as || (typeof delegated.to === 'string' ? Link : UnfocusedButton);
+const MiniButton = ({ children, color, hoverColor, as, width, style = {}, ...delegated }) => {
+	const renderAs = as || (typeof delegated.to === "string" ? Link : UnfocusedButton);
 
-  return (
-    <ButtonElem
-      as={renderAs}
-      {...delegated}
-      color={color}
-      hover-color={hoverColor}
-      style={{ ...style, width }}
-    >
-      {typeof children === 'string' ? (
-        <PixelShifter y={-1}>{children}</PixelShifter>
-      ) : (
-        children
-      )}
-    </ButtonElem>
-  );
+	return (
+		<ButtonElem as={renderAs} {...delegated} color={color} hover-color={hoverColor} style={{ ...style, width }}>
+			{typeof children === "string" ? <PixelShifter y={-1}>{children}</PixelShifter> : children}
+		</ButtonElem>
+	);
 };
 
 const ButtonElem = styled(UnfocusedButton)`
@@ -41,7 +22,7 @@ const ButtonElem = styled(UnfocusedButton)`
   padding: ${UNIT / 2}px ${UNIT * 1.5}px;
   border-radius: ${UNIT}px;
   font-size: 14px;
-  background: ${props => props.color || 'hsla(0, 0%, 100%, 9%)'};
+  background: ${(props) => props.color || "hsla(0, 0%, 100%, 9%)"};
   display: flex;
   justify-content: center;
   align-items: center;
@@ -49,8 +30,7 @@ const ButtonElem = styled(UnfocusedButton)`
   text-decoration: none;
 
   &:hover:not(:disabled) {
-    background: ${props =>
-      props['hover-color'] || 'hsla(0, 0%, 100%, 14%) !important'};
+    background: ${(props) => props["hover-color"] || "hsla(0, 0%, 100%, 14%) !important"};
   }
 
   &:disabled {

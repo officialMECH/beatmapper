@@ -1,1 +1,1 @@
-export { default } from './MiniSlider';
+export { default } from "./MiniSlider";

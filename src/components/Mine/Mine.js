@@ -4,10 +4,10 @@
  * NOTE: This code is largely duplicated with Block.js. There's probably a
  * smart abstraction, but for now the duplication doesn't bug me much.
  */
-import React from 'react';
+import React from "react";
 
-import mineUrl from '../../assets/obj/mine.obj?url';
-import useObject from '../../hooks/use-object.hook';
+import mineUrl from "../../assets/obj/mine.obj?url";
+import useObject from "../../hooks/use-object.hook";
 
 const Mine = React.memo(({ x, y, z, time, lineLayer, lineIndex, direction, color, size = 1, isTransparent, isSelected, handleClick, handleStartSelecting, handleMouseOver }) => {
 	const position = [x, y, z];
@@ -38,16 +38,16 @@ const Mine = React.memo(({ x, y, z, time, lineLayer, lineIndex, direction, color
 					// start deselecting instead
 					let selectionMode;
 					if (ev.button === 0) {
-						selectionMode = isSelected ? 'deselect' : 'select';
+						selectionMode = isSelected ? "deselect" : "select";
 					} else if (ev.button === 1) {
 						// Middle clicks shouldnt affect selections
 						selectionMode = null;
 					} else if (ev.button === 2) {
-						selectionMode = 'delete';
+						selectionMode = "delete";
 					}
 					handleStartSelecting(selectionMode);
 
-					const clickType = ev.button === 2 ? 'right' : 'left';
+					const clickType = ev.button === 2 ? "right" : "left";
 
 					handleClick(clickType, time, lineLayer, lineIndex);
 				}}
@@ -58,7 +58,7 @@ const Mine = React.memo(({ x, y, z, time, lineLayer, lineIndex, direction, color
 				}}
 			>
 				<primitive object={geometry} attach="geometry" />
-				<meshStandardMaterial attach="material" metalness={0.75} roughness={0.4} color={color} transparent={isTransparent} emissive={'yellow'} emissiveIntensity={isSelected ? 0.5 : 0} opacity={isTransparent ? 0.25 : 1} />
+				<meshStandardMaterial attach="material" metalness={0.75} roughness={0.4} color={color} transparent={isTransparent} emissive={"yellow"} emissiveIntensity={isSelected ? 0.5 : 0} opacity={isTransparent ? 0.25 : 1} />
 			</mesh>
 		</group>
 	);

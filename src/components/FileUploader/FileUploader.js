@@ -1,91 +1,78 @@
-import React from 'react';
-import styled from 'styled-components';
-import { Icon } from 'react-icons-kit';
-import { x } from 'react-icons-kit/feather/x';
-import { useDropzone } from 'react-dropzone';
+import React from "react";
+import { useDropzone } from "react-dropzone";
+import { Icon } from "react-icons-kit";
+import { x } from "react-icons-kit/feather/x";
+import styled from "styled-components";
 
-import { COLORS, UNIT } from '../../constants';
+import { COLORS, UNIT } from "../../constants";
 
-import Spacer from '../Spacer';
-import UnstyledButton from '../UnstyledButton';
+import Spacer from "../Spacer";
+import UnstyledButton from "../UnstyledButton";
 
-const FileUploader = ({
-  icon,
-  file,
-  title,
-  description,
-  height,
-  onSelectFile,
-  onClear,
-  showFilename,
-  renderWhenFileSelected,
-  ...delegated
-}) => {
-  const onDrop = React.useCallback(
-    acceptedFiles => {
-      const selectedFile = acceptedFiles[0];
+const FileUploader = ({ icon, file, title, description, height, onSelectFile, onClear, showFilename, renderWhenFileSelected, ...delegated }) => {
+	const onDrop = React.useCallback(
+		(acceptedFiles) => {
+			const selectedFile = acceptedFiles[0];
 
-      if (selectedFile) {
-        onSelectFile(selectedFile);
-      }
-    },
-    [onSelectFile]
-  );
+			if (selectedFile) {
+				onSelectFile(selectedFile);
+			}
+		},
+		[onSelectFile],
+	);
 
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
+	const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 
-  const handleClear = () => {
-    onClear();
-  };
+	const handleClear = () => {
+		onClear();
+	};
 
-  const rootProps = getRootProps();
+	const rootProps = getRootProps();
 
-  return (
-    <Wrapper
-      {...rootProps}
-      style={{
-        ...(rootProps.style || {}),
-        height,
-      }}
-    >
-      {file ? (
-        <SelectedWrapper>
-          {renderWhenFileSelected()}
+	return (
+		<Wrapper
+			{...rootProps}
+			style={{
+				...(rootProps.style || {}),
+				height,
+			}}
+		>
+			{file ? (
+				<SelectedWrapper>
+					{renderWhenFileSelected()}
 
-          <SelectedHeader>
-            <Filename>{showFilename && file.name}</Filename>
-            <Spacer size={UNIT * 4} />
-            <ClearAction onClick={handleClear}>
-              <Icon icon={x} size={16} />
-              <Spacer size={UNIT} />
-              Clear
-            </ClearAction>
-          </SelectedHeader>
-          <SelectedHeaderGradient />
-        </SelectedWrapper>
-      ) : (
-        <PlaceholderWrapper
-          style={{
-            borderColor: isDragActive
-              ? COLORS.yellow[500]
-              : COLORS.blueGray[300],
-          }}
-        >
-          <InnerWrapper>
-            <IconWrapper>
-              <Icon icon={icon} size={24} />
-            </IconWrapper>
-            <Spacer size={UNIT * 2} />
-            <Title>{title}</Title>
-            <Spacer size={UNIT * 1} />
-            <Description>{description}</Description>
+					<SelectedHeader>
+						<Filename>{showFilename && file.name}</Filename>
+						<Spacer size={UNIT * 4} />
+						<ClearAction onClick={handleClear}>
+							<Icon icon={x} size={16} />
+							<Spacer size={UNIT} />
+							Clear
+						</ClearAction>
+					</SelectedHeader>
+					<SelectedHeaderGradient />
+				</SelectedWrapper>
+			) : (
+				<PlaceholderWrapper
+					style={{
+						borderColor: isDragActive ? COLORS.yellow[500] : COLORS.blueGray[300],
+					}}
+				>
+					<InnerWrapper>
+						<IconWrapper>
+							<Icon icon={icon} size={24} />
+						</IconWrapper>
+						<Spacer size={UNIT * 2} />
+						<Title>{title}</Title>
+						<Spacer size={UNIT * 1} />
+						<Description>{description}</Description>
 
-            <FileInput {...delegated} {...getInputProps()} />
-          </InnerWrapper>
-        </PlaceholderWrapper>
-      )}
-    </Wrapper>
-  );
+						<FileInput {...delegated} {...getInputProps()} />
+					</InnerWrapper>
+				</PlaceholderWrapper>
+			)}
+		</Wrapper>
+	);
 };
 
 const Wrapper = styled.div`

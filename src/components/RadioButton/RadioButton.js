@@ -1,25 +1,16 @@
-import React from 'react';
-import styled from 'styled-components';
-import { x as checkedIcon } from 'react-icons-kit/feather/x';
+import React from "react";
+import { x as checkedIcon } from "react-icons-kit/feather/x";
+import styled from "styled-components";
 
 const RadioButton = ({ name, value, checked, onChange, ...delegated }) => {
-  return (
-    <Wrapper>
-      <RealRadioButton
-        name={name}
-        value={value}
-        onChange={onChange}
-        {...delegated}
-      />
-      <FakeRadio>
-        <Dot
-          icon={checkedIcon}
-          size={16}
-          style={{ transform: `scale(${checked ? 1 : 0})` }}
-        />
-      </FakeRadio>
-    </Wrapper>
-  );
+	return (
+		<Wrapper>
+			<RealRadioButton name={name} value={value} onChange={onChange} {...delegated} />
+			<FakeRadio>
+				<Dot icon={checkedIcon} size={16} style={{ transform: `scale(${checked ? 1 : 0})` }} />
+			</FakeRadio>
+		</Wrapper>
+	);
 };
 
 const Wrapper = styled.span`
@@ -30,7 +21,7 @@ const Wrapper = styled.span`
 `;
 
 const RealRadioButton = styled.input.attrs({
-  type: 'radio',
+	type: "radio",
 })`
   position: absolute;
   z-index: 2;

@@ -1,39 +1,37 @@
-import React from 'react';
-import styled from 'styled-components';
-import { Icon } from 'react-icons-kit';
-import { image } from 'react-icons-kit/feather/image';
+import React from "react";
+import { Icon } from "react-icons-kit";
+import { image } from "react-icons-kit/feather/image";
+import styled from "styled-components";
 
-import sampleCoverArtSrc from '../../assets/images/sample-cover-art.jpg';
-import { COLORS, UNIT } from '../../constants';
+import sampleCoverArtSrc from "../../assets/images/sample-cover-art.jpg";
+import { COLORS, UNIT } from "../../constants";
 
-import Spacer from '../Spacer';
+import Spacer from "../Spacer";
 
 const CoverArtSelector = ({ coverArt }) => {
-  const fileInputRef = React.useRef(null);
+	const fileInputRef = React.useRef(null);
 
-  return (
-    <Wrapper>
-      {coverArt ? (
-        <CoverArtImage src={coverArt} />
-      ) : (
-        <PlaceholderWrapper>
-          <InnerWrapper>
-            <IconWrapper>
-              <Icon icon={image} size={32} />
-            </IconWrapper>
-            <Spacer size={UNIT * 3} />
-            <Title>Cover Art</Title>
-            <Spacer size={UNIT * 2} />
-            <Description>
-              Browse for a square cover image, at least 500px wide
-            </Description>
+	return (
+		<Wrapper>
+			{coverArt ? (
+				<CoverArtImage src={coverArt} />
+			) : (
+				<PlaceholderWrapper>
+					<InnerWrapper>
+						<IconWrapper>
+							<Icon icon={image} size={32} />
+						</IconWrapper>
+						<Spacer size={UNIT * 3} />
+						<Title>Cover Art</Title>
+						<Spacer size={UNIT * 2} />
+						<Description>Browse for a square cover image, at least 500px wide</Description>
 
-            <FileInput ref={fileInputRef} />
-          </InnerWrapper>
-        </PlaceholderWrapper>
-      )}
-    </Wrapper>
-  );
+						<FileInput ref={fileInputRef} />
+					</InnerWrapper>
+				</PlaceholderWrapper>
+			)}
+		</Wrapper>
+	);
 };
 
 const Wrapper = styled.div`

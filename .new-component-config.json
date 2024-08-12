@@ -1,6 +1,6 @@
 {
-  "type": "functional",
-  "prettierConfig": {
-    "singleQuote": true
-  }
+	"type": "functional",
+	"prettierConfig": {
+		"singleQuote": true
+	}
 }

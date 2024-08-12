@@ -1,23 +1,23 @@
-import React from 'react';
-import styled from 'styled-components';
+import React from "react";
+import styled from "styled-components";
 
-import { UNIT, HEADER_HEIGHT, FOOTER_HEIGHT } from '../../constants';
+import { FOOTER_HEIGHT, HEADER_HEIGHT, UNIT } from "../../constants";
 
-import Header from '../Header';
-import Footer from '../Footer';
-import Spacer from '../Spacer';
+import Footer from "../Footer";
+import Header from "../Header";
+import Spacer from "../Spacer";
 
 const HEADER_SPACING = UNIT * 8;
 
 const BasicLayout = ({ children }) => {
-  return (
-    <>
-      <Header />
-      <Spacer size={HEADER_SPACING} />
-      <MainContent>{children}</MainContent>
-      <Footer />
-    </>
-  );
+	return (
+		<>
+			<Header />
+			<Spacer size={HEADER_SPACING} />
+			<MainContent>{children}</MainContent>
+			<Footer />
+		</>
+	);
 };
 
 const MainContent = styled.div`

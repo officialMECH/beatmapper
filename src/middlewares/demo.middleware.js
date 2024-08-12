@@ -2,16 +2,16 @@
  * This middleware exists only to load (and possibly manage) the demo song
  * that comes with this app.
  */
-import { importExistingSong } from '../actions';
-import demoFileUrl from '../assets/demo/demo-map.zip?url';
-import { getIsNewUser } from '../reducers/user.reducer';
-import { processImportedMap } from '../services/packaging.service';
+import { importExistingSong } from "../actions";
+import demoFileUrl from "../assets/demo/demo-map.zip?url";
+import { getIsNewUser } from "../reducers/user.reducer";
+import { processImportedMap } from "../services/packaging.service";
 
 export default () => (store) => (next) => {
 	return (action) => {
 		next(action);
 
-		if (action.type === 'LOAD_DEMO_MAP') {
+		if (action.type === "LOAD_DEMO_MAP") {
 			// If this is a brand-new user, they won't have the demo song at all
 			const state = store.getState();
 			const isNewUser = getIsNewUser(state);
@@ -26,7 +26,7 @@ export default () => (store) => (next) => {
 					})
 					.then(() => {
 						// HACK: Should pull data from demoSong
-						window.location = '/edit/only-now/Normal/notes';
+						window.location = "/edit/only-now/Normal/notes";
 					});
 			}
 		}

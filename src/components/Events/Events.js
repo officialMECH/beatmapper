@@ -1,48 +1,48 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import styled from 'styled-components';
+import React from "react";
+import { connect } from "react-redux";
+import styled from "styled-components";
 
-import { SIDEBAR_WIDTH, EVENTS_VIEW } from '../../constants';
-import useWindowDimensions from '../../hooks/use-window-dimensions.hook';
+import { EVENTS_VIEW, SIDEBAR_WIDTH } from "../../constants";
+import useWindowDimensions from "../../hooks/use-window-dimensions.hook";
 
-import EventsGrid from '../EventsGrid';
-import SongInfo from '../SongInfo';
-import GlobalShortcuts from '../GlobalShortcuts';
+import EventsGrid from "../EventsGrid";
+import GlobalShortcuts from "../GlobalShortcuts";
+import SongInfo from "../SongInfo";
 
-import BottomPanel from './BottomPanel';
-import GridControls from './GridControls';
-import KeyboardShortcuts from './KeyboardShortcuts';
-import EventLightingPreview from './EventLightingPreview';
-import { getBackgroundOpacity } from '../../reducers/editor.reducer';
+import { getBackgroundOpacity } from "../../reducers/editor.reducer";
+import BottomPanel from "./BottomPanel";
+import EventLightingPreview from "./EventLightingPreview";
+import GridControls from "./GridControls";
+import KeyboardShortcuts from "./KeyboardShortcuts";
 
 const Events = ({ backgroundOpacity }) => {
-  const { width: windowWidth } = useWindowDimensions();
-  const contentWidth = windowWidth - SIDEBAR_WIDTH;
+	const { width: windowWidth } = useWindowDimensions();
+	const contentWidth = windowWidth - SIDEBAR_WIDTH;
 
-  return (
-    <>
-      <Background>
-        <EventLightingPreview />
-      </Background>
+	return (
+		<>
+			<Background>
+				<EventLightingPreview />
+			</Background>
 
-      <Wrapper>
-        <SongInfo showDifficultySelector={false} coverArtSize="small" />
+			<Wrapper>
+				<SongInfo showDifficultySelector={false} coverArtSize="small" />
 
-        <MainUI
-          style={{
-            background: `hsla(222, 32%, 4%, ${backgroundOpacity})`,
-          }}
-        >
-          <GridControls contentWidth={contentWidth} />
-          <EventsGrid contentWidth={contentWidth} />
-          <BottomPanel contentWidth={contentWidth} />
-        </MainUI>
+				<MainUI
+					style={{
+						background: `hsla(222, 32%, 4%, ${backgroundOpacity})`,
+					}}
+				>
+					<GridControls contentWidth={contentWidth} />
+					<EventsGrid contentWidth={contentWidth} />
+					<BottomPanel contentWidth={contentWidth} />
+				</MainUI>
 
-        <GlobalShortcuts view={EVENTS_VIEW} />
-        <KeyboardShortcuts />
-      </Wrapper>
-    </>
-  );
+				<GlobalShortcuts view={EVENTS_VIEW} />
+				<KeyboardShortcuts />
+			</Wrapper>
+		</>
+	);
 };
 
 const Wrapper = styled.div`
@@ -70,10 +70,10 @@ const MainUI = styled.div`
   flex-direction: column;
 `;
 
-const mapStateToProps = state => {
-  return {
-    backgroundOpacity: getBackgroundOpacity(state),
-  };
+const mapStateToProps = (state) => {
+	return {
+		backgroundOpacity: getBackgroundOpacity(state),
+	};
 };
 
 export default connect(mapStateToProps)(Events);

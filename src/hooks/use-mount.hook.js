@@ -11,8 +11,8 @@
  *
  * Use with caution.
  */
-import React from 'react';
+import React from "react";
 
 export default function useMount(callback) {
-  React.useEffect(callback, []);
+	React.useEffect(callback, []);
 }

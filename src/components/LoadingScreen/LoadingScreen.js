@@ -1,16 +1,16 @@
-import React from 'react';
-import styled from 'styled-components';
+import React from "react";
+import styled from "styled-components";
 
-import { COLORS } from '../../constants';
+import { COLORS } from "../../constants";
 
-import Spinner from '../Spinner';
+import Spinner from "../Spinner";
 
 const LoadingScreen = () => {
-  return (
-    <Wrapper>
-      <Spinner />
-    </Wrapper>
-  );
+	return (
+		<Wrapper>
+			<Spinner />
+		</Wrapper>
+	);
 };
 
 const Wrapper = styled.div`

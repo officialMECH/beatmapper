@@ -5,58 +5,54 @@
  * It does NOT include the 2D stuff like the toolbar or the track
  * controls.
  */
-import React from 'react';
-import { useRender } from 'react-three-fiber';
+import React from "react";
+import { useRender } from "react-three-fiber";
 
-import Controls from '../../controls';
-import { BLOCK_COLUMN_WIDTH, SONG_OFFSET } from '../../constants';
+import { BLOCK_COLUMN_WIDTH, SONG_OFFSET } from "../../constants";
+import Controls from "../../controls";
 
-import StaticEnvironment from '../StaticEnvironment';
-import SongBlocks from '../SongBlocks';
-import BarMarkers from '../BarMarkers';
-import Obstacles from '../Obstacles';
-import PlacementGrid from '../PlacementGrid';
-import TrackMover from '../TrackMover';
-import Fog from '../Fog';
+import BarMarkers from "../BarMarkers";
+import Fog from "../Fog";
+import Obstacles from "../Obstacles";
+import PlacementGrid from "../PlacementGrid";
+import SongBlocks from "../SongBlocks";
+import StaticEnvironment from "../StaticEnvironment";
+import TrackMover from "../TrackMover";
 
-import Lighting from './Lighting';
+import Lighting from "./Lighting";
 
 const GRID_POSITION = [0, 0, -SONG_OFFSET];
 
 const MapVisualization = () => {
-  const controls = React.useRef(null);
+	const controls = React.useRef(null);
 
-  // Controls to move around the space.
-  useRender(({ scene, camera }) => {
-    if (!controls.current) {
-      controls.current = new Controls(camera);
-      scene.add(controls.current.getObject());
-    } else {
-      controls.current.update();
-    }
-  });
+	// Controls to move around the space.
+	useRender(({ scene, camera }) => {
+		if (!controls.current) {
+			controls.current = new Controls(camera);
+			scene.add(controls.current.getObject());
+		} else {
+			controls.current.update();
+		}
+	});
 
-  return (
-    <>
-      <StaticEnvironment includeEdgeStrips trackGridRows={true} />
+	return (
+		<>
+			<StaticEnvironment includeEdgeStrips trackGridRows={true} />
 
-      <Fog renderForGraphics="high" strength={0.02} />
+			<Fog renderForGraphics="high" strength={0.02} />
 
-      <Lighting />
+			<Lighting />
 
-      <TrackMover>
-        <SongBlocks />
-        <BarMarkers />
-        <Obstacles />
-      </TrackMover>
+			<TrackMover>
+				<SongBlocks />
+				<BarMarkers />
+				<Obstacles />
+			</TrackMover>
 
-      <PlacementGrid
-        width={BLOCK_COLUMN_WIDTH * 4}
-        height={BLOCK_COLUMN_WIDTH * 3}
-        gridPosition={GRID_POSITION}
-      />
-    </>
-  );
+			<PlacementGrid width={BLOCK_COLUMN_WIDTH * 4} height={BLOCK_COLUMN_WIDTH * 3} gridPosition={GRID_POSITION} />
+		</>
+	);
 };
 
 export default MapVisualization;
