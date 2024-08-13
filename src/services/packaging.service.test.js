@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import { createInfoContent } from "./packaging.service";
 import { getDifficultyRankForDifficulty } from "./packaging.service.nitty-gritty";
 
@@ -25,6 +25,15 @@ const DEFAULT_SONG = {
 		},
 	},
 };
+
+vi.mock("localforage", () => {
+	const instance = vi.fn(() => {
+		return { config: vi.fn() };
+	});
+	return {
+		default: { createInstance: instance },
+	};
+});
 
 describe("packaging.service", () => {
 	describe("createInfoContent", () => {
@@ -80,7 +89,7 @@ describe("packaging.service", () => {
 				_songFilename: "song.egg",
 				_coverImageFilename: "cover.jpg",
 				_environmentName: DEFAULT_SONG.environment,
-				_customData: { _editor: "beatmapper" },
+				_customData: { _editor: "beatmapper", _editorSettings: {} },
 				_difficultyBeatmapSets: [
 					{
 						_beatmapCharacteristicName: "Standard",

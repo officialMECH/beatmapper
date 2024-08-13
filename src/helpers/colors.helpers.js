@@ -75,7 +75,7 @@ const OVERDRIVE_MAX_FOR_ELEMENT = {
 	obstacleColor: 10,
 };
 
-export const formatColorForMods = (element, hex, overdrive) => {
+export const formatColorForMods = (element, hex, overdrive = 0) => {
 	// For overdrive: every element ranges from 0 (no overdrive) to 1 (full).
 	// Different elements are affected by different amounts, though.
 	// left/right environment colors range from 1 to 3, whereas obstacles range
