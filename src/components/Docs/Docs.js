@@ -1,5 +1,4 @@
-import React from "react";
-import { Route, Switch } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 
 import Layout from "./Layout";
 import ContentPolicy from "./pages/ContentPolicy";
@@ -21,24 +20,24 @@ import SongPrep from "./pages/SongPrep";
 const Docs = () => {
 	return (
 		<Layout>
-			<Switch>
-				<Route exact path="/docs" component={Intro} />
-				<Route path="/docs/song-prep" component={SongPrep} />
-				{/** <Route path="/docs/keyboard-shortcuts" component={Shortcuts} /> */}
-				<Route path="/docs/manual/getting-started" component={ManualGettingStarted} />
-				<Route path="/docs/manual/navigating-the-editor" component={ManualNavigatingTheEditor} />
-				<Route path="/docs/manual/notes-view" component={ManualNotes} />
-				<Route path="/docs/manual/events-view" component={ManualEvents} />
-				<Route path="/docs/manual/demo-view" component={ManualDemo} />
-				<Route path="/docs/manual/publishing" component={ManualPublishing} />
-				<Route path="/docs/migrating" component={Migrating} />
-				<Route path="/docs/mods" component={Mods} />
-				<Route path="/docs/fast-walls" component={FastWalls} />
-				<Route path="/docs/running-locally" component={RunningLocally} />
-				<Route path="/docs/release-notes" component={ReleaseNotes} />
-				<Route path="/docs/privacy" component={Privacy} />
-				<Route path="/docs/content-policy" component={ContentPolicy} />
-			</Switch>
+			<Routes>
+				<Route path="/" element={<Intro />} />
+				<Route path="/song-prep" element={<SongPrep />} />
+				{/** <Route path="/docs/keyboard-shortcuts" element={<Shortcuts/>} /> */}
+				<Route path="/manual/getting-started" element={<ManualGettingStarted />} />
+				<Route path="/manual/navigating-the-editor" element={<ManualNavigatingTheEditor />} />
+				<Route path="/manual/notes-view" element={<ManualNotes />} />
+				<Route path="/manual/events-view" element={<ManualEvents />} />
+				<Route path="/manual/demo-view" element={<ManualDemo />} />
+				<Route path="/manual/publishing" element={<ManualPublishing />} />
+				<Route path="/migrating" element={<Migrating />} />
+				<Route path="/mods" element={<Mods />} />
+				<Route path="/fast-walls" element={<FastWalls />} />
+				<Route path="/running-locally" element={<RunningLocally />} />
+				<Route path="/release-notes" element={<ReleaseNotes />} />
+				<Route path="/privacy" element={<Privacy />} />
+				<Route path="/content-policy" element={<ContentPolicy />} />
+			</Routes>
 		</Layout>
 	);
 };

@@ -1,6 +1,5 @@
 import React from "react";
 import { connect } from "react-redux";
-import { withRouter } from "react-router-dom";
 import styled from "styled-components";
 
 import * as actions from "../../actions";
@@ -9,6 +8,7 @@ import { getLabelForDifficulty } from "../../helpers/song.helpers";
 import { getDifficulty } from "../../reducers/editor-entities.reducer";
 import { getSelectedSong, getSelectedSongDifficultyIds } from "../../reducers/songs.reducer";
 
+import { useNavigate } from "react-router-dom";
 import CoverArtImage from "../CoverArtImage";
 import CreateDifficultyForm from "../CreateDifficultyForm";
 import Dropdown from "../Dropdown";
@@ -20,7 +20,9 @@ const COVER_ART_SIZES = {
 	small: 50,
 };
 
-const SongInfo = ({ showDifficultySelector, coverArtSize = "medium", song, selectedDifficulty, difficultyIds, history, pausePlaying }) => {
+const SongInfo = ({ showDifficultySelector, coverArtSize = "medium", song, selectedDifficulty, difficultyIds, pausePlaying }) => {
+	const navigate = useNavigate();
+
 	const [showCreateDifficultyModal, setShowCreateDifficultyModal] = React.useState(false);
 
 	return (
@@ -56,7 +58,7 @@ const SongInfo = ({ showDifficultySelector, coverArtSize = "medium", song, selec
 											//
 											// Maybe I can solve this by pushing query strings?
 											// ?offset=716.83
-											history.push(`/edit/${song.id}/${value}/notes`);
+											navigate(`/edit/${song.id}/${value}/notes`);
 										}
 									}}
 									width={90}
@@ -80,7 +82,7 @@ const SongInfo = ({ showDifficultySelector, coverArtSize = "medium", song, selec
 				<CreateDifficultyForm
 					afterCreate={(difficulty) => {
 						setShowCreateDifficultyModal(false);
-						history.push(`/edit/${song.id}/${difficulty}/notes`);
+						navigate(`/edit/${song.id}/${difficulty}/notes`);
 					}}
 				/>
 			</Modal>
@@ -133,4 +135,4 @@ const mapDispatchToProps = {
 	pausePlaying: actions.pausePlaying,
 };
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(React.memo(SongInfo)));
+export default connect(mapStateToProps, mapDispatchToProps)(React.memo(SongInfo));

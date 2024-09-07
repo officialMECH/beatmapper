@@ -1,6 +1,5 @@
-import React from "react";
+import { animated, useSpring } from "@react-spring/three";
 import { connect } from "react-redux";
-import { animated, useSpring } from "react-spring/three";
 
 import { SURFACE_WIDTH } from "../../constants";
 import { convertMillisecondsToBeats } from "../../helpers/audio.helpers";

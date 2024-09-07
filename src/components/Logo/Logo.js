@@ -1,7 +1,7 @@
+import { animated as a, useSpring } from "@react-spring/three";
+import { Canvas } from "@react-three/fiber";
 import React from "react";
 import { Link } from "react-router-dom";
-import { animated as a, useSpring } from "react-spring/three";
-import { Canvas } from "react-three-fiber";
 import styled from "styled-components";
 
 import { UNIT } from "../../constants";
@@ -22,7 +22,7 @@ const Logo = ({ size = "full", color = "#FFF" }) => {
 	return (
 		<Wrapper to="/" onMouseEnter={() => setIsHovering(true)} onMouseLeave={() => setIsHovering(false)}>
 			<Canvas
-				pixelRatio={window.devicePixelRatio || 1}
+				pixelratio={window.devicePixelRatio || 1}
 				style={{
 					width: size === "full" ? 50 : 30,
 					height: size === "full" ? 50 : 30,
@@ -33,9 +33,9 @@ const Logo = ({ size = "full", color = "#FFF" }) => {
 				</a.group>
 
 				<ambientLight intensity={0.85} />
-				<spotLight intensity={0.5} position={[0, 30, 8]} angle={0.5} penumbra={1} />
-				<spotLight intensity={0.1} position={[5, 0, 20]} angle={0.75} penumbra={0.2} />
-				<spotLight intensity={0.1} position={[-20, -10, 4]} angle={1} penumbra={1} />
+				<directionalLight intensity={0.5} position={[0, 30, 8]} angle={0.5} penumbra={1} />
+				<directionalLight intensity={0.1} position={[5, 0, 20]} angle={0.75} penumbra={0.2} />
+				<directionalLight intensity={0.1} position={[-20, -10, 4]} angle={1} penumbra={1} />
 			</Canvas>
 			<Spacer size={UNIT} />
 			<Text style={{ fontSize: size === "full" ? 24 : 18, color }}>Beatmapper</Text>

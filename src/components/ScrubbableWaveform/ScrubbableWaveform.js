@@ -86,11 +86,10 @@ export const ScrubbableWaveform = ({ width, height, waveformData, duration, curs
 
 		ctx.beginPath();
 
-		const resampledData = waveformData.resample({ width });
+		const resampledData = waveformData.resample({ width }).toJSON();
 
-		resampledData.min.forEach((min, i) => {
-			ctx.lineTo(i, getY(height, min));
-			ctx.lineTo(i + 0.5, getY(height, resampledData.max[i]));
+		resampledData.data.forEach((min, i) => {
+			ctx.lineTo(i / 2, getY(height, min));
 		});
 
 		ctx.stroke();

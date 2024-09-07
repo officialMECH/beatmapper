@@ -1,5 +1,5 @@
 import React from "react";
-import OBJLoader from "../vendor/obj-loader";
+import { OBJLoader } from "three-stdlib";
 
 const loadingMap = {};
 

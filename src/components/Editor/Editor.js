@@ -1,6 +1,6 @@
 import React from "react";
-import { connect } from "react-redux";
-import { Route, Switch } from "react-router-dom";
+import { connect, useSelector } from "react-redux";
+import { Route, Routes, useParams } from "react-router-dom";
 import styled from "styled-components";
 
 import * as actions from "../../actions";
@@ -18,7 +18,13 @@ import SongDetails from "../SongDetails";
 
 import EditorErrors from "./EditorErrors";
 
-const Editor = ({ songId, difficulty, isCorrectSongSelected, startLoadingSong, leaveEditor }) => {
+const Editor = ({ startLoadingSong, leaveEditor }) => {
+	const { songId, difficulty } = useParams();
+
+	const selectedSongFromRedux = useSelector((state) => getSelectedSong(state));
+
+	const isCorrectSongSelected = selectedSongFromRedux && songId === selectedSongFromRedux.id;
+
 	// HACK: We're duplicating the state between the URL (/edit/:songId) and Redux
 	// (state.songs.selectedId). This is because having the URL as the sole
 	// source of truth was a HUGE pain in the butt. This way is overall much
@@ -46,13 +52,13 @@ const Editor = ({ songId, difficulty, isCorrectSongSelected, startLoadingSong, l
 
 			<Wrapper>
 				<EditorErrors>
-					<Switch>
-						<Route path="/edit/:songId/:difficulty/notes" component={NotesEditor} />
-						<Route path="/edit/:songId/:difficulty/events" component={Events} />
-						<Route path="/edit/:songId/:difficulty/preview" component={Preview} />
-						<Route path="/edit/:songId/:difficulty/details" component={SongDetails} />
-						<Route path="/edit/:songId/:difficulty/download" component={Download} />
-					</Switch>
+					<Routes>
+						<Route path="/notes" element={<NotesEditor />} />
+						<Route path="/events" element={<Events />} />
+						<Route path="/preview" element={<Preview />} />
+						<Route path="/details" element={<SongDetails />} />
+						<Route path="/download" element={<Download />} />
+					</Routes>
 				</EditorErrors>
 			</Wrapper>
 
@@ -70,24 +76,9 @@ const Wrapper = styled.div`
   background: ${COLORS.blueGray[1000]};
 `;
 
-const mapStateToProps = (state, ownProps) => {
-	const songIdFromUrl = ownProps.match.params.songId;
-	const difficultyFromUrl = ownProps.match.params.difficulty;
-
-	const selectedSongFromRedux = getSelectedSong(state);
-
-	const isCorrectSongSelected = selectedSongFromRedux && songIdFromUrl === selectedSongFromRedux.id;
-
-	return {
-		songId: songIdFromUrl,
-		difficulty: difficultyFromUrl,
-		isCorrectSongSelected,
-	};
-};
-
 const mapDispatchToProps = {
 	startLoadingSong: actions.startLoadingSong,
 	leaveEditor: actions.leaveEditor,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Editor);
+export default connect(null, mapDispatchToProps)(Editor);

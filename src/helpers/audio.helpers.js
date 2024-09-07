@@ -1,4 +1,4 @@
-import webAudioBuilder from "waveform-data/webaudio";
+import { default as WaveformData } from "waveform-data";
 
 import { roundToNearest } from "../utils";
 
@@ -35,7 +35,7 @@ export const getWaveformDataForFile = (file) => {
 		fetch(fileBlobUrl)
 			.then((response) => response.arrayBuffer())
 			.then((buffer) => {
-				webAudioBuilder(audioContext, buffer, (err, waveform) => {
+				WaveformData.createFromAudio({ audio_context: audioContext, array_buffer: buffer }, (err, waveform) => {
 					if (err) {
 						reject(err);
 					}

@@ -1,4 +1,4 @@
-import produce from "immer";
+import { produce } from "immer";
 import { createSelector } from "reselect";
 
 const initialState = {};

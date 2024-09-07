@@ -1,7 +1,6 @@
 import React from "react";
 import * as THREE from "three";
-
-import RectAreaLightHelper from "../../vendor/rect-area-light-helper";
+import { RectAreaLightHelper } from "three-stdlib";
 
 const RectAreaLight = ({ color = "#FFFFFF", intensity = 10, width = 1, height = 1, position = [0, 0, -5], lookAt = [0, 0, 0] }) => {
 	const [light] = React.useState(() => new THREE.RectAreaLight(color, intensity, width, height));

@@ -1,6 +1,6 @@
+import { Canvas } from "@react-three/fiber";
 import React from "react";
 import { Provider, ReactReduxContext } from "react-redux";
-import { Canvas } from "react-three-fiber";
 import * as THREE from "three";
 
 const ReduxForwardingCanvas = React.forwardRef(({ children, ...forwarded }, ref) => {
@@ -10,7 +10,7 @@ const ReduxForwardingCanvas = React.forwardRef(({ children, ...forwarded }, ref)
 				<span ref={ref}>
 					<Canvas
 						{...forwarded}
-						pixelRatio={window.devicePixelRatio || 1}
+						pixelratio={window.devicePixelRatio || 1}
 						onContextMenu={(ev) => {
 							// Don't allow context menu to pop on right click.
 							// I need that for deleting notes and stuff.

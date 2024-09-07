@@ -1,4 +1,3 @@
-import React from "react";
 import { NavLink as NavLinkRaw } from "react-router-dom";
 import styled from "styled-components";
 
@@ -15,9 +14,7 @@ const Sidebar = () => {
 			</Header>
 			<Navigation>
 				<NavGroup>
-					<NavLink exact to="/docs">
-						About
-					</NavLink>
+					<NavLink to="/docs">About</NavLink>
 					<NavLink to="/docs/song-prep">Song prep</NavLink>
 					<NavLink to="/docs/keyboard-shortcuts">Keyboard shortcuts</NavLink>
 				</NavGroup>
@@ -57,7 +54,7 @@ const Navigation = styled.nav`
 `;
 
 const NavLink = styled(NavLinkRaw).attrs((props) => ({
-	activeStyle: {
+	$activeStyle: {
 		color: COLORS.blue[500],
 	},
 }))`

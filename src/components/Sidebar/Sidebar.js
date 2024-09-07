@@ -7,7 +7,7 @@ import { play } from "react-icons-kit/feather/play";
 import { settings } from "react-icons-kit/feather/settings";
 import { sliders } from "react-icons-kit/feather/sliders";
 import { sun } from "react-icons-kit/feather/sun";
-import { withRouter } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import styled from "styled-components";
 
 import { COLORS, SIDEBAR_WIDTH, UNIT } from "../../constants";
@@ -17,8 +17,9 @@ import SpacedChildren from "../SpacedChildren";
 import Spacer from "../Spacer";
 import SidebarNavItem from "./SidebarNavItem";
 
-const Sidebar = ({ location, match }) => {
-	const { songId, difficulty } = match.params;
+const Sidebar = () => {
+	const location = useLocation();
+	const { songId, difficulty } = useParams();
 
 	const [showSettingsModal, setShowSettingsModal] = React.useState(false);
 
@@ -90,4 +91,4 @@ const Divider = styled.div`
   border-bottom: 1px dotted rgba(255, 255, 255, 0.25);
 `;
 
-export default withRouter(Sidebar);
+export default Sidebar;

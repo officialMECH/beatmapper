@@ -1,6 +1,5 @@
-import React from "react";
+import { a, useSpring } from "@react-spring/three";
 import { connect } from "react-redux";
-import { a, useSpring } from "react-spring/three";
 
 import { getBeatDepth, getCursorPositionInBeats } from "../../reducers/navigation.reducer";
 
@@ -17,7 +16,7 @@ const TrackMover = ({ cursorPositionInBeats, beatDepth, animateBlockMotion, chil
 		},
 	});
 
-	return <a.group position={spring.zPosition.interpolate((interpolated) => [0, 0, interpolated])}>{children}</a.group>;
+	return <a.group position={spring.zPosition.to((interpolated) => [0, 0, interpolated])}>{children}</a.group>;
 };
 
 const mapStateToProps = (state) => {

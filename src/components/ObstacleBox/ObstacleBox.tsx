@@ -1,10 +1,14 @@
+import { extend } from "@react-three/fiber";
 import React from "react";
 import * as THREE from "three";
+import { Font, TextGeometry } from "three-stdlib";
 
 import oswaldGlyphs from "../../assets/fonts/oswald.json";
 import type { Obstacle } from "../../types";
 
 import { getDimensionsForObstacle, getPositionForObstacle } from "./ObstacleBox.helpers";
+
+extend({ TextGeometry });
 
 interface Props {
 	obstacle: Obstacle;
@@ -85,7 +89,7 @@ const ObstacleBox: React.FC<Props> = ({ obstacle, color, beatDepth, snapTo, hand
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [mouseDownAt, handleResize]);
 
-	const font = new THREE.Font(oswaldGlyphs);
+	const font = new Font(oswaldGlyphs as unknown as Pick<Font, "data">["data"]);
 	const textGeometryOptions = {
 		font,
 		size: 0.4,

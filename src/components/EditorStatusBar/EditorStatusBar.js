@@ -3,7 +3,6 @@
  * need the same info :/ I should create a shared "root" component with slots
  * for the stuff that is variant.
  */
-import React from "react";
 import { alignJustify as rowHeightMinIcon } from "react-icons-kit/feather/alignJustify";
 import { bell as tickOnIcon } from "react-icons-kit/feather/bell";
 import { bellOff as tickOffIcon } from "react-icons-kit/feather/bellOff";
@@ -22,7 +21,7 @@ import { volumeX as volumeMinIcon } from "react-icons-kit/feather/volumeX";
 import { zap as showLightsIcon } from "react-icons-kit/feather/zap";
 import { zapOff as hideLightsIcon } from "react-icons-kit/feather/zapOff";
 import { connect } from "react-redux";
-import { withRouter } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import styled from "styled-components";
 
 import * as actions from "../../actions";
@@ -39,7 +38,8 @@ import NoteDensityIndicator from "./NoteDensityIndicator";
 import SliderGroup from "./SliderGroup";
 import Toggle from "./Toggle";
 
-const getViewFromLocation = (location) => {
+const getViewFromLocation = () => {
+	const location = useLocation();
 	if (location.pathname.match(/\/notes$/)) {
 		return NOTES_VIEW;
 	}
@@ -70,9 +70,8 @@ const EditorStatusBar = ({
 	togglePreviewLightingInEventsView,
 	tweakEventRowHeight,
 	tweakEventBackgroundOpacity,
-	location,
 }) => {
-	const view = getViewFromLocation(location);
+	const view = getViewFromLocation();
 
 	let leftContent;
 	let rightContent;
@@ -183,4 +182,4 @@ const mapDispatchToProps = {
 	tweakEventBackgroundOpacity: actions.tweakEventBackgroundOpacity,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(EditorStatusBar));
+export default connect(mapStateToProps, mapDispatchToProps)(EditorStatusBar);

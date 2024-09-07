@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Prompt } from "react-router";
+import { useBlocker } from "react-router-dom";
 import styled from "styled-components";
 
 import * as actions from "../../actions";
@@ -156,9 +156,10 @@ const SongDetails = ({ stopPlaying, updateSongDetails, togglePropertyForSelected
 
 	const isSaveDisabled = status === "working";
 
+	useBlocker(() => (isDirty ? !window.confirm("You have unsaved changes! Are you sure you want to leave this page?") : false));
+
 	return (
 		<Wrapper>
-			<Prompt when={isDirty} message="You have unsaved changes! Are you sure you want to leave this page?" />
 			<InnerWrapper>
 				<Spacer size={UNIT * 10} />
 				<Heading size={1}>Edit Song Details</Heading>

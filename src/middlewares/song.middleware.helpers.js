@@ -1,4 +1,4 @@
-import webAudioBuilder from "waveform-data/webaudio";
+import { default as WaveformData } from "waveform-data";
 
 import { EVENTS_VIEW } from "../constants";
 import { convertBeatsToMilliseconds, convertMillisecondsToBeats } from "../helpers/audio.helpers";
@@ -25,7 +25,7 @@ export const generateWaveformForSongFile = async (file) => {
 	const audioContext = new AudioContext();
 
 	return new Promise((resolve, reject) => {
-		webAudioBuilder(audioContext, arrayBuffer, (err, waveform) => {
+		WaveformData.createFromAudio({ audio_context: audioContext, array_buffer: arrayBuffer }, (err, waveform) => {
 			if (err) {
 				reject(err);
 			}

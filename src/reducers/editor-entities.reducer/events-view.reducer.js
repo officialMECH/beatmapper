@@ -1,4 +1,4 @@
-import produce from "immer";
+import { produce } from "immer";
 import undoable, { groupByActionTypes, includeAction } from "redux-undo";
 import { createSelector } from "reselect";
 

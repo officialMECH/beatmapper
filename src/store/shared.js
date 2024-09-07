@@ -1,6 +1,6 @@
 import { createStateSyncMiddleware } from "redux-state-sync";
 import * as storage from "redux-storage";
-import thunk from "redux-thunk";
+import { thunk } from "redux-thunk";
 
 import createBackupMiddleware from "../middlewares/backup.middleware";
 import createDemoMiddleware from "../middlewares/demo.middleware";

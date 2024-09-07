@@ -2,7 +2,7 @@
  * This service zips up the current state, to let the user download it.
  */
 
-import formatDate from "date-fns/format";
+import { formatDate } from "date-fns/format";
 import { saveAs } from "file-saver";
 import JSZip from "jszip";
 import get from "lodash.get";
@@ -361,7 +361,7 @@ export const zipFiles = async (song, songFile, coverArtFile, version) => {
 			},
 		})
 		.then((blob) => {
-			const timestamp = formatDate(new Date(), "YYYYMMDDTHHmm");
+			const timestamp = formatDate(new Date(), "yyyyMMddTHHmm");
 			const filename = version === 1 ? `${song.id}_${timestamp}.legacy.zip` : `${song.id}_${timestamp}.zip`;
 			saveAs(blob, filename);
 		});

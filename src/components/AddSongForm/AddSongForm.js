@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { withRouter } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 import * as actions from "../../actions";
@@ -22,7 +22,9 @@ import SongPicker from "./SongPicker";
 
 const MEDIA_ROW_HEIGHT = 150;
 
-const AddSongForm = ({ createNewSong, currentSongIds, history }) => {
+const AddSongForm = ({ createNewSong, currentSongIds }) => {
+	const navigate = useNavigate();
+
 	// These files are sent to the redux middleware.
 	// We'll store them on disk (currently in indexeddb, but that may change),
 	// and capture a reference to them by a filename, which we'll store in redux.
@@ -76,7 +78,7 @@ const AddSongForm = ({ createNewSong, currentSongIds, history }) => {
 			// Wait for the `createNewSong` action to flush, and then redirect the
 			// user to the new song page!
 			window.requestAnimationFrame(() => {
-				history.push(`/edit/${songId}/${selectedDifficulty}/notes`);
+				navigate(`/edit/${songId}/${selectedDifficulty}/notes`);
 			});
 		} catch (err) {
 			console.error("Could not save files to local storage", err);
@@ -209,4 +211,4 @@ const mapStateToProps = (state) => {
 	};
 };
 
-export default connect(mapStateToProps, { createNewSong: actions.createNewSong })(withRouter(AddSongForm));
+export default connect(mapStateToProps, { createNewSong: actions.createNewSong })(AddSongForm);

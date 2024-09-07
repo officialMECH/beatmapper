@@ -5,8 +5,9 @@
  * It does NOT include the 2D stuff like the toolbar or the track
  * controls.
  */
+
+import { useFrame } from "@react-three/fiber";
 import React from "react";
-import { useRender } from "react-three-fiber";
 
 import { BLOCK_COLUMN_WIDTH, SONG_OFFSET } from "../../constants";
 import Controls from "../../controls";
@@ -27,7 +28,7 @@ const MapVisualization = () => {
 	const controls = React.useRef(null);
 
 	// Controls to move around the space.
-	useRender(({ scene, camera }) => {
+	useFrame(({ scene, camera }) => {
 		if (!controls.current) {
 			controls.current = new Controls(camera);
 			scene.add(controls.current.getObject());

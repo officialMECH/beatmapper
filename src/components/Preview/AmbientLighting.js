@@ -1,4 +1,3 @@
-import React from "react";
 import * as THREE from "three";
 
 const AmbientLighting = ({ includeSpotlight }) => {
@@ -7,12 +6,12 @@ const AmbientLighting = ({ includeSpotlight }) => {
 
 	return (
 		<>
-			<ambientLight intensity={0.2} />
+			<ambientLight intensity={1} />
 			{includeSpotlight && (
 				<>
 					<primitive object={midLightTarget} />
 
-					<spotLight intensity={0.5} position={[0, 20, 0]} target={midLightTarget} angle={1} penumbra={1} />
+					<directionalLight intensity={0.25} position={[0, 20, 0]} target={midLightTarget} angle={1} penumbra={1} />
 				</>
 			)}
 		</>

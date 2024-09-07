@@ -7,7 +7,7 @@ import localforage from "localforage";
 import debounce from "redux-storage-decorator-debounce";
 import filter from "redux-storage-decorator-filter";
 
-const key = process.env.NODE_ENV === "development" ? "redux-state-dev" : "redux-state";
+const key = import.meta.env.DEV ? "redux-state-dev" : "redux-state";
 
 const config = {
 	driver: localforage.INDEXEDDB,

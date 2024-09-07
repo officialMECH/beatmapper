@@ -1,5 +1,4 @@
-import React from "react";
-import { animated, useSpring } from "react-spring/three";
+import { animated, useSpring } from "@react-spring/three";
 
 const RingHalf = ({ side, size, thickness, color }) => {
 	const length = size;

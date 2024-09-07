@@ -1,6 +1,6 @@
+import { useTrail } from "@react-spring/three";
 import React from "react";
 import { connect } from "react-redux";
-import { useTrail } from "react-spring/three";
 
 import { convertMillisecondsToBeats } from "../../helpers/audio.helpers";
 import { getColorForItem } from "../../helpers/colors.helpers";

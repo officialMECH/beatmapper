@@ -1,7 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Prompt } from "react-router";
-import { withRouter } from "react-router-dom";
+import { useBlocker, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 import * as actions from "../../actions";
@@ -16,6 +15,8 @@ import Spacer from "../Spacer";
 import TextInput from "../TextInput";
 
 const BeatmapSettings = ({ song, difficultyId, updateBeatmapMetadata, copyDifficulty, deleteBeatmap, history }) => {
+	const navigate = useNavigate();
+
 	const savedVersion = song.difficultiesById[difficultyId];
 
 	const [noteJumpSpeed, setNoteJumpSpeed] = React.useState(savedVersion.noteJumpSpeed);
@@ -33,7 +34,7 @@ const BeatmapSettings = ({ song, difficultyId, updateBeatmapMetadata, copyDiffic
 		renderImperativePrompt(modalProps, (triggerSuccess) => <CopyDifficultyForm song={song} idToCopy={difficultyId} afterCopy={triggerSuccess} copyDifficulty={copyDifficulty} />).then((copiedToDifficultyId) => {
 			// Redirect the user to this new difficulty, so that when they go to
 			// edit it, they're editing the right difficulty.
-			history.push(`/edit/${song.id}/${copiedToDifficultyId}/details`);
+			navigate(`/edit/${song.id}/${copiedToDifficultyId}/details`);
 		});
 	};
 
@@ -63,7 +64,7 @@ const BeatmapSettings = ({ song, difficultyId, updateBeatmapMetadata, copyDiffic
 
 		deleteBeatmap(song.id, difficultyId);
 
-		history.push(`/edit/${song.id}/${nextDifficultyId}/details`);
+		navigate(`/edit/${song.id}/${nextDifficultyId}/details`);
 	};
 
 	const handleSaveBeatmap = (ev) => {
@@ -79,9 +80,10 @@ const BeatmapSettings = ({ song, difficultyId, updateBeatmapMetadata, copyDiffic
 
 	const difficultyLabel = getLabelForDifficulty(difficultyId);
 
+	useBlocker(() => (isDirty ? !window.confirm(`You have unsaved changes! Are you sure you want to leave this page?\n\n(You tweaked a value for the ${difficultyLabel} beatmap)`) : false));
+
 	return (
 		<Wrapper>
-			<Prompt when={isDirty} message={`You have unsaved changes! Are you sure you want to leave this page?\n\n(You tweaked a value for the ${difficultyLabel} beatmap)`} />
 			<Heading size={3}>{difficultyLabel}</Heading>
 			<Spacer size={UNIT * 3} />
 			<TextInput label="Note jump speed" value={noteJumpSpeed} onChange={(ev) => setNoteJumpSpeed(ev.target.value)} />
@@ -128,4 +130,4 @@ const mapDispatchToProps = {
 	deleteBeatmap: actions.deleteBeatmap,
 };
 
-export default connect(null, mapDispatchToProps)(withRouter(BeatmapSettings));
+export default connect(null, mapDispatchToProps)(BeatmapSettings);

@@ -1,6 +1,5 @@
 import React from "react";
 import { Helmet } from "react-helmet";
-import { withRouter } from "react-router-dom";
 import styled from "styled-components";
 
 import { COLORS, UNIT } from "../../constants";
@@ -9,6 +8,7 @@ import Spacer from "../Spacer";
 import MdxWrapper from "./MdxWrapper";
 import TableOfContents from "./TableOfContents";
 
+import { useLocation } from "react-router-dom";
 import HorizontalRule from "./HorizontalRule";
 
 /**
@@ -16,14 +16,16 @@ import HorizontalRule from "./HorizontalRule";
  * Unless a hash is explicitly provided, in which case we scroll them to the
  * appropriate section.
  */
-const useScrollOnLoad = (location) => {
+const useScrollOnLoad = () => {
+	const location = useLocation();
+
 	React.useEffect(() => {
 		window.scrollTo({ top: 0 });
 	}, [location.pathname]);
 };
 
-const DocPage = ({ title, subtitle, tableOfContents, children, location }) => {
-	useScrollOnLoad(location);
+const DocPage = ({ title, subtitle, tableOfContents, children }) => {
+	useScrollOnLoad();
 
 	return (
 		<>
@@ -77,4 +79,4 @@ const MainContent = styled.div`
   flex: 1;
 `;
 
-export default withRouter(DocPage);
+export default DocPage;

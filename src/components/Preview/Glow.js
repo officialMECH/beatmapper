@@ -1,6 +1,5 @@
-import React from "react";
-import { animated, useSpring } from "react-spring/three";
-import { useThree } from "react-three-fiber";
+import { animated, useSpring } from "@react-spring/three";
+import { useThree } from "@react-three/fiber";
 import * as THREE from "three";
 
 import useOnChange from "../../hooks/use-on-change.hook";
@@ -80,8 +79,8 @@ const Glow = ({ x, y, z, color, size, status, lastEventId, isPlaying, isBlooming
 					},
 				]}
 				uniforms-glowColor-value={new THREE.Color(color)}
-				uniforms-p-value={spring.opacity.interpolate((o) => normalize(o, 0, 1, ...PValueRange))}
-				uniforms-c-value={spring.opacity.interpolate((o) => normalize(o, 0, 1, 0.1, maxCValue))}
+				uniforms-p-value={spring.opacity.to((o) => normalize(o, 0, 1, ...PValueRange))}
+				uniforms-c-value={spring.opacity.to((o) => normalize(o, 0, 1, 0.1, maxCValue))}
 			/>
 		</mesh>
 	);

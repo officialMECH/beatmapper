@@ -1,4 +1,4 @@
-import uuid from "uuid/v1";
+import { v1 as uuid } from "uuid";
 
 const HUMANIZED_DIRECTIONS = ["up", "down", "left", "right", "upLeft", "upRight", "downLeft", "downRight", "face"];
 

@@ -5,9 +5,10 @@
  * It does NOT include the 2D stuff like the toolbar or the track
  * controls.
  */
+
+import { useFrame } from "@react-three/fiber";
 import React from "react";
 import { connect } from "react-redux";
-import { useRender } from "react-three-fiber";
 
 import Controls from "../../controls";
 import { getShowLightingPreview } from "../../reducers/editor.reducer";
@@ -29,7 +30,7 @@ const EventLightingPreviewPresentational = ({ song, isPlaying, graphicsLevel }) 
 	const controls = React.useRef(null);
 
 	// Controls to move around the space.
-	useRender(({ canvas, scene, camera }) => {
+	useFrame(({ canvas, scene, camera }) => {
 		if (!controls.current) {
 			controls.current = new Controls(camera, [0, -1, 0]);
 			scene.add(controls.current.getObject());

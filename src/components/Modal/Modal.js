@@ -6,10 +6,11 @@
  * TODO: Use a portal to render this at the top-level, to avoid any z-index
  * issues?
  */
-import React, { PureComponent } from "react";
+
+import { Spring } from "@react-spring/core";
+import { PureComponent } from "react";
 import Icon from "react-icons-kit";
 import { x } from "react-icons-kit/feather/x";
-import { Spring } from "react-spring/renderprops";
 import Transition from "react-transition-group/Transition";
 import styled from "styled-components";
 

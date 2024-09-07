@@ -5,7 +5,7 @@ import { default as prod } from "./store.prod.js";
 
 let instance;
 
-if (process.env.NODE_ENV === "production") {
+if (import.meta.env.PROD) {
 	instance = prod;
 } else {
 	instance = dev;

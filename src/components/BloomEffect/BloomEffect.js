@@ -1,9 +1,7 @@
+import { useFrame, useThree } from "@react-three/fiber";
 import React from "react";
-import { useRender, useThree } from "react-three-fiber";
 import * as THREE from "three";
-import { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer";
-import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass";
-import { UnrealBloomPass } from "three/examples/jsm/postprocessing/UnrealBloomPass";
+import { EffectComposer, RenderPass, UnrealBloomPass } from "three-stdlib";
 
 export function Bloom({ children }) {
 	const { gl, camera, size } = useThree();
@@ -23,7 +21,7 @@ export function Bloom({ children }) {
 	}, []); // eslint-disable-line
 
 	React.useEffect(() => void composer.current.setSize(size.width, size.height), [size]);
-	useRender(() => {
+	useFrame(() => {
 		composer.current.render();
 		// gl.autoClear = false;
 		// gl.clearDepth();
@@ -35,7 +33,7 @@ export function Bloom({ children }) {
 export function NoBloom({ children }) {
 	const scene = React.useRef();
 	const { gl, camera } = useThree();
-	useRender(() => {
+	useFrame(() => {
 		gl.autoClear = false;
 		gl.clearDepth();
 		gl.render(scene.current, camera);

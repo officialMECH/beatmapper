@@ -1,6 +1,5 @@
-import React from "react";
 import { connect } from "react-redux";
-import { Route, BrowserRouter as Router } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 
 import { getHasInitialized } from "../../reducers/global.reducer";
 
@@ -20,11 +19,11 @@ const App = ({ hasInitialized }) => {
 
 	return (
 		<>
-			<Router>
-				<Route exact path="/" component={Home} />
-				<Route path="/edit/:songId/:difficulty" component={Editor} />
-				<Route path="/docs" component={Docs} />
-			</Router>
+			<Routes>
+				<Route path="/" element={<Home />} />
+				<Route path="/edit/:songId/:difficulty/*" element={<Editor />} />
+				<Route path="/docs/*" element={<Docs />} />
+			</Routes>
 			<DevTools />
 			<GlobalStyles />
 		</>

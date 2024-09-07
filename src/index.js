@@ -1,6 +1,8 @@
-import React from "react";
-import ReactDOM from "react-dom";
+import isPropValid from "@emotion/is-prop-valid";
+import { createRoot } from "react-dom/client";
 import { Provider } from "react-redux";
+import { Route, RouterProvider, createBrowserRouter, createRoutesFromChildren } from "react-router-dom";
+import { StyleSheetManager } from "styled-components";
 
 import configureStore from "./store";
 
@@ -8,9 +10,19 @@ import App from "./components/App";
 
 const store = configureStore();
 
-ReactDOM.render(
+const root = createRoot(document.getElementById("root"));
+
+const router = createBrowserRouter(createRoutesFromChildren(<Route path="*" element={<App />} />));
+
+root.render(
 	<Provider store={store}>
-		<App />
+		<StyleSheetManager shouldForwardProp={shouldForwardProp}>
+			<RouterProvider router={router} />
+		</StyleSheetManager>
 	</Provider>,
-	document.getElementById("root"),
 );
+
+function shouldForwardProp(propName, target) {
+	if (typeof target === "string") return isPropValid(propName);
+	return true;
+}
