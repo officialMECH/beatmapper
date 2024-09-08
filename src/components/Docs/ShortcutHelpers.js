@@ -1,4 +1,3 @@
-import React from "react";
 import { Icon } from "react-icons-kit";
 import { plus } from "react-icons-kit/feather/plus";
 import styled from "styled-components";
@@ -78,6 +77,9 @@ export const Sidenote = styled.div`
   font-weight: 300;
   margin-top: 8px;
   line-height: 1.3;
+  & p {
+    margin-bottom: 0;
+  }
 `;
 
 export const Or = ({ children = "or" }) => <OrWrapper>— {children} —</OrWrapper>;
@@ -93,7 +95,6 @@ export const OrWrapper = styled.div`
 `;
 
 const PlusWrapper = styled.div`
-  width: 30px;
   display: flex;
   justify-content: center;
 `;

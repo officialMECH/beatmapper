@@ -15,6 +15,7 @@ import Mods from "./pages/Mods";
 import Privacy from "./pages/Privacy";
 import ReleaseNotes from "./pages/ReleaseNotes";
 import RunningLocally from "./pages/RunningLocally";
+import Shortcuts from "./pages/Shortcuts";
 import SongPrep from "./pages/SongPrep";
 
 const Docs = () => {
@@ -23,7 +24,7 @@ const Docs = () => {
 			<Routes>
 				<Route path="/" element={<Intro />} />
 				<Route path="/song-prep" element={<SongPrep />} />
-				{/** <Route path="/docs/keyboard-shortcuts" element={<Shortcuts/>} /> */}
+				<Route path="/keyboard-shortcuts" element={<Shortcuts />} />
 				<Route path="/manual/getting-started" element={<ManualGettingStarted />} />
 				<Route path="/manual/navigating-the-editor" element={<ManualNavigatingTheEditor />} />
 				<Route path="/manual/notes-view" element={<ManualNotes />} />
