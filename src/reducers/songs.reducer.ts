@@ -2,65 +2,11 @@ import { produce } from "immer";
 import get from "lodash.get";
 import { createSelector } from "reselect";
 
+import type { Song } from "$/types";
 import { DEFAULT_BLUE, DEFAULT_RED } from "../helpers/colors.helpers";
 import { DEFAULT_COL_WIDTH, DEFAULT_GRID, DEFAULT_ROW_HEIGHT } from "../helpers/grid.helpers";
 import { sortDifficultyIds } from "../helpers/song.helpers";
 import { isEmpty } from "../utils";
-
-interface Difficulty {
-	id: string;
-	noteJumpSpeed: number;
-	startBeatOffset: number;
-	customLabel?: string;
-}
-
-interface ModSettings {
-	mappingExtensions: {
-		isEnabled: boolean;
-		numRows: number;
-		numCols: number;
-		colWidth: number;
-		rowHeight: number;
-	};
-	customColors: {
-		isEnabled: boolean;
-		colorLeft: string;
-		colorLeftOverdrive: number;
-		colorRight: string;
-		colorRightOverdrive: number;
-		envColorLeft: string;
-		envColorLeftOverdrive: number;
-		envColorRight: string;
-		envColorRightOverdrive: number;
-		obstacleColor: string;
-		obstacleColorOverdrive: number;
-	};
-}
-
-interface Song {
-	id: string;
-	name: string;
-	subName?: string;
-	artistName: string;
-	mapAuthorName?: string;
-	bpm: number;
-	offset: number;
-	swingAmount?: number;
-	swingPeriod?: number;
-	previewStartTime: number;
-	previewDuration: number;
-	environment: "DefaultEnvironment" | "BigMirrorEnvironment" | "TriangleEnvironment" | "NiceEnvironment" | "DragonsEnvironment";
-	songFilename: string;
-	coverArtFilename: string;
-	difficultiesById: { [key: string]: Difficulty };
-	selectedDifficulty?: Difficulty;
-	createdAt: number;
-	lastOpenedAt: number;
-	demo?: boolean;
-	modSettings: ModSettings;
-	enabledFastWalls?: boolean;
-	enabledLightshow?: boolean;
-}
 
 interface State {
 	byId: { [key: string]: Song };

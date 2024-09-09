@@ -1,12 +1,10 @@
-import React from "react";
 import styled from "styled-components";
 
+import type { Difficulty } from "$/types";
 import { DIFFICULTY_COLORS } from "../../constants";
 import { getLabelForDifficulty } from "../../helpers/song.helpers";
 
 import UnstyledButton from "../UnstyledButton";
-
-import type { Difficulty } from "../../types";
 
 interface Props {
 	difficulty: Difficulty;

@@ -1,6 +1,6 @@
 import slugify from "slugify";
 
-import type { Difficulty } from "../types";
+import type { Difficulty } from "$/types";
 
 export const getSongIdFromName = (songName: string): string => {
 	const songId = slugify(songName).toLowerCase();

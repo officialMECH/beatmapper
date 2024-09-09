@@ -1,8 +1,7 @@
 import localforage from "localforage";
 
+import type { Difficulty } from "$/types";
 import defaultCoverArtPath from "../assets/images/placeholder-cover-art.jpg";
-
-import type { Difficulty } from "../types";
 
 // These are the types of things we'll need to save.
 type ThingType = "song" | "cover-art" | "info" | "beatmap";

@@ -1,6 +1,6 @@
 import { v1 as uuid } from "uuid";
 
-import type { Event, LaserSpeedEvent, LightingEvent, RingEvent } from "../types";
+import type { Event, LaserSpeedEvent, LightingEvent, RingEvent } from "$/types";
 
 interface JsonEvent {
 	_time: number;
