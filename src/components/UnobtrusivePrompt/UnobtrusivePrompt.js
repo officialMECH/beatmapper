@@ -1,10 +1,9 @@
 import Color from "color";
-import React from "react";
 import Icon from "react-icons-kit";
 import { x } from "react-icons-kit/feather/x";
 import styled, { keyframes } from "styled-components";
 
-import { COLORS, UNIT } from "../../constants";
+import { COLORS, UNIT } from "$/constants";
 
 import Heading from "../Heading";
 import Spacer from "../Spacer";

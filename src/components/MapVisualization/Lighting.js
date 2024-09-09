@@ -1,6 +1,6 @@
 import * as THREE from "three";
 
-import { SONG_OFFSET } from "../../constants";
+import { SONG_OFFSET } from "$/constants";
 
 const Lighting = () => {
 	const frontLightTarget = new THREE.Object3D();

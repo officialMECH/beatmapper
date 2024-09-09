@@ -9,7 +9,7 @@
 import { useFrame } from "@react-three/fiber";
 import React from "react";
 
-import { BLOCK_COLUMN_WIDTH, SONG_OFFSET } from "../../constants";
+import { BLOCK_COLUMN_WIDTH, GRID_POSITION } from "$/constants";
 import Controls from "../../controls";
 
 import BarMarkers from "../BarMarkers";
@@ -19,10 +19,7 @@ import PlacementGrid from "../PlacementGrid";
 import SongBlocks from "../SongBlocks";
 import StaticEnvironment from "../StaticEnvironment";
 import TrackMover from "../TrackMover";
-
 import Lighting from "./Lighting";
-
-const GRID_POSITION = [0, 0, -SONG_OFFSET];
 
 const MapVisualization = () => {
 	const controls = React.useRef(null);

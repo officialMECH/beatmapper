@@ -1,9 +1,8 @@
-import React from "react";
 import { connect } from "react-redux";
 import styled from "styled-components";
 
+import { PREVIEW_VIEW } from "$/constants";
 import * as actions from "../../actions";
-import { PREVIEW_VIEW } from "../../constants";
 
 import EditorBottomPanel from "../EditorBottomPanel";
 import ReduxForwardingCanvas from "../ReduxForwardingCanvas";

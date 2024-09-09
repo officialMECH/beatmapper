@@ -2,8 +2,8 @@ import React from "react";
 import { connect } from "react-redux";
 import styled from "styled-components";
 
+import { COLORS } from "$/constants";
 import * as actions from "../../actions";
-import { COLORS } from "../../constants";
 
 const GridHeader = ({ height, beatNums, selectedBeat, scrubEventsHeader }) => {
 	const [isScrubbing, setIsScrubbing] = React.useState(false);

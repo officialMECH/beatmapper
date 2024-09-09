@@ -1,7 +1,6 @@
-import React from "react";
 import styled from "styled-components";
 
-import { COLORS } from "../../constants";
+import { COLORS } from "$/constants";
 import { range } from "../../utils";
 
 const BackgroundLines = ({ width, height, numOfBeatsToShow, primaryDivisions, secondaryDivisions }) => {

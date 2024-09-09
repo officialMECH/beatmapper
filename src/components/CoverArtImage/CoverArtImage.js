@@ -1,7 +1,6 @@
-import React from "react";
 import styled from "styled-components";
 
-import { COLORS } from "../../constants";
+import { COLORS } from "$/constants";
 import useLocallyStoredFile from "../../hooks/use-locally-stored-file.hook";
 
 import CenteredSpinner from "../CenteredSpinner";

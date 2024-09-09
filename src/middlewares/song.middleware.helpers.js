@@ -1,6 +1,6 @@
 import { default as WaveformData } from "waveform-data";
 
-import { EVENTS_VIEW } from "../constants";
+import { EVENTS_VIEW } from "$/constants";
 import { convertBeatsToMilliseconds, convertMillisecondsToBeats } from "../helpers/audio.helpers";
 import { convertFileToArrayBuffer } from "../helpers/file.helpers";
 import { getNotes } from "../reducers/editor-entities.reducer/notes-view.reducer";

@@ -1,10 +1,9 @@
 /**
  * Building a Slider component from scratch because
  */
-import React from "react";
 import styled from "styled-components";
 
-import { COLORS } from "../../constants";
+import { COLORS } from "$/constants";
 
 const MiniSlider = ({ width, height, style = {}, includeMidpointTick, ...delegated }) => {
 	return (

@@ -1,15 +1,14 @@
 import React from "react";
 import { Helmet } from "react-helmet";
+import { useLocation } from "react-router-dom";
 import styled from "styled-components";
 
-import { COLORS, UNIT } from "../../constants";
+import { COLORS, UNIT } from "$/constants";
 
 import Spacer from "../Spacer";
+import HorizontalRule from "./HorizontalRule";
 import MdxWrapper from "./MdxWrapper";
 import TableOfContents from "./TableOfContents";
-
-import { useLocation } from "react-router-dom";
-import HorizontalRule from "./HorizontalRule";
 
 /**
  * When loading a new route, we want to scroll the user to the top of the page.

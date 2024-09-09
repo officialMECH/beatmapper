@@ -1,4 +1,3 @@
-import React from "react";
 import { connect } from "react-redux";
 import styled from "styled-components";
 
@@ -8,6 +7,7 @@ import { getSeenPrompts } from "../../reducers/user.reducer";
 import Paragraph from "../Paragraph";
 import UnobtrusivePrompt from "../UnobtrusivePrompt";
 
+// TODO: compose prompts in mdx for better dx
 const PROMPTS = [
 	{
 		id: "bsmg",

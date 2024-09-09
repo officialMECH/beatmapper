@@ -4,7 +4,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
-import { UNIT } from "../../constants";
+import { UNIT } from "$/constants";
 
 import Block from "../Block";
 import Spacer from "../Spacer";

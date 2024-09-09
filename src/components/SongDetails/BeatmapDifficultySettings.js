@@ -3,8 +3,8 @@ import { connect } from "react-redux";
 import { useBlocker, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
+import { COLORS, UNIT } from "$/constants";
 import * as actions from "../../actions";
-import { COLORS, UNIT } from "../../constants";
 import { renderImperativePrompt } from "../../helpers/modal.helpers";
 import { getLabelForDifficulty } from "../../helpers/song.helpers";
 

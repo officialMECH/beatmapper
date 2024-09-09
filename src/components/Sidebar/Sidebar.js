@@ -10,7 +10,7 @@ import { sun } from "react-icons-kit/feather/sun";
 import { useLocation, useParams } from "react-router-dom";
 import styled from "styled-components";
 
-import { COLORS, SIDEBAR_WIDTH, UNIT } from "../../constants";
+import { COLORS, SIDEBAR_WIDTH, UNIT } from "$/constants";
 
 import SettingsModal from "../SettingsModal";
 import SpacedChildren from "../SpacedChildren";

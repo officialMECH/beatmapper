@@ -1,9 +1,8 @@
-import React from "react";
 import { connect } from "react-redux";
 import styled from "styled-components";
 
+import { UNIT } from "$/constants";
 import * as actions from "../../actions";
-import { UNIT } from "../../constants";
 import useBoundingBox from "../../hooks/use-bounding-box.hook";
 import { getSelectedSong } from "../../reducers/songs.reducer";
 import { roundToNearest } from "../../utils";

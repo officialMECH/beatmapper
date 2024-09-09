@@ -1,9 +1,8 @@
-import React from "react";
 import IconBase from "react-icons-kit";
 import { arrowRightC } from "react-icons-kit/ionicons/arrowRightC";
 import styled from "styled-components";
 
-import { COLORS } from "../../constants";
+import { COLORS } from "$/constants";
 
 const List = ({ children }) => <ListElem>{children}</ListElem>;
 

@@ -1,8 +1,7 @@
-import React from "react";
 import { connect } from "react-redux";
 import styled from "styled-components";
 
-import { COLORS } from "../../constants";
+import { COLORS } from "$/constants";
 import { getCursorPositionInBeats } from "../../reducers/navigation.reducer";
 import { normalize } from "../../utils";
 

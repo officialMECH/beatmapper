@@ -2,7 +2,7 @@ import { Icon } from "react-icons-kit";
 import { plus } from "react-icons-kit/feather/plus";
 import styled from "styled-components";
 
-import { COLORS } from "../../constants";
+import { COLORS } from "$/constants";
 import { getMetaKeyLabel, getOptionKeyLabel } from "../../utils";
 
 export const KeyIcon = ({ size = "medium", type, children }) => {

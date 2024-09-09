@@ -1,8 +1,8 @@
 import React from "react";
 import { connect } from "react-redux";
 
+import { BLOCK_COLUMN_WIDTH, HIGHEST_PRECISION, SONG_OFFSET } from "$/constants";
 import * as actions from "../../actions";
-import { BLOCK_COLUMN_WIDTH, HIGHEST_PRECISION, SONG_OFFSET } from "../../constants";
 import { getColorForItem } from "../../helpers/colors.helpers";
 import { getVisibleNotes } from "../../reducers/editor-entities.reducer/notes-view.reducer";
 import { getBeatDepth, getCursorPositionInBeats } from "../../reducers/navigation.reducer";

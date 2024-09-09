@@ -1,6 +1,7 @@
 import React from "react";
 
-import { UNIT } from "../../constants";
+import { UNIT } from "$/constants";
+
 import Spacer from "../Spacer";
 
 const SpacedChildren = ({ children, spacing = UNIT }) => {

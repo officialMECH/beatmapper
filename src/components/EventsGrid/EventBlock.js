@@ -3,8 +3,8 @@ import React from "react";
 import { connect } from "react-redux";
 import styled from "styled-components";
 
+import { COLORS } from "$/constants";
 import * as actions from "../../actions";
-import { COLORS } from "../../constants";
 import { getColorForItem } from "../../helpers/colors.helpers";
 import { getSelectedEventEditMode } from "../../reducers/editor.reducer";
 import { normalize } from "../../utils";

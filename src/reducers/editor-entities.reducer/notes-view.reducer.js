@@ -3,7 +3,7 @@ import { combineReducers } from "redux";
 import undoable, { groupByActionTypes, includeAction } from "redux-undo";
 import { createSelector } from "reselect";
 
-import { NOTES_VIEW, SURFACE_DEPTHS } from "../../constants";
+import { NOTES_VIEW, SURFACE_DEPTHS } from "$/constants";
 import { calculateVisibleRange } from "../../helpers/editor.helpers";
 import { calculateNoteDensity, findNoteIndexByProperties, nudgeNotes, swapNotes } from "../../helpers/notes.helpers";
 import { nudgeObstacles, swapObstacles } from "../../helpers/obstacles.helpers";

@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import { COLORS } from "../../constants";
+import { COLORS } from "$/constants";
 
 export default styled.hr`
   background: ${COLORS.blueGray[200]};

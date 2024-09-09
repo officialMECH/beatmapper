@@ -1,9 +1,9 @@
 // TODO: Custom spinner!
-import React from "react";
 import { Icon } from "react-icons-kit";
 import { loader } from "react-icons-kit/feather/loader";
 import styled, { keyframes } from "styled-components";
-import { COLORS } from "../../constants";
+
+import { COLORS } from "$/constants";
 
 const Spinner = ({ size = 32 }) => {
 	return (

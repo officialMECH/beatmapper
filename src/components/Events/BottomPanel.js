@@ -1,7 +1,6 @@
-import React from "react";
 import styled from "styled-components";
 
-import { EVENTS_VIEW, UNIT } from "../../constants";
+import { EVENTS_VIEW, UNIT } from "$/constants";
 
 import EditorNavigationControls from "../EditorNavigationControls";
 import EditorStatusBar from "../EditorStatusBar";

@@ -1,7 +1,7 @@
 import React from "react";
 import * as THREE from "three";
 
-import { BLOCK_PLACEMENT_SQUARE_SIZE } from "../../constants";
+import { BLOCK_PLACEMENT_SQUARE_SIZE } from "$/constants";
 import { convertGridColumn, convertGridRow } from "../../helpers/grid.helpers";
 import { createObstacleFromMouseEvent } from "../../helpers/obstacles.helpers";
 

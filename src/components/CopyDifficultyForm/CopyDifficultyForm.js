@@ -5,7 +5,7 @@ import React from "react";
 import { Tooltip } from "react-tippy";
 import styled from "styled-components";
 
-import { COLORS, DIFFICULTIES, UNIT } from "../../constants";
+import { COLORS, DIFFICULTIES, UNIT } from "$/constants";
 import { getLabelForDifficulty, sortDifficultyIds } from "../../helpers/song.helpers";
 
 import Button from "../Button";

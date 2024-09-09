@@ -1,8 +1,8 @@
 import React from "react";
 import { connect } from "react-redux";
 
+import { EVENTS_VIEW } from "$/constants";
 import * as actions from "../../actions";
-import { EVENTS_VIEW } from "../../constants";
 import { isMetaKeyPressed } from "../../utils";
 
 const KeyboardShortcuts = ({ selectTool, selectEventEditMode, toggleSelectAll, zoomOut, zoomIn, toggleEventWindowLock, toggleLaserLock }) => {

@@ -1,5 +1,6 @@
 import { v1 as uuid } from "uuid";
 
+import { LIGHT_EVENTS_ARRAY, LIGHT_EVENT_TYPES, TRACK_IDS_ARRAY, TRACK_ID_MAP } from "$/constants";
 import type { Event, LaserSpeedEvent, LightingEvent, RingEvent } from "$/types";
 
 interface JsonEvent {
@@ -7,37 +8,6 @@ interface JsonEvent {
 	_type: number;
 	_value: number;
 }
-
-const TRACK_ID_MAP = {
-	laserBack: 0,
-	trackNeons: 1,
-	laserLeft: 2,
-	laserRight: 3,
-	primaryLight: 4,
-	largeRing: 8,
-	smallRing: 9,
-	laserSpeedLeft: 12,
-	laserSpeedRight: 13,
-};
-
-const TRACK_IDS_ARRAY = ["laserBack", "trackNeons", "laserLeft", "laserRight", "primaryLight", null, null, null, "largeRing", "smallRing", null, null, "laserSpeedLeft", "laserSpeedRight"];
-
-const LIGHT_EVENT_TYPES = {
-	blue: {
-		off: 0,
-		on: 1,
-		flash: 2,
-		fade: 3,
-	},
-	red: {
-		off: 0,
-		on: 5,
-		flash: 6,
-		fade: 7,
-	},
-};
-
-const LIGHT_EVENTS_ARRAY = ["off", "on", "flash", "fade", null, "on", "flash", "fade"];
 
 /**
  * WARNING: This method mutates the `events` array supplied.

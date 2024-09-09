@@ -3,8 +3,8 @@ import { connect, useSelector } from "react-redux";
 import { Route, Routes, useParams } from "react-router-dom";
 import styled from "styled-components";
 
+import { COLORS, SIDEBAR_WIDTH } from "$/constants";
 import * as actions from "../../actions";
-import { COLORS, SIDEBAR_WIDTH } from "../../constants";
 import { getSelectedSong } from "../../reducers/songs.reducer";
 
 import Download from "../Download";

@@ -1,14 +1,12 @@
-import React from "react";
 import { connect } from "react-redux";
 import styled from "styled-components";
 
+import { GRID_PRESET_SLOTS, UNIT } from "$/constants";
 import * as actions from "../../actions";
-import { GRID_PRESET_SLOTS } from "../../constants";
 import { promptSaveGridPreset } from "../../helpers/prompts.helpers";
 import { getGridPresets } from "../../reducers/editor.reducer";
 import { getGridSize } from "../../reducers/songs.reducer";
 
-import { UNIT } from "../../constants";
 import Center from "../Center";
 import Heading from "../Heading";
 import MiniButton from "../MiniButton";

@@ -1,10 +1,9 @@
-import React from "react";
 import { connect } from "react-redux";
 import { Tooltip } from "react-tippy";
 import styled from "styled-components";
 
+import { UNIT } from "$/constants";
 import * as actions from "../../actions";
-import { UNIT } from "../../constants";
 import { getCanRedo, getCanUndo } from "../../reducers/editor-entities.reducer/notes-view.reducer";
 import { getMetaKeyLabel } from "../../utils";
 

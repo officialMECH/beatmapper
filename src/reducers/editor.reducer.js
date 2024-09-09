@@ -8,17 +8,9 @@ import { produce } from "immer";
 import { combineReducers } from "redux";
 import { createSelector } from "reselect";
 
-import { BEATS_PER_ZOOM_LEVEL, EVENTS_VIEW, NOTES_VIEW, ZOOM_LEVEL_MAX, ZOOM_LEVEL_MIN } from "../constants";
+import { BEATS_PER_ZOOM_LEVEL, EVENTS_VIEW, EVENT_COLORS, EVENT_EDIT_MODES, EVENT_TOOLS, NOTES_VIEW, NOTE_TOOLS, ZOOM_LEVEL_MAX, ZOOM_LEVEL_MIN } from "$/constants";
 import { floorToNearest } from "../utils";
 import { getCursorPositionInBeats } from "./navigation.reducer";
-
-const NOTE_TOOLS = ["left-block", "right-block", "mine", "obstacle"];
-
-const EVENT_TOOLS = ["on", "off", "flash", "fade"];
-
-const EVENT_EDIT_MODES = ["place", "select"];
-
-const EVENT_COLORS = ["red", "blue"];
 
 const initialState = {
 	// `notes` covers everything in the /notes editor view:
@@ -31,7 +23,7 @@ const initialState = {
 		gridPresets: {},
 	},
 	events: {
-		zoomLevel: 2,
+		zoomLevel: BEATS_PER_ZOOM_LEVEL[4],
 		isLockedToCurrentWindow: false,
 		areLasersLocked: false,
 		showLightingPreview: false,

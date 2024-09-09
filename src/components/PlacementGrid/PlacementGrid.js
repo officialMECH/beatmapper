@@ -1,8 +1,8 @@
 import React from "react";
 import { connect } from "react-redux";
 
+import { BLOCK_PLACEMENT_SQUARE_SIZE } from "$/constants";
 import * as actions from "../../actions";
-import { BLOCK_PLACEMENT_SQUARE_SIZE } from "../../constants";
 import { getColorForItem } from "../../helpers/colors.helpers";
 import { convertGridColumn, convertGridRow } from "../../helpers/grid.helpers";
 import { getGridSize, getMappingMode, getSelectedSong } from "../../reducers/songs.reducer";

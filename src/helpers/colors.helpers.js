@@ -1,11 +1,8 @@
 import Color from "color";
 import get from "lodash.get";
 
-import { COLORS } from "../constants";
+import { COLORS, COLOR_ELEMENT_DATA, DEFAULT_BLUE, DEFAULT_RED } from "$/constants";
 import { clamp, normalize } from "../utils";
-
-export const DEFAULT_RED = "#f21212";
-export const DEFAULT_BLUE = "#006cff";
 
 export const getColorForItem = (item, song) => {
 	const customColorsEnabled = get(song, "modSettings.customColors.isEnabled");
@@ -67,20 +64,12 @@ export const getColorForItem = (item, song) => {
 	}
 };
 
-const OVERDRIVE_MAX_FOR_ELEMENT = {
-	colorLeft: 4,
-	colorRight: 4,
-	envColorLeft: 2,
-	envColorRight: 2,
-	obstacleColor: 10,
-};
-
 export const formatColorForMods = (element, hex, overdrive = 0) => {
 	// For overdrive: every element ranges from 0 (no overdrive) to 1 (full).
 	// Different elements are affected by different amounts, though.
 	// left/right environment colors range from 1 to 3, whereas obstacles range
 	// from 1 to 10.
-	const overdriveMultiple = normalize(overdrive, 0, 1, 1, OVERDRIVE_MAX_FOR_ELEMENT[element]);
+	const overdriveMultiple = normalize(overdrive, 0, 1, 1, COLOR_ELEMENT_DATA[element].overdrive);
 
 	const rgb = Color(hex).rgb().color;
 

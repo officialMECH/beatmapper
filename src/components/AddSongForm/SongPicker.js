@@ -2,7 +2,7 @@ import React from "react";
 import { volume2 } from "react-icons-kit/feather/volume2";
 import styled from "styled-components";
 
-import { UNIT } from "../../constants";
+import { UNIT } from "$/constants";
 import { getWaveformDataForFile } from "../../helpers/audio.helpers";
 
 import FileUploader from "../FileUploader";

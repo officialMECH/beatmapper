@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import { COLORS } from "../../constants";
+import { COLORS } from "$/constants";
 
 const Mouse = ({ width = 18, height = 27, activeButton }) => {
 	return (

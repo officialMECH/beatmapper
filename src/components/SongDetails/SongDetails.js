@@ -3,8 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { useBlocker } from "react-router-dom";
 import styled from "styled-components";
 
+import { COLORS, ENVIRONMENT_DISPLAY_MAP, MEDIA_ROW_HEIGHT, UNIT } from "$/constants";
 import * as actions from "../../actions";
-import { COLORS, UNIT } from "../../constants";
 import { sortDifficultyIds } from "../../helpers/song.helpers";
 import useMount from "../../hooks/use-mount.hook";
 import { getEnabledFastWalls, getEnabledLightshow, getSelectedSong } from "../../reducers/songs.reducer";
@@ -26,21 +26,6 @@ import TextInput from "../TextInput";
 import BeatmapDifficultySettings from "./BeatmapDifficultySettings";
 import CustomColorSettings from "./CustomColorSettings";
 import MappingExtensionSettings from "./MappingExtensionSettings";
-
-const MEDIA_ROW_HEIGHT = 150;
-
-const ENVIRONMENT_DISPLAY_MAP = {
-	DefaultEnvironment: "The First (default)",
-	Origins: "Origins",
-	TriangleEnvironment: "Triangle",
-	BigMirrorEnvironment: "Big Mirror",
-	NiceEnvironment: "Nice",
-	KDAEnvironment: "KDA",
-	MonstercatEnvironment: "Monstercat",
-	DragonsEnvironment: "Dragons",
-	CrabRaveEnvironment: "Crab Rave",
-	PanicEnvironment: "Panic",
-};
 
 const SongDetails = ({ stopPlaying, updateSongDetails, togglePropertyForSelectedSong }) => {
 	const dispatch = useDispatch();

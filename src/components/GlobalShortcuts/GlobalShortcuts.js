@@ -7,8 +7,8 @@
 import React from "react";
 import { connect } from "react-redux";
 
+import { EVENTS_VIEW, NOTES_VIEW, SNAPPING_INCREMENTS } from "$/constants";
 import * as actions from "../../actions";
-import { EVENTS_VIEW, NOTES_VIEW, SNAPPING_INCREMENTS } from "../../constants";
 import { promptJumpToBeat, promptQuickSelect } from "../../helpers/prompts.helpers";
 import useMousewheel from "../../hooks/use-mousewheel.hook";
 import { isMetaKeyPressed, throttle } from "../../utils";

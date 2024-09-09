@@ -24,8 +24,8 @@ import { connect } from "react-redux";
 import { useLocation } from "react-router-dom";
 import styled from "styled-components";
 
+import { COLORS, EVENTS_VIEW, NOTES_VIEW, PREVIEW_VIEW, UNIT } from "$/constants";
 import * as actions from "../../actions";
-import { COLORS, EVENTS_VIEW, NOTES_VIEW, PREVIEW_VIEW, UNIT } from "../../constants";
 import { getNumOfBlocks, getNumOfMines, getNumOfObstacles } from "../../reducers/editor-entities.reducer/notes-view.reducer";
 import { getBackgroundOpacity, getRowHeight, getShowLightingPreview } from "../../reducers/editor.reducer";
 import { getBeatDepth, getIsLoading, getPlayNoteTick, getPlaybackRate, getVolume } from "../../reducers/navigation.reducer";

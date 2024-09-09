@@ -4,7 +4,7 @@ import { Icon } from "react-icons-kit";
 import { x } from "react-icons-kit/feather/x";
 import styled from "styled-components";
 
-import { COLORS, UNIT } from "../../constants";
+import { COLORS, UNIT } from "$/constants";
 
 import Spacer from "../Spacer";
 import UnstyledButton from "../UnstyledButton";

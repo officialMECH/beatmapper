@@ -1,7 +1,8 @@
 import { v1 as uuid } from "uuid";
 
+import { DEFAULT_NUM_COLS } from "$/constants";
 import { clamp, normalize, roundToNearest } from "../utils";
-import { DEFAULT_NUM_COLS, convertGridColumn, convertGridRow } from "./grid.helpers";
+import { convertGridColumn, convertGridRow } from "./grid.helpers";
 
 // These constants relate to the conversion to/from MappingExtensions
 // obstacles.

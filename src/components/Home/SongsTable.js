@@ -1,7 +1,7 @@
-import React from "react";
 import styled from "styled-components";
 
-import { COLORS, UNIT } from "../../constants";
+import { COLORS, UNIT } from "$/constants";
+
 import CenteredSpinner from "../CenteredSpinner";
 import SongsTableRow from "./SongsTableRow";
 

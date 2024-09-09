@@ -1,5 +1,6 @@
-import React from "react";
 import styled from "styled-components";
+
+import { NOTES_VIEW } from "$/constants";
 
 import EditorBottomPanel from "../EditorBottomPanel";
 import EditorRightPanel from "../EditorRightPanel";
@@ -7,8 +8,6 @@ import GlobalShortcuts from "../GlobalShortcuts";
 import MapVisualization from "../MapVisualization";
 import ReduxForwardingCanvas from "../ReduxForwardingCanvas";
 import SongInfo from "../SongInfo";
-
-import { NOTES_VIEW } from "../../constants";
 import KeyboardShortcuts from "./KeyboardShortcuts";
 
 const NotesEditor = () => {

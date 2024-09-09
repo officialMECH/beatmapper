@@ -1,6 +1,4 @@
-import * as React from "react";
-
-import { BLOCK_COLUMN_WIDTH, SONG_OFFSET } from "../../constants";
+import { BLOCK_COLUMN_WIDTH, SONG_OFFSET } from "$/constants";
 
 import Block from "../Block";
 

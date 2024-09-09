@@ -1,4 +1,3 @@
-import React from "react";
 import { arrowDown } from "react-icons-kit/feather/arrowDown";
 import { arrowDownLeft } from "react-icons-kit/feather/arrowDownLeft";
 import { arrowDownRight } from "react-icons-kit/feather/arrowDownRight";
@@ -11,8 +10,8 @@ import { circle } from "react-icons-kit/feather/circle";
 import { connect } from "react-redux";
 import styled from "styled-components";
 
+import { UNIT } from "$/constants";
 import * as actions from "../../actions";
-import { UNIT } from "../../constants";
 import { getSelectedCutDirection, getSelectedNoteTool } from "../../reducers/editor.reducer";
 
 import Heading from "../Heading";

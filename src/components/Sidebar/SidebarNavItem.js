@@ -1,9 +1,8 @@
-import React from "react";
 import Icon from "react-icons-kit";
 import { Tooltip } from "react-tippy";
 import styled from "styled-components";
 
-import { COLORS, SIDEBAR_WIDTH, UNIT } from "../../constants";
+import { COLORS, SIDEBAR_WIDTH, UNIT } from "$/constants";
 
 import BaseLink from "../BaseLink";
 

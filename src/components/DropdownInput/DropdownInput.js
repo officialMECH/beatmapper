@@ -1,12 +1,11 @@
 /*
   A Select, styled to look like our TextInput component
 */
-import React from "react";
 import { Icon } from "react-icons-kit";
 import { chevronDown } from "react-icons-kit/feather/chevronDown";
 import styled from "styled-components";
 
-import { COLORS } from "../../constants";
+import { COLORS } from "$/constants";
 
 const DropdownInput = ({ label, children, value, displayValue, ...delegated }) => {
 	const displayedText = displayValue || value;

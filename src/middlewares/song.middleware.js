@@ -4,8 +4,8 @@ import get from "lodash.get";
  */
 import { ActionCreators as ReduxUndoActionCreators } from "redux-undo";
 
+import { EVENTS_VIEW, HIGHEST_PRECISION } from "$/constants";
 import { adjustCursorPosition, finishLoadingSong, loadBeatmapEntities, pausePlaying, reloadWaveform, startPlaying } from "../actions";
-import { EVENTS_VIEW, HIGHEST_PRECISION } from "../constants";
 import { convertBeatsToMilliseconds, convertMillisecondsToBeats, snapToNearestBeat } from "../helpers/audio.helpers";
 import { convertBookmarksToRedux } from "../helpers/bookmarks.helpers";
 import { convertEventsToExportableJson, convertEventsToRedux } from "../helpers/events.helpers";

@@ -1,8 +1,8 @@
 import React from "react";
 import { connect } from "react-redux";
 
+import { NOTES_VIEW } from "$/constants";
 import * as actions from "../../actions";
-import { NOTES_VIEW } from "../../constants";
 import { getDefaultObstacleDuration } from "../../reducers/editor.reducer";
 import { isMetaKeyPressed } from "../../utils";
 

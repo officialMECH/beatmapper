@@ -2,8 +2,8 @@ import React from "react";
 import { connect } from "react-redux";
 import styled from "styled-components";
 
+import { COLORS } from "$/constants";
 import * as actions from "../../actions";
-import { COLORS } from "../../constants";
 import usePointerUpHandler from "../../hooks/use-pointer-up-handler.hook";
 import { makeGetEventsForTrack, makeGetInitialTrackLightingColorType } from "../../reducers/editor-entities.reducer/events-view.reducer";
 import { getSelectedEventColor, getSelectedEventEditMode, getSelectedEventTool } from "../../reducers/editor.reducer";

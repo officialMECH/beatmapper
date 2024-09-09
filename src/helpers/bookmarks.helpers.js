@@ -1,11 +1,4 @@
-export const BOOKMARK_COLORS = [
-	{ background: "#F50057", text: "white" }, // pink
-	{ background: "#FFEA00", text: "black" }, // yellow
-	{ background: "#D500F9", text: "white" }, // purple
-	{ background: "#64DD17", text: "black" }, // green
-	{ background: "#0091EA", text: "white" }, // blue
-	{ background: "#FF9100", text: "black" }, // orange
-];
+import { BOOKMARK_COLORS } from "$/constants";
 
 export const getNewBookmarkColor = (bookmarks) => {
 	// I have 6 unique colors, and it's important that these are the first-used

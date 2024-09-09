@@ -1,6 +1,8 @@
 import { useMemo } from "react";
 import styled from "styled-components";
-import { COLORS } from "../../constants";
+
+import { COLORS } from "$/constants";
+
 import Mouse from "./Mouse";
 import { IconRow, KeyIcon, MetaKey, OptionKey, Or, Plus, Sidenote } from "./ShortcutHelpers";
 

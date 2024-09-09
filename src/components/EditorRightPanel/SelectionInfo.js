@@ -1,4 +1,3 @@
-import React from "react";
 import { arrowDown } from "react-icons-kit/feather/arrowDown";
 import { arrowUp } from "react-icons-kit/feather/arrowUp";
 import { maximize2 as swapIcon } from "react-icons-kit/feather/maximize2";
@@ -6,8 +5,8 @@ import { connect } from "react-redux";
 import { Tooltip } from "react-tippy";
 import styled from "styled-components";
 
+import { COLORS, NOTES_VIEW, UNIT } from "$/constants";
 import * as actions from "../../actions";
-import { COLORS, NOTES_VIEW, UNIT } from "../../constants";
 import { getHasCopiedNotes } from "../../reducers/clipboard.reducer";
 import { getMetaKeyLabel, interleave } from "../../utils";
 import { ACTION_WIDTH, HALF_ACTION_WIDTH } from "./EditorRightPanel.constants";

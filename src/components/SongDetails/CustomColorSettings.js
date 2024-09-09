@@ -2,8 +2,8 @@ import React from "react";
 import { connect } from "react-redux";
 import styled from "styled-components";
 
+import { COLOR_ELEMENT_DATA, COLOR_ELEMENT_IDS, UNIT } from "$/constants";
 import * as actions from "../../actions";
-import { UNIT } from "../../constants";
 import { getCustomColors } from "../../reducers/songs.reducer";
 
 import CenteredSpinner from "../CenteredSpinner";
@@ -15,31 +15,6 @@ import QuestionTooltip from "../QuestionTooltip";
 import Spacer from "../Spacer";
 
 const ColorPicker = React.lazy(() => import("../ColorPicker"));
-
-const ELEMENT_IDS = ["colorLeft", "colorRight", "envColorLeft", "envColorRight", "obstacleColor"];
-
-const ELEMENT_DATA = {
-	colorLeft: {
-		label: "Left Saber",
-		maxValue: 5,
-	},
-	colorRight: {
-		label: "Right Saber",
-		maxValue: 5,
-	},
-	envColorLeft: {
-		label: "Environment 1",
-		maxValue: 3,
-	},
-	envColorRight: {
-		label: "Environment 2",
-		maxValue: 3,
-	},
-	obstacleColor: {
-		label: "Obstacles",
-		maxValue: 10,
-	},
-};
 
 const CustomColorSettings = ({ customColors, toggleModForSong, updateModColor, updateModColorOverdrive }) => {
 	return (
@@ -59,7 +34,7 @@ const CustomColorSettings = ({ customColors, toggleModForSong, updateModColor, u
 				<React.Suspense fallback={<CenteredSpinner />}>
 					<Spacer size={UNIT * 4} />
 					<Row>
-						{ELEMENT_IDS.map((elementId) => {
+						{COLOR_ELEMENT_IDS.map((elementId) => {
 							const color = customColors[elementId];
 							const overdrive = customColors[`${elementId}Overdrive`];
 
@@ -67,7 +42,7 @@ const CustomColorSettings = ({ customColors, toggleModForSong, updateModColor, u
 								<Cell key={elementId}>
 									<ColorPicker colorId={elementId} color={color} updateColor={updateModColor} overdrive={overdrive} />
 									<Spacer size={UNIT * 2} />
-									<Heading size={3}>{ELEMENT_DATA[elementId].label}</Heading>
+									<Heading size={3}>{COLOR_ELEMENT_DATA[elementId].label}</Heading>
 									<Spacer size={UNIT * 3} />
 									<Heading size={4}>Overdrive</Heading>
 									<Spacer size={UNIT * 1} />

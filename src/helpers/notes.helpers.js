@@ -1,6 +1,6 @@
 import { v1 as uuid } from "uuid";
 
-const HUMANIZED_DIRECTIONS = ["up", "down", "left", "right", "upLeft", "upRight", "downLeft", "downRight", "face"];
+import { HUMANIZED_DIRECTIONS } from "$/constants";
 
 /**
  * NOTE: Currently, the "redux" variant of the blocks format isn't used.

@@ -5,9 +5,9 @@ import { filePlus } from "react-icons-kit/feather/filePlus";
 import { connect } from "react-redux";
 import styled from "styled-components";
 
+import { COLORS, UNIT } from "$/constants";
 import * as actions from "../../actions";
 import heroVideo from "../../assets/videos/hero-video.mp4";
-import { COLORS, UNIT } from "../../constants";
 import useWindowDimensions from "../../hooks/use-window-dimensions.hook";
 import { getDemoSong } from "../../reducers/songs.reducer";
 

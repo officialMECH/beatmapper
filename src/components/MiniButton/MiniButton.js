@@ -1,8 +1,7 @@
-import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
-import { COLORS, UNIT } from "../../constants";
+import { COLORS, UNIT } from "$/constants";
 
 import PixelShifter from "../PixelShifter";
 import UnfocusedButton from "../UnfocusedButton";

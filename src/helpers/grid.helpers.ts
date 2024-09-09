@@ -1,14 +1,4 @@
-export const DEFAULT_NUM_COLS = 4;
-export const DEFAULT_NUM_ROWS = 3;
-export const DEFAULT_COL_WIDTH = 1;
-export const DEFAULT_ROW_HEIGHT = 1;
-
-export const DEFAULT_GRID = {
-	numRows: DEFAULT_NUM_ROWS,
-	numCols: DEFAULT_NUM_COLS,
-	colWidth: DEFAULT_COL_WIDTH,
-	rowHeight: DEFAULT_ROW_HEIGHT,
-};
+import { DEFAULT_NUM_COLS } from "$/constants";
 
 export const convertGridColumn = (colIndex: number, numCols: number, colWidth: number) => {
 	// Getting the index is according to this formula.

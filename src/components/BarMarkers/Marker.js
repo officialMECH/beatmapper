@@ -1,9 +1,8 @@
 import React from "react";
 import { Font } from "three-stdlib";
 
+import { BLOCK_COLUMN_WIDTH, DEFAULT_NUM_ROWS, SURFACE_WIDTH } from "$/constants";
 import oswaldGlyphs from "../../assets/fonts/oswald.json";
-import { BLOCK_COLUMN_WIDTH, SURFACE_WIDTH } from "../../constants";
-import { DEFAULT_NUM_ROWS } from "../../helpers/grid.helpers";
 
 const font = new Font(oswaldGlyphs);
 const textGeometryOptions = {

@@ -1,7 +1,7 @@
 import { NavLink as NavLinkRaw } from "react-router-dom";
 import styled from "styled-components";
 
-import { COLORS } from "../../constants";
+import { COLORS } from "$/constants";
 
 import Logo from "../Logo";
 import NavGroup from "./NavGroup";

@@ -1,7 +1,7 @@
 import { animated, useSpring } from "@react-spring/three";
 import { connect } from "react-redux";
 
-import { SURFACE_WIDTH } from "../../constants";
+import { SURFACE_WIDTH } from "$/constants";
 import { convertMillisecondsToBeats } from "../../helpers/audio.helpers";
 import { getColorForItem } from "../../helpers/colors.helpers";
 import useOnChange from "../../hooks/use-on-change.hook";

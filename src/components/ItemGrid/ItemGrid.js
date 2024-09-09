@@ -1,9 +1,8 @@
-import React from "react";
 import { connect } from "react-redux";
 import styled from "styled-components";
 
+import { NOTES_VIEW, UNIT } from "$/constants";
 import * as actions from "../../actions";
-import { NOTES_VIEW, UNIT } from "../../constants";
 
 import Heading from "../Heading";
 import IconButton from "../IconButton";

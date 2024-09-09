@@ -1,9 +1,8 @@
-import React from "react";
 import { connect } from "react-redux";
 import styled from "styled-components";
 
+import { UNIT } from "$/constants";
 import * as actions from "../../actions";
-import { UNIT } from "../../constants";
 import { getGraphicsLevel, getProcessingDelay } from "../../reducers/user.reducer";
 
 import Heading from "../Heading";

@@ -3,8 +3,7 @@ import { Icon } from "react-icons-kit";
 import { image } from "react-icons-kit/feather/image";
 import styled from "styled-components";
 
-import sampleCoverArtSrc from "../../assets/images/sample-cover-art.jpg";
-import { COLORS, UNIT } from "../../constants";
+import { COLORS, UNIT } from "$/constants";
 
 import Spacer from "../Spacer";
 

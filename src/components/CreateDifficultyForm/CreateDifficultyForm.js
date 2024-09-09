@@ -5,8 +5,8 @@ import { connect } from "react-redux";
 import { Tooltip } from "react-tippy";
 import styled from "styled-components";
 
+import { DIFFICULTIES, UNIT } from "$/constants";
 import * as actions from "../../actions";
-import { DIFFICULTIES, UNIT } from "../../constants";
 import { getLabelForDifficulty } from "../../helpers/song.helpers";
 import { getDifficulty } from "../../reducers/editor-entities.reducer";
 import { getSelectedSongDifficultyIds, getSelectedSongId } from "../../reducers/songs.reducer";

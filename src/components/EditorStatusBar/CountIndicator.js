@@ -1,9 +1,8 @@
-import React from "react";
 import { Icon } from "react-icons-kit";
 import { Tooltip } from "react-tippy";
 import styled from "styled-components";
 
-import { UNIT } from "../../constants";
+import { UNIT } from "$/constants";
 
 import Spacer from "../Spacer";
 

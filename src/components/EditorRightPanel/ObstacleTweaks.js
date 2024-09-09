@@ -1,8 +1,7 @@
-import React from "react";
 import { connect } from "react-redux";
 
+import { UNIT } from "$/constants";
 import * as actions from "../../actions";
-import { UNIT } from "../../constants";
 import { promptChangeObstacleDuration } from "../../helpers/prompts.helpers";
 import { getSelectedObstacles } from "../../reducers/editor-entities.reducer/notes-view.reducer";
 import { getEnabledFastWalls } from "../../reducers/songs.reducer";

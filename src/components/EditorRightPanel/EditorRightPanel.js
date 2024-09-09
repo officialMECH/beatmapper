@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import styled from "styled-components";
 
-import { UNIT } from "../../constants";
+import { UNIT } from "$/constants";
 import useOnChange from "../../hooks/use-on-change.hook";
 import { getSelectedBlocks, getSelectedMines, getSelectedObstacles } from "../../reducers/editor-entities.reducer/notes-view.reducer";
 import { getMappingMode, getSelectedSong } from "../../reducers/songs.reducer";

@@ -2,7 +2,7 @@ import { produce } from "immer";
 import undoable, { groupByActionTypes, includeAction } from "redux-undo";
 import { createSelector } from "reselect";
 
-import { EVENTS_VIEW, EVENT_TRACKS } from "../../constants";
+import { EVENTS_VIEW, EVENT_TRACKS, LIGHTING_TRACKS } from "$/constants";
 import { nudgeEvents } from "../../helpers/events.helpers";
 import { flatten } from "../../utils";
 import { getStartAndEndBeat } from "../editor.reducer";
@@ -14,8 +14,6 @@ const createInitialState = () => ({
 		return acc;
 	}, {}),
 });
-
-const LIGHTING_TRACKS = ["laserLeft", "laserRight", "laserBack", "primaryLight", "trackNeons"];
 
 const eventsView = undoable(
 	(state = createInitialState(), action = undefined) => {

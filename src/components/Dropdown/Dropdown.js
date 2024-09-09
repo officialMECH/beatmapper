@@ -2,7 +2,7 @@ import React from "react";
 import { chevronDown } from "react-icons-kit/feather/chevronDown";
 import styled from "styled-components";
 
-import { COLORS, UNIT } from "../../constants";
+import { COLORS, UNIT } from "$/constants";
 
 import Icon from "react-icons-kit";
 import Spacer from "../Spacer";

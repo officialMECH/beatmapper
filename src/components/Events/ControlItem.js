@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-import { UNIT } from "../../constants";
+import { UNIT } from "$/constants";
 
 import Heading from "../Heading";
 import Spacer from "../Spacer";

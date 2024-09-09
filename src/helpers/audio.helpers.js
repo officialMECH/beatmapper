@@ -1,10 +1,7 @@
 import { default as WaveformData } from "waveform-data";
 
+import { LOWEST_COMMON_MULTIPLE } from "$/constants";
 import { roundToNearest } from "../utils";
-
-// Our most precise snapping increments are 1/24 and 1/32.
-// These two numbers share 1/96 as their lowest common multiple
-const LOWEST_COMMON_MULTIPLE = 1 / 96;
 
 export const createHtmlAudioElement = (url) => {
 	const elem = document.createElement("audio");

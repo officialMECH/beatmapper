@@ -8,7 +8,7 @@
  */
 import { combineReducers } from "redux";
 
-import { EVENTS_VIEW, NOTES_VIEW } from "../../constants";
+import { EVENTS_VIEW, NOTES_VIEW } from "$/constants";
 import eventsView, { getSelectedEvents } from "./events-view.reducer";
 import notesView, { getSelectedNotesAndObstacles } from "./notes-view.reducer";
 

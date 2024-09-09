@@ -3,7 +3,7 @@ import Icon from "react-icons-kit";
 import { externalLink } from "react-icons-kit/feather/externalLink";
 import styled from "styled-components";
 
-import { COLORS } from "../../constants";
+import { COLORS } from "$/constants";
 import { slugify, throttle } from "../../utils";
 
 import BaseLink from "../BaseLink";

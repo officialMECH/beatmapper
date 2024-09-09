@@ -1,5 +1,4 @@
 import Color from "color";
-import React from "react";
 import { Icon } from "react-icons-kit";
 import { lock as lockIcon } from "react-icons-kit/feather/lock";
 import { maximize as selectToolIcon } from "react-icons-kit/feather/maximize";
@@ -11,8 +10,8 @@ import { connect } from "react-redux";
 import { Tooltip } from "react-tippy";
 import styled from "styled-components";
 
+import { COLORS, EVENTS_VIEW, UNIT, ZOOM_LEVEL_MAX, ZOOM_LEVEL_MIN } from "$/constants";
 import * as actions from "../../actions";
-import { COLORS, EVENTS_VIEW, UNIT, ZOOM_LEVEL_MAX, ZOOM_LEVEL_MIN } from "../../constants";
 import { getColorForItem } from "../../helpers/colors.helpers";
 import { getAreLasersLocked, getIsLockedToCurrentWindow, getSelectedEventColor, getSelectedEventEditMode, getSelectedEventTool, getZoomLevel } from "../../reducers/editor.reducer";
 

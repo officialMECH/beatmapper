@@ -1,6 +1,6 @@
+import { DEFAULT_GRID } from "$/constants";
 import { convertMillisecondsToBeats } from "../helpers/audio.helpers";
 import { formatColorFromImport } from "../helpers/colors.helpers";
-import { DEFAULT_GRID } from "../helpers/grid.helpers";
 import { isEmpty, roundAwayFloatingPointNonsense } from "../utils";
 
 export const getFileFromArchive = (archive, filename) => {

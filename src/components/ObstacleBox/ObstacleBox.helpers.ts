@@ -1,5 +1,5 @@
+import { BLOCK_PLACEMENT_SQUARE_SIZE, SONG_OFFSET } from "$/constants";
 import type { MappingExtensionObstacle, Obstacle } from "$/types";
-import { BLOCK_PLACEMENT_SQUARE_SIZE, SONG_OFFSET } from "../../constants";
 
 export const getPositionForObstacle = (obstacle: Obstacle, obstacleDimensions: { width: number; height: number; depth: number }, zOffset: number): [number, number, number] => {
 	const position = { x: 0, y: 0, z: 0 };

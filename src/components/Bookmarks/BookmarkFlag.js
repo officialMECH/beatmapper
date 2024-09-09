@@ -1,7 +1,6 @@
-import React from "react";
 import styled from "styled-components";
 
-import { UNIT } from "../../constants";
+import { UNIT } from "$/constants";
 
 import UnfocusedButton from "../UnfocusedButton";
 

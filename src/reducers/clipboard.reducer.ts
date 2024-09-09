@@ -1,4 +1,4 @@
-import { NOTES_VIEW } from "../constants";
+import { NOTES_VIEW } from "$/constants";
 
 interface State {
 	view: "notes" | "events" | null;

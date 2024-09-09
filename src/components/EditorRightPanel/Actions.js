@@ -1,10 +1,9 @@
-import React from "react";
 import { connect } from "react-redux";
 import { Tooltip } from "react-tippy";
 import styled from "styled-components";
 
+import { NOTES_VIEW, UNIT } from "$/constants";
 import * as actions from "../../actions";
-import { NOTES_VIEW, UNIT } from "../../constants";
 import { promptJumpToBeat, promptQuickSelect } from "../../helpers/prompts.helpers";
 import { getMetaKeyLabel } from "../../utils";
 

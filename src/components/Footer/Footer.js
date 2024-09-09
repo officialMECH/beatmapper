@@ -1,7 +1,6 @@
-import React from "react";
 import styled from "styled-components";
 
-import { COLORS, FOOTER_HEIGHT, UNIT } from "../../constants";
+import { COLORS, FOOTER_HEIGHT, UNIT } from "$/constants";
 
 import Link from "../Link";
 import Logo from "../Logo";

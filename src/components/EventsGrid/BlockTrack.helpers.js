@@ -1,4 +1,4 @@
-import { EVENT_TRACKS } from "../../constants";
+import { EVENT_TRACKS } from "$/constants";
 
 const getIsEventOn = (ev) => ev.type === "on" || ev.type === "flash";
 

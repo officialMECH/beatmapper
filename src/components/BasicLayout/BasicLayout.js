@@ -1,7 +1,6 @@
-import React from "react";
 import styled from "styled-components";
 
-import { FOOTER_HEIGHT, HEADER_HEIGHT, UNIT } from "../../constants";
+import { FOOTER_HEIGHT, HEADER_HEIGHT, UNIT } from "$/constants";
 
 import Footer from "../Footer";
 import Header from "../Header";

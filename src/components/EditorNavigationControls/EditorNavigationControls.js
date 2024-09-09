@@ -1,4 +1,3 @@
-import React from "react";
 import { fastForward } from "react-icons-kit/feather/fastForward";
 import { pause } from "react-icons-kit/feather/pause";
 import { play } from "react-icons-kit/feather/play";
@@ -8,8 +7,8 @@ import { skipForward } from "react-icons-kit/feather/skipForward";
 import { connect } from "react-redux";
 import styled from "styled-components";
 
+import { COLORS, SNAPPING_INCREMENTS, UNIT } from "$/constants";
 import * as actions from "../../actions";
-import { COLORS, SNAPPING_INCREMENTS, UNIT } from "../../constants";
 
 import Dropdown from "../Dropdown";
 import IconButton from "../IconButton";

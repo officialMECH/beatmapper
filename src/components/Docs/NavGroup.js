@@ -3,7 +3,7 @@ import Icon from "react-icons-kit";
 import { chevronDown } from "react-icons-kit/feather/chevronDown";
 import styled, { keyframes } from "styled-components";
 
-import { COLORS } from "../../constants";
+import { COLORS } from "$/constants";
 
 import UnstyledButton from "../UnstyledButton";
 

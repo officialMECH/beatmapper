@@ -1,10 +1,9 @@
-import React from "react";
 import { connect } from "react-redux";
 import { Tooltip } from "react-tippy";
 import styled from "styled-components";
 
+import { COLORS, DIFFICULTIES, DIFFICULTY_COLORS, UNIT } from "$/constants";
 import * as actions from "../../actions";
-import { COLORS, DIFFICULTIES, DIFFICULTY_COLORS, UNIT } from "../../constants";
 import { getLabelForDifficulty } from "../../helpers/song.helpers";
 
 import CoverArtImage from "../CoverArtImage";

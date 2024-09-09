@@ -1,6 +1,6 @@
 import { v1 as uuid } from "uuid";
 
-import { EVENTS_VIEW, HIGHEST_PRECISION, NOTES_VIEW } from "./constants";
+import { EVENTS_VIEW, HIGHEST_PRECISION, NOTES_VIEW } from "$/constants";
 import { getNewBookmarkColor } from "./helpers/bookmarks.helpers";
 import { getSortedBookmarksArray } from "./reducers/bookmarks.reducer";
 import { getCopiedData } from "./reducers/clipboard.reducer";

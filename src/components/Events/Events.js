@@ -1,8 +1,7 @@
-import React from "react";
 import { connect } from "react-redux";
 import styled from "styled-components";
 
-import { EVENTS_VIEW, SIDEBAR_WIDTH } from "../../constants";
+import { EVENTS_VIEW, SIDEBAR_WIDTH } from "$/constants";
 import useWindowDimensions from "../../hooks/use-window-dimensions.hook";
 
 import EventsGrid from "../EventsGrid";

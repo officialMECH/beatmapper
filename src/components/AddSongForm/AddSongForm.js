@@ -3,8 +3,8 @@ import { connect } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
+import { COLORS, DIFFICULTIES, MEDIA_ROW_HEIGHT, UNIT } from "$/constants";
 import * as actions from "../../actions";
-import { COLORS, DIFFICULTIES, UNIT } from "../../constants";
 import { getSongIdFromName } from "../../helpers/song.helpers";
 import { getAllSongIds } from "../../reducers/songs.reducer";
 import { saveLocalCoverArtFile, saveSongFile } from "../../services/file.service";
@@ -19,8 +19,6 @@ import TextInput from "../TextInput";
 
 import CoverArtPicker from "./CoverArtPicker";
 import SongPicker from "./SongPicker";
-
-const MEDIA_ROW_HEIGHT = 150;
 
 const AddSongForm = ({ createNewSong, currentSongIds }) => {
 	const navigate = useNavigate();

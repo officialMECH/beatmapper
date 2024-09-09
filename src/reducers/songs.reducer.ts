@@ -2,9 +2,8 @@ import { produce } from "immer";
 import get from "lodash.get";
 import { createSelector } from "reselect";
 
+import { DEFAULT_COL_WIDTH, DEFAULT_GRID, DEFAULT_MOD_SETTINGS, DEFAULT_ROW_HEIGHT } from "$/constants";
 import type { Song } from "$/types";
-import { DEFAULT_BLUE, DEFAULT_RED } from "../helpers/colors.helpers";
-import { DEFAULT_COL_WIDTH, DEFAULT_GRID, DEFAULT_ROW_HEIGHT } from "../helpers/grid.helpers";
 import { sortDifficultyIds } from "../helpers/song.helpers";
 import { isEmpty } from "../utils";
 
@@ -18,34 +17,6 @@ const initialState = {
 	byId: {},
 	selectedId: null,
 	processingImport: false,
-};
-
-const DEFAULT_NOTE_JUMP_SPEEDS = {
-	Easy: 10,
-	Normal: 10,
-	Hard: 12,
-	Expert: 15,
-	ExpertPlus: 18,
-};
-
-const DEFAULT_MOD_SETTINGS = {
-	customColors: {
-		isEnabled: false,
-		colorLeft: DEFAULT_RED,
-		colorLeftOverdrive: 0,
-		colorRight: DEFAULT_BLUE,
-		colorRightOverdrive: 0,
-		envColorLeft: DEFAULT_RED,
-		envColorLeftOverdrive: 0,
-		envColorRight: DEFAULT_BLUE,
-		envColorRightOverdrive: 0,
-		obstacleColor: DEFAULT_RED,
-		obstacleColorOverdrive: 0,
-	},
-	mappingExtensions: {
-		isEnabled: false,
-		...DEFAULT_GRID,
-	},
 };
 
 export default function songsReducer(state: State = initialState, action: any = undefined) {

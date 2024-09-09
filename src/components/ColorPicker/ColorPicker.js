@@ -3,7 +3,7 @@ import { ChromePicker } from "react-color";
 import OutsideClickHandler from "react-outside-click-handler";
 import styled from "styled-components";
 
-import { COLORS } from "../../constants";
+import { COLORS } from "$/constants";
 
 import UnstyledButton from "../UnstyledButton";
 

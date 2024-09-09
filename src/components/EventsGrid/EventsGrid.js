@@ -2,8 +2,8 @@ import React from "react";
 import { connect } from "react-redux";
 import styled from "styled-components";
 
+import { COLORS, EVENT_TRACKS, UNIT } from "$/constants";
 import * as actions from "../../actions";
-import { COLORS, EVENT_TRACKS, UNIT } from "../../constants";
 import useMousePositionOverElement from "../../hooks/use-mouse-position-over-element.hook";
 import usePointerUpHandler from "../../hooks/use-pointer-up-handler.hook";
 import { getAreLasersLocked, getRowHeight, getSelectedEventBeat, getSelectedEventEditMode, getSelectionBox, getStartAndEndBeat } from "../../reducers/editor.reducer";

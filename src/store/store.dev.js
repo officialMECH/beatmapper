@@ -2,7 +2,6 @@ import { applyMiddleware, compose, createStore } from "redux";
 import * as storage from "redux-storage";
 
 import DevTools from "../components/DevTools";
-import { DEVTOOLS_ENABLED_IN_DEV } from "../constants";
 import rootReducer from "../reducers";
 
 import { createAllSharedMiddlewares, createPersistenceEngine } from "./shared";
@@ -14,7 +13,7 @@ export default function configureStore(initialState) {
 	const wrappedReducer = storage.reducer(rootReducer);
 
 	let enhancers;
-	if (DEVTOOLS_ENABLED_IN_DEV) {
+	if (import.meta.env.VITE_ENABLE_DEVTOOLS) {
 		enhancers = compose(applyMiddleware(...middlewares), DevTools.instrument());
 	} else {
 		enhancers = compose(applyMiddleware(...middlewares));
