@@ -1,4 +1,5 @@
-import { DEFAULT_GRID } from "$/constants";
+import { COLOR_ELEMENT_IDS, DEFAULT_GRID } from "$/constants";
+import { Difficulty } from "$/types";
 import { convertMillisecondsToBeats } from "../helpers/audio.helpers";
 import { formatColorFromImport } from "../helpers/colors.helpers";
 import { isEmpty, roundAwayFloatingPointNonsense } from "../utils";
@@ -16,15 +17,15 @@ export const getFileFromArchive = (archive, filename) => {
 export const getDifficultyRankForDifficulty = (difficulty) => {
 	// prettier-ignore
 	switch (difficulty.id) {
-		case "Easy":
+		case Difficulty.EASY:
 			return 1;
-		case "Normal":
+		case Difficulty.NORMAL:
 			return 3;
-		case "Hard":
+		case Difficulty.HARD:
 			return 5;
-		case "Expert":
+		case Difficulty.EXPERT:
 			return 7;
-		case "ExpertPlus":
+		case Difficulty.EXPERT_PLUS:
 			return 9;
 		default:
 			throw new Error("Unrecognized difficulty");
@@ -91,9 +92,8 @@ export const deriveDefaultModSettingsFromBeatmap = (beatmapSet) => {
 		// If we set any custom colors on previous beatmaps, we can skip this.
 		if (!modSettings.customColors) {
 			const customColors = {};
-			const colorKeys = ["colorLeft", "colorRight", "envColorLeft", "envColorRight", "obstacleColor"];
 
-			colorKeys.forEach((key) => {
+			COLOR_ELEMENT_IDS.forEach((key) => {
 				const _key = `_${key}`;
 
 				if (beatmap._customData[_key]) {

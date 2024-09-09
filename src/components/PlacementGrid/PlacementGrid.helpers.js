@@ -1,3 +1,4 @@
+import { Direction, ObjectPlacementMode } from "$/types";
 import { convertCartesianToPolar } from "../../utils";
 
 const getDirectionForStandardMode = (angle) => {
@@ -28,21 +29,21 @@ const getDirectionForStandardMode = (angle) => {
 
 	switch (chunkIndex) {
 		case 0:
-			return 3;
+			return Direction.RIGHT;
 		case 1:
-			return 7;
+			return Direction.DOWN_RIGHT;
 		case 2:
-			return 1;
+			return Direction.DOWN;
 		case 3:
-			return 6;
+			return Direction.DOWN_LEFT;
 		case 4:
-			return 2;
+			return Direction.LEFT;
 		case 5:
-			return 4;
+			return Direction.UP_LEFT;
 		case 6:
-			return 0;
+			return Direction.UP;
 		case 7:
-			return 5;
+			return Direction.UP_RIGHT;
 		default:
 			throw new Error(`Unrecognized chunk index: ${chunkIndex}`);
 	}
@@ -76,7 +77,7 @@ export const getDirectionForDrag = (initialPosition, currentPosition, mappingMod
 	const angle = (angleInRadians * 180) / Math.PI;
 
 	// We need to convert this index to the batty set of directions the app uses.
-	if (mappingMode === "mapping-extensions" && precisionPlacement) {
+	if (mappingMode === ObjectPlacementMode.EXTENSIONS && precisionPlacement) {
 		return getDirectionForMappingExtensions(angle);
 	}
 	return getDirectionForStandardMode(angle);

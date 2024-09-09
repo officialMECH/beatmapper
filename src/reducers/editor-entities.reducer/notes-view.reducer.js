@@ -3,7 +3,8 @@ import { combineReducers } from "redux";
 import undoable, { groupByActionTypes, includeAction } from "redux-undo";
 import { createSelector } from "reselect";
 
-import { NOTES_VIEW, SURFACE_DEPTHS } from "$/constants";
+import { SURFACE_DEPTHS } from "$/constants";
+import { ObjectTool, ObjectType, View } from "$/types";
 import { calculateVisibleRange } from "../../helpers/editor.helpers";
 import { calculateNoteDensity, findNoteIndexByProperties, nudgeNotes, swapNotes } from "../../helpers/notes.helpers";
 import { nudgeObstacles, swapObstacles } from "../../helpers/obstacles.helpers";
@@ -18,13 +19,11 @@ const initialState = {
 
 const getItemType = (item) => {
 	switch (item) {
-		case "left-block":
-		case "red-block": // Legacy value
+		case ObjectTool.LEFT_NOTE:
 			return 0;
-		case "right-block":
-		case "blue-block": // Legacy value
+		case ObjectTool.RIGHT_NOTE: // Legacy value
 			return 1;
-		case "mine":
+		case ObjectTool.BOMB_NOTE:
 			return 3;
 		default: {
 			throw new Error(`Unrecognized item: ${item}`);
@@ -124,7 +123,7 @@ const notes = (state = initialState.notes, action = undefined) => {
 		}
 
 		case "CUT_SELECTION": {
-			if (action.view !== NOTES_VIEW) {
+			if (action.view !== View.BEATMAP) {
 				return state;
 			}
 
@@ -134,7 +133,7 @@ const notes = (state = initialState.notes, action = undefined) => {
 		case "PASTE_SELECTION": {
 			const { pasteAtBeat, view, data } = action;
 
-			if (view !== NOTES_VIEW || data.length === 0) {
+			if (view !== View.BEATMAP || data.length === 0) {
 				return state;
 			}
 
@@ -227,7 +226,7 @@ const notes = (state = initialState.notes, action = undefined) => {
 		}
 
 		case "SELECT_ALL": {
-			if (action.view !== NOTES_VIEW) {
+			if (action.view !== View.BEATMAP) {
 				return state;
 			}
 			return state.map((note) => ({
@@ -236,7 +235,7 @@ const notes = (state = initialState.notes, action = undefined) => {
 			}));
 		}
 		case "DESELECT_ALL": {
-			if (action.view !== NOTES_VIEW) {
+			if (action.view !== View.BEATMAP) {
 				return state;
 			}
 			return state.map((note) => ({
@@ -248,7 +247,7 @@ const notes = (state = initialState.notes, action = undefined) => {
 		case "SELECT_ALL_IN_RANGE": {
 			const { start, end, view } = action;
 
-			if (view !== NOTES_VIEW) {
+			if (view !== View.BEATMAP) {
 				return state;
 			}
 
@@ -270,7 +269,7 @@ const notes = (state = initialState.notes, action = undefined) => {
 		case "NUDGE_SELECTION": {
 			const { view, direction, amount } = action;
 
-			if (view !== NOTES_VIEW) {
+			if (view !== View.BEATMAP) {
 				return state;
 			}
 
@@ -280,14 +279,14 @@ const notes = (state = initialState.notes, action = undefined) => {
 		case "DESELECT_ALL_OF_TYPE": {
 			const { itemType } = action;
 
-			if (itemType === "obstacle") {
+			if (itemType === ObjectType.OBSTACLE) {
 				return state;
 			}
 
 			const typeMap = {
-				0: "block",
-				1: "block",
-				3: "mine",
+				0: ObjectType.NOTE,
+				1: ObjectType.NOTE,
+				3: ObjectType.BOMB,
 			};
 
 			return state.map((note) => {
@@ -359,7 +358,7 @@ const obstacles = (state = initialState.obstacles, action = undefined) => {
 		}
 
 		case "CUT_SELECTION": {
-			if (action.view !== NOTES_VIEW) {
+			if (action.view !== View.BEATMAP) {
 				return state;
 			}
 
@@ -368,7 +367,7 @@ const obstacles = (state = initialState.obstacles, action = undefined) => {
 		case "PASTE_SELECTION": {
 			const { pasteAtBeat, view, data } = action;
 
-			if (view !== NOTES_VIEW || data.length === 0) {
+			if (view !== View.BEATMAP || data.length === 0) {
 				return state;
 			}
 
@@ -415,7 +414,7 @@ const obstacles = (state = initialState.obstacles, action = undefined) => {
 		}
 
 		case "SELECT_ALL": {
-			if (action.view !== NOTES_VIEW) {
+			if (action.view !== View.BEATMAP) {
 				return state;
 			}
 			return state.map((obstacle) => ({
@@ -424,7 +423,7 @@ const obstacles = (state = initialState.obstacles, action = undefined) => {
 			}));
 		}
 		case "DESELECT_ALL": {
-			if (action.view !== NOTES_VIEW) {
+			if (action.view !== View.BEATMAP) {
 				return state;
 			}
 			return state.map((obstacle) => ({
@@ -436,7 +435,7 @@ const obstacles = (state = initialState.obstacles, action = undefined) => {
 		case "SELECT_ALL_IN_RANGE": {
 			const { start, end, view } = action;
 
-			if (view !== NOTES_VIEW) {
+			if (view !== View.BEATMAP) {
 				return state;
 			}
 
@@ -458,7 +457,7 @@ const obstacles = (state = initialState.obstacles, action = undefined) => {
 		case "NUDGE_SELECTION": {
 			const { view, direction, amount } = action;
 
-			if (view !== NOTES_VIEW) {
+			if (view !== View.BEATMAP) {
 				return state;
 			}
 
@@ -486,7 +485,7 @@ const obstacles = (state = initialState.obstacles, action = undefined) => {
 		case "DESELECT_ALL_OF_TYPE": {
 			const { itemType } = action;
 
-			if (itemType !== "obstacle") {
+			if (itemType !== ObjectType.OBSTACLE) {
 				return state;
 			}
 

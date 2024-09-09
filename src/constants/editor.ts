@@ -1,16 +1,10 @@
+import { EventColor, EventEditMode, EventTool, ObjectTool } from "$/types/editor";
 import { getMetaKeyLabel, pluralize, roundTo } from "$/utils";
 
-export const NOTES_VIEW = "notes";
-export const EVENTS_VIEW = "events";
-export const PREVIEW_VIEW = "preview";
-
-export const NOTE_TOOLS = ["left-block", "right-block", "mine", "obstacle"] as const;
-
-export const EVENT_TOOLS = ["on", "off", "flash", "fade"] as const;
-
-export const EVENT_EDIT_MODES = ["place", "select"] as const;
-
-export const EVENT_COLORS = ["red", "blue"] as const;
+export const NOTE_TOOLS = Object.freeze(Object.values(ObjectTool));
+export const EVENT_TOOLS = Object.freeze(Object.values(EventTool));
+export const EVENT_EDIT_MODES = Object.freeze(Object.values(EventEditMode));
+export const EVENT_COLORS = Object.freeze(Object.values(EventColor));
 
 const META_KEY_LABEL = Object.freeze(getMetaKeyLabel());
 

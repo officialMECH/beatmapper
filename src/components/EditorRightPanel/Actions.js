@@ -2,17 +2,17 @@ import { connect } from "react-redux";
 import { Tooltip } from "react-tippy";
 import styled from "styled-components";
 
-import { NOTES_VIEW, UNIT } from "$/constants";
+import { UNIT } from "$/constants";
+import { View } from "$/types";
 import * as actions from "../../actions";
 import { promptJumpToBeat, promptQuickSelect } from "../../helpers/prompts.helpers";
-import { getMetaKeyLabel } from "../../utils";
-
 import { getHasCopiedNotes } from "../../reducers/clipboard.reducer";
+import { getMetaKeyLabel } from "../../utils";
+import { ACTION_WIDTH } from "./EditorRightPanel.constants";
+
 import Heading from "../Heading";
 import MiniButton from "../MiniButton";
 import Spacer from "../Spacer";
-
-import { ACTION_WIDTH } from "./EditorRightPanel.constants";
 import UndoRedo from "./UndoRedo";
 
 const Actions = ({
@@ -40,7 +40,7 @@ const Actions = ({
 			<Spacer size={UNIT} />
 
 			<Tooltip delay={[1000, 0]} title={`Paste previously-copied notes (${getMetaKeyLabel()} + V)`}>
-				<MiniButton disabled={!hasCopiedNotes} width={ACTION_WIDTH} onClick={() => pasteSelection(NOTES_VIEW)}>
+				<MiniButton disabled={!hasCopiedNotes} width={ACTION_WIDTH} onClick={() => pasteSelection(View.BEATMAP)}>
 					Paste Selection
 				</MiniButton>
 			</Tooltip>
@@ -48,7 +48,7 @@ const Actions = ({
 			<Spacer size={UNIT} />
 
 			<Tooltip delay={[1000, 0]} title="Select everything over a time period (Q)">
-				<MiniButton width={ACTION_WIDTH} onClick={() => promptQuickSelect(NOTES_VIEW, selectAllInRange)}>
+				<MiniButton width={ACTION_WIDTH} onClick={() => promptQuickSelect(View.BEATMAP, selectAllInRange)}>
 					Quick-select
 				</MiniButton>
 			</Tooltip>

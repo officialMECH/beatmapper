@@ -1,6 +1,7 @@
 import { connect } from "react-redux";
 
 import { SONG_OFFSET, SURFACE_DEPTHS } from "$/constants";
+import { Quality } from "$/types";
 import { getGraphicsLevel } from "../../reducers/user.reducer";
 
 import RectAreaLight from "../RectAreaLight";
@@ -27,7 +28,7 @@ const mapStateToProps = (state) => {
 
 	const depth = SURFACE_DEPTHS[graphicsLevel];
 
-	const renderAs = graphicsLevel === "high" ? "light" : "plane";
+	const renderAs = graphicsLevel === Quality.HIGH ? "light" : "plane";
 
 	const z = -SONG_OFFSET - depth / 2;
 

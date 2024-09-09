@@ -1,3 +1,4 @@
+import { App } from "$/types";
 import { describe, expect, it } from "vitest";
 import { convertEventsToExportableJson, convertEventsToRedux } from "./events.helpers";
 
@@ -7,10 +8,10 @@ describe("Event helpers", () => {
 			const events = [
 				{
 					id: "abc",
-					trackId: "primaryLight",
+					trackId: App.TrackId[4],
 					beatNum: 12,
-					type: "on",
-					colorType: "red",
+					type: App.EventType.ON,
+					colorType: App.EventColorType.PRIMARY,
 				},
 			];
 
@@ -30,29 +31,29 @@ describe("Event helpers", () => {
 			const events = [
 				{
 					id: "abc",
-					trackId: "laserLeft",
+					trackId: App.TrackId[2],
 					beatNum: 1,
-					type: "flash",
-					colorType: "red",
+					type: App.EventType.FLASH,
+					colorType: App.EventColorType.PRIMARY,
 				},
 				{
 					id: "def",
-					trackId: "laserLeft",
+					trackId: App.TrackId[2],
 					beatNum: 2,
-					type: "off",
+					type: App.EventType.OFF,
 				},
 				{
 					id: "ghi",
-					trackId: "laserRight",
+					trackId: App.TrackId[3],
 					beatNum: 2,
-					type: "flash",
-					colorType: "blue",
+					type: App.EventType.FLASH,
+					colorType: App.EventColorType.SECONDARY,
 				},
 				{
 					id: "jkl",
-					trackId: "laserRight",
+					trackId: App.TrackId[3],
 					beatNum: 3,
-					type: "off",
+					type: App.EventType.OFF,
 				},
 			];
 
@@ -71,23 +72,23 @@ describe("Event helpers", () => {
 			const events = [
 				{
 					id: "abc",
-					trackId: "smallRing",
+					trackId: App.TrackId[9],
 					beatNum: 1,
 				},
 				{
 					id: "abc",
-					trackId: "largeRing",
+					trackId: App.TrackId[8],
 					beatNum: 1,
 				},
 				{
 					id: "abc",
-					trackId: "laserSpeedLeft",
+					trackId: App.TrackId[12],
 					beatNum: 2,
 					laserSpeed: 8,
 				},
 				{
 					id: "abc",
-					trackId: "laserSpeedRight",
+					trackId: App.TrackId[13],
 					beatNum: 2,
 					laserSpeed: 2,
 				},
@@ -134,10 +135,10 @@ describe("Event helpers", () => {
 			const expectedResult = [
 				{
 					id: "abc",
-					trackId: "primaryLight",
+					trackId: App.TrackId[4],
 					beatNum: 12,
-					type: "on",
-					colorType: "red",
+					type: App.EventType.ON,
+					colorType: App.EventColorType.PRIMARY,
 				},
 			];
 
@@ -156,29 +157,29 @@ describe("Event helpers", () => {
 			const expectedResult = [
 				{
 					id: "abc",
-					trackId: "laserLeft",
+					trackId: App.TrackId[2],
 					beatNum: 1,
-					type: "flash",
-					colorType: "red",
+					type: App.EventType.FLASH,
+					colorType: App.EventColorType.PRIMARY,
 				},
 				{
 					id: "def",
-					trackId: "laserLeft",
+					trackId: App.TrackId[2],
 					beatNum: 2,
-					type: "off",
+					type: App.EventType.OFF,
 				},
 				{
 					id: "ghi",
-					trackId: "laserRight",
+					trackId: App.TrackId[3],
 					beatNum: 2,
-					type: "flash",
-					colorType: "blue",
+					type: App.EventType.FLASH,
+					colorType: App.EventColorType.SECONDARY,
 				},
 				{
 					id: "jkl",
-					trackId: "laserRight",
+					trackId: App.TrackId[3],
 					beatNum: 3,
-					type: "off",
+					type: App.EventType.OFF,
 				},
 			];
 
@@ -197,25 +198,25 @@ describe("Event helpers", () => {
 			const expectedResult = [
 				{
 					id: "abc",
-					trackId: "smallRing",
+					trackId: App.TrackId[9],
 					beatNum: 1,
-					type: "rotate",
+					type: App.EventType.TRIGGER,
 				},
 				{
 					id: "abc",
-					trackId: "largeRing",
+					trackId: App.TrackId[8],
 					beatNum: 1,
-					type: "rotate",
+					type: App.EventType.TRIGGER,
 				},
 				{
 					id: "abc",
-					trackId: "laserSpeedLeft",
+					trackId: App.TrackId[12],
 					beatNum: 2,
 					laserSpeed: 8,
 				},
 				{
 					id: "abc",
-					trackId: "laserSpeedRight",
+					trackId: App.TrackId[13],
 					beatNum: 2,
 					laserSpeed: 2,
 				},

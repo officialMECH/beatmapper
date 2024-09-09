@@ -1,10 +1,16 @@
 import localforage from "localforage";
 
-import type { Difficulty } from "$/types";
+import type { Difficulty, Member } from "$/types";
 import defaultCoverArtPath from "../assets/images/placeholder-cover-art.jpg";
 
 // These are the types of things we'll need to save.
-type ThingType = "song" | "cover-art" | "info" | "beatmap";
+export const FileType = {
+	INFO: "info",
+	BEATMAP: "beatmap",
+	SONG: "song",
+	COVER: "cover-art",
+} as const;
+export type FileType = Member<typeof FileType>;
 
 // These are the types of things we're able to save
 type Saveable = File | Blob | string;
@@ -72,13 +78,13 @@ const getExtension = (filename: string, defaultExtension = "") => {
  *  -> `123_ExpertPlus.dat`
  */
 type Metadata = { extension?: string; difficulty?: Difficulty };
-export const getFilenameForThing = (songId: string, type: ThingType, metadata: Metadata = {}) => {
+export const getFilenameForThing = (songId: string, type: FileType, metadata: Metadata = {}) => {
 	switch (type) {
-		case "song": {
+		case FileType.SONG: {
 			return `${songId}_song.ogg`;
 		}
 
-		case "cover-art": {
+		case FileType.COVER: {
 			if (!metadata.extension) {
 				throw new Error("Must supply a file extension for cover art.");
 			}
@@ -86,11 +92,11 @@ export const getFilenameForThing = (songId: string, type: ThingType, metadata: M
 			return `${songId}_cover.${metadata.extension}`;
 		}
 
-		case "info": {
+		case FileType.INFO: {
 			return `${songId}_Info.dat`;
 		}
 
-		case "beatmap": {
+		case FileType.BEATMAP: {
 			if (!metadata.difficulty) {
 				throw new Error("Must supply a difficulty for beatmaps.");
 			}
@@ -113,7 +119,7 @@ export const getFilenameForThing = (songId: string, type: ThingType, metadata: M
 
 export const getBeatmap = (songId: string, difficulty: Difficulty): Promise<object> => {
 	// Start by getting the entities (notes, events, etc) for this map
-	const beatmapFilename = getFilenameForThing(songId, "beatmap", {
+	const beatmapFilename = getFilenameForThing(songId, FileType.BEATMAP, {
 		difficulty,
 	});
 
@@ -130,7 +136,7 @@ export const getBeatmap = (songId: string, difficulty: Difficulty): Promise<obje
 };
 
 export const saveSongFile = (songId: string, songFile: File | Blob) => {
-	const songFilename = getFilenameForThing(songId, "song");
+	const songFilename = getFilenameForThing(songId, FileType.SONG);
 	return saveFile(songFilename, songFile);
 };
 
@@ -157,7 +163,7 @@ const saveBackupCoverArt = (songId: string): SaveReturn => {
 export const saveLocalCoverArtFile = (songId: string, coverArtFile?: File): SaveReturn => {
 	if (coverArtFile) {
 		const extension = getExtension(coverArtFile.name, "unknown");
-		const coverArtFilename = getFilenameForThing(songId, "cover-art", {
+		const coverArtFilename = getFilenameForThing(songId, FileType.COVER, {
 			extension,
 		});
 
@@ -177,7 +183,7 @@ export const saveCoverArtFromBlob = (songId: string, coverArtBlob?: Blob, origin
 
 		const extension = getExtension(originalCoverArtFilename, "unknown");
 
-		const coverArtFilename = getFilenameForThing(songId, "cover-art", {
+		const coverArtFilename = getFilenameForThing(songId, FileType.COVER, {
 			extension,
 		});
 
@@ -187,7 +193,7 @@ export const saveCoverArtFromBlob = (songId: string, coverArtBlob?: Blob, origin
 };
 
 export const saveBeatmap = (songId: string, difficulty: Difficulty, beatmapContents: string) => {
-	const beatmapFilename = getFilenameForThing(songId, "beatmap", {
+	const beatmapFilename = getFilenameForThing(songId, FileType.BEATMAP, {
 		difficulty,
 	});
 
@@ -201,7 +207,7 @@ export const saveBeatmap = (songId: string, difficulty: Difficulty, beatmapConte
 };
 
 export const saveInfoDat = (songId: string, infoContent: string) => {
-	const infoDatFilename = getFilenameForThing(songId, "info");
+	const infoDatFilename = getFilenameForThing(songId, FileType.INFO);
 
 	return saveFile(infoDatFilename, infoContent);
 };
@@ -216,10 +222,10 @@ export const deleteAllSongFiles = async (song: any) => {
 	 */
 	const { id, songFilename, coverArtFilename, difficultiesById } = song;
 
-	const infoDatName = getFilenameForThing(id, "info");
+	const infoDatName = getFilenameForThing(id, FileType.INFO);
 	const beatmapFilenames = Object.keys(difficultiesById).map((difficultyId) => {
 		// @ts-ignore
-		return getFilenameForThing(id, "beatmap", { difficulty: difficultyId });
+		return getFilenameForThing(id, FileType.BEATMAP, { difficulty: difficultyId });
 	});
 
 	try {

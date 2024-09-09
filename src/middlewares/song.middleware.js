@@ -4,7 +4,8 @@ import get from "lodash.get";
  */
 import { ActionCreators as ReduxUndoActionCreators } from "redux-undo";
 
-import { EVENTS_VIEW, HIGHEST_PRECISION } from "$/constants";
+import { HIGHEST_PRECISION } from "$/constants";
+import { View } from "$/types";
 import { adjustCursorPosition, finishLoadingSong, loadBeatmapEntities, pausePlaying, reloadWaveform, startPlaying } from "../actions";
 import { convertBeatsToMilliseconds, convertMillisecondsToBeats, snapToNearestBeat } from "../helpers/audio.helpers";
 import { convertBookmarksToRedux } from "../helpers/bookmarks.helpers";
@@ -16,14 +17,13 @@ import { getAllEventsAsArray } from "../reducers/editor-entities.reducer/events-
 import { getBeatsPerZoomLevel } from "../reducers/editor.reducer";
 import { getCursorPositionInBeats, getPlaybackRate, getVolume } from "../reducers/navigation.reducer";
 import { getSelectedSong, getSongById } from "../reducers/songs.reducer";
+import { getProcessingDelay } from "../reducers/user.reducer";
 import AudioSample from "../services/audio.service";
 import { deleteAllSongFiles, deleteFile, getBeatmap, getFile, getFilenameForThing, saveBeatmap, saveFile, saveInfoDat } from "../services/file.service";
 import { createBeatmapContents, createInfoContent } from "../services/packaging.service";
 import { shiftEntitiesByOffset, unshiftEntitiesByOffset } from "../services/packaging.service.nitty-gritty";
 import Sfx from "../services/sfx.service";
 import { clamp, roundToNearest } from "../utils";
-
-import { getProcessingDelay } from "../reducers/user.reducer";
 import { calculateIfPlaybackShouldBeCommandeered, generateWaveformForSongFile, stopAndRewindAudio, triggerTickerIfNecessary } from "./song.middleware.helpers";
 
 export default function createSongMiddleware() {
@@ -339,7 +339,7 @@ export default function createSongMiddleware() {
 				const cursorPositionInBeats = getCursorPositionInBeats(state);
 				const beatsPerZoomLevel = getBeatsPerZoomLevel(state);
 
-				const windowSize = view === EVENTS_VIEW ? beatsPerZoomLevel : 32;
+				const windowSize = view === View.LIGHTSHOW ? beatsPerZoomLevel : 32;
 
 				const currentWindowIndex = Math.floor(cursorPositionInBeats / windowSize);
 

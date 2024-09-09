@@ -6,9 +6,10 @@
  * map (or, perhaps periodically in the future), I'll want to save this data to
  * indexeddb as a text file, and I need to know which difficulty we're editing.
  */
+
 import { combineReducers } from "redux";
 
-import { EVENTS_VIEW, NOTES_VIEW } from "$/constants";
+import { View } from "$/types";
 import eventsView, { getSelectedEvents } from "./events-view.reducer";
 import notesView, { getSelectedNotesAndObstacles } from "./notes-view.reducer";
 
@@ -43,10 +44,10 @@ export default combineReducers({ difficulty, notesView, eventsView });
 export const getDifficulty = (state) => state.editorEntities.difficulty;
 
 export const getSelection = (state, view) => {
-	if (view === EVENTS_VIEW) {
+	if (view === View.LIGHTSHOW) {
 		return getSelectedEvents(state);
 	}
-	if (view === NOTES_VIEW) {
+	if (view === View.BEATMAP) {
 		return getSelectedNotesAndObstacles(state);
 	}
 };

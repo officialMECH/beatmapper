@@ -3,12 +3,12 @@ import get from "lodash.get";
 import { createSelector } from "reselect";
 
 import { DEFAULT_COL_WIDTH, DEFAULT_GRID, DEFAULT_MOD_SETTINGS, DEFAULT_ROW_HEIGHT } from "$/constants";
-import type { Song } from "$/types";
+import { type App, Environment, ObjectPlacementMode } from "$/types";
 import { sortDifficultyIds } from "../helpers/song.helpers";
 import { isEmpty } from "../utils";
 
 interface State {
-	byId: { [key: string]: Song };
+	byId: { [key: string]: App.Song };
 	selectedId: string | null;
 	processingImport: boolean;
 }
@@ -78,7 +78,7 @@ export default function songsReducer(state: State = initialState, action: any = 
 					previewDuration: 10,
 					songFilename,
 					coverArtFilename,
-					environment: "DefaultEnvironment",
+					environment: Environment.THE_FIRST,
 					mapAuthorName,
 					createdAt,
 					lastOpenedAt,
@@ -385,14 +385,14 @@ const grabSelectedSong = (state: State) => {
 //
 const getById = (state: any) => state.songs.byId;
 
-export const getAllSongs = (state: any): Array<Song> => {
+export const getAllSongs = (state: any): Array<App.Song> => {
 	return Object.values(getById(state));
 };
 export const getAllSongIds = (state: any) => {
 	return Object.keys(getById(state));
 };
 export const getAllSongsChronologically = (state: any) => {
-	return getAllSongs(state).sort((a: Song, b: Song) => {
+	return getAllSongs(state).sort((a: App.Song, b: App.Song) => {
 		return a.lastOpenedAt > b.lastOpenedAt ? -1 : 1;
 	});
 };
@@ -484,5 +484,5 @@ export const getCustomColors = createSelector(getSelectedSong, (song) => {
 });
 
 export const getMappingMode = createSelector(getEnabledMods, (enabledMods) => {
-	return enabledMods.mappingExtensions ? "mapping-extensions" : "original";
+	return enabledMods.mappingExtensions ? ObjectPlacementMode.EXTENSIONS : ObjectPlacementMode.NORMAL;
 });

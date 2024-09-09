@@ -1,3 +1,4 @@
+import { App } from "$/types";
 import { describe, expect, it } from "vitest";
 import { calculateNoteDensity, convertBlocksToExportableJson, convertBlocksToRedux, convertNotesFromMappingExtensions, convertNotesToMappingExtensions } from "./notes.helpers";
 
@@ -26,16 +27,16 @@ describe("Notes helpers", () => {
 			const expectedResult = [
 				{
 					id: actualResult[0].id, // Randomly generated so I have to cheat
-					color: "blue",
-					direction: "down",
+					color: App.SaberColor.LEFT,
+					direction: App.Direction.DOWN,
 					beatNum: 2,
 					rowIndex: 0,
 					colIndex: 2,
 				},
 				{
 					id: actualResult[1].id,
-					color: "red",
-					direction: "up",
+					color: App.SaberColor.RIGHT,
+					direction: App.Direction.UP,
 					beatNum: 3.5,
 					rowIndex: 0,
 					colIndex: 3,
@@ -50,16 +51,16 @@ describe("Notes helpers", () => {
 			const blocks = [
 				{
 					id: "a",
-					color: "blue",
-					direction: "down",
+					color: App.SaberColor.LEFT,
+					direction: App.Direction.DOWN,
 					beatNum: 2,
 					rowIndex: 0,
 					colIndex: 2,
 				},
 				{
 					id: "b",
-					color: "red",
-					direction: "up",
+					color: App.SaberColor.RIGHT,
+					direction: App.Direction.UP,
 					beatNum: 3.5,
 					rowIndex: 0,
 					colIndex: 3,

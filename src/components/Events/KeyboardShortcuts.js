@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 
-import { EVENTS_VIEW } from "$/constants";
+import { EventEditMode, EventTool, View } from "$/types";
 import * as actions from "../../actions";
 import { isMetaKeyPressed } from "../../utils";
 
@@ -27,14 +27,14 @@ const KeyboardShortcuts = ({ selectTool, selectEventEditMode, toggleSelectAll, z
 			case "KeyA": {
 				if (isMetaKeyPressed(ev)) {
 					ev.preventDefault();
-					return toggleSelectAll(EVENTS_VIEW);
+					return toggleSelectAll(View.LIGHTSHOW);
 				}
 
-				return selectEventEditMode("place");
+				return selectEventEditMode(EventEditMode.PLACE);
 			}
 
 			case "KeyS": {
-				return selectEventEditMode("select");
+				return selectEventEditMode(EventEditMode.SELECT);
 			}
 
 			case "KeyZ": {
@@ -56,16 +56,16 @@ const KeyboardShortcuts = ({ selectTool, selectEventEditMode, toggleSelectAll, z
 			}
 
 			case "Digit1": {
-				return selectTool(EVENTS_VIEW, "on");
+				return selectTool(View.LIGHTSHOW, EventTool.ON);
 			}
 			case "Digit2": {
-				return selectTool(EVENTS_VIEW, "off");
+				return selectTool(View.LIGHTSHOW, EventTool.OFF);
 			}
 			case "Digit3": {
-				return selectTool(EVENTS_VIEW, "flash");
+				return selectTool(View.LIGHTSHOW, EventTool.FLASH);
 			}
 			case "Digit4": {
-				return selectTool(EVENTS_VIEW, "fade");
+				return selectTool(View.LIGHTSHOW, EventTool.FADE);
 			}
 
 			default:

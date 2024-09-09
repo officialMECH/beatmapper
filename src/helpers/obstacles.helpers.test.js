@@ -1,3 +1,4 @@
+import { App } from "$/types";
 import { describe, expect, it } from "vitest";
 import { convertObstaclesToExportableJson, convertObstaclesToRedux } from "./obstacles.helpers";
 
@@ -13,16 +14,16 @@ const SAMPLE_PROPRIETARY_DATA = [
 ];
 
 const SAMPLE_REDUX_DATA = [
-	{ id: "a", beatStart: 2, beatDuration: 4, lane: 0, type: "wall", colspan: 2 },
+	{ id: "a", beatStart: 2, beatDuration: 4, lane: 0, type: App.ObstacleType.FULL, colspan: 2 },
 	{
 		id: "b",
 		beatStart: 4,
 		beatDuration: 0,
 		lane: 2,
-		type: "ceiling",
+		type: App.ObstacleType.TOP,
 		colspan: 2,
 	},
-	{ id: "c", beatStart: 4, beatDuration: 4, lane: 0, type: "wall", colspan: 1 },
+	{ id: "c", beatStart: 4, beatDuration: 4, lane: 0, type: App.ObstacleType.FULL, colspan: 1 },
 ];
 
 describe("Obstacles helpers", () => {
@@ -44,19 +45,19 @@ describe("Obstacles helpers", () => {
 		});
 
 		const expectedResult = [
-			{ beatStart: 0, beatDuration: 1, lane: 0, type: "wall", colspan: 1 },
-			{ beatStart: 2, beatDuration: 2, lane: 1, type: "wall", colspan: 1 },
-			{ beatStart: 9, beatDuration: 1, lane: 0, type: "wall", colspan: 2 },
-			{ beatStart: 11, beatDuration: 1, lane: 2, type: "wall", colspan: 1 },
+			{ beatStart: 0, beatDuration: 1, lane: 0, type: App.ObstacleType.FULL, colspan: 1 },
+			{ beatStart: 2, beatDuration: 2, lane: 1, type: App.ObstacleType.FULL, colspan: 1 },
+			{ beatStart: 9, beatDuration: 1, lane: 0, type: App.ObstacleType.FULL, colspan: 2 },
+			{ beatStart: 11, beatDuration: 1, lane: 2, type: App.ObstacleType.FULL, colspan: 1 },
 			{
 				beatStart: 14,
 				beatDuration: 1,
 				lane: 0,
-				type: "ceiling",
+				type: App.ObstacleType.TOP,
 				colspan: 4,
 			},
-			{ beatStart: 17, beatDuration: 1, lane: 0, type: "wall", colspan: 4 },
-			{ beatStart: 17, beatDuration: 1, lane: 2, type: "wall", colspan: 2 },
+			{ beatStart: 17, beatDuration: 1, lane: 0, type: App.ObstacleType.FULL, colspan: 4 },
+			{ beatStart: 17, beatDuration: 1, lane: 2, type: App.ObstacleType.FULL, colspan: 2 },
 		];
 
 		expect(actualWithoutIds).toEqual(expectedResult);
@@ -90,7 +91,7 @@ describe("Obstacles helpers", () => {
 			// [_ _ _ _]
 			const obstacle = {
 				id: "a",
-				type: "extension",
+				type: App.ObstacleType.EXTENDED,
 				beatStart: 2,
 				beatDuration: 4,
 				lane: 0,
@@ -121,7 +122,7 @@ describe("Obstacles helpers", () => {
 		const gridCols = 8;
 		const obstacle = {
 			id: "a",
-			type: "extension",
+			type: App.ObstacleType.EXTENDED,
 			beatStart: 2,
 			beatDuration: 4,
 			lane: -2,
@@ -168,7 +169,7 @@ describe("Obstacles helpers", () => {
 
 		const expectedResult = [
 			{
-				type: "extension",
+				type: App.ObstacleType.EXTENDED,
 				beatStart: 2,
 				beatDuration: 4,
 				lane: -2,
@@ -194,7 +195,7 @@ describe("Obstacles helpers", () => {
 				lane: 2.75,
 				rowIndex: 1,
 				rowspan: 1,
-				type: "extension",
+				type: App.ObstacleType.EXTENDED,
 			};
 
 			const exportableJson = convertObstaclesToExportableJson([obstacle], gridCols);
@@ -218,7 +219,7 @@ describe("Obstacles helpers", () => {
 				lane: 1,
 				rowIndex: 1.25,
 				rowspan: 0.5,
-				type: "extension",
+				type: App.ObstacleType.EXTENDED,
 			};
 
 			const exportableJson = convertObstaclesToExportableJson([obstacle], gridCols);

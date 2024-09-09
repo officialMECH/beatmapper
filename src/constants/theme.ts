@@ -1,3 +1,5 @@
+import { Difficulty } from "$/types";
+
 export const COLORS = {
 	gray: {
 		100: "hsl(0, 0%, 92%)",
@@ -51,11 +53,11 @@ export const SIDEBAR_WIDTH = 55;
 export const MEDIA_ROW_HEIGHT = 150;
 
 export const DIFFICULTY_COLORS = {
-	Easy: "#4AFFBE",
-	Normal: "#FCFF6A",
-	Hard: "#4AE9FF",
-	Expert: "#FF4A6B",
-	ExpertPlus: "#FF5FF9",
+	[Difficulty.EASY]: "#4AFFBE",
+	[Difficulty.NORMAL]: "#FCFF6A",
+	[Difficulty.HARD]: "#4AE9FF",
+	[Difficulty.EXPERT]: "#FF4A6B",
+	[Difficulty.EXPERT_PLUS]: "#FF5FF9",
 } as const;
 
 export const DEFAULT_RED = "#f21212";

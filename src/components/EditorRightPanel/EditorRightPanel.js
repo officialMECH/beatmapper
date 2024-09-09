@@ -3,15 +3,15 @@ import { connect } from "react-redux";
 import styled from "styled-components";
 
 import { UNIT } from "$/constants";
+import { ObjectPlacementMode } from "$/types";
 import useOnChange from "../../hooks/use-on-change.hook";
+import useOnKeydown from "../../hooks/use-on-keydown.hook";
 import { getSelectedBlocks, getSelectedMines, getSelectedObstacles } from "../../reducers/editor-entities.reducer/notes-view.reducer";
 import { getMappingMode, getSelectedSong } from "../../reducers/songs.reducer";
 
 import ItemGrid from "../ItemGrid";
 import NoteGrid from "../NoteGrid";
 import Spacer from "../Spacer";
-
-import useOnKeydown from "../../hooks/use-on-keydown.hook";
 import Actions from "./Actions";
 import GridConfig from "./GridConfig";
 import SelectionInfo from "./SelectionInfo";
@@ -40,7 +40,7 @@ const EditorRightPanel = ({ song, mappingMode, numOfSelectedBlocks, numOfSelecte
 	useOnKeydown(
 		"KeyG",
 		() => {
-			if (mappingMode === "mapping-extensions") {
+			if (mappingMode === ObjectPlacementMode.EXTENSIONS) {
 				setShowGridConfig((currentVal) => !currentVal);
 			}
 		},

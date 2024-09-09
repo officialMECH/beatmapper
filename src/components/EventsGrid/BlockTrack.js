@@ -3,14 +3,15 @@ import { connect } from "react-redux";
 import styled from "styled-components";
 
 import { COLORS } from "$/constants";
+import { App, EventEditMode, EventTool } from "$/types";
 import * as actions from "../../actions";
 import usePointerUpHandler from "../../hooks/use-pointer-up-handler.hook";
 import { makeGetEventsForTrack, makeGetInitialTrackLightingColorType } from "../../reducers/editor-entities.reducer/events-view.reducer";
 import { getSelectedEventColor, getSelectedEventEditMode, getSelectedEventTool } from "../../reducers/editor.reducer";
-
 import { getSelectedSong } from "../../reducers/songs.reducer";
-import BackgroundBox from "./BackgroundBox";
 import { getBackgroundBoxes } from "./BlockTrack.helpers";
+
+import BackgroundBox from "./BackgroundBox";
 import EventBlock from "./EventBlock";
 
 const BlockTrack = ({ song, trackId, width, height, startBeat, numOfBeatsToShow, cursorAtBeat, events, areLasersLocked, isDisabled, selectedTool, selectedColorType, selectedEditMode, initialTrackLightingColorType, placeEvent }) => {
@@ -23,11 +24,11 @@ const BlockTrack = ({ song, trackId, width, height, startBeat, numOfBeatsToShow,
 	usePointerUpHandler(!!mouseButtonDepressed, handlePointerUp);
 
 	const getPropsForPlacedEvent = () => {
-		const isRingEvent = trackId === "largeRing" || trackId === "smallRing";
-		const eventType = isRingEvent ? "rotate" : selectedTool;
+		const isRingEvent = trackId === App.TrackId[8] || trackId === App.TrackId[9];
+		const eventType = isRingEvent ? App.EventType.TRIGGER : selectedTool;
 
 		let eventColorType = selectedColorType;
-		if (isRingEvent || selectedTool === "off") {
+		if (isRingEvent || selectedTool === EventTool.OFF) {
 			eventColorType = undefined;
 		}
 
@@ -39,7 +40,7 @@ const BlockTrack = ({ song, trackId, width, height, startBeat, numOfBeatsToShow,
 	};
 
 	React.useEffect(() => {
-		if (selectedEditMode === "place" && mouseButtonDepressed === "left") {
+		if (selectedEditMode === EventEditMode.PLACE && mouseButtonDepressed === "left") {
 			// TODO: Technically this should be a new action, bulkPlaceEVent, so that
 			// they can all be undoed in 1 step
 			placeEvent(...getPropsForPlacedEvent());
@@ -54,7 +55,7 @@ const BlockTrack = ({ song, trackId, width, height, startBeat, numOfBeatsToShow,
 			style={{ height }}
 			isDisabled={isDisabled}
 			onPointerDown={(ev) => {
-				if (isDisabled || selectedEditMode === "select") {
+				if (isDisabled || selectedEditMode === EventEditMode.SELECT) {
 					return;
 				}
 
@@ -72,7 +73,7 @@ const BlockTrack = ({ song, trackId, width, height, startBeat, numOfBeatsToShow,
 			))}
 
 			{events.map((event) => {
-				return <EventBlock key={event.id} event={event} trackWidth={width} trackId={trackId} startBeat={startBeat} numOfBeatsToShow={numOfBeatsToShow} deleteOnHover={selectedEditMode === "place" && mouseButtonDepressed === "right"} areLasersLocked={areLasersLocked} />;
+				return <EventBlock key={event.id} event={event} trackWidth={width} trackId={trackId} startBeat={startBeat} numOfBeatsToShow={numOfBeatsToShow} deleteOnHover={selectedEditMode === EventEditMode.PLACE && mouseButtonDepressed === "right"} areLasersLocked={areLasersLocked} />;
 			})}
 		</Wrapper>
 	);

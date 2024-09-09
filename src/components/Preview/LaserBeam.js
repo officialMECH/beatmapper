@@ -1,7 +1,7 @@
 import { animated, useSpring } from "@react-spring/three";
 
+import { App } from "$/types";
 import useOnChange from "../../hooks/use-on-change.hook";
-
 import { getSpringConfigForLight } from "./Preview.helpers";
 
 const ON_PROPS = { emissiveIntensity: 0.75, opacity: 0.75 };
@@ -34,7 +34,7 @@ const LaserBeam = ({ color, position, rotation, brightness, status, lastEventId,
 			return;
 		}
 
-		const statusShouldReset = status === "flash" || status === "fade";
+		const statusShouldReset = status === App.EventType.FLASH || status === App.EventType.FADE;
 
 		springConfig.reset = statusShouldReset;
 	}, lastEventId);

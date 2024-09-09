@@ -1,6 +1,7 @@
 import { v1 as uuid } from "uuid";
 
 import { HUMANIZED_DIRECTIONS } from "$/constants";
+import { App, Direction } from "$/types";
 
 /**
  * NOTE: Currently, the "redux" variant of the blocks format isn't used.
@@ -12,7 +13,7 @@ export const convertBlocksToRedux = (blocks) => {
 	return blocks.map((b) => {
 		return {
 			id: uuid(),
-			color: b._type === 0 ? "blue" : "red",
+			color: b._type === 0 ? App.SaberColor.LEFT : App.SaberColor.RIGHT,
 			direction: HUMANIZED_DIRECTIONS[b._cutDirection],
 			beatNum: b._time,
 			rowIndex: b._lineLayer,
@@ -27,7 +28,7 @@ export const convertBlocksToExportableJson = (blocks) => {
 		_time: b.beatNum,
 		_lineIndex: Math.round(b.colIndex),
 		_lineLayer: Math.round(b.rowIndex),
-		_type: b.color === "blue" ? 0 : 1,
+		_type: b.color === App.SaberColor.LEFT ? 0 : 1,
 		_cutDirection: HUMANIZED_DIRECTIONS.indexOf(b.direction),
 	}));
 };
@@ -49,19 +50,19 @@ const getHorizontallyFlippedCutDirection = (cutDirection) => {
 	//  6 1 7
 
 	switch (cutDirection) {
-		case 0:
-		case 8:
-		case 1:
+		case Direction.UP:
+		case Direction.ANY:
+		case Direction.DOWN:
 			return cutDirection;
 
-		case 4:
-		case 2:
-		case 6:
+		case Direction.UP_LEFT:
+		case Direction.LEFT:
+		case Direction.DOWN_LEFT:
 			return cutDirection + 1;
 
-		case 5:
-		case 3:
-		case 7:
+		case Direction.UP_RIGHT:
+		case Direction.RIGHT:
+		case Direction.DOWN_RIGHT:
 			return cutDirection - 1;
 
 		default:
@@ -74,23 +75,23 @@ const getVerticallyFlippedCutDirection = (cutDirection) => {
 	//  6 1 7
 
 	switch (cutDirection) {
-		case 2:
-		case 8:
-		case 3:
+		case Direction.LEFT:
+		case Direction.ANY:
+		case Direction.RIGHT:
 			return cutDirection;
 
-		case 4:
-		case 5:
+		case Direction.UP_LEFT:
+		case Direction.UP_RIGHT:
 			return cutDirection + 2;
 
-		case 0:
+		case Direction.UP:
 			return cutDirection + 1;
 
-		case 1:
+		case Direction.DOWN:
 			return cutDirection - 1;
 
-		case 6:
-		case 7:
+		case Direction.DOWN_LEFT:
+		case Direction.DOWN_RIGHT:
 			return cutDirection - 2;
 
 		default:

@@ -7,7 +7,8 @@
 import React from "react";
 import { connect } from "react-redux";
 
-import { EVENTS_VIEW, NOTES_VIEW, SNAPPING_INCREMENTS } from "$/constants";
+import { SNAPPING_INCREMENTS } from "$/constants";
+import { View } from "$/types";
 import * as actions from "../../actions";
 import { promptJumpToBeat, promptQuickSelect } from "../../helpers/prompts.helpers";
 import useMousewheel from "../../hooks/use-mousewheel.hook";
@@ -133,10 +134,10 @@ const GlobalShortcuts = ({
 			}
 
 			case "Delete": {
-				if (view === EVENTS_VIEW) {
+				if (view === View.LIGHTSHOW) {
 					return deleteSelectedEvents();
 				}
-				if (view === NOTES_VIEW) {
+				if (view === View.BEATMAP) {
 					return deleteSelectedNotes();
 				}
 
@@ -193,10 +194,10 @@ const GlobalShortcuts = ({
 					return;
 				}
 
-				if (view === NOTES_VIEW) {
+				if (view === View.BEATMAP) {
 					return ev.shiftKey ? redoNotes() : undoNotes();
 				}
-				if (view === EVENTS_VIEW) {
+				if (view === View.LIGHTSHOW) {
 					return ev.shiftKey ? redoEvents() : undoEvents();
 				}
 				return;

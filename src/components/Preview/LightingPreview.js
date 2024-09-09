@@ -10,6 +10,7 @@ import { useFrame } from "@react-three/fiber";
 import React from "react";
 import { connect } from "react-redux";
 
+import { Quality } from "$/types";
 import Controls from "../../controls";
 import { getIsPlaying } from "../../reducers/navigation.reducer";
 import { getSelectedSong } from "../../reducers/songs.reducer";
@@ -28,7 +29,7 @@ import SmallRings from "./SmallRings";
 const LightingPreview = ({ song, isPlaying, graphicsLevel }) => {
 	const controls = React.useRef(null);
 
-	const isBlooming = graphicsLevel === "high";
+	const isBlooming = graphicsLevel === Quality.HIGH;
 
 	// Controls to move around the space.
 	useFrame(({ canvas, scene, camera }) => {
@@ -72,7 +73,7 @@ const LightingPreview = ({ song, isPlaying, graphicsLevel }) => {
 		<>
 			{lights}
 			{environment}
-			<Fog renderForGraphics="medium" strength={0.005} />
+			<Fog renderForGraphics={Quality.MEDIUM} strength={0.005} />
 		</>
 	);
 };

@@ -2,6 +2,7 @@ import { animated, useSpring } from "@react-spring/three";
 import { connect } from "react-redux";
 
 import { SURFACE_WIDTH } from "$/constants";
+import { App } from "$/types";
 import { convertMillisecondsToBeats } from "../../helpers/audio.helpers";
 import { getColorForItem } from "../../helpers/colors.helpers";
 import useOnChange from "../../hooks/use-on-change.hook";
@@ -9,7 +10,6 @@ import { getTracks } from "../../reducers/editor-entities.reducer/events-view.re
 import { getCursorPositionInBeats } from "../../reducers/navigation.reducer";
 import { getUsableProcessingDelay } from "../../reducers/user.reducer";
 import { convertDegreesToRadians } from "../../utils";
-
 import { findMostRecentEventInTrack, getSpringConfigForLight } from "./Preview.helpers";
 
 import Glow from "./Glow";
@@ -21,10 +21,10 @@ const BRIGHT_PROPS = { emissiveIntensity: 1, opacity: 1 };
 
 const PrimaryLight = ({ song, isPlaying, isBlooming, lastEvent }) => {
 	// TODO: laser beams for along the side and maybe along the bottom too?
-	const status = lastEvent ? lastEvent.type : "off";
+	const status = lastEvent ? lastEvent.type : App.EventType.OFF;
 	const lastEventId = lastEvent ? lastEvent.id : null;
 
-	const color = status === "off" ? "#000000" : getColorForItem(lastEvent.colorType, song);
+	const color = status === App.EventType.OFF ? "#000000" : getColorForItem(lastEvent.colorType, song);
 
 	const springConfig = getSpringConfigForLight([ON_PROPS, OFF_PROPS, BRIGHT_PROPS], status);
 
@@ -33,7 +33,7 @@ const PrimaryLight = ({ song, isPlaying, isBlooming, lastEvent }) => {
 			return;
 		}
 
-		const statusShouldReset = status === "flash" || status === "fade";
+		const statusShouldReset = status === App.EventType.FLASH || status === App.EventType.FADE;
 
 		springConfig.reset = statusShouldReset;
 	}, lastEventId);
@@ -75,7 +75,7 @@ const mapStateToProps = (state, { song }) => {
 	if (!song) {
 		return;
 	}
-	const trackId = "primaryLight";
+	const trackId = App.TrackId[4];
 
 	const tracks = getTracks(state);
 	const events = tracks[trackId];

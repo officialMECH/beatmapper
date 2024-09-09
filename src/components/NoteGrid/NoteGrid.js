@@ -11,6 +11,7 @@ import { connect } from "react-redux";
 import styled from "styled-components";
 
 import { UNIT } from "$/constants";
+import { Direction, ObjectTool } from "$/types";
 import * as actions from "../../actions";
 import { getSelectedCutDirection, getSelectedNoteTool } from "../../reducers/editor.reducer";
 
@@ -19,7 +20,7 @@ import IconButton from "../IconButton";
 import Spacer from "../Spacer";
 
 const NoteGrid = ({ selectedDirection, selectedNoteTool, selectNoteDirection }) => {
-	const isDisabled = selectedNoteTool !== "left-block" && selectedNoteTool !== "right-block" && selectedNoteTool !== "red-block" && selectedNoteTool !== "blue-block";
+	const isDisabled = selectedNoteTool !== ObjectTool.LEFT_NOTE && selectedNoteTool !== ObjectTool.RIGHT_NOTE;
 
 	return (
 		<Wrapper>
@@ -29,28 +30,28 @@ const NoteGrid = ({ selectedDirection, selectedNoteTool, selectNoteDirection }) 
 
 			<Grid>
 				<Row>
-					<IconButton disabled={isDisabled} icon={arrowUpLeft} isToggled={selectedDirection === 4} onClick={() => selectNoteDirection(4)} />
+					<IconButton disabled={isDisabled} icon={arrowUpLeft} isToggled={selectedDirection === Direction.UP_LEFT} onClick={() => selectNoteDirection(Direction.UP_LEFT)} />
 					<Spacer size={1} />
-					<IconButton disabled={isDisabled} icon={arrowUp} isToggled={selectedDirection === 0} onClick={() => selectNoteDirection(0)} />
+					<IconButton disabled={isDisabled} icon={arrowUp} isToggled={selectedDirection === Direction.UP} onClick={() => selectNoteDirection(Direction.UP)} />
 					<Spacer size={1} />
-					<IconButton disabled={isDisabled} icon={arrowUpRight} isToggled={selectedDirection === 5} onClick={() => selectNoteDirection(5)} />
+					<IconButton disabled={isDisabled} icon={arrowUpRight} isToggled={selectedDirection === Direction.UP_RIGHT} onClick={() => selectNoteDirection(Direction.UP_RIGHT)} />
 				</Row>
 				<Spacer size={1} />
 				<Row>
-					<IconButton disabled={isDisabled} icon={arrowLeft} isToggled={selectedDirection === 2} onClick={() => selectNoteDirection(2)} />
+					<IconButton disabled={isDisabled} icon={arrowLeft} isToggled={selectedDirection === Direction.LEFT} onClick={() => selectNoteDirection(Direction.LEFT)} />
 					<Spacer size={1} />
-					<IconButton disabled={isDisabled} icon={circle} isToggled={selectedDirection === 8} onClick={() => selectNoteDirection(8)} />
+					<IconButton disabled={isDisabled} icon={circle} isToggled={selectedDirection === Direction.ANY} onClick={() => selectNoteDirection(Direction.ANY)} />
 					<Spacer size={1} />
-					<IconButton disabled={isDisabled} icon={arrowRight} isToggled={selectedDirection === 3} onClick={() => selectNoteDirection(3)} />
+					<IconButton disabled={isDisabled} icon={arrowRight} isToggled={selectedDirection === Direction.RIGHT} onClick={() => selectNoteDirection(Direction.RIGHT)} />
 					<Spacer size={1} />
 				</Row>
 				<Spacer size={1} />
 				<Row>
-					<IconButton disabled={isDisabled} icon={arrowDownLeft} isToggled={selectedDirection === 6} onClick={() => selectNoteDirection(6)} />
+					<IconButton disabled={isDisabled} icon={arrowDownLeft} isToggled={selectedDirection === Direction.DOWN_LEFT} onClick={() => selectNoteDirection(Direction.DOWN_LEFT)} />
 					<Spacer size={1} />
-					<IconButton disabled={isDisabled} icon={arrowDown} isToggled={selectedDirection === 1} onClick={() => selectNoteDirection(1)} />
+					<IconButton disabled={isDisabled} icon={arrowDown} isToggled={selectedDirection === Direction.DOWN} onClick={() => selectNoteDirection(Direction.DOWN)} />
 					<Spacer size={1} />
-					<IconButton disabled={isDisabled} icon={arrowDownRight} isToggled={selectedDirection === 7} onClick={() => selectNoteDirection(7)} />
+					<IconButton disabled={isDisabled} icon={arrowDownRight} isToggled={selectedDirection === Direction.DOWN_RIGHT} onClick={() => selectNoteDirection(Direction.DOWN_RIGHT)} />
 					<Spacer size={1} />
 				</Row>
 			</Grid>

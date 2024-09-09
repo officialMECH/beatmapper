@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
-import { EVENTS_VIEW, UNIT } from "$/constants";
+import { UNIT } from "$/constants";
+import { View } from "$/types";
 
 import EditorNavigationControls from "../EditorNavigationControls";
 import EditorStatusBar from "../EditorStatusBar";
@@ -20,7 +21,7 @@ const EventsBottomPanel = ({ contentWidth }) => {
 	return (
 		<Wrapper style={{ width: contentWidth }}>
 			<SubWrapper>
-				<EditorNavigationControls height={playbackControlsHeight} view={EVENTS_VIEW} />
+				<EditorNavigationControls height={playbackControlsHeight} view={View.LIGHTSHOW} />
 			</SubWrapper>
 			<SubWrapper>
 				<EditorWaveform height={waveformHeight} />

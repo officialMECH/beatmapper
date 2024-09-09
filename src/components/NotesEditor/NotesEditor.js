@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import { NOTES_VIEW } from "$/constants";
+import { View } from "$/types";
 
 import EditorBottomPanel from "../EditorBottomPanel";
 import EditorRightPanel from "../EditorRightPanel";
@@ -22,7 +22,7 @@ const NotesEditor = () => {
 			<EditorBottomPanel />
 			<EditorRightPanel />
 
-			<GlobalShortcuts view={NOTES_VIEW} />
+			<GlobalShortcuts view={View.BEATMAP} />
 			<KeyboardShortcuts />
 		</Wrapper>
 	);

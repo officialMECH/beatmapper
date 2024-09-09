@@ -6,6 +6,7 @@
  */
 import React from "react";
 
+import { ObjectSelectionMode } from "$/types";
 import mineUrl from "../../assets/obj/mine.obj?url";
 import useObject from "../../hooks/use-object.hook";
 
@@ -38,12 +39,12 @@ const Mine = React.memo(({ x, y, z, time, lineLayer, lineIndex, direction, color
 					// start deselecting instead
 					let selectionMode;
 					if (ev.button === 0) {
-						selectionMode = isSelected ? "deselect" : "select";
+						selectionMode = isSelected ? ObjectSelectionMode.DESELECT : ObjectSelectionMode.SELECT;
 					} else if (ev.button === 1) {
 						// Middle clicks shouldnt affect selections
 						selectionMode = null;
 					} else if (ev.button === 2) {
-						selectionMode = "delete";
+						selectionMode = ObjectSelectionMode.DELETE;
 					}
 					handleStartSelecting(selectionMode);
 

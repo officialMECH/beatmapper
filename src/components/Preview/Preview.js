@@ -1,13 +1,12 @@
 import { connect } from "react-redux";
 import styled from "styled-components";
 
-import { PREVIEW_VIEW } from "$/constants";
+import { View } from "$/types";
 import * as actions from "../../actions";
 
 import EditorBottomPanel from "../EditorBottomPanel";
-import ReduxForwardingCanvas from "../ReduxForwardingCanvas";
-
 import GlobalShortcuts from "../GlobalShortcuts";
+import ReduxForwardingCanvas from "../ReduxForwardingCanvas";
 // import KeyboardShortcuts from './KeyboardShortcuts';
 import LightingPreview from "./LightingPreview";
 
@@ -20,7 +19,7 @@ const Preview = ({ isPlaying, scrollThroughSong }) => {
 
 			<EditorBottomPanel />
 
-			<GlobalShortcuts view={PREVIEW_VIEW} />
+			<GlobalShortcuts view={View.PREVIEW} />
 		</Wrapper>
 	);
 };

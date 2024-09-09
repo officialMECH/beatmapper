@@ -1,15 +1,16 @@
 import React from "react";
 import { connect } from "react-redux";
 
+import { App, Quality } from "$/types";
 import { convertMillisecondsToBeats } from "../../helpers/audio.helpers";
 import useOnChange from "../../hooks/use-on-change.hook";
 import { getTracks } from "../../reducers/editor-entities.reducer/events-view.reducer";
 import { getAnimateRingMotion, getCursorPositionInBeats } from "../../reducers/navigation.reducer";
 import { getGraphicsLevel, getUsableProcessingDelay } from "../../reducers/user.reducer";
 import { range } from "../../utils";
+import { findMostRecentEventInTrack } from "./Preview.helpers";
 
 import BracketRing from "./BracketRing";
-import { findMostRecentEventInTrack } from "./Preview.helpers";
 
 const INITIAL_ROTATION = Math.PI * 0.25;
 const INCREMENT_ROTATION_BY = Math.PI * 0.5;
@@ -57,8 +58,8 @@ const mapStateToProps = (state, { song }) => {
 
 	const tracks = getTracks(state);
 
-	const zoomTrackId = "smallRing";
-	const rotationTrackId = "largeRing";
+	const zoomTrackId = App.TrackId[9];
+	const rotationTrackId = App.TrackId[8];
 
 	const zoomEvents = tracks[zoomTrackId];
 	const rotationEvents = tracks[rotationTrackId];
@@ -75,15 +76,15 @@ const mapStateToProps = (state, { song }) => {
 
 	let numOfRings;
 	switch (graphicsLevel) {
-		case "high": {
+		case Quality.HIGH: {
 			numOfRings = 16;
 			break;
 		}
-		default: {
+		case Quality.MEDIUM: {
 			numOfRings = 12;
 			break;
 		}
-		case "low": {
+		case Quality.LOW: {
 			numOfRings = 8;
 			break;
 		}

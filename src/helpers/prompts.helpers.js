@@ -3,6 +3,8 @@
  * Currently uses window.prompt, but I should build something prettier.
  */
 
+import { GRID_PRESET_SLOTS } from "$/constants";
+
 export const promptQuickSelect = (view, wrappedAction) => {
 	let beatStr = window.prompt('Quick-select all entities in a given range of beats. Eg. "16-32" will select everything from beat 16 to 32.');
 
@@ -61,8 +63,7 @@ export const promptChangeObstacleDuration = (obstacles, wrappedAction) => {
 };
 
 export const promptSaveGridPreset = (gridPresets, wrappedAction) => {
-	const presetSlots = ["1", "2", "3", "4"];
-	const suggestedPreset = presetSlots.find((n) => !gridPresets[n]);
+	const suggestedPreset = GRID_PRESET_SLOTS.find((n) => !gridPresets[n]);
 
 	const providedValue = window.prompt("Select a number from 1 to 4 to store this preset", suggestedPreset);
 

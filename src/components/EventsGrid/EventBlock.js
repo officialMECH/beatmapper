@@ -4,12 +4,13 @@ import { connect } from "react-redux";
 import styled from "styled-components";
 
 import { COLORS } from "$/constants";
+import { App, EventEditMode } from "$/types";
 import * as actions from "../../actions";
 import { getColorForItem } from "../../helpers/colors.helpers";
 import { getSelectedEventEditMode } from "../../reducers/editor.reducer";
+import { getSelectedSong } from "../../reducers/songs.reducer";
 import { normalize } from "../../utils";
 
-import { getSelectedSong } from "../../reducers/songs.reducer";
 import UnstyledButton from "../UnstyledButton";
 
 const BLOCK_WIDTH = 7;
@@ -18,14 +19,14 @@ const getBackgroundForEvent = (event, song) => {
 	const color = getColorForItem(event.colorType || event.type, song);
 
 	switch (event.type) {
-		case "on":
-		case "off":
-		case "rotate": {
+		case App.EventType.ON:
+		case App.EventType.OFF:
+		case App.EventType.TRIGGER: {
 			// On/off are solid colors
 			return color;
 		}
 
-		case "flash": {
+		case App.EventType.FLASH: {
 			const brightColor = Color(color).lighten(0.4).hsl();
 			const semiTransparentColor = Color(color)
 				.darken(0.5)
@@ -34,7 +35,7 @@ const getBackgroundForEvent = (event, song) => {
 			return `linear-gradient(90deg, ${semiTransparentColor}, ${brightColor})`;
 		}
 
-		case "fade": {
+		case App.EventType.FADE: {
 			const brightColor = Color(color).lighten(0.4).hsl();
 
 			const semiTransparentColor = Color(color)
@@ -71,7 +72,7 @@ const EventBlock = ({ song, event, trackWidth, startBeat, numOfBeatsToShow, dele
 				// We don't want to do that when the user clicks directly on a block.
 				// In "place" mode, we need the event to propagate to enable bulk
 				// delete.
-				if (selectedEditMode === "select") {
+				if (selectedEditMode === EventEditMode.SELECT) {
 					ev.stopPropagation();
 				}
 

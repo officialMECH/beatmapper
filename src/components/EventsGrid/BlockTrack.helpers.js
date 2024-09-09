@@ -1,6 +1,7 @@
 import { EVENT_TRACKS } from "$/constants";
+import { App, TrackType } from "$/types";
 
-const getIsEventOn = (ev) => ev.type === "on" || ev.type === "flash";
+const getIsEventOn = (ev) => ev.type === App.EventType.ON || ev.type === App.EventType.FLASH;
 
 const getIsLightingTrack = (trackId) => {
 	const track = EVENT_TRACKS.find((t) => t.id === trackId);
@@ -9,11 +10,11 @@ const getIsLightingTrack = (trackId) => {
 		throw new Error(`Unrecognized trackId: ${trackId}`);
 	}
 
-	if (track.type !== "blocks") {
+	if (track.type !== TrackType.LIGHT) {
 		return false;
 	}
 
-	if (track.id === "smallRing" || track.id === "largeRing") {
+	if (track.id === App.TrackId[8] || track.id === App.TrackId[9]) {
 		return false;
 	}
 
@@ -36,7 +37,7 @@ export const getBackgroundBoxes = (events, trackId, initialTrackLightingColorTyp
 	if (initialTrackLightingColorType) {
 		const pseudoInitialEvent = {
 			id: `initial-${startBeat}-${numOfBeatsToShow}`,
-			type: "on",
+			type: App.EventType.ON,
 			beatNum: startBeat,
 			colorType: initialTrackLightingColorType,
 		};

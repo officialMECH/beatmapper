@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import styled from "styled-components";
 
 import { COLORS, EVENT_TRACKS, UNIT } from "$/constants";
+import { App, EventEditMode, TrackType } from "$/types";
 import * as actions from "../../actions";
 import useMousePositionOverElement from "../../hooks/use-mouse-position-over-element.hook";
 import usePointerUpHandler from "../../hooks/use-pointer-up-handler.hook";
@@ -63,7 +64,7 @@ const EventsGrid = ({ contentWidth, startBeat, endBeat, selectedBeat, selectionB
 		commitSelection();
 	}, [commitSelection]);
 
-	const shouldCompleteSelectionOnPointerUp = selectedEditMode === "select" && !!mouseDownAt;
+	const shouldCompleteSelectionOnPointerUp = selectedEditMode === EventEditMode.SELECT && !!mouseDownAt;
 
 	usePointerUpHandler(shouldCompleteSelectionOnPointerUp, handleCompleteSelection);
 
@@ -73,7 +74,7 @@ const EventsGrid = ({ contentWidth, startBeat, endBeat, selectedBeat, selectionB
 
 		const hoveringOverBeatNum = convertMousePositionToBeatNum(x, innerGridWidth, beatNums, startBeat, snapTo);
 
-		if (selectedEditMode === "select" && mouseDownAt && mouseButtonDepressed.current === "left") {
+		if (selectedEditMode === EventEditMode.SELECT && mouseDownAt && mouseButtonDepressed.current === "left") {
 			const newSelectionBox = {
 				top: Math.min(mouseDownAt.y, currentMousePosition.y),
 				left: Math.min(mouseDownAt.x, currentMousePosition.x),
@@ -124,7 +125,7 @@ const EventsGrid = ({ contentWidth, startBeat, endBeat, selectedBeat, selectionB
 			return false;
 		}
 
-		return trackId === "laserRight" || trackId === "laserSpeedRight";
+		return trackId === App.TrackId[3] || trackId === App.TrackId[13];
 	};
 
 	return (
@@ -152,7 +153,7 @@ const EventsGrid = ({ contentWidth, startBeat, endBeat, selectedBeat, selectionB
 				<MainGridContent
 					style={{
 						height: innerGridHeight,
-						cursor: selectedEditMode === "select" ? "crosshair" : "pointer",
+						cursor: selectedEditMode === EventEditMode.SELECT ? "crosshair" : "pointer",
 					}}
 				>
 					<BackgroundLinesWrapper>
@@ -161,7 +162,7 @@ const EventsGrid = ({ contentWidth, startBeat, endBeat, selectedBeat, selectionB
 
 					<Tracks ref={tracksRef} onPointerDown={handlePointerDown}>
 						{EVENT_TRACKS.map(({ id, type }) => {
-							const TrackComponent = type === "blocks" ? BlockTrack : SpeedTrack;
+							const TrackComponent = type === TrackType.LIGHT || type === TrackType.TRIGGER ? BlockTrack : SpeedTrack;
 
 							const isDisabled = getIsTrackDisabled(id);
 

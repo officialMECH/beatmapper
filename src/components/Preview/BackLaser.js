@@ -1,15 +1,15 @@
-import React from "react";
 import { connect } from "react-redux";
 
+import { App } from "$/types";
 import { convertMillisecondsToBeats } from "../../helpers/audio.helpers";
 import { getColorForItem } from "../../helpers/colors.helpers";
 import { getTracks } from "../../reducers/editor-entities.reducer/events-view.reducer";
 import { getCursorPositionInBeats } from "../../reducers/navigation.reducer";
 import { getUsableProcessingDelay } from "../../reducers/user.reducer";
 import { range } from "../../utils";
+import { findMostRecentEventInTrack } from "./Preview.helpers";
 
 import LaserBeam from "./LaserBeam";
-import { findMostRecentEventInTrack } from "./Preview.helpers";
 
 const BackLaser = ({ song, isPlaying, lastEvent, secondsSinceSongStart }) => {
 	const NUM_OF_BEAMS_PER_SIDE = 5;
@@ -17,9 +17,9 @@ const BackLaser = ({ song, isPlaying, lastEvent, secondsSinceSongStart }) => {
 
 	const zDistanceBetweenBeams = -25;
 
-	const status = lastEvent ? lastEvent.type : "off";
+	const status = lastEvent ? lastEvent.type : App.EventType.OFF;
 	const eventId = lastEvent ? lastEvent.id : null;
-	const color = status === "off" ? "#000000" : getColorForItem(lastEvent.colorType, song);
+	const color = status === App.EventType.OFF ? "#000000" : getColorForItem(lastEvent.colorType, song);
 
 	const sides = ["left", "right"];
 
@@ -42,7 +42,7 @@ const mapStateToProps = (state, { song }) => {
 		return;
 	}
 
-	const trackId = "laserBack";
+	const trackId = App.TrackId[0];
 
 	const tracks = getTracks(state);
 	const events = tracks[trackId];

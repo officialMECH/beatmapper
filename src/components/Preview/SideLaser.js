@@ -1,16 +1,15 @@
-import React from "react";
 import { connect } from "react-redux";
 
+import { App } from "$/types";
 import { convertMillisecondsToBeats } from "../../helpers/audio.helpers";
 import { getColorForItem } from "../../helpers/colors.helpers";
 import { getTracks } from "../../reducers/editor-entities.reducer/events-view.reducer";
-import { getCursorPositionInBeats } from "../../reducers/navigation.reducer";
-import { getCursorPosition } from "../../reducers/navigation.reducer";
+import { getCursorPosition, getCursorPositionInBeats } from "../../reducers/navigation.reducer";
 import { getUsableProcessingDelay } from "../../reducers/user.reducer";
 import { convertDegreesToRadians, normalize, range } from "../../utils";
+import { findMostRecentEventInTrack } from "./Preview.helpers";
 
 import LaserBeam from "./LaserBeam";
-import { findMostRecentEventInTrack } from "./Preview.helpers";
 
 // We want to use a sin curve to control laser rotation.
 // Math.sin produces a value between -1 and 1, and resets after 2PI, which means
@@ -58,10 +57,10 @@ const SideLaser = ({ song, isPlaying, side, lastEvent, laserSpeed, secondsSinceS
 	const yOffset = -10;
 	const zOffset = side === "right" ? -100 : -100 - zLeftSideOffset;
 
-	const status = lastEvent ? lastEvent.type : "off";
+	const status = lastEvent ? lastEvent.type : App.EventType.OFF;
 	const eventId = lastEvent ? lastEvent.id : null;
 
-	const color = status === "off" ? "#000000" : getColorForItem(lastEvent.colorType, song);
+	const color = status === App.EventType.OFF ? "#000000" : getColorForItem(lastEvent.colorType, song);
 
 	const horizontalBeams = laserIndices.map((index) => {
 		const position = [xOffset + index * xDistanceBetweenBeams, yOffset, zOffset + index * zDistanceBetweenBeams];
@@ -94,8 +93,8 @@ const mapStateToProps = (state, { song, side }) => {
 
 	const tracks = getTracks(state);
 
-	const trackId = side === "left" ? "laserLeft" : "laserRight";
-	const speedTrackId = side === "left" ? "laserSpeedLeft" : "laserSpeedRight";
+	const trackId = side === "left" ? App.TrackId[2] : App.TrackId[3];
+	const speedTrackId = side === "left" ? App.TrackId[12] : App.TrackId[13];
 
 	const lightEvents = tracks[trackId];
 	const speedEvents = tracks[speedTrackId];

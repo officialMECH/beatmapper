@@ -2,13 +2,14 @@ import React from "react";
 import { connect } from "react-redux";
 
 import { BLOCK_PLACEMENT_SQUARE_SIZE } from "$/constants";
+import { ObjectTool } from "$/types";
 import * as actions from "../../actions";
 import { getColorForItem } from "../../helpers/colors.helpers";
 import { convertGridColumn, convertGridRow } from "../../helpers/grid.helpers";
+import { getDefaultObstacleDuration } from "../../reducers/editor.reducer";
 import { getGridSize, getMappingMode, getSelectedSong } from "../../reducers/songs.reducer";
 import { range } from "../../utils";
 
-import { getDefaultObstacleDuration } from "../../reducers/editor.reducer";
 import GridCell from "./GridCell";
 import { getDirectionForDrag } from "./PlacementGrid.helpers";
 import TentativeBlock from "./TentativeBlock";
@@ -45,7 +46,7 @@ const PlacementGrid = ({ width, gridPosition, song, selectedTool, selectionMode,
 		const handleMouseMove = (ev) => {
 			const { rowIndex, colIndex, ...initialPosition } = mouseDownAt;
 
-			if (selectedTool !== "left-block" && selectedTool !== "right-block") {
+			if (selectedTool !== ObjectTool.LEFT_NOTE && selectedTool !== ObjectTool.RIGHT_NOTE) {
 				return;
 			}
 
@@ -145,7 +146,7 @@ const PlacementGrid = ({ width, gridPosition, song, selectedTool, selectionMode,
 
 			{tentativeBlock && <TentativeBlock song={song} direction={tentativeBlock.direction} rowIndex={tentativeBlock.rowIndex} colIndex={tentativeBlock.colIndex} color={getColorForItem(tentativeBlock.selectedTool, song)} />}
 
-			{mouseDownAt && selectedTool === "obstacle" && <TentativeObstacle mouseDownAt={mouseDownAt} mouseOverAt={mouseOverAt} color={getColorForItem("obstacle", song)} mode={mappingMode} />}
+			{mouseDownAt && selectedTool === ObjectTool.OBSTACLE && <TentativeObstacle mouseDownAt={mouseDownAt} mouseOverAt={mouseOverAt} color={getColorForItem(ObjectTool.OBSTACLE, song)} mode={mappingMode} />}
 		</>
 	);
 };

@@ -2,6 +2,7 @@ import Color from "color";
 import get from "lodash.get";
 
 import { COLORS, COLOR_ELEMENT_DATA, DEFAULT_BLUE, DEFAULT_RED } from "$/constants";
+import { App, EventColor, ObjectTool } from "$/types";
 import { clamp, normalize } from "../utils";
 
 export const getColorForItem = (item, song) => {
@@ -10,25 +11,25 @@ export const getColorForItem = (item, song) => {
 	switch (item) {
 		// In our notes view, the tool will be labeled "left-block", while the
 		// underlying data structure treats colors as a number: 0, 1, 3.
-		case "left-block":
+		case ObjectTool.LEFT_NOTE:
 		case 0: {
 			const defaultColor = DEFAULT_RED;
 			const customColor = get(song, "modSettings.customColors.colorLeft") || defaultColor;
 
 			return customColorsEnabled ? customColor : defaultColor;
 		}
-		case "right-block":
+		case ObjectTool.RIGHT_NOTE:
 		case 1: {
 			const defaultColor = DEFAULT_BLUE;
 			const customColor = get(song, "modSettings.customColors.colorRight") || defaultColor;
 
 			return customColorsEnabled ? customColor : defaultColor;
 		}
-		case "mine":
+		case ObjectTool.BOMB_NOTE:
 		case 3: {
 			return "#687485";
 		}
-		case "obstacle": {
+		case ObjectTool.OBSTACLE: {
 			const defaultColor = DEFAULT_RED;
 			const customColor = get(song, "modSettings.customColors.obstacleColor") || defaultColor;
 
@@ -37,15 +38,17 @@ export const getColorForItem = (item, song) => {
 
 		// In the events view, our formal name is `envColorLeft`, but the events
 		// themselves still use the original colors 'red' / 'blue'.
-		case "envColorLeft":
-		case "red": {
+		case App.BeatmapColorKey.ENV_LEFT:
+		case App.EventColorType.PRIMARY:
+		case EventColor.PRIMARY: {
 			const defaultColor = DEFAULT_RED;
 			const customColor = get(song, "modSettings.customColors.envColorLeft") || defaultColor;
 
 			return customColorsEnabled ? customColor : defaultColor;
 		}
-		case "envColorRight":
-		case "blue": {
+		case App.BeatmapColorKey.ENV_RIGHT:
+		case App.EventColorType.SECONDARY:
+		case EventColor.SECONDARY: {
 			const defaultColor = DEFAULT_BLUE;
 			const customColor = get(song, "modSettings.customColors.envColorRight") || defaultColor;
 
@@ -54,9 +57,9 @@ export const getColorForItem = (item, song) => {
 
 		// Event view has two other event types: rotate and off. They have unique
 		// colors.
-		case "rotate":
+		case App.EventType.TRIGGER:
 			return COLORS.green[500];
-		case "off":
+		case App.EventType.OFF:
 			return COLORS.blueGray[400];
 
 		default:

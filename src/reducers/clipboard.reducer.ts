@@ -1,7 +1,7 @@
-import { NOTES_VIEW } from "$/constants";
+import { View } from "$/types";
 
 interface State {
-	view: "notes" | "events" | null;
+	view: View | null;
 	data: Array<any> | null;
 }
 
@@ -52,4 +52,4 @@ export default function clipboard(state: State = initialState, action: any = und
 
 export const getCopiedData = (state: any) => state.clipboard.data;
 
-export const getHasCopiedNotes = (state: any) => state.clipboard.data && state.clipboard.view === NOTES_VIEW;
+export const getHasCopiedNotes = (state: any) => state.clipboard.data && state.clipboard.view === View.BEATMAP;

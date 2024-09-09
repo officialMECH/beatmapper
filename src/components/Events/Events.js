@@ -1,14 +1,14 @@
 import { connect } from "react-redux";
 import styled from "styled-components";
 
-import { EVENTS_VIEW, SIDEBAR_WIDTH } from "$/constants";
+import { SIDEBAR_WIDTH } from "$/constants";
+import { View } from "$/types";
 import useWindowDimensions from "../../hooks/use-window-dimensions.hook";
+import { getBackgroundOpacity } from "../../reducers/editor.reducer";
 
 import EventsGrid from "../EventsGrid";
 import GlobalShortcuts from "../GlobalShortcuts";
 import SongInfo from "../SongInfo";
-
-import { getBackgroundOpacity } from "../../reducers/editor.reducer";
 import BottomPanel from "./BottomPanel";
 import EventLightingPreview from "./EventLightingPreview";
 import GridControls from "./GridControls";
@@ -37,7 +37,7 @@ const Events = ({ backgroundOpacity }) => {
 					<BottomPanel contentWidth={contentWidth} />
 				</MainUI>
 
-				<GlobalShortcuts view={EVENTS_VIEW} />
+				<GlobalShortcuts view={View.LIGHTSHOW} />
 				<KeyboardShortcuts />
 			</Wrapper>
 		</>

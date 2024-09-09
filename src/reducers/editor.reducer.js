@@ -8,7 +8,8 @@ import { produce } from "immer";
 import { combineReducers } from "redux";
 import { createSelector } from "reselect";
 
-import { BEATS_PER_ZOOM_LEVEL, EVENTS_VIEW, EVENT_COLORS, EVENT_EDIT_MODES, EVENT_TOOLS, NOTES_VIEW, NOTE_TOOLS, ZOOM_LEVEL_MAX, ZOOM_LEVEL_MIN } from "$/constants";
+import { BEATS_PER_ZOOM_LEVEL, EVENT_COLORS, EVENT_EDIT_MODES, EVENT_TOOLS, NOTE_TOOLS, ZOOM_LEVEL_MAX, ZOOM_LEVEL_MIN } from "$/constants";
+import { ObjectTool, View } from "$/types";
 import { floorToNearest } from "../utils";
 import { getCursorPositionInBeats } from "./navigation.reducer";
 
@@ -50,7 +51,7 @@ function notes(state = initialState.notes, action = undefined) {
 		case "SELECT_TOOL": {
 			const { view, tool } = action;
 
-			if (view !== NOTES_VIEW) {
+			if (view !== View.BEATMAP) {
 				return state;
 			}
 
@@ -64,7 +65,7 @@ function notes(state = initialState.notes, action = undefined) {
 		case "SELECT_PREVIOUS_TOOL": {
 			const { view } = action;
 
-			if (view !== NOTES_VIEW) {
+			if (view !== View.BEATMAP) {
 				return state;
 			}
 
@@ -82,15 +83,15 @@ function notes(state = initialState.notes, action = undefined) {
 		}
 
 		case "SELECT_COLOR": {
-			if (action.view !== NOTES_VIEW) {
+			if (action.view !== View.BEATMAP) {
 				return state;
 			}
 
 			let toolName;
 			if (action.color === "red") {
-				toolName = "left-block";
+				toolName = ObjectTool.LEFT_NOTE;
 			} else {
-				toolName = "right-block";
+				toolName = ObjectTool.RIGHT_NOTE;
 			}
 
 			return {
@@ -182,7 +183,7 @@ function events(state = initialState.events, action = undefined) {
 		case "SELECT_COLOR": {
 			const { view, color } = action;
 
-			if (view !== EVENTS_VIEW) {
+			if (view !== View.LIGHTSHOW) {
 				return state;
 			}
 
@@ -195,7 +196,7 @@ function events(state = initialState.events, action = undefined) {
 		case "SELECT_TOOL": {
 			const { view, tool } = action;
 
-			if (view !== EVENTS_VIEW) {
+			if (view !== View.LIGHTSHOW) {
 				return state;
 			}
 
@@ -209,7 +210,7 @@ function events(state = initialState.events, action = undefined) {
 		case "SELECT_PREVIOUS_TOOL": {
 			const { view } = action;
 
-			if (view !== EVENTS_VIEW) {
+			if (view !== View.LIGHTSHOW) {
 				return state;
 			}
 
@@ -278,7 +279,7 @@ function events(state = initialState.events, action = undefined) {
 			};
 		}
 
-		case "TOGGLE_PREVIEW_LIGHTING_IN_EVENTS_VIEW": {
+		case "TOGGLE_PREVIEW_LIGHTING_IN_View.LIGHTSHOW": {
 			return {
 				...state,
 				showLightingPreview: !state.showLightingPreview,

@@ -2,12 +2,13 @@ import { connect } from "react-redux";
 import styled from "styled-components";
 
 import { UNIT } from "$/constants";
+import { Quality } from "$/types";
 import * as actions from "../../actions";
 import useBoundingBox from "../../hooks/use-bounding-box.hook";
 import { getSelectedSong } from "../../reducers/songs.reducer";
+import { getGraphicsLevel } from "../../reducers/user.reducer";
 import { roundToNearest } from "../../utils";
 
-import { getGraphicsLevel } from "../../reducers/user.reducer";
 import Bookmarks from "../Bookmarks";
 import CenteredSpinner from "../CenteredSpinner";
 import ScrubbableWaveform from "../ScrubbableWaveform";
@@ -20,9 +21,9 @@ const EditorWaveform = ({ height, view, song, waveformData, isLoadingSong, durat
 	// graphics settings. Because it's a pure component, providing the same
 	// cursorPosition means that the rendering will be skipped for equal values.
 	let roundedCursorPosition;
-	if (graphicsLevel === "low") {
+	if (graphicsLevel === Quality.LOW) {
 		roundedCursorPosition = roundToNearest(cursorPosition, 150);
-	} else if (graphicsLevel === "medium") {
+	} else if (graphicsLevel === Quality.MEDIUM) {
 		roundedCursorPosition = roundToNearest(cursorPosition, 75);
 	} else {
 		roundedCursorPosition = cursorPosition;

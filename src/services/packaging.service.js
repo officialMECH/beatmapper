@@ -7,6 +7,7 @@ import { saveAs } from "file-saver";
 import JSZip from "jszip";
 import get from "lodash.get";
 
+import { App, Difficulty } from "$/types";
 import { convertBookmarksToExportableJson } from "../helpers/bookmarks.helpers";
 import { formatColorForMods } from "../helpers/colors.helpers";
 import { convertEventsToExportableJson } from "../helpers/events.helpers";
@@ -17,7 +18,7 @@ import { getSortedBookmarksArray } from "../reducers/bookmarks.reducer";
 import { getAllEventsAsArray } from "../reducers/editor-entities.reducer/events-view.reducer";
 import { getNotes, getObstacles } from "../reducers/editor-entities.reducer/notes-view.reducer";
 import { getSelectedSong, getSelectedSongDifficultyIds } from "../reducers/songs.reducer";
-import { getFile, getFilenameForThing, saveCoverArtFromBlob, saveFile, saveSongFile } from "./file.service";
+import { FileType, getFile, getFilenameForThing, saveCoverArtFromBlob, saveFile, saveSongFile } from "./file.service";
 import { deriveDefaultModSettingsFromBeatmap, getArchiveVersion, getDifficultyRankForDifficulty, getFileFromArchive, shiftEntitiesByOffset } from "./packaging.service.nitty-gritty";
 
 const LIGHTSHOW_FILENAME = "EasyLightshow.dat";
@@ -94,7 +95,7 @@ export function createInfoContent(song, meta = { version: 2 }) {
 				_beatmapCharacteristicName: "Lightshow",
 				_difficultyBeatmaps: [
 					{
-						_difficulty: "Easy",
+						_difficulty: Difficulty.EASY,
 						_difficultyRank: 1,
 						_beatmapFilename: "EasyLightshow.dat",
 						_noteJumpMovementSpeed: 16,
@@ -137,11 +138,11 @@ export function createInfoContent(song, meta = { version: 2 }) {
 			const colors = song.modSettings.customColors;
 
 			const colorData = {
-				_colorLeft: formatColorForMods("colorLeft", colors.colorLeft, colors.colorLeftOverdrive),
-				_colorRight: formatColorForMods("colorRight", colors.colorRight, colors.colorRightOverdrive),
-				_envColorLeft: formatColorForMods("envColorLeft", colors.envColorLeft, colors.envColorLeftOverdrive),
-				_envColorRight: formatColorForMods("envColorRight", colors.envColorRight, colors.envColorRightOverdrive),
-				_obstacleColor: formatColorForMods("obstacleColor", colors.obstacleColor, colors.obstacleColorOverdrive),
+				_colorLeft: formatColorForMods(App.BeatmapColorKey.SABER_LEFT, colors.colorLeft, colors.colorLeftOverdrive),
+				_colorRight: formatColorForMods(App.BeatmapColorKey.SABER_RIGHT, colors.colorRight, colors.colorRightOverdrive),
+				_envColorLeft: formatColorForMods(App.BeatmapColorKey.ENV_LEFT, colors.envColorLeft, colors.envColorLeftOverdrive),
+				_envColorRight: formatColorForMods(App.BeatmapColorKey.ENV_RIGHT, colors.envColorRight, colors.envColorRightOverdrive),
+				_obstacleColor: formatColorForMods(App.BeatmapColorKey.OBSTACLE, colors.obstacleColor, colors.obstacleColorOverdrive),
 			};
 
 			contents._difficultyBeatmapSets.forEach((set) => {
@@ -306,7 +307,7 @@ export const zipFiles = async (song, songFile, coverArtFile, version) => {
 
 	const difficultyContents = await Promise.all(
 		Object.keys(song.difficultiesById).map((difficulty) =>
-			getFile(getFilenameForThing(song.id, "beatmap", { difficulty })).then((fileContents) => ({
+			getFile(getFilenameForThing(song.id, FileType.BEATMAP, { difficulty })).then((fileContents) => ({
 				difficulty,
 				fileContents,
 			})),
@@ -470,7 +471,7 @@ export const processImportedMap = async (zipFile, currentSongIds) => {
 
 	// Save the Info.dat (Not 100% sure that this is necessary, but better to
 	// have and not need)
-	const infoFilename = getFilenameForThing(songId, "info");
+	const infoFilename = getFilenameForThing(songId, FileType.INFO);
 	await saveFile(infoFilename, infoDatString);
 
 	// Save the assets - cover art and song file - to our local store
@@ -500,7 +501,7 @@ export const processImportedMap = async (zipFile, currentSongIds) => {
 				.then((fileContents) => {
 					// TODO: Should I do any cleanup, to verify that the data is legic?
 
-					const beatmapFilename = getFilenameForThing(songId, "beatmap", {
+					const beatmapFilename = getFilenameForThing(songId, FileType.BEATMAP, {
 						difficulty: beatmap._difficulty,
 					});
 
@@ -584,7 +585,7 @@ export const saveEventsToAllDifficulties = (state) => {
 		difficulties.map(
 			(difficulty) =>
 				new Promise((resolve) => {
-					const beatmapFilename = getFilenameForThing(song.id, "beatmap", {
+					const beatmapFilename = getFilenameForThing(song.id, FileType.BEATMAP, {
 						difficulty,
 					});
 

@@ -1,8 +1,8 @@
 import { animated, useSpring } from "@react-spring/three";
 import * as THREE from "three";
 
+import { App } from "$/types";
 import useOnChange from "../../hooks/use-on-change.hook";
-
 import { getSpringConfigForLight } from "./Preview.helpers";
 
 const ON_PROPS = { emissiveIntensity: 0.5, opacity: 0.75 };
@@ -20,7 +20,7 @@ const RingPeg = ({ size, thickness, color, zRotation, lightStatus, lightColor, l
 			return;
 		}
 
-		const statusShouldReset = lightStatus === "flash" || lightStatus === "fade";
+		const statusShouldReset = lightStatus === App.EventType.FLASH || lightStatus === App.EventType.FADE;
 
 		lightSpringConfig.reset = statusShouldReset;
 	}, lastLightingEventId);

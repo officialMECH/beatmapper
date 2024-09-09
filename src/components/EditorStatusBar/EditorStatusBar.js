@@ -24,7 +24,8 @@ import { connect } from "react-redux";
 import { useLocation } from "react-router-dom";
 import styled from "styled-components";
 
-import { COLORS, EVENTS_VIEW, NOTES_VIEW, PREVIEW_VIEW, UNIT } from "$/constants";
+import { COLORS, UNIT } from "$/constants";
+import { View } from "$/types";
 import * as actions from "../../actions";
 import { getNumOfBlocks, getNumOfMines, getNumOfObstacles } from "../../reducers/editor-entities.reducer/notes-view.reducer";
 import { getBackgroundOpacity, getRowHeight, getShowLightingPreview } from "../../reducers/editor.reducer";
@@ -32,7 +33,6 @@ import { getBeatDepth, getIsLoading, getPlayNoteTick, getPlaybackRate, getVolume
 import { pluralize } from "../../utils";
 
 import Spacer from "../Spacer";
-
 import CountIndicator from "./CountIndicator";
 import NoteDensityIndicator from "./NoteDensityIndicator";
 import SliderGroup from "./SliderGroup";
@@ -41,12 +41,12 @@ import Toggle from "./Toggle";
 const getViewFromLocation = () => {
 	const location = useLocation();
 	if (location.pathname.match(/\/notes$/)) {
-		return NOTES_VIEW;
+		return View.BEATMAP;
 	}
 	if (location.pathname.match(/\/events$/)) {
-		return EVENTS_VIEW;
+		return View.LIGHTSHOW;
 	}
-	return PREVIEW_VIEW;
+	return View.PREVIEW;
 };
 
 const EditorStatusBar = ({
@@ -76,7 +76,7 @@ const EditorStatusBar = ({
 	let leftContent;
 	let rightContent;
 
-	if (view === NOTES_VIEW) {
+	if (view === View.BEATMAP) {
 		leftContent = (
 			<>
 				<CountIndicator num={numOfBlocks} label={pluralize(numOfBlocks, "block")} icon={box} />
@@ -100,7 +100,7 @@ const EditorStatusBar = ({
 				<SliderGroup width={UNIT * 7} height={height} minIcon={volumeMinIcon} maxIcon={volumeMaxIcon} min={0} max={1} value={volume} onChange={(value) => updateVolume(value)} />
 			</>
 		);
-	} else if (view === EVENTS_VIEW) {
+	} else if (view === View.LIGHTSHOW) {
 		leftContent = (
 			<>
 				<Toggle size={8} value={showLightingPreview} onIcon={showLightsIcon} offIcon={hideLightsIcon} onChange={togglePreviewLightingInEventsView} />

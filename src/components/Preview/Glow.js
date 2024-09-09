@@ -2,9 +2,9 @@ import { animated, useSpring } from "@react-spring/three";
 import { useThree } from "@react-three/fiber";
 import * as THREE from "three";
 
+import { App } from "$/types";
 import useOnChange from "../../hooks/use-on-change.hook";
 import { normalize } from "../../utils";
-
 import { getSpringConfigForLight } from "./Preview.helpers";
 
 const ON_PROPS = { opacity: 0.75 };
@@ -45,7 +45,7 @@ const Glow = ({ x, y, z, color, size, status, lastEventId, isPlaying, isBlooming
 		if (!isPlaying) {
 			return;
 		}
-		const statusShouldReset = status === "flash" || status === "fade";
+		const statusShouldReset = status === App.EventType.FLASH || status === App.EventType.FADE;
 
 		springConfig.reset = statusShouldReset;
 	}, lastEventId);

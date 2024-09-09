@@ -2,6 +2,7 @@ import React from "react";
 import * as THREE from "three";
 
 import { BLOCK_PLACEMENT_SQUARE_SIZE } from "$/constants";
+import { ObjectTool } from "$/types";
 import { convertGridColumn, convertGridRow } from "../../helpers/grid.helpers";
 import { createObstacleFromMouseEvent } from "../../helpers/obstacles.helpers";
 
@@ -51,7 +52,7 @@ const GridSquare = ({ rowIndex, colIndex, numRows, numCols, rowHeight, colWidth,
 				}
 
 				// If we're adding an obstacle, we use the other handlers
-				if (selectedTool === "obstacle") {
+				if (selectedTool === ObjectTool.OBSTACLE) {
 					return;
 				}
 
@@ -78,7 +79,7 @@ const GridSquare = ({ rowIndex, colIndex, numRows, numCols, rowHeight, colWidth,
 
 				// If the user is placing an obstacle, the idea of a hovered
 				// cell suddenly doesn't make as much sense.
-				if (selectedTool === "obstacle" && isHovered) {
+				if (selectedTool === ObjectTool.OBSTACLE && isHovered) {
 					setHoveredCell(null);
 				}
 
@@ -92,7 +93,7 @@ const GridSquare = ({ rowIndex, colIndex, numRows, numCols, rowHeight, colWidth,
 				});
 			}}
 			onPointerUp={(ev) => {
-				if (selectedTool === "obstacle" && ev.button === 0 && mouseDownAt) {
+				if (selectedTool === ObjectTool.OBSTACLE && ev.button === 0 && mouseDownAt) {
 					ev.stopPropagation();
 
 					const mouseOverAt = { rowIndex, colIndex };

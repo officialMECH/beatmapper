@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 
-import { NOTES_VIEW } from "$/constants";
+import { Direction, ObjectTool, View } from "$/types";
 import * as actions from "../../actions";
 import { getDefaultObstacleDuration } from "../../reducers/editor.reducer";
 import { isMetaKeyPressed } from "../../utils";
@@ -21,22 +21,22 @@ const KeyboardShortcuts = ({ defaultObstacleDuration, selectTool, selectNoteDire
 				if (isMetaKeyPressed(ev)) {
 					return;
 				}
-				return selectTool(NOTES_VIEW, "left-block");
+				return selectTool(View.BEATMAP, ObjectTool.LEFT_NOTE);
 			case "Digit2":
 				if (isMetaKeyPressed(ev)) {
 					return;
 				}
-				return selectTool(NOTES_VIEW, "right-block");
+				return selectTool(View.BEATMAP, ObjectTool.RIGHT_NOTE);
 			case "Digit3":
 				if (isMetaKeyPressed(ev)) {
 					return;
 				}
-				return selectTool(NOTES_VIEW, "mine");
+				return selectTool(View.BEATMAP, ObjectTool.BOMB_NOTE);
 			case "Digit4":
 				if (isMetaKeyPressed(ev)) {
 					return;
 				}
-				return selectTool(NOTES_VIEW, "obstacle");
+				return selectTool(View.BEATMAP, ObjectTool.OBSTACLE);
 
 			case "KeyH": {
 				return swapSelectedNotes("horizontal");
@@ -56,12 +56,12 @@ const KeyboardShortcuts = ({ defaultObstacleDuration, selectTool, selectNoteDire
 				keysDepressed.current.w = true;
 
 				if (keysDepressed.current.a) {
-					return selectNoteDirection(4);
+					return selectNoteDirection(Direction.UP_RIGHT);
 				}
 				if (keysDepressed.current.d) {
-					return selectNoteDirection(5);
+					return selectNoteDirection(Direction.UP_LEFT);
 				}
-				return selectNoteDirection(0);
+				return selectNoteDirection(Direction.UP);
 			}
 			case "KeyA": {
 				if (ev.shiftKey) {
@@ -69,18 +69,18 @@ const KeyboardShortcuts = ({ defaultObstacleDuration, selectTool, selectNoteDire
 				}
 				if (isMetaKeyPressed(ev)) {
 					ev.preventDefault();
-					return toggleSelectAll(NOTES_VIEW);
+					return toggleSelectAll(View.BEATMAP);
 				}
 
 				keysDepressed.current.a = true;
 
 				if (keysDepressed.current.w) {
-					return selectNoteDirection(4);
+					return selectNoteDirection(Direction.UP_LEFT);
 				}
 				if (keysDepressed.current.s) {
-					return selectNoteDirection(6);
+					return selectNoteDirection(Direction.DOWN_LEFT);
 				}
-				return selectNoteDirection(2);
+				return selectNoteDirection(Direction.LEFT);
 			}
 			case "KeyS": {
 				if (ev.shiftKey) {
@@ -89,12 +89,12 @@ const KeyboardShortcuts = ({ defaultObstacleDuration, selectTool, selectNoteDire
 				keysDepressed.current.s = true;
 
 				if (keysDepressed.current.a) {
-					return selectNoteDirection(6);
+					return selectNoteDirection(Direction.DOWN_LEFT);
 				}
 				if (keysDepressed.current.d) {
-					return selectNoteDirection(7);
+					return selectNoteDirection(Direction.DOWN_RIGHT);
 				}
-				return selectNoteDirection(1);
+				return selectNoteDirection(Direction.DOWN);
 			}
 			case "KeyD": {
 				if (ev.shiftKey) {
@@ -103,12 +103,12 @@ const KeyboardShortcuts = ({ defaultObstacleDuration, selectTool, selectNoteDire
 				keysDepressed.current.d = true;
 
 				if (keysDepressed.current.w) {
-					return selectNoteDirection(5);
+					return selectNoteDirection(Direction.UP_RIGHT);
 				}
 				if (keysDepressed.current.s) {
-					return selectNoteDirection(7);
+					return selectNoteDirection(Direction.DOWN_RIGHT);
 				}
-				return selectNoteDirection(3);
+				return selectNoteDirection(Direction.RIGHT);
 			}
 
 			case "KeyF": {
@@ -116,35 +116,35 @@ const KeyboardShortcuts = ({ defaultObstacleDuration, selectTool, selectNoteDire
 					return;
 				}
 
-				return selectNoteDirection(8);
+				return selectNoteDirection(Direction.ANY);
 			}
 
 			case "Numpad1": {
-				return selectNoteDirection(6);
+				return selectNoteDirection(Direction.DOWN_LEFT);
 			}
 			case "Numpad2": {
-				return selectNoteDirection(1);
+				return selectNoteDirection(Direction.DOWN);
 			}
 			case "Numpad3": {
-				return selectNoteDirection(7);
+				return selectNoteDirection(Direction.DOWN_RIGHT);
 			}
 			case "Numpad4": {
-				return selectNoteDirection(2);
+				return selectNoteDirection(Direction.LEFT);
 			}
 			case "Numpad5": {
-				return selectNoteDirection(8);
+				return selectNoteDirection(Direction.ANY);
 			}
 			case "Numpad6": {
-				return selectNoteDirection(3);
+				return selectNoteDirection(Direction.RIGHT);
 			}
 			case "Numpad7": {
-				return selectNoteDirection(4);
+				return selectNoteDirection(Direction.UP_LEFT);
 			}
 			case "Numpad8": {
-				return selectNoteDirection(0);
+				return selectNoteDirection(Direction.UP);
 			}
 			case "Numpad9": {
-				return selectNoteDirection(5);
+				return selectNoteDirection(Direction.UP_RIGHT);
 			}
 
 			default:

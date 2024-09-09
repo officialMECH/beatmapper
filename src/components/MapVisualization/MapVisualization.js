@@ -10,6 +10,7 @@ import { useFrame } from "@react-three/fiber";
 import React from "react";
 
 import { BLOCK_COLUMN_WIDTH, GRID_POSITION } from "$/constants";
+import { Quality } from "$/types";
 import Controls from "../../controls";
 
 import BarMarkers from "../BarMarkers";
@@ -38,7 +39,7 @@ const MapVisualization = () => {
 		<>
 			<StaticEnvironment includeEdgeStrips trackGridRows={true} />
 
-			<Fog renderForGraphics="high" strength={0.02} />
+			<Fog renderForGraphics={Quality.HIGH} strength={0.02} />
 
 			<Lighting />
 

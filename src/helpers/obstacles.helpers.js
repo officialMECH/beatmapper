@@ -1,6 +1,7 @@
 import { v1 as uuid } from "uuid";
 
 import { DEFAULT_NUM_COLS } from "$/constants";
+import { App, ObjectPlacementMode } from "$/types";
 import { clamp, normalize, roundToNearest } from "../utils";
 import { convertGridColumn, convertGridRow } from "./grid.helpers";
 
@@ -19,7 +20,7 @@ export const convertObstaclesToRedux = (obstacles, gridCols = DEFAULT_NUM_COLS) 
 	return obstacles.map((o) => {
 		const obstacleData = {};
 		if (o._type <= 1) {
-			obstacleData.type = o._type === 0 ? "wall" : "ceiling";
+			obstacleData.type = o._type === 0 ? App.ObstacleType.FULL : App.ObstacleType.TOP;
 
 			// We want to truncate widths that fall outside the acceptable parameters
 			// (4 columns).
@@ -41,7 +42,7 @@ export const convertObstaclesToRedux = (obstacles, gridCols = DEFAULT_NUM_COLS) 
 
 			const rowIndex = roundToNearest(normalize(wallStartHeight, WALL_START_BASE, WALL_START_MAX, 0, 2), 0.01);
 
-			obstacleData.type = "extension";
+			obstacleData.type = App.ObstacleType.EXTENDED;
 			obstacleData.rowspan = rowspan;
 			obstacleData.rowIndex = rowIndex;
 			obstacleData.lane = o._lineIndex < 0 ? o._lineIndex / 1000 + 1 : o._lineIndex / 1000 - 1;
@@ -78,19 +79,19 @@ export const convertObstaclesToExportableJson = (obstacles, gridCols = DEFAULT_N
 		const obstacleData = {};
 
 		switch (o.type) {
-			case "wall": {
+			case App.ObstacleType.FULL: {
 				obstacleData._type = 0;
 				obstacleData._lineIndex = o.lane;
 				obstacleData._width = o.colspan;
 				break;
 			}
-			case "ceiling": {
+			case App.ObstacleType.TOP: {
 				obstacleData._type = 1;
 				obstacleData._lineIndex = o.lane;
 				obstacleData._width = o.colspan;
 				break;
 			}
-			case "extension": {
+			case App.ObstacleType.EXTENDED: {
 				// `wallHeight` is a value from 0 to 4000:
 				// - 0 is flat
 				// - 1000 is normal height (which I think is like 4 rows?)
@@ -188,7 +189,7 @@ export const createObstacleFromMouseEvent = (mode, numCols, numRows, colWidth, r
 	const colspan = Math.abs(mouseDownAt.colIndex - mouseOverAt.colIndex) + 1;
 
 	// prettier-ignore
-	const obstacleType = mode === "mapping-extensions" ? "extension" : mouseOverAt.rowIndex === 2 ? "ceiling" : "wall";
+	const obstacleType = mode === ObjectPlacementMode.EXTENSIONS ? App.ObstacleType.EXTENDED : mouseOverAt.rowIndex === 2 ? App.ObstacleType.TOP : App.ObstacleType.FULL;
 
 	const obstacle = {
 		type: obstacleType,
@@ -197,11 +198,11 @@ export const createObstacleFromMouseEvent = (mode, numCols, numRows, colWidth, r
 	};
 
 	// 'original' walls need to be clamped, to not cause hazards
-	if (mode === "original") {
+	if (mode === ObjectPlacementMode.NORMAL) {
 		const lane = convertGridColumn(laneIndex, numCols, colWidth);
 		obstacle.lane = lane;
 
-		if (obstacle.type === "wall" && obstacle.colspan > 2) {
+		if (obstacle.type === App.ObstacleType.FULL && obstacle.colspan > 2) {
 			const overBy = obstacle.colspan - 2;
 			obstacle.colspan = 2;
 
@@ -213,7 +214,7 @@ export const createObstacleFromMouseEvent = (mode, numCols, numRows, colWidth, r
 				obstacle.lane = mouseOverAt.colIndex;
 			}
 		}
-	} else if (mode === "mapping-extensions") {
+	} else if (mode === ObjectPlacementMode.EXTENSIONS) {
 		// For mapping extensions, things work a little bit differently.
 		// We need a rowIndex, which works like `lane`, and rowspan, which works
 		// like `colspan`

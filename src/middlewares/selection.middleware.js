@@ -5,6 +5,7 @@
  *
  * Will do a different approach for events. This is just for notes-view stuff.
  */
+import { ObjectSelectionMode } from "$/types";
 import { bulkDeleteNote, deleteNote, deselectNote, selectNote, toggleNoteColor } from "../actions";
 import { findNoteByProperties } from "../helpers/notes.helpers";
 import { getNotes } from "../reducers/editor-entities.reducer/notes-view.reducer";
@@ -42,13 +43,13 @@ export default function createSelectionMiddleware() {
 				const note = findNoteByProperties(getNotes(state), action);
 
 				// If the selection mode is delete, we can simply remove this note.
-				if (selectionMode === "delete") {
+				if (selectionMode === ObjectSelectionMode.DELETE) {
 					return next(bulkDeleteNote(action.time, action.lineLayer, action.lineIndex));
 				}
 
 				// Ignore double-positives or double-negatives
-				const alreadySelected = note.selected && selectionMode === "select";
-				const alreadyDeselected = !note.selected && selectionMode === "deselect";
+				const alreadySelected = note.selected && selectionMode === ObjectSelectionMode.SELECT;
+				const alreadyDeselected = !note.selected && selectionMode === ObjectSelectionMode.DESELECT;
 				if (alreadySelected || alreadyDeselected) {
 					return;
 				}

@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
-import { NOTES_VIEW, UNIT } from "$/constants";
+import { UNIT } from "$/constants";
+import { View } from "$/types";
 
 import EditorNavigationControls from "../EditorNavigationControls";
 import EditorStatusBar from "../EditorStatusBar";
@@ -20,7 +21,7 @@ const EditorBottomPanel = () => {
 	return (
 		<Wrapper>
 			<SubWrapper>
-				<EditorNavigationControls height={playbackControlsHeight} view={NOTES_VIEW} />
+				<EditorNavigationControls height={playbackControlsHeight} view={View.BEATMAP} />
 			</SubWrapper>
 			<SubWrapper>
 				<EditorWaveform height={waveformHeight} />

@@ -1,3 +1,5 @@
+import { App } from "$/types";
+
 const lightSpringConfig = {
 	tension: 270,
 	friction: 120,
@@ -5,7 +7,7 @@ const lightSpringConfig = {
 
 export const getSpringConfigForLight = ([onProps, offProps, brightProps], status) => {
 	switch (status) {
-		case "off":
+		case App.EventType.OFF:
 			return {
 				to: offProps,
 				immediate: true,
@@ -13,7 +15,7 @@ export const getSpringConfigForLight = ([onProps, offProps, brightProps], status
 				config: lightSpringConfig,
 			};
 
-		case "on": {
+		case App.EventType.ON: {
 			return {
 				to: onProps,
 				immediate: true,
@@ -22,7 +24,7 @@ export const getSpringConfigForLight = ([onProps, offProps, brightProps], status
 			};
 		}
 
-		case "flash": {
+		case App.EventType.FLASH: {
 			return {
 				from: brightProps,
 				to: onProps,
@@ -32,7 +34,7 @@ export const getSpringConfigForLight = ([onProps, offProps, brightProps], status
 			};
 		}
 
-		case "fade": {
+		case App.EventType.FADE: {
 			return {
 				from: brightProps,
 				to: offProps,

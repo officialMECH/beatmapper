@@ -1,6 +1,6 @@
-import React from "react";
 import { connect } from "react-redux";
 
+import { ObjectSelectionMode, ObjectTool } from "$/types";
 import * as actions from "../../actions";
 import { getColorForItem } from "../../helpers/colors.helpers";
 import { getVisibleObstacles } from "../../reducers/editor-entities.reducer/notes-view.reducer";
@@ -10,7 +10,7 @@ import { getSelectedSong } from "../../reducers/songs.reducer";
 import ObstacleBox from "../ObstacleBox";
 
 const Obstacles = ({ song, obstacles, beatDepth, selectionMode, snapTo, deleteObstacle, resizeObstacle, selectObstacle, deselectObstacle }) => {
-	const obstacleColor = getColorForItem("obstacle", song);
+	const obstacleColor = getColorForItem(ObjectTool.OBSTACLE, song);
 
 	return obstacles.map((obstacle) => (
 		<ObstacleBox
@@ -23,11 +23,11 @@ const Obstacles = ({ song, obstacles, beatDepth, selectionMode, snapTo, deleteOb
 			handleResize={resizeObstacle}
 			handleClick={() => (obstacle.selected ? deselectObstacle(obstacle.id) : selectObstacle(obstacle.id))}
 			handleMouseOver={() => {
-				if (selectionMode === "select" && !obstacle.selected) {
+				if (selectionMode === ObjectSelectionMode.SELECT && !obstacle.selected) {
 					selectObstacle(obstacle.id);
-				} else if (selectionMode === "deselect" && obstacle.selected) {
+				} else if (selectionMode === ObjectSelectionMode.DESELECT && obstacle.selected) {
 					deselectObstacle(obstacle.id);
-				} else if (selectionMode === "delete") {
+				} else if (selectionMode === ObjectSelectionMode.DELETE) {
 					deleteObstacle(obstacle.id);
 				}
 			}}

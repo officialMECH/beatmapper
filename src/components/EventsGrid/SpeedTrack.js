@@ -3,14 +3,15 @@ import { connect } from "react-redux";
 import styled from "styled-components";
 
 import { COLORS } from "$/constants";
+import { EventEditMode } from "$/types";
 import * as actions from "../../actions";
 import useMousePositionOverElement from "../../hooks/use-mouse-position-over-element.hook";
 import usePointerUpHandler from "../../hooks/use-pointer-up-handler.hook";
 import { getTrackSpeedAtBeat, makeGetEventsForTrack } from "../../reducers/editor-entities.reducer/events-view.reducer";
 import { getSelectedEventEditMode } from "../../reducers/editor.reducer";
 import { normalize, range } from "../../utils";
-
 import { getYForSpeed } from "./EventsGrid.helpers";
+
 import SpeedTrackEvent from "./SpeedTrackEvent";
 
 const NUM_OF_SPEEDS = 7;
@@ -57,7 +58,7 @@ const SpeedTrack = ({ trackId, width, height, startBeat, numOfBeatsToShow, curso
 			return;
 		}
 
-		if (ev.button !== 0 || selectedEditMode !== "place") {
+		if (ev.button !== 0 || selectedEditMode !== EventEditMode.PLACE) {
 			return;
 		}
 

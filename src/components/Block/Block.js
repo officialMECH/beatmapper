@@ -1,5 +1,6 @@
 import React from "react";
 
+import { Direction, ObjectSelectionMode } from "$/types";
 import blockCenterUrl from "../../assets/obj/block-center.obj?url";
 import blockDirectionalUrl from "../../assets/obj/block-directional.obj?url";
 import useObject from "../../hooks/use-object.hook";
@@ -13,19 +14,17 @@ const getBlockUrlForDirection = (direction) => {
 	}
 
 	switch (direction) {
-		case 0:
-		case 1:
-		case 2:
-		case 3:
-		case 4:
-		case 5:
-		case 6:
-		case 7:
+		case Direction.UP:
+		case Direction.DOWN:
+		case Direction.LEFT:
+		case Direction.RIGHT:
+		case Direction.UP_LEFT:
+		case Direction.UP_RIGHT:
+		case Direction.DOWN_LEFT:
+		case Direction.DOWN_RIGHT:
 			return blockDirectionalUrl;
-
-		case 8:
+		case Direction.ANY:
 			return blockCenterUrl;
-
 		default:
 			throw new Error(`Unrecognized direction: ${direction}`);
 	}
@@ -53,24 +52,24 @@ const getRotationForDirection = (direction) => {
 	// Our block by default points downwards, so we'll do x-axis rotations
 	// depending on the number
 	switch (direction) {
-		case 0: // up
+		case Direction.UP:
 			return Math.PI;
-		case 1: // down
+		case Direction.DOWN:
 			return 0;
-		case 2: // left
+		case Direction.LEFT:
 			return Math.PI * -0.5;
-		case 3: // right
+		case Direction.RIGHT:
 			return Math.PI * 0.5;
-		case 4: // up-left
+		case Direction.UP_LEFT:
 			return Math.PI * -0.75;
-		case 5: // up-right
+		case Direction.UP_RIGHT:
 			return Math.PI * 0.75;
-		case 6: //  down-left
+		case Direction.DOWN_LEFT:
 			return Math.PI * -0.25;
-		case 7:
+		case Direction.DOWN_RIGHT:
 			return Math.PI * 0.25;
 
-		case 8: // Center. Doesn't need to be rotated.
+		case Direction.ANY:
 			return 0;
 
 		default:
@@ -105,12 +104,12 @@ const Block = React.memo(({ x, y, z, time, lineLayer, lineIndex, direction, size
 		// and dragging the cursor across the field.
 		let newSelectionMode;
 		if (ev.button === 0) {
-			newSelectionMode = isSelected ? "deselect" : "select";
+			newSelectionMode = isSelected ? ObjectSelectionMode.DESELECT : ObjectSelectionMode.SELECT;
 		} else if (ev.button === 1) {
 			// Middle clicks shouldnt affect selections
 			newSelectionMode = null;
 		} else if (ev.button === 2) {
-			newSelectionMode = "delete";
+			newSelectionMode = ObjectSelectionMode.DELETE;
 		}
 
 		if (newSelectionMode) {

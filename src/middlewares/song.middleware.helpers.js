@@ -1,6 +1,6 @@
 import { default as WaveformData } from "waveform-data";
 
-import { EVENTS_VIEW } from "$/constants";
+import { View } from "$/types";
 import { convertBeatsToMilliseconds, convertMillisecondsToBeats } from "../helpers/audio.helpers";
 import { convertFileToArrayBuffer } from "../helpers/file.helpers";
 import { getNotes } from "../reducers/editor-entities.reducer/notes-view.reducer";
@@ -54,7 +54,7 @@ export const triggerTickerIfNecessary = (state, currentBeat, lastBeat, ticker, p
 };
 
 export const calculateIfPlaybackShouldBeCommandeered = (state, currentBeat, lastBeat, processingDelay, view) => {
-	if (view !== EVENTS_VIEW) {
+	if (view !== View.LIGHTSHOW) {
 		return;
 	}
 	const song = getSelectedSong(state);

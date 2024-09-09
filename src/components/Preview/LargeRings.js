@@ -2,15 +2,16 @@ import { useTrail } from "@react-spring/three";
 import React from "react";
 import { connect } from "react-redux";
 
+import { App, Quality } from "$/types";
 import { convertMillisecondsToBeats } from "../../helpers/audio.helpers";
 import { getColorForItem } from "../../helpers/colors.helpers";
 import useOnChange from "../../hooks/use-on-change.hook";
 import { getTracks } from "../../reducers/editor-entities.reducer/events-view.reducer";
 import { getAnimateRingMotion, getCursorPositionInBeats } from "../../reducers/navigation.reducer";
 import { getGraphicsLevel, getUsableProcessingDelay } from "../../reducers/user.reducer";
+import { findMostRecentEventInTrack } from "./Preview.helpers";
 
 import LitSquareRing from "./LitSquareRing";
-import { findMostRecentEventInTrack } from "./Preview.helpers";
 
 const INITIAL_ROTATION = Math.PI * 0.25;
 const INCREMENT_ROTATION_BY = Math.PI * 0.5;
@@ -23,9 +24,9 @@ const LargeRings = ({ song, isPlaying, numOfRings, animateRingMotion, lastRotati
 
 	const [rotationRatio, setRotationRatio] = React.useState(0);
 
-	const lightStatus = lastLightingEvent ? lastLightingEvent.type : "off";
+	const lightStatus = lastLightingEvent ? lastLightingEvent.type : App.EventType.OFF;
 	const lastLightingEventId = lastLightingEvent ? lastLightingEvent.id : null;
-	const lightColor = lightStatus === "off" ? "#000000" : getColorForItem(lastLightingEvent.colorType, song);
+	const lightColor = lightStatus === App.EventType.OFF ? "#000000" : getColorForItem(lastLightingEvent.colorType, song);
 
 	// TODO: Custom hook that is shared with SmallRings
 	useOnChange(() => {
@@ -64,8 +65,8 @@ const mapStateToProps = (state, { song }) => {
 
 	const tracks = getTracks(state);
 
-	const rotationTrackId = "largeRing";
-	const lightingTrackId = "trackNeons";
+	const rotationTrackId = App.TrackId[8];
+	const lightingTrackId = App.TrackId[1];
 
 	const rotationEvents = tracks[rotationTrackId];
 	const lightingEvents = tracks[lightingTrackId];
@@ -82,15 +83,15 @@ const mapStateToProps = (state, { song }) => {
 
 	let numOfRings;
 	switch (graphicsLevel) {
-		case "high": {
+		case Quality.HIGH: {
 			numOfRings = 16;
 			break;
 		}
-		default: {
+		case Quality.MEDIUM: {
 			numOfRings = 8;
 			break;
 		}
-		case "low": {
+		case Quality.LOW: {
 			numOfRings = 4;
 			break;
 		}

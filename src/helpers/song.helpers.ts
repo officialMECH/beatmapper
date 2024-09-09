@@ -1,6 +1,7 @@
 import slugify from "slugify";
 
-import type { Difficulty } from "$/types";
+import { DIFFICULTIES } from "$/constants";
+import { Difficulty } from "$/types";
 
 export const getSongIdFromName = (songName: string): string => {
 	const songId = slugify(songName).toLowerCase();
@@ -9,18 +10,16 @@ export const getSongIdFromName = (songName: string): string => {
 };
 
 export const getLabelForDifficulty = (difficulty: Difficulty) => {
-	if (difficulty === "ExpertPlus") {
+	if (difficulty === Difficulty.EXPERT_PLUS) {
 		return "Expert+";
 	}
 	return difficulty;
 };
 
 export const sortDifficultyIds = (difficultyIds: Array<Difficulty>) => {
-	const order = ["Easy", "Normal", "Hard", "Expert", "ExpertPlus"];
 	return difficultyIds.sort((a, b) => {
-		const aIndex = order.indexOf(a);
-		const bIndex = order.indexOf(b);
-
+		const aIndex = DIFFICULTIES.indexOf(a);
+		const bIndex = DIFFICULTIES.indexOf(b);
 		return aIndex > bIndex ? 1 : -1;
 	});
 };

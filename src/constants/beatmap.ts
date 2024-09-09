@@ -1,41 +1,54 @@
+import { App, Difficulty, Environment } from "$/types/beatmap";
+import { TrackType } from "$/types/editor";
 import { DEFAULT_BLUE, DEFAULT_RED } from "./theme";
+import { EVENT_TRACKS } from "./tracks";
 
-export const DIFFICULTIES = ["Easy", "Normal", "Hard", "Expert", "ExpertPlus"] as const;
+export const DIFFICULTIES = Object.freeze(Object.values(Difficulty));
 
-export const HUMANIZED_DIRECTIONS = ["up", "down", "left", "right", "upLeft", "upRight", "downLeft", "downRight", "face"] as const;
+export const HUMANIZED_DIRECTIONS = Object.freeze(Object.values(App.Direction));
 
-export const TRACK_ID_MAP = {
-	laserBack: 0,
-	trackNeons: 1,
-	laserLeft: 2,
-	laserRight: 3,
-	primaryLight: 4,
-	largeRing: 8,
-	smallRing: 9,
-	laserSpeedLeft: 12,
-	laserSpeedRight: 13,
-} as const;
+export const TRACK_ID_MAP = Object.freeze(
+	Object.entries(App.TrackId).reduce(
+		(acc, [index, value]) => {
+			acc[value] = Number(index);
+			return acc;
+		},
+		{} as Record<App.TrackId, number>,
+	),
+);
 
-export const TRACK_IDS_ARRAY = ["laserBack", "trackNeons", "laserLeft", "laserRight", "primaryLight", null, null, null, "largeRing", "smallRing", null, null, "laserSpeedLeft", "laserSpeedRight"] as const;
+export const TRACK_IDS_ARRAY = Object.freeze(
+	Object.entries(App.TrackId).reduce(
+		(acc, [index, value]) => {
+			acc[Number(index)] = value;
+			return acc;
+		},
+		[] as (App.TrackId | null)[],
+	),
+);
 
 export const LIGHT_EVENT_TYPES = {
 	blue: {
-		off: 0,
-		on: 1,
-		flash: 2,
-		fade: 3,
+		[App.EventType.OFF]: 0,
+		[App.EventType.ON]: 1,
+		[App.EventType.FLASH]: 2,
+		[App.EventType.FADE]: 3,
 	},
 	red: {
-		off: 0,
-		on: 5,
-		flash: 6,
-		fade: 7,
+		[App.EventType.OFF]: 0,
+		[App.EventType.ON]: 5,
+		[App.EventType.FLASH]: 6,
+		[App.EventType.FADE]: 7,
 	},
 } as const;
 
-export const LIGHT_EVENTS_ARRAY = ["off", "on", "flash", "fade", null, "on", "flash", "fade"] as const;
+export const LIGHT_EVENTS_ARRAY = [App.EventType.OFF, App.EventType.ON, App.EventType.FLASH, App.EventType.FADE, null, App.EventType.ON, App.EventType.FLASH, App.EventType.FADE] as const;
 
-export const LIGHTING_TRACKS = ["laserLeft", "laserRight", "laserBack", "primaryLight", "trackNeons"] as const;
+export const LIGHTING_TRACKS = Object.freeze(
+	Object.values(EVENT_TRACKS)
+		.filter(({ type }) => type === TrackType.LIGHT)
+		.map(({ id }) => id),
+);
 
 export const DEFAULT_NUM_COLS = 4;
 export const DEFAULT_NUM_ROWS = 3;
@@ -50,11 +63,11 @@ export const DEFAULT_GRID = {
 } as const;
 
 export const DEFAULT_NOTE_JUMP_SPEEDS = {
-	Easy: 10,
-	Normal: 10,
-	Hard: 12,
-	Expert: 15,
-	ExpertPlus: 18,
+	[Difficulty.EASY]: 10,
+	[Difficulty.NORMAL]: 10,
+	[Difficulty.HARD]: 12,
+	[Difficulty.EXPERT]: 15,
+	[Difficulty.EXPERT_PLUS]: 18,
 } as const;
 
 export const DEFAULT_MOD_SETTINGS = {
@@ -77,40 +90,40 @@ export const DEFAULT_MOD_SETTINGS = {
 	},
 } as const;
 
-export const COLOR_ELEMENT_IDS = ["colorLeft", "colorRight", "envColorLeft", "envColorRight", "obstacleColor"] as const;
+export const COLOR_ELEMENT_IDS = Object.freeze(Object.values(App.BeatmapColorKey));
 
 export const COLOR_ELEMENT_DATA = {
-	colorLeft: {
+	[App.BeatmapColorKey.SABER_LEFT]: {
 		label: "Left Saber",
 		maxValue: 5,
 	},
-	colorRight: {
+	[App.BeatmapColorKey.SABER_RIGHT]: {
 		label: "Right Saber",
 		maxValue: 5,
 	},
-	envColorLeft: {
+	[App.BeatmapColorKey.ENV_LEFT]: {
 		label: "Environment 1",
 		maxValue: 3,
 	},
-	envColorRight: {
+	[App.BeatmapColorKey.ENV_RIGHT]: {
 		label: "Environment 2",
 		maxValue: 3,
 	},
-	obstacleColor: {
+	[App.BeatmapColorKey.OBSTACLE]: {
 		label: "Obstacles",
 		maxValue: 10,
 	},
 } as const;
 
 export const ENVIRONMENT_DISPLAY_MAP = {
-	DefaultEnvironment: "The First (default)",
-	Origins: "Origins",
-	TriangleEnvironment: "Triangle",
-	BigMirrorEnvironment: "Big Mirror",
-	NiceEnvironment: "Nice",
-	KDAEnvironment: "KDA",
-	MonstercatEnvironment: "Monstercat",
-	DragonsEnvironment: "Dragons",
-	CrabRaveEnvironment: "Crab Rave",
-	PanicEnvironment: "Panic",
+	[Environment.THE_FIRST]: "The First",
+	[Environment.ORIGINS]: "Origins",
+	[Environment.TRIANGLE]: "Triangle",
+	[Environment.BIG_MIRROR]: "Big Mirror",
+	[Environment.NICE]: "Nice",
+	[Environment.KDA]: "K/DA",
+	[Environment.MONSTERCAT]: "Monstercat",
+	[Environment.DRAGONS]: "Dragons",
+	[Environment.CRAB_RAVE]: "Crab Rave",
+	[Environment.PANIC]: "Panic",
 } as const;

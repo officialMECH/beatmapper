@@ -2,7 +2,8 @@ import { produce } from "immer";
 import undoable, { groupByActionTypes, includeAction } from "redux-undo";
 import { createSelector } from "reselect";
 
-import { EVENTS_VIEW, EVENT_TRACKS, LIGHTING_TRACKS } from "$/constants";
+import { EVENT_TRACKS, LIGHTING_TRACKS } from "$/constants";
+import { App, View } from "$/types";
 import { nudgeEvents } from "../../helpers/events.helpers";
 import { flatten } from "../../utils";
 import { getStartAndEndBeat } from "../editor.reducer";
@@ -88,8 +89,8 @@ const eventsView = undoable(
 
 					// Important: if the side lasers are "locked" we need to mimic this
 					// event from the left laser to the right laser.
-					if (areLasersLocked && trackId === "laserLeft") {
-						const mirrorTrackId = "laserRight";
+					if (areLasersLocked && trackId === App.TrackId[2]) {
+						const mirrorTrackId = App.TrackId[3];
 
 						const symmetricalEvent = {
 							...newEvent,
@@ -128,8 +129,8 @@ const eventsView = undoable(
 
 					// Repeat all the above stuff for the laserSpeedRight track, if we're
 					// modifying the left track and have locked the lasers together.
-					if (areLasersLocked && trackId === "laserSpeedLeft") {
-						const symmetricalTrackId = "laserSpeedRight";
+					if (areLasersLocked && trackId === App.TrackId[12]) {
+						const symmetricalTrackId = App.TrackId[13];
 						const symmetricalEvent = {
 							...newEvent,
 							id: getSymmetricalId(newEvent.id),
@@ -151,7 +152,7 @@ const eventsView = undoable(
 				return produce(state, (draftState) => {
 					draftState.tracks[trackId] = draftState.tracks[trackId].filter((ev) => ev.id !== id);
 
-					const mirroredTracks = ["laserLeft", "laserSpeedLeft"];
+					const mirroredTracks = [App.TrackId[2], App.TrackId[12]];
 
 					if (areLasersLocked && mirroredTracks.includes(trackId)) {
 						const mirroredTrackId = trackId.replace("Left", "Right");
@@ -172,7 +173,7 @@ const eventsView = undoable(
 			}
 
 			case "CUT_SELECTION": {
-				if (action.view !== EVENTS_VIEW) {
+				if (action.view !== View.LIGHTSHOW) {
 					return state;
 				}
 
@@ -190,7 +191,7 @@ const eventsView = undoable(
 			case "PASTE_SELECTION": {
 				const { view, data, pasteAtBeat } = action;
 
-				if (view !== EVENTS_VIEW) {
+				if (view !== View.LIGHTSHOW) {
 					return state;
 				}
 
@@ -222,7 +223,7 @@ const eventsView = undoable(
 
 					const event = draftState.tracks[trackId][eventIndex];
 
-					event.colorType = event.colorType === "blue" ? "red" : "blue";
+					event.colorType = event.colorType === App.EventColorType.SECONDARY ? App.EventColorType.PRIMARY : App.EventColorType.SECONDARY;
 				});
 			}
 
@@ -240,7 +241,7 @@ const eventsView = undoable(
 			case "SELECT_ALL": {
 				const { view, metadata } = action;
 
-				if (view !== EVENTS_VIEW) {
+				if (view !== View.LIGHTSHOW) {
 					return state;
 				}
 
@@ -262,7 +263,7 @@ const eventsView = undoable(
 			case "DESELECT_ALL": {
 				const { view } = action;
 
-				if (view !== EVENTS_VIEW) {
+				if (view !== View.LIGHTSHOW) {
 					return state;
 				}
 
@@ -274,7 +275,7 @@ const eventsView = undoable(
 			case "SELECT_ALL_IN_RANGE": {
 				const { start, end, view } = action;
 
-				if (view !== EVENTS_VIEW) {
+				if (view !== View.LIGHTSHOW) {
 					return state;
 				}
 
@@ -342,7 +343,7 @@ const eventsView = undoable(
 			case "NUDGE_SELECTION": {
 				const { view, direction, amount } = action;
 
-				if (view !== EVENTS_VIEW) {
+				if (view !== View.LIGHTSHOW) {
 					return state;
 				}
 
@@ -485,7 +486,7 @@ export const makeGetInitialTrackLightingColorType = (trackId) =>
 			return null;
 		}
 
-		const isLastEventOn = lastEvent.type === "on" || lastEvent.type === "flash";
+		const isLastEventOn = lastEvent.type === App.EventType.ON || lastEvent.type === App.EventType.FLASH;
 
 		return isLastEventOn ? lastEvent.colorType : null;
 	});

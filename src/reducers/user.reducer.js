@@ -3,11 +3,13 @@
  *
  * Persisted across sessions (like songs.reducer)
  */
+
+import { Quality } from "$/types";
 import { createSelector } from "reselect";
 import { getIsPlaying } from "./navigation.reducer";
 
 const DEFAULT_PROCESSING_DELAY = 60;
-const DEFAULT_GRAPHICS_LEVEL = "high";
+const DEFAULT_GRAPHICS_LEVEL = Quality.HIGH;
 
 const initialState = {
 	isNewUser: true,

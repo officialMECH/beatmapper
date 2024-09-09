@@ -5,7 +5,8 @@ import { connect } from "react-redux";
 import { Tooltip } from "react-tippy";
 import styled from "styled-components";
 
-import { COLORS, NOTES_VIEW, UNIT } from "$/constants";
+import { COLORS, UNIT } from "$/constants";
+import { ObjectType, View } from "$/types";
 import * as actions from "../../actions";
 import { getHasCopiedNotes } from "../../reducers/clipboard.reducer";
 import { getMetaKeyLabel, interleave } from "../../utils";
@@ -37,13 +38,13 @@ const SelectionInfo = ({ numOfSelectedBlocks, numOfSelectedMines, numOfSelectedO
 
 	let numbers = [];
 	if (numOfSelectedBlocks) {
-		numbers.push(<SelectionCount key="blocks" num={numOfSelectedBlocks} label="block" onClick={() => deselectAllOfType("block")} />);
+		numbers.push(<SelectionCount key="blocks" num={numOfSelectedBlocks} label="block" onClick={() => deselectAllOfType(ObjectType.NOTE)} />);
 	}
 	if (numOfSelectedMines) {
-		numbers.push(<SelectionCount key="mines" num={numOfSelectedMines} label="mine" onClick={() => deselectAllOfType("mine")} />);
+		numbers.push(<SelectionCount key="mines" num={numOfSelectedMines} label="mine" onClick={() => deselectAllOfType(ObjectType.BOMB)} />);
 	}
 	if (numOfSelectedObstacles) {
-		numbers.push(<SelectionCount key="obstacles" num={numOfSelectedObstacles} label="wall" onClick={() => deselectAllOfType("obstacle")} />);
+		numbers.push(<SelectionCount key="obstacles" num={numOfSelectedObstacles} label="wall" onClick={() => deselectAllOfType(ObjectType.OBSTACLE)} />);
 	}
 
 	numbers = interleave(numbers, ", ");
@@ -83,18 +84,18 @@ const SelectionInfo = ({ numOfSelectedBlocks, numOfSelectedMines, numOfSelectedO
 
 			<Row>
 				<Tooltip delay={[1000, 0]} title={`Nudge forwards (${metaKeyLabel} + ↑)`}>
-					<IconButton icon={arrowUp} onClick={() => nudgeSelection("forwards", NOTES_VIEW)} />
+					<IconButton icon={arrowUp} onClick={() => nudgeSelection("forwards", View.BEATMAP)} />
 				</Tooltip>
 				<Spacer size={UNIT} />
 				<Tooltip delay={[1000, 0]} title={`Nudge backwards (${metaKeyLabel} + ↓)`}>
-					<IconButton icon={arrowDown} onClick={() => nudgeSelection("backwards", NOTES_VIEW)} />
+					<IconButton icon={arrowDown} onClick={() => nudgeSelection("backwards", View.BEATMAP)} />
 				</Tooltip>
 			</Row>
 
 			<Spacer size={UNIT * 2} />
 
 			<Tooltip delay={[1000, 0]} title="Clear selection (Escape)">
-				<MiniButton width={ACTION_WIDTH} onClick={() => deselectAll(NOTES_VIEW)}>
+				<MiniButton width={ACTION_WIDTH} onClick={() => deselectAll(View.BEATMAP)}>
 					Deselect
 				</MiniButton>
 			</Tooltip>
@@ -106,13 +107,13 @@ const SelectionInfo = ({ numOfSelectedBlocks, numOfSelectedMines, numOfSelectedO
 
 			<Row>
 				<Tooltip delay={[1000, 0]} title={`copy and remove selection (${getMetaKeyLabel()} + X)`}>
-					<MiniButton width={HALF_ACTION_WIDTH} onClick={() => cutSelection(NOTES_VIEW)}>
+					<MiniButton width={HALF_ACTION_WIDTH} onClick={() => cutSelection(View.BEATMAP)}>
 						Cut
 					</MiniButton>
 				</Tooltip>
 				<Spacer size={UNIT} />
 				<Tooltip delay={[1000, 0]} title={`Copy selection (${getMetaKeyLabel()} + C)`}>
-					<MiniButton width={HALF_ACTION_WIDTH} onClick={() => copySelection(NOTES_VIEW)}>
+					<MiniButton width={HALF_ACTION_WIDTH} onClick={() => copySelection(View.BEATMAP)}>
 						Copy
 					</MiniButton>
 				</Tooltip>
@@ -121,7 +122,7 @@ const SelectionInfo = ({ numOfSelectedBlocks, numOfSelectedMines, numOfSelectedO
 			<Spacer size={UNIT} />
 
 			<Tooltip delay={[1000, 0]} title={`Paste copied notes and obstacles (${getMetaKeyLabel()} + V)`}>
-				<MiniButton width={ACTION_WIDTH} disabled={!hasCopiedNotes} onClick={() => pasteSelection(NOTES_VIEW)}>
+				<MiniButton width={ACTION_WIDTH} disabled={!hasCopiedNotes} onClick={() => pasteSelection(View.BEATMAP)}>
 					Paste
 				</MiniButton>
 			</Tooltip>

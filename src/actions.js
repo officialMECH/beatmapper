@@ -1,6 +1,7 @@
 import { v1 as uuid } from "uuid";
 
-import { EVENTS_VIEW, HIGHEST_PRECISION, NOTES_VIEW } from "$/constants";
+import { HIGHEST_PRECISION } from "$/constants";
+import { View } from "$/types";
 import { getNewBookmarkColor } from "./helpers/bookmarks.helpers";
 import { getSortedBookmarksArray } from "./reducers/bookmarks.reducer";
 import { getCopiedData } from "./reducers/clipboard.reducer";
@@ -157,7 +158,7 @@ export const pasteSelection = (view) => (dispatch, getState) => {
 	// When pasting in notes view, we want to paste at the cursor position, where
 	// the song is currently playing. For the events view, we want to paste it
 	// where the mouse cursor is, the selected beat.
-	const pasteAtBeat = view === NOTES_VIEW ? getCursorPositionInBeats(state) : getSelectedEventBeat(state);
+	const pasteAtBeat = view === View.BEATMAP ? getCursorPositionInBeats(state) : getSelectedEventBeat(state);
 
 	// Every entity that has an ID (obstacles, events) needs a unique ID, we
 	// shouldn't blindly copy it over.
@@ -194,7 +195,7 @@ export const createBookmark = (name, view) => (dispatch, getState) => {
 	// For the notes view, we want to use the cursorPosition to figure out when to
 	// create the bookmark for.
 	// For the events view, we want it to be based on the mouse position.
-	const beatNum = view === NOTES_VIEW ? getCursorPositionInBeats(state) : getSelectedEventBeat(state);
+	const beatNum = view === View.BEATMAP ? getCursorPositionInBeats(state) : getSelectedEventBeat(state);
 
 	return dispatch({
 		type: "CREATE_BOOKMARK",
@@ -381,7 +382,7 @@ export const selectAll = (view) => (dispatch, getState) => {
 	// only want to select what is visible in the current frame.
 	let metadata = null;
 
-	if (view === EVENTS_VIEW) {
+	if (view === View.LIGHTSHOW) {
 		const { startBeat, endBeat } = getStartAndEndBeat(state);
 		metadata = { startBeat, endBeat };
 	}
@@ -397,7 +398,7 @@ export const toggleSelectAll = (view) => (dispatch, getState) => {
 
 	let anythingSelected;
 
-	if (view === NOTES_VIEW) {
+	if (view === View.BEATMAP) {
 		const notes = getNotes(state);
 		const obstacles = getObstacles(state);
 
@@ -405,7 +406,7 @@ export const toggleSelectAll = (view) => (dispatch, getState) => {
 		const anyObstaclesSelected = obstacles.some((s) => s.selected);
 
 		anythingSelected = anyNotesSelected || anyObstaclesSelected;
-	} else if (view === EVENTS_VIEW) {
+	} else if (view === View.LIGHTSHOW) {
 		const events = getAllEventsAsArray(state);
 
 		anythingSelected = events.some((e) => e.selected);
@@ -640,7 +641,7 @@ export const switchEventColor = (id, trackId) => ({
 	id,
 	trackId,
 });
-export const selectEventColor = (color) => selectColor(EVENTS_VIEW, color);
+export const selectEventColor = (color) => selectColor(View.LIGHTSHOW, color);
 
 export const selectEventEditMode = (editMode) => ({
 	type: "SELECT_EVENT_EDIT_MODE",

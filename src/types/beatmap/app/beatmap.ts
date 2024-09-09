@@ -31,7 +31,7 @@ export interface OriginalObstacle {
 	fast?: boolean;
 }
 export interface MappingExtensionObstacle extends OriginalObstacle {
-	type: "extension";
+	type: typeof ObstacleType.EXTENDED;
 	rowIndex: number;
 	rowspan: number;
 }

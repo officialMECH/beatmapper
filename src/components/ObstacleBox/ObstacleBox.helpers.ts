@@ -1,7 +1,7 @@
 import { BLOCK_PLACEMENT_SQUARE_SIZE, SONG_OFFSET } from "$/constants";
-import type { MappingExtensionObstacle, Obstacle } from "$/types";
+import { App } from "$/types";
 
-export const getPositionForObstacle = (obstacle: Obstacle, obstacleDimensions: { width: number; height: number; depth: number }, zOffset: number): [number, number, number] => {
+export const getPositionForObstacle = (obstacle: App.Obstacle, obstacleDimensions: { width: number; height: number; depth: number }, zOffset: number): [number, number, number] => {
 	const position = { x: 0, y: 0, z: 0 };
 
 	// ----------- X ------------
@@ -14,12 +14,12 @@ export const getPositionForObstacle = (obstacle: Obstacle, obstacleDimensions: {
 	position.x += obstacle.colspan * (BLOCK_PLACEMENT_SQUARE_SIZE / 2) - BLOCK_PLACEMENT_SQUARE_SIZE / 2;
 
 	// ----------- Y ------------
-	if (obstacle.type === "extension") {
-		const mapObstacle = obstacle as MappingExtensionObstacle;
+	if (obstacle.type === App.ObstacleType.EXTENDED) {
+		const mapObstacle = obstacle as App.MappingExtensionObstacle;
 		const OFFSET_Y = BLOCK_PLACEMENT_SQUARE_SIZE * -1;
 		position.y = mapObstacle.rowIndex * BLOCK_PLACEMENT_SQUARE_SIZE + OFFSET_Y;
 		position.y += obstacleDimensions.height / 2 - BLOCK_PLACEMENT_SQUARE_SIZE / 2;
-	} else if (obstacle.type === "wall" || obstacle.type === "ceiling") {
+	} else if (obstacle.type === App.ObstacleType.FULL || obstacle.type === App.ObstacleType.TOP) {
 		const top = BLOCK_PLACEMENT_SQUARE_SIZE * 1.75;
 		position.y = top - obstacleDimensions.height / 2;
 	}
@@ -31,7 +31,7 @@ export const getPositionForObstacle = (obstacle: Obstacle, obstacleDimensions: {
 	return [position.x, position.y, position.z];
 };
 
-export const getDimensionsForObstacle = (obstacle: Obstacle, beatDepth: number) => {
+export const getDimensionsForObstacle = (obstacle: App.Obstacle, beatDepth: number) => {
 	let width: number;
 	let height: number;
 	let depth: number;
@@ -39,12 +39,12 @@ export const getDimensionsForObstacle = (obstacle: Obstacle, beatDepth: number) 
 	width = obstacle.colspan * BLOCK_PLACEMENT_SQUARE_SIZE;
 	depth = obstacle.beatDuration * beatDepth;
 
-	if (obstacle.type === "extension") {
-		const extensionObstacle = obstacle as MappingExtensionObstacle;
+	if (obstacle.type === App.ObstacleType.EXTENDED) {
+		const extensionObstacle = obstacle as App.MappingExtensionObstacle;
 		height = extensionObstacle.rowspan * BLOCK_PLACEMENT_SQUARE_SIZE;
 	} else {
 		// Height is tricky since it depends on the type.
-		height = obstacle.type === "wall" ? BLOCK_PLACEMENT_SQUARE_SIZE * 3.5 : BLOCK_PLACEMENT_SQUARE_SIZE * 1.25;
+		height = obstacle.type === App.ObstacleType.FULL ? BLOCK_PLACEMENT_SQUARE_SIZE * 3.5 : BLOCK_PLACEMENT_SQUARE_SIZE * 1.25;
 	}
 
 	// We don't want to allow invisible / 0-depth walls

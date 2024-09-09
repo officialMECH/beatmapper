@@ -10,12 +10,13 @@ import { connect } from "react-redux";
 import { Tooltip } from "react-tippy";
 import styled from "styled-components";
 
-import { COLORS, EVENTS_VIEW, UNIT, ZOOM_LEVEL_MAX, ZOOM_LEVEL_MIN } from "$/constants";
+import { COLORS, UNIT, ZOOM_LEVEL_MAX, ZOOM_LEVEL_MIN } from "$/constants";
+import { EventColor, EventEditMode, EventTool, View } from "$/types";
 import * as actions from "../../actions";
 import { getColorForItem } from "../../helpers/colors.helpers";
 import { getAreLasersLocked, getIsLockedToCurrentWindow, getSelectedEventColor, getSelectedEventEditMode, getSelectedEventTool, getZoomLevel } from "../../reducers/editor.reducer";
-
 import { getSelectedSong } from "../../reducers/songs.reducer";
+
 import Spacer from "../Spacer";
 import UnfocusedButton from "../UnfocusedButton";
 import ControlItem from "./ControlItem";
@@ -27,38 +28,38 @@ const GridControls = ({ contentWidth, song, selectedEditMode, selectedTool, sele
 		<Wrapper style={{ width: contentWidth }}>
 			<Left>
 				<ControlItem label="Edit Mode">
-					<ControlItemToggleButton value="place" isToggled={selectedEditMode === "place"} onToggle={() => selectEventEditMode("place")}>
+					<ControlItemToggleButton value={EventEditMode.PLACE} isToggled={selectedEditMode === EventEditMode.PLACE} onToggle={() => selectEventEditMode(EventEditMode.PLACE)}>
 						<Icon icon={placeToolIcon} />
 					</ControlItemToggleButton>
 
-					<ControlItemToggleButton value="select" isToggled={selectedEditMode === "select"} onToggle={() => selectEventEditMode("select")}>
+					<ControlItemToggleButton value={EventEditMode.SELECT} isToggled={selectedEditMode === EventEditMode.SELECT} onToggle={() => selectEventEditMode(EventEditMode.SELECT)}>
 						<Icon icon={selectToolIcon} />
 					</ControlItemToggleButton>
 				</ControlItem>
 				<Spacer size={UNIT * 4} />
 				<ControlItem label="Light Color">
-					<ControlItemToggleButton value="red" isToggled={selectedColor === "red"} onToggle={selectEventColor}>
-						<Box color={getColorForItem("envColorLeft", song)} />
+					<ControlItemToggleButton value={EventColor.PRIMARY} isToggled={selectedColor === EventColor.PRIMARY} onToggle={selectEventColor}>
+						<Box color={getColorForItem(EventColor.PRIMARY, song)} />
 					</ControlItemToggleButton>
-					<ControlItemToggleButton value="blue" isToggled={selectedColor === "blue"} onToggle={selectEventColor}>
-						<Box color={getColorForItem("envColorRight", song)} />
+					<ControlItemToggleButton value={EventColor.SECONDARY} isToggled={selectedColor === EventColor.SECONDARY} onToggle={selectEventColor}>
+						<Box color={getColorForItem(EventColor.SECONDARY, song)} />
 					</ControlItemToggleButton>
 				</ControlItem>
 
 				<Spacer size={UNIT * 4} />
 
 				<ControlItem label="Effect">
-					<ControlItemToggleButton value="on" isToggled={selectedTool === "on"} onToggle={() => selectTool(EVENTS_VIEW, "on")}>
-						<EventToolIcon tool="on" color={getColorForItem(selectedColor === "red" ? "envColorLeft" : "envColorRight", song)} />
+					<ControlItemToggleButton value={EventTool.ON} isToggled={selectedTool === EventTool.ON} onToggle={() => selectTool(View.LIGHTSHOW, EventTool.ON)}>
+						<EventToolIcon tool={EventTool.ON} color={getColorForItem(selectedColor, song)} />
 					</ControlItemToggleButton>
-					<ControlItemToggleButton value="off" isToggled={selectedTool === "off"} onToggle={() => selectTool(EVENTS_VIEW, "off")}>
-						<EventToolIcon tool="off" />
+					<ControlItemToggleButton value={EventTool.OFF} isToggled={selectedTool === EventTool.OFF} onToggle={() => selectTool(View.LIGHTSHOW, EventTool.OFF)}>
+						<EventToolIcon tool={EventTool.OFF} />
 					</ControlItemToggleButton>
-					<ControlItemToggleButton value="flash" isToggled={selectedTool === "flash"} onToggle={() => selectTool(EVENTS_VIEW, "flash")}>
-						<EventToolIcon tool="flash" color={getColorForItem(selectedColor === "red" ? "envColorLeft" : "envColorRight", song)} />
+					<ControlItemToggleButton value={EventTool.FLASH} isToggled={selectedTool === EventTool.FLASH} onToggle={() => selectTool(View.LIGHTSHOW, EventTool.FLASH)}>
+						<EventToolIcon tool={EventTool.FLASH} color={getColorForItem(selectedColor, song)} />
 					</ControlItemToggleButton>
-					<ControlItemToggleButton value="fade" isToggled={selectedTool === "fade"} onToggle={() => selectTool(EVENTS_VIEW, "fade")}>
-						<EventToolIcon tool="fade" color={getColorForItem(selectedColor === "red" ? "envColorLeft" : "envColorRight", song)} />
+					<ControlItemToggleButton value={EventTool.FADE} isToggled={selectedTool === EventTool.FADE} onToggle={() => selectTool(View.LIGHTSHOW, EventTool.FADE)}>
+						<EventToolIcon tool={EventTool.FADE} color={getColorForItem(selectedColor, song)} />
 					</ControlItemToggleButton>
 				</ControlItem>
 				<Spacer size={UNIT * 4} />
