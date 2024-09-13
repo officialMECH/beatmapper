@@ -2,6 +2,7 @@ import { animated, useSpring } from "@react-spring/three";
 import { useThree } from "@react-three/fiber";
 import * as THREE from "three";
 
+import { glowFragmentShader, glowVertexShader } from "$/assets";
 import { useOnChange } from "$/hooks";
 import { App } from "$/types";
 import { normalize } from "$/utils";
@@ -10,31 +11,6 @@ import { getSpringConfigForLight } from "./Preview.helpers";
 const ON_PROPS = { opacity: 0.75 };
 const OFF_PROPS = { opacity: 0 };
 const BRIGHT_PROPS = { opacity: 1 };
-
-const vertexShader = `
-uniform vec3 viewVector;
-uniform float c;
-uniform float p;
-varying float intensity;
-void main()
-{
-    vec3 vNormal = normalize( normalMatrix * normal );
-	vec3 vNormel = normalize( normalMatrix * viewVector );
-	intensity = pow( c - dot(vNormal, vNormel), p );
-
-    gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );
-}
-`;
-
-const fragmentShader = `
-uniform vec3 glowColor;
-varying float intensity;
-void main()
-{
-	vec3 glow = glowColor * intensity;
-    gl_FragColor = vec4( glow, 1.0 );
-}
-`;
 
 const Glow = ({ x, y, z, color, size, status, lastEventId, isPlaying, isBlooming }) => {
 	const { camera } = useThree();
@@ -71,8 +47,8 @@ const Glow = ({ x, y, z, color, size, status, lastEventId, isPlaying, isBlooming
 							glowColor: { type: "c", value: new THREE.Color(color) },
 							viewVector: { type: "v3", value: camera.position },
 						},
-						vertexShader,
-						fragmentShader,
+						vertexShader: glowVertexShader,
+						fragmentShader: glowFragmentShader,
 						side: THREE.FrontSide,
 						blending: THREE.AdditiveBlending,
 						transparent: true,

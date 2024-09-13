@@ -5,10 +5,10 @@ import { filePlus } from "react-icons-kit/feather/filePlus";
 import { connect } from "react-redux";
 import styled from "styled-components";
 
+import { heroVideo } from "$/assets";
 import { COLORS, UNIT } from "$/constants";
 import { useWindowDimensions } from "$/hooks";
 import * as actions from "../../actions";
-import heroVideo from "../../assets/videos/hero-video.mp4";
 import { getDemoSong } from "../../reducers/songs.reducer";
 
 import Center from "../Center";

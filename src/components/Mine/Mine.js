@@ -6,9 +6,9 @@
  */
 import React from "react";
 
+import { mineUrl } from "$/assets";
 import { useObject } from "$/hooks";
 import { ObjectSelectionMode } from "$/types";
-import mineUrl from "../../assets/obj/mine.obj?url";
 
 const Mine = React.memo(({ x, y, z, time, lineLayer, lineIndex, direction, color, size = 1, isTransparent, isSelected, handleClick, handleStartSelecting, handleMouseOver }) => {
 	const position = [x, y, z];

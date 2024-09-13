@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import pixelSrc from "../../assets/pixel.png";
+import { pixelSrc } from "$/assets";
 
 const Spacer = styled.img.attrs({
 	src: pixelSrc,

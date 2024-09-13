@@ -56,6 +56,7 @@ export default defineConfig({
 			$: fileURLToPath(new URL("./src", import.meta.url)),
 		},
 	},
+	assetsInclude: ["**/*.glsl"],
 	build: {
 		commonjsOptions: { transformMixedEsModules: true }, // Change
 	},

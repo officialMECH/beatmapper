@@ -3,9 +3,9 @@
  * that comes with this app.
  */
 
+import { demoFileUrl } from "$/assets";
 import { processImportedMap } from "$/services/packaging.service";
 import { importExistingSong } from "../actions";
-import demoFileUrl from "../assets/demo/demo-map.zip?url";
 import { getIsNewUser } from "../reducers/user.reducer";
 
 export default () => (store) => (next) => {

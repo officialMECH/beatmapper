@@ -1,7 +1,7 @@
 import localforage from "localforage";
 
+import { defaultCoverArtPath } from "$/assets";
 import type { Difficulty, Member } from "$/types";
-import defaultCoverArtPath from "../assets/images/placeholder-cover-art.jpg";
 
 // These are the types of things we'll need to save.
 export const FileType = {

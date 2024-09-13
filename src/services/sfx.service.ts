@@ -3,7 +3,7 @@
  * tick SFX.
  */
 
-import defaultSfxPath from "../assets/sounds/tick-alt.mp3";
+import { defaultSfxPath } from "$/assets";
 import { AudioSample } from "./audio.service";
 
 export class Sfx {

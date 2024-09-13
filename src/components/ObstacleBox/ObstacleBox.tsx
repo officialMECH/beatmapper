@@ -3,8 +3,8 @@ import React from "react";
 import * as THREE from "three";
 import { Font, TextGeometry } from "three-stdlib";
 
+import { oswaldGlyphs } from "$/assets";
 import type { App } from "$/types";
-import oswaldGlyphs from "../../assets/fonts/oswald.json";
 import { getDimensionsForObstacle, getPositionForObstacle } from "./ObstacleBox.helpers";
 
 extend({ TextGeometry });
