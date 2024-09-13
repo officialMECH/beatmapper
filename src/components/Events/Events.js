@@ -2,8 +2,8 @@ import { connect } from "react-redux";
 import styled from "styled-components";
 
 import { SIDEBAR_WIDTH } from "$/constants";
+import { useWindowDimensions } from "$/hooks";
 import { View } from "$/types";
-import useWindowDimensions from "../../hooks/use-window-dimensions.hook";
 import { getBackgroundOpacity } from "../../reducers/editor.reducer";
 
 import EventsGrid from "../EventsGrid";

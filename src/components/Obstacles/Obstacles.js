@@ -1,8 +1,8 @@
 import { connect } from "react-redux";
 
+import { getColorForItem } from "$/helpers/colors.helpers";
 import { ObjectSelectionMode, ObjectTool } from "$/types";
 import * as actions from "../../actions";
-import { getColorForItem } from "../../helpers/colors.helpers";
 import { getVisibleObstacles } from "../../reducers/editor-entities.reducer/notes-view.reducer";
 import { getBeatDepth, getSnapTo } from "../../reducers/navigation.reducer";
 import { getSelectedSong } from "../../reducers/songs.reducer";

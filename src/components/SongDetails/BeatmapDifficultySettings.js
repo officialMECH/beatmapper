@@ -4,9 +4,9 @@ import { useBlocker, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 import { COLORS, UNIT } from "$/constants";
+import { renderImperativePrompt } from "$/helpers/modal.helpers";
+import { getLabelForDifficulty } from "$/helpers/song.helpers";
 import * as actions from "../../actions";
-import { renderImperativePrompt } from "../../helpers/modal.helpers";
-import { getLabelForDifficulty } from "../../helpers/song.helpers";
 
 import CopyDifficultyForm from "../CopyDifficultyForm";
 import Heading from "../Heading";

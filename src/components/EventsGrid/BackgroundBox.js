@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
+import { getColorForItem } from "$/helpers/colors.helpers";
 import { normalize } from "$/utils";
-import { getColorForItem } from "../../helpers/colors.helpers";
 
 const BackgroundBox = ({ song, box, startBeat, numOfBeatsToShow }) => {
 	const startOffset = normalize(box.beatNum, startBeat, numOfBeatsToShow + startBeat, 0, 100);

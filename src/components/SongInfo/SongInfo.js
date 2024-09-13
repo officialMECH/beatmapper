@@ -3,8 +3,8 @@ import { connect } from "react-redux";
 import styled from "styled-components";
 
 import { COLORS, UNIT } from "$/constants";
+import { getLabelForDifficulty } from "$/helpers/song.helpers";
 import * as actions from "../../actions";
-import { getLabelForDifficulty } from "../../helpers/song.helpers";
 import { getDifficulty } from "../../reducers/editor-entities.reducer";
 import { getSelectedSong, getSelectedSongDifficultyIds } from "../../reducers/songs.reducer";
 

@@ -2,10 +2,10 @@ import { connect } from "react-redux";
 import styled from "styled-components";
 
 import { UNIT } from "$/constants";
+import { useBoundingBox } from "$/hooks";
 import { Quality } from "$/types";
 import { roundToNearest } from "$/utils";
 import * as actions from "../../actions";
-import useBoundingBox from "../../hooks/use-bounding-box.hook";
 import { getSelectedSong } from "../../reducers/songs.reducer";
 import { getGraphicsLevel } from "../../reducers/user.reducer";
 

@@ -3,11 +3,10 @@ import { connect } from "react-redux";
 import styled from "styled-components";
 
 import { COLORS, EVENT_TRACKS, UNIT } from "$/constants";
+import { useMousePositionOverElement, usePointerUpHandler } from "$/hooks";
 import { App, EventEditMode, TrackType } from "$/types";
 import { normalize, range, roundToNearest } from "$/utils";
 import * as actions from "../../actions";
-import useMousePositionOverElement from "../../hooks/use-mouse-position-over-element.hook";
-import usePointerUpHandler from "../../hooks/use-pointer-up-handler.hook";
 import { getAreLasersLocked, getRowHeight, getSelectedEventBeat, getSelectedEventEditMode, getSelectionBox, getStartAndEndBeat } from "../../reducers/editor.reducer";
 import { getIsLoading, getSnapTo } from "../../reducers/navigation.reducer";
 

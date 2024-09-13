@@ -6,15 +6,14 @@ import { connect } from "react-redux";
 import styled from "styled-components";
 
 import { COLORS, UNIT } from "$/constants";
+import { useWindowDimensions } from "$/hooks";
 import * as actions from "../../actions";
 import heroVideo from "../../assets/videos/hero-video.mp4";
-import useWindowDimensions from "../../hooks/use-window-dimensions.hook";
 import { getDemoSong } from "../../reducers/songs.reducer";
 
 import Center from "../Center";
 import Heading from "../Heading";
 import Spacer from "../Spacer";
-
 import OptionColumn from "./OptionColumn";
 
 const WRAPPER_MAX_WIDTH = 850;

@@ -1,5 +1,5 @@
 import { SNAPPING_INCREMENTS } from "$/constants";
-import { convertMillisecondsToBeats } from "../helpers/audio.helpers";
+import { convertMillisecondsToBeats } from "$/helpers/audio.helpers";
 import { getSelectedSong } from "./songs.reducer";
 
 const initialState = {

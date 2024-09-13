@@ -1,3 +1,4 @@
+import { findNoteByProperties } from "$/helpers/notes.helpers";
 /**
  * NOTE: I don't really think this middleware is necessary.
  * I think all this stuff can be done at the component level, maybe put into
@@ -7,7 +8,6 @@
  */
 import { ObjectSelectionMode } from "$/types";
 import { bulkDeleteNote, deleteNote, deselectNote, selectNote, toggleNoteColor } from "../actions";
-import { findNoteByProperties } from "../helpers/notes.helpers";
 import { getNotes } from "../reducers/editor-entities.reducer/notes-view.reducer";
 
 export default function createSelectionMiddleware() {

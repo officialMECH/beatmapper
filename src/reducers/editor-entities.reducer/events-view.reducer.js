@@ -3,9 +3,9 @@ import undoable, { groupByActionTypes, includeAction } from "redux-undo";
 import { createSelector } from "reselect";
 
 import { EVENT_TRACKS, LIGHTING_TRACKS } from "$/constants";
+import { nudgeEvents } from "$/helpers/events.helpers";
 import { App, View } from "$/types";
 import { flatten } from "$/utils";
-import { nudgeEvents } from "../../helpers/events.helpers";
 import { getStartAndEndBeat } from "../editor.reducer";
 
 const createInitialState = () => ({

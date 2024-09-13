@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 import { COLORS } from "$/constants";
-import useLocallyStoredFile from "../../hooks/use-locally-stored-file.hook";
+import { useLocallyStoredFile } from "$/hooks";
 
 import CenteredSpinner from "../CenteredSpinner";
 

@@ -13,11 +13,13 @@ export const FileType = {
 export type FileType = Member<typeof FileType>;
 
 // These are the types of things we're able to save
-type Saveable = File | Blob | string;
+export type Saveable = File | Blob | ArrayBuffer | string;
 
 // All functions that save a file should return a promise that resolves to
 // an array of the filename and its file (or blob).
-type SaveReturn = Promise<[string, Saveable | string]>;
+type SaveReturn<T extends Saveable> = Promise<[string, T]>;
+
+type Metadata = { extension?: string; difficulty?: Difficulty };
 
 const filestore = localforage.createInstance({
 	name: "BeatMapper files",
@@ -35,23 +37,24 @@ filestore.config({
  * Low-level generic utilities.
  * Ideally, shouldn't be used outside this file.
  */
-export const saveFile = (filename: string, file: Saveable): SaveReturn => {
-	return filestore.setItem(filename, file).then(() => [filename, file]);
-};
+export async function saveFile<T extends Saveable>(filename: string, file: T): SaveReturn<T> {
+	await filestore.setItem(filename, file);
+	return [filename, file];
+}
 
-export const getFile = (filename: string): Promise<Saveable | null> => {
+export function getFile<T extends Saveable>(filename: string): Promise<T | null> {
 	return filestore.getItem(filename);
-};
+}
 
-export const deleteFile = (filename: string): Promise<void> => {
+export function deleteFile(filename: string): Promise<void> {
 	return filestore.removeItem(filename);
-};
-export const deleteFiles = (filenames: Array<string>): Promise<Array<void>> => {
+}
+export function deleteFiles(filenames: Array<string>): Promise<Array<void>> {
 	// prettier-ignore
 	return Promise.all(filenames.map((filename) => filestore.removeItem(filename)));
-};
+}
 
-const getExtension = (filename: string, defaultExtension = "") => {
+function getExtension(filename: string, defaultExtension = "") {
 	const match = filename.match(/\.[a-zA-Z]+$/);
 
 	if (!match) {
@@ -59,7 +62,7 @@ const getExtension = (filename: string, defaultExtension = "") => {
 	}
 
 	return match[0].slice(1);
-};
+}
 
 /**
  * HELPERS
@@ -77,8 +80,7 @@ const getExtension = (filename: string, defaultExtension = "") => {
  * @example getFilenameForThing(123, 'beatmap', { difficulty: 'ExpertPlus' })
  *  -> `123_ExpertPlus.dat`
  */
-type Metadata = { extension?: string; difficulty?: Difficulty };
-export const getFilenameForThing = (songId: string, type: FileType, metadata: Metadata = {}) => {
+export function getFilenameForThing(songId: string, type: FileType, metadata: Metadata = {}) {
 	switch (type) {
 		case FileType.SONG: {
 			return `${songId}_song.ogg`;
@@ -107,7 +109,7 @@ export const getFilenameForThing = (songId: string, type: FileType, metadata: Me
 		default:
 			throw new Error(`Unrecognized type: ${type}`);
 	}
-};
+}
 
 /**
  * PERSISTENCE AND RETRIEVAL METHODS
@@ -140,7 +142,7 @@ export const saveSongFile = (songId: string, songFile: File | Blob) => {
 	return saveFile(songFilename, songFile);
 };
 
-const saveBackupCoverArt = (songId: string): SaveReturn => {
+async function saveBackupCoverArt(songId: string): SaveReturn<Blob> {
 	// If the user doesn't have a cover image yet, we'll supply a default.
 	// Ideally we'd need a File, to be consistent with the File we get from
 	// a locally-selected file, but a Blob is near-identical.
@@ -154,13 +156,12 @@ const saveBackupCoverArt = (songId: string): SaveReturn => {
 	const pathPieces = defaultCoverArtPath.split("/");
 	const coverArtFilename = pathPieces[pathPieces.length - 1];
 
-	return window
-		.fetch(defaultCoverArtPath)
-		.then((res) => res.blob())
-		.then((blob: Blob) => saveFile(coverArtFilename, blob));
-};
+	const res = await window.fetch(defaultCoverArtPath);
+	const blob = await res.blob();
+	return await saveFile(coverArtFilename, blob);
+}
 
-export const saveLocalCoverArtFile = (songId: string, coverArtFile?: File): SaveReturn => {
+export function saveLocalCoverArtFile(songId: string, coverArtFile?: File): SaveReturn<Blob> {
 	if (coverArtFile) {
 		const extension = getExtension(coverArtFile.name, "unknown");
 		const coverArtFilename = getFilenameForThing(songId, FileType.COVER, {
@@ -170,9 +171,9 @@ export const saveLocalCoverArtFile = (songId: string, coverArtFile?: File): Save
 		return saveFile(coverArtFilename, coverArtFile);
 	}
 	return saveBackupCoverArt(songId);
-};
+}
 
-export const saveCoverArtFromBlob = (songId: string, coverArtBlob?: Blob, originalCoverArtFilename?: string): SaveReturn => {
+export function saveCoverArtFromBlob(songId: string, coverArtBlob?: Blob, originalCoverArtFilename?: string): SaveReturn<Blob> {
 	if (coverArtBlob) {
 		// When uploading a .zip file, we don't have a File object for the image,
 		// we get a Blob instead. Blobs don't have a `name` property, so instead we
@@ -190,9 +191,9 @@ export const saveCoverArtFromBlob = (songId: string, coverArtBlob?: Blob, origin
 		return saveFile(coverArtFilename, coverArtBlob);
 	}
 	return saveBackupCoverArt(songId);
-};
+}
 
-export const saveBeatmap = (songId: string, difficulty: Difficulty, beatmapContents: string) => {
+export function saveBeatmap(songId: string, difficulty: Difficulty, beatmapContents: string) {
 	const beatmapFilename = getFilenameForThing(songId, FileType.BEATMAP, {
 		difficulty,
 	});
@@ -204,15 +205,15 @@ export const saveBeatmap = (songId: string, difficulty: Difficulty, beatmapConte
 	}
 
 	return saveFile(beatmapFilename, beatmapContentsString);
-};
+}
 
-export const saveInfoDat = (songId: string, infoContent: string) => {
+export function saveInfoDat(songId: string, infoContent: string) {
 	const infoDatFilename = getFilenameForThing(songId, FileType.INFO);
 
 	return saveFile(infoDatFilename, infoContent);
-};
+}
 
-export const deleteAllSongFiles = async (song: any) => {
+export async function deleteAllSongFiles(song: any) {
 	/**
 	 * If the user deletes a song, we have a lot of stuff to get rid of:
 	 *   - Song file (.ogg)
@@ -237,4 +238,4 @@ export const deleteAllSongFiles = async (song: any) => {
 	} catch (err) {
 		console.error("Could not delete all files for song:", err);
 	}
-};
+}

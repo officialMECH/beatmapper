@@ -3,9 +3,9 @@ import get from "lodash.get";
 import { createSelector } from "reselect";
 
 import { DEFAULT_COL_WIDTH, DEFAULT_GRID, DEFAULT_MOD_SETTINGS, DEFAULT_ROW_HEIGHT } from "$/constants";
+import { sortDifficultyIds } from "$/helpers/song.helpers";
 import { type App, Environment, ObjectPlacementMode } from "$/types";
 import { isEmpty } from "$/utils";
-import { sortDifficultyIds } from "../helpers/song.helpers";
 
 interface State {
 	byId: { [key: string]: App.Song };

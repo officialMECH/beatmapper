@@ -4,12 +4,12 @@ import { useBlocker } from "react-router-dom";
 import styled from "styled-components";
 
 import { COLORS, ENVIRONMENT_DISPLAY_MAP, MEDIA_ROW_HEIGHT, UNIT } from "$/constants";
+import { sortDifficultyIds } from "$/helpers/song.helpers";
+import { useMount } from "$/hooks";
+import { getFile, saveInfoDat, saveLocalCoverArtFile, saveSongFile } from "$/services/file.service";
+import { createInfoContent } from "$/services/packaging.service";
 import * as actions from "../../actions";
-import { sortDifficultyIds } from "../../helpers/song.helpers";
-import useMount from "../../hooks/use-mount.hook";
 import { getEnabledFastWalls, getEnabledLightshow, getSelectedSong } from "../../reducers/songs.reducer";
-import { getFile, saveInfoDat, saveLocalCoverArtFile, saveSongFile } from "../../services/file.service";
-import { createInfoContent } from "../../services/packaging.service";
 
 import CoverArtPicker from "../AddSongForm/CoverArtPicker";
 import SongPicker from "../AddSongForm/SongPicker";

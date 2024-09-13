@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 
+import { getDevicePixelRatio, getScaledCanvasProps } from "$/helpers/canvas.helpers";
 import { throttle } from "$/utils";
-import { getDevicePixelRatio, getScaledCanvasProps } from "../../helpers/canvas.helpers";
 
 const getY = (totalHeight, val) => {
 	const amplitude = 256;

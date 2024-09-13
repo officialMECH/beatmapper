@@ -1,9 +1,9 @@
 import { default as WaveformData } from "waveform-data";
 
+import { convertBeatsToMilliseconds, convertMillisecondsToBeats } from "$/helpers/audio.helpers";
+import { convertFileToArrayBuffer } from "$/helpers/file.helpers";
 import { View } from "$/types";
 import { floorToNearest } from "$/utils";
-import { convertBeatsToMilliseconds, convertMillisecondsToBeats } from "../helpers/audio.helpers";
-import { convertFileToArrayBuffer } from "../helpers/file.helpers";
 import { getNotes } from "../reducers/editor-entities.reducer/notes-view.reducer";
 import { getBeatsPerZoomLevel, getIsLockedToCurrentWindow } from "../reducers/editor.reducer";
 import { getPlayNoteTick } from "../reducers/navigation.reducer";

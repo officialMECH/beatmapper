@@ -3,10 +3,10 @@ import { Tooltip } from "react-tippy";
 import styled from "styled-components";
 
 import { UNIT } from "$/constants";
+import { promptJumpToBeat, promptQuickSelect } from "$/helpers/prompts.helpers";
 import { View } from "$/types";
 import { getMetaKeyLabel } from "$/utils";
 import * as actions from "../../actions";
-import { promptJumpToBeat, promptQuickSelect } from "../../helpers/prompts.helpers";
 import { getHasCopiedNotes } from "../../reducers/clipboard.reducer";
 import { ACTION_WIDTH } from "./EditorRightPanel.constants";
 

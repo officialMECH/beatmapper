@@ -2,9 +2,9 @@ import { connect } from "react-redux";
 import styled from "styled-components";
 
 import { UNIT } from "$/constants";
+import { getColorForItem } from "$/helpers/colors.helpers";
 import { ObjectTool, View } from "$/types";
 import * as actions from "../../actions";
-import { getColorForItem } from "../../helpers/colors.helpers";
 import { getSelectedSong } from "../../reducers/songs.reducer";
 
 import Heading from "../Heading";

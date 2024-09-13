@@ -2,8 +2,8 @@ import { connect } from "react-redux";
 import styled from "styled-components";
 
 import { GRID_PRESET_SLOTS, UNIT } from "$/constants";
+import { promptSaveGridPreset } from "$/helpers/prompts.helpers";
 import * as actions from "../../actions";
-import { promptSaveGridPreset } from "../../helpers/prompts.helpers";
 import { getGridPresets } from "../../reducers/editor.reducer";
 import { getGridSize } from "../../reducers/songs.reducer";
 

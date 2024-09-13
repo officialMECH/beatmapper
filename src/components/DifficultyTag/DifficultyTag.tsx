@@ -1,8 +1,8 @@
 import styled from "styled-components";
 
 import { DIFFICULTY_COLORS } from "$/constants";
+import { getLabelForDifficulty } from "$/helpers/song.helpers";
 import type { Difficulty } from "$/types";
-import { getLabelForDifficulty } from "../../helpers/song.helpers";
 
 import UnstyledButton from "../UnstyledButton";
 

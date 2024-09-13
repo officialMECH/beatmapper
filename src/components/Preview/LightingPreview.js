@@ -10,8 +10,8 @@ import { useFrame } from "@react-three/fiber";
 import React from "react";
 import { connect } from "react-redux";
 
+import { Controls } from "$/services/controls.service";
 import { Quality } from "$/types";
-import Controls from "../../controls";
 import { getIsPlaying } from "../../reducers/navigation.reducer";
 import { getSelectedSong } from "../../reducers/songs.reducer";
 import { getGraphicsLevel } from "../../reducers/user.reducer";

@@ -1,8 +1,8 @@
+import { saveBeatmap } from "$/services/file.service";
+import { createBeatmapContentsFromState } from "$/services/packaging.service";
+import { autosaveWorker } from "$/workers";
 import { getDifficulty } from "../reducers/editor-entities.reducer";
 import { getSelectedSong } from "../reducers/songs.reducer";
-import { saveBeatmap } from "../services/file.service";
-import { createBeatmapContentsFromState } from "../services/packaging.service";
-import autosaveWorker from "../workers/autosave.worker";
 
 // Saving is a significantly expensive operation, and it's one that is done
 // very often, so it makes sense to do it in a web worker.

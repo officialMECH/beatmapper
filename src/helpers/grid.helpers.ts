@@ -1,6 +1,6 @@
 import { DEFAULT_NUM_COLS } from "$/constants";
 
-export const convertGridColumn = (colIndex: number, numCols: number, colWidth: number) => {
+export function convertGridColumn(colIndex: number, numCols: number, colWidth: number) {
 	// Getting the index is according to this formula.
 	const index = colIndex - (numCols - DEFAULT_NUM_COLS) / 2;
 
@@ -13,7 +13,6 @@ export const convertGridColumn = (colIndex: number, numCols: number, colWidth: n
 	// - `a` is the amount to multiply our ratio by, works out to either -1.5
 	//   or -1 depending on desired Total
 	// - `b` is the y intercept at 0, which for some reason is -a -shrugs-
-
 	const a = (DEFAULT_NUM_COLS - 1) / -2;
 	const b = a * -1;
 
@@ -21,20 +20,15 @@ export const convertGridColumn = (colIndex: number, numCols: number, colWidth: n
 
 	// our formula to find the new x or y position, then, is:
 	// y = colWidth * index + offset
-
 	const newValue = colWidth * index + offset;
 
 	return newValue;
-};
+}
 
-export const convertGridRow = (
-	rowIndex: number,
-	// NOTE: `numRows` is unused and should be removed
-	numRows: number,
-	rowHeight: number,
-) => {
+// NOTE: `numRows` is unused and should be removed
+export function convertGridRow(rowIndex: number, numRows: number, rowHeight: number) {
 	return rowIndex * rowHeight;
-};
+}
 
 /**
  * With Mapping Extensions, we need to move between two different grid systems:
@@ -47,6 +41,6 @@ export const convertGridRow = (
  *
  * This function converts from our custom grid [0,2] to a standard grid [-2,2]
  */
-export const convertGridIndicesToNaturalGrid = (colIndex: number, numCols: number, colWidth: number, rowIndex: number, numRows: number, rowHeight: number) => {
+export function convertGridIndicesToNaturalGrid(colIndex: number, numCols: number, colWidth: number, rowIndex: number, numRows: number, rowHeight: number) {
 	return [convertGridColumn(colIndex, numCols, colWidth), convertGridRow(rowIndex, numRows, rowHeight)];
-};
+}

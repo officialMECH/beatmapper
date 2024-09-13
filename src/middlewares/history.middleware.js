@@ -7,8 +7,8 @@
  * cursor position in response to these actions.
  */
 
+import { calculateVisibleRange } from "$/helpers/editor.helpers";
 import { jumpToBeat } from "../actions";
-import { calculateVisibleRange } from "../helpers/editor.helpers";
 import { getEvents, getFutureEvents, getPastEvents } from "../reducers/editor-entities.reducer/events-view.reducer";
 import { getFutureNotes, getFutureObstacles, getNotes, getObstacles, getPastNotes, getPastObstacles } from "../reducers/editor-entities.reducer/notes-view.reducer";
 import { getStartAndEndBeat } from "../reducers/editor.reducer";

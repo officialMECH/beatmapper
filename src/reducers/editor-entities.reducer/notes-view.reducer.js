@@ -4,10 +4,10 @@ import undoable, { groupByActionTypes, includeAction } from "redux-undo";
 import { createSelector } from "reselect";
 
 import { SURFACE_DEPTHS } from "$/constants";
+import { calculateVisibleRange } from "$/helpers/editor.helpers";
+import { calculateNoteDensity, findNoteIndexByProperties, nudgeNotes, swapNotes } from "$/helpers/notes.helpers";
+import { nudgeObstacles, swapObstacles } from "$/helpers/obstacles.helpers";
 import { ObjectTool, ObjectType, View } from "$/types";
-import { calculateVisibleRange } from "../../helpers/editor.helpers";
-import { calculateNoteDensity, findNoteIndexByProperties, nudgeNotes, swapNotes } from "../../helpers/notes.helpers";
-import { nudgeObstacles, swapObstacles } from "../../helpers/obstacles.helpers";
 import { getBeatDepth, getCursorPositionInBeats } from "../navigation.reducer";
 import { getSelectedSong } from "../songs.reducer";
 import { getGraphicsLevel } from "../user.reducer";

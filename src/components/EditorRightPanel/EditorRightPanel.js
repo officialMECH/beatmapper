@@ -3,9 +3,8 @@ import { connect } from "react-redux";
 import styled from "styled-components";
 
 import { UNIT } from "$/constants";
+import { useOnChange, useOnKeydown } from "$/hooks";
 import { ObjectPlacementMode } from "$/types";
-import useOnChange from "../../hooks/use-on-change.hook";
-import useOnKeydown from "../../hooks/use-on-keydown.hook";
 import { getSelectedBlocks, getSelectedMines, getSelectedObstacles } from "../../reducers/editor-entities.reducer/notes-view.reducer";
 import { getMappingMode, getSelectedSong } from "../../reducers/songs.reducer";
 

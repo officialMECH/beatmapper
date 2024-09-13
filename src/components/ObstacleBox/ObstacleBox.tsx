@@ -3,15 +3,14 @@ import React from "react";
 import * as THREE from "three";
 import { Font, TextGeometry } from "three-stdlib";
 
-import type { Obstacle } from "$/types";
+import type { App } from "$/types";
 import oswaldGlyphs from "../../assets/fonts/oswald.json";
-
 import { getDimensionsForObstacle, getPositionForObstacle } from "./ObstacleBox.helpers";
 
 extend({ TextGeometry });
 
 interface Props {
-	obstacle: Obstacle;
+	obstacle: App.Obstacle;
 	color: string;
 	snapTo: number;
 	beatDepth: number;

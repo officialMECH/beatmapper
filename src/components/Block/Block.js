@@ -1,10 +1,10 @@
 import React from "react";
 
+import { useObject } from "$/hooks";
 import { Direction, ObjectSelectionMode } from "$/types";
 import { convertDegreesToRadians } from "$/utils";
 import blockCenterUrl from "../../assets/obj/block-center.obj?url";
 import blockDirectionalUrl from "../../assets/obj/block-directional.obj?url";
-import useObject from "../../hooks/use-object.hook";
 
 const getBlockUrlForDirection = (direction) => {
 	// If the direction is >=1000, that means it's a MappingExtensions thing.

@@ -1,13 +1,7 @@
 import { v1 as uuid } from "uuid";
 
 import { LIGHT_EVENTS_ARRAY, LIGHT_EVENT_TYPES, TRACK_IDS_ARRAY, TRACK_ID_MAP } from "$/constants";
-import { App } from "$/types";
-
-interface JsonEvent {
-	_time: number;
-	_type: number;
-	_value: number;
-}
+import { App, type Json } from "$/types";
 
 /**
  * WARNING: This method mutates the `events` array supplied.
@@ -19,19 +13,19 @@ interface JsonEvent {
  * This is the kind of thing I'm doing only because this isn't a shared
  * codebase :D
  */
-export const nudgeEvents = (direction: "forwards" | "backwards", amount: number, events: Array<App.LightingEvent>) => {
+export function nudgeEvents<T extends App.Event>(direction: "forwards" | "backwards", amount: number, events: T[]) {
 	const sign = direction === "forwards" ? 1 : -1;
 
-	return events.forEach((event) => {
+	for (const event of events) {
 		if (!event.selected) {
 			return;
 		}
 
 		event.beatNum += amount * sign;
-	});
-};
+	}
+}
 
-const convertLightingEventToJson = (event: App.LightingEvent): JsonEvent => {
+function convertLightingEventToJson<T extends App.LightingEvent>(event: T): Json.Event {
 	// `Off` events have no color attribute, since there is no way to tell when
 	// importing whether it was supposed to be red or blue.
 	const value = event.colorType ? LIGHT_EVENT_TYPES[event.colorType][event.type] : 0;
@@ -41,9 +35,9 @@ const convertLightingEventToJson = (event: App.LightingEvent): JsonEvent => {
 		_type: TRACK_ID_MAP[event.trackId],
 		_value: value,
 	};
-};
+}
 
-const convertLaserSpeedEventToJson = (event: App.LaserSpeedEvent): JsonEvent => {
+function convertLaserSpeedEventToJson<T extends App.LaserSpeedEvent>(event: T): Json.Event {
 	const type = TRACK_ID_MAP[event.trackId];
 
 	return {
@@ -51,8 +45,8 @@ const convertLaserSpeedEventToJson = (event: App.LaserSpeedEvent): JsonEvent => 
 		_type: type,
 		_value: event.laserSpeed,
 	};
-};
-const convertRotationEventToJson = (event: App.RingEvent): JsonEvent => {
+}
+function convertRotationEventToJson<T extends App.RingEvent>(event: T): Json.Event {
 	const type = TRACK_ID_MAP[event.trackId];
 
 	return {
@@ -60,9 +54,9 @@ const convertRotationEventToJson = (event: App.RingEvent): JsonEvent => {
 		_type: type,
 		_value: 0,
 	};
-};
+}
 
-export const convertEventsToExportableJson = (events: Array<App.Event>): Array<JsonEvent> => {
+export function convertEventsToExportableJson<T extends App.Event>(events: T[]) {
 	return events.map((event) => {
 		if (event.trackId === App.TrackId[12] || event.trackId === App.TrackId[13]) {
 			return convertLaserSpeedEventToJson(event as App.LaserSpeedEvent);
@@ -72,9 +66,9 @@ export const convertEventsToExportableJson = (events: Array<App.Event>): Array<J
 		}
 		return convertLightingEventToJson(event as App.LightingEvent);
 	});
-};
+}
 
-export const convertEventsToRedux = (events: Array<JsonEvent>) => {
+export function convertEventsToRedux<T extends Json.Event>(events: T[]) {
 	return events.map((event) => {
 		const id = uuid();
 		const trackId = TRACK_IDS_ARRAY[event._type];
@@ -108,9 +102,10 @@ export const convertEventsToRedux = (events: Array<JsonEvent>) => {
 				id,
 				trackId,
 				beatNum,
+				type: App.EventType.VALUE,
 				laserSpeed,
 			};
 		}
 		throw new Error(`Unrecognized event track: ${JSON.stringify(event._type, null, 2)}`);
 	});
-};
+}

@@ -10,8 +10,8 @@ import { useFrame } from "@react-three/fiber";
 import React from "react";
 
 import { BLOCK_COLUMN_WIDTH, GRID_POSITION } from "$/constants";
+import { Controls } from "$/services/controls.service";
 import { Quality } from "$/types";
-import Controls from "../../controls";
 
 import BarMarkers from "../BarMarkers";
 import Fog from "../Fog";

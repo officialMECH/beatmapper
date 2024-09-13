@@ -2,8 +2,8 @@ import { connect } from "react-redux";
 import styled from "styled-components";
 
 import { UNIT } from "$/constants";
+import { useMount } from "$/hooks";
 import * as actions from "../../actions";
-import useMount from "../../hooks/use-mount.hook";
 import { getIsPlaying } from "../../reducers/navigation.reducer";
 import { getSelectedSong } from "../../reducers/songs.reducer";
 

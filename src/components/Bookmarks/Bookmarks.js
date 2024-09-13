@@ -1,8 +1,7 @@
-import React from "react";
 import { connect } from "react-redux";
 
+import { convertMillisecondsToBeats } from "$/helpers/audio.helpers";
 import * as actions from "../../actions";
-import { convertMillisecondsToBeats } from "../../helpers/audio.helpers";
 import { getSortedBookmarksArray } from "../../reducers/bookmarks.reducer";
 import { getDurationInBeats } from "../../reducers/navigation.reducer";
 import { getSelectedSong } from "../../reducers/songs.reducer";

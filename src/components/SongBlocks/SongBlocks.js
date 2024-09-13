@@ -2,9 +2,9 @@ import React from "react";
 import { connect } from "react-redux";
 
 import { BLOCK_COLUMN_WIDTH, HIGHEST_PRECISION, SONG_OFFSET } from "$/constants";
+import { getColorForItem } from "$/helpers/colors.helpers";
 import { roundAwayFloatingPointNonsense } from "$/utils";
 import * as actions from "../../actions";
-import { getColorForItem } from "../../helpers/colors.helpers";
 import { getVisibleNotes } from "../../reducers/editor-entities.reducer/notes-view.reducer";
 import { getBeatDepth, getCursorPositionInBeats } from "../../reducers/navigation.reducer";
 import { getSelectedSong } from "../../reducers/songs.reducer";

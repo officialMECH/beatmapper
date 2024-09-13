@@ -2,9 +2,9 @@ import { animated, useSpring } from "@react-spring/three";
 import { useThree } from "@react-three/fiber";
 import * as THREE from "three";
 
+import { useOnChange } from "$/hooks";
 import { App } from "$/types";
 import { normalize } from "$/utils";
-import useOnChange from "../../hooks/use-on-change.hook";
 import { getSpringConfigForLight } from "./Preview.helpers";
 
 const ON_PROPS = { opacity: 0.75 };

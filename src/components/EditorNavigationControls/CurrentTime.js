@@ -1,7 +1,6 @@
-import React from "react";
 import { connect } from "react-redux";
 
-import { getFormattedTimestamp } from "../../helpers/audio.helpers";
+import { getFormattedTimestamp } from "$/helpers/audio.helpers";
 import { getCursorPosition } from "../../reducers/navigation.reducer";
 
 import LabeledNumber from "../LabeledNumber";

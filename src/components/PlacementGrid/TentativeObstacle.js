@@ -1,7 +1,6 @@
-import * as React from "react";
 import { connect } from "react-redux";
 
-import { createObstacleFromMouseEvent } from "../../helpers/obstacles.helpers";
+import { createObstacleFromMouseEvent } from "$/helpers/obstacles.helpers";
 import { getBeatDepth } from "../../reducers/navigation.reducer";
 import { getGridSize } from "../../reducers/songs.reducer";
 

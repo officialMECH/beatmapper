@@ -11,15 +11,15 @@ export interface ModSettings {
 	customColors: {
 		isEnabled: boolean;
 		colorLeft: string;
-		colorLeftOverdrive: number;
+		colorLeftOverdrive?: number;
 		colorRight: string;
-		colorRightOverdrive: number;
+		colorRightOverdrive?: number;
 		envColorLeft: string;
-		envColorLeftOverdrive: number;
+		envColorLeftOverdrive?: number;
 		envColorRight: string;
-		envColorRightOverdrive: number;
+		envColorRightOverdrive?: number;
 		obstacleColor: string;
-		obstacleColorOverdrive: number;
+		obstacleColorOverdrive?: number;
 	};
 }
 
@@ -50,7 +50,7 @@ export interface Song {
 	createdAt: number;
 	lastOpenedAt: number;
 	demo?: boolean;
-	modSettings: ModSettings;
+	modSettings: Partial<ModSettings>;
 	enabledFastWalls?: boolean;
 	enabledLightshow?: boolean;
 }

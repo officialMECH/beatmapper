@@ -4,10 +4,10 @@ import { connect } from "react-redux";
 import styled from "styled-components";
 
 import { COLORS } from "$/constants";
+import { getColorForItem } from "$/helpers/colors.helpers";
 import { App, EventEditMode } from "$/types";
 import { normalize } from "$/utils";
 import * as actions from "../../actions";
-import { getColorForItem } from "../../helpers/colors.helpers";
 import { getSelectedEventEditMode } from "../../reducers/editor.reducer";
 import { getSelectedSong } from "../../reducers/songs.reducer";
 

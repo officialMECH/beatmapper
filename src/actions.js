@@ -1,9 +1,9 @@
 import { v1 as uuid } from "uuid";
 
 import { HIGHEST_PRECISION } from "$/constants";
+import { getNewBookmarkColor } from "$/helpers/bookmarks.helpers";
 import { View } from "$/types";
 import { roundAwayFloatingPointNonsense, roundToNearest } from "$/utils";
-import { getNewBookmarkColor } from "./helpers/bookmarks.helpers";
 import { getSortedBookmarksArray } from "./reducers/bookmarks.reducer";
 import { getCopiedData } from "./reducers/clipboard.reducer";
 import { getSelection } from "./reducers/editor-entities.reducer";

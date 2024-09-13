@@ -4,10 +4,10 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 import { COLORS, DIFFICULTIES, MEDIA_ROW_HEIGHT, UNIT } from "$/constants";
+import { getSongIdFromName } from "$/helpers/song.helpers";
+import { saveLocalCoverArtFile, saveSongFile } from "$/services/file.service";
 import * as actions from "../../actions";
-import { getSongIdFromName } from "../../helpers/song.helpers";
 import { getAllSongIds } from "../../reducers/songs.reducer";
-import { saveLocalCoverArtFile, saveSongFile } from "../../services/file.service";
 
 import Button from "../Button";
 import DifficultyTag from "../DifficultyTag";
@@ -16,7 +16,6 @@ import QuestionTooltip from "../QuestionTooltip";
 import Spacer from "../Spacer";
 import Spinner from "../Spinner";
 import TextInput from "../TextInput";
-
 import CoverArtPicker from "./CoverArtPicker";
 import SongPicker from "./SongPicker";
 

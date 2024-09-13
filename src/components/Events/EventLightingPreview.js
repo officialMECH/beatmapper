@@ -10,14 +10,11 @@ import { useFrame } from "@react-three/fiber";
 import React from "react";
 import { connect } from "react-redux";
 
-import Controls from "../../controls";
+import { Controls } from "$/services/controls.service";
 import { getShowLightingPreview } from "../../reducers/editor.reducer";
 import { getIsPlaying } from "../../reducers/navigation.reducer";
 import { getSelectedSong } from "../../reducers/songs.reducer";
 import { getGraphicsLevel } from "../../reducers/user.reducer";
-
-import ReduxForwardingCanvas from "../ReduxForwardingCanvas";
-import StaticEnvironment from "../StaticEnvironment";
 
 import AmbientLighting from "../Preview/AmbientLighting";
 import BackLaser from "../Preview/BackLaser";
@@ -25,6 +22,8 @@ import LargeRings from "../Preview/LargeRings";
 import PrimaryLight from "../Preview/PrimaryLight";
 import SideLaser from "../Preview/SideLaser";
 import SmallRings from "../Preview/SmallRings";
+import ReduxForwardingCanvas from "../ReduxForwardingCanvas";
+import StaticEnvironment from "../StaticEnvironment";
 
 const EventLightingPreviewPresentational = ({ song, isPlaying, graphicsLevel }) => {
 	const controls = React.useRef(null);

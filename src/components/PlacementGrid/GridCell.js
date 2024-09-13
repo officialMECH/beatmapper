@@ -2,9 +2,9 @@ import React from "react";
 import * as THREE from "three";
 
 import { BLOCK_PLACEMENT_SQUARE_SIZE } from "$/constants";
+import { convertGridColumn, convertGridRow } from "$/helpers/grid.helpers";
+import { createObstacleFromMouseEvent } from "$/helpers/obstacles.helpers";
 import { ObjectTool } from "$/types";
-import { convertGridColumn, convertGridRow } from "../../helpers/grid.helpers";
-import { createObstacleFromMouseEvent } from "../../helpers/obstacles.helpers";
 
 const CELL_PADDING = 0.05;
 

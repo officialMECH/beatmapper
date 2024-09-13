@@ -1,7 +1,7 @@
 import { connect } from "react-redux";
 
+import { getFormattedBeatNum } from "$/helpers/audio.helpers";
 import { roundToNearest } from "$/utils";
-import { getFormattedBeatNum } from "../../helpers/audio.helpers";
 import { getCursorPositionInBeats, getIsPlaying } from "../../reducers/navigation.reducer";
 import { getSelectedSong } from "../../reducers/songs.reducer";
 

@@ -1,9 +1,9 @@
 import { connect } from "react-redux";
 
+import { convertMillisecondsToBeats } from "$/helpers/audio.helpers";
+import { getColorForItem } from "$/helpers/colors.helpers";
 import { App } from "$/types";
 import { convertDegreesToRadians, normalize, range } from "$/utils";
-import { convertMillisecondsToBeats } from "../../helpers/audio.helpers";
-import { getColorForItem } from "../../helpers/colors.helpers";
 import { getTracks } from "../../reducers/editor-entities.reducer/events-view.reducer";
 import { getCursorPosition, getCursorPositionInBeats } from "../../reducers/navigation.reducer";
 import { getUsableProcessingDelay } from "../../reducers/user.reducer";
