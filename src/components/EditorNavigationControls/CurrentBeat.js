@@ -1,11 +1,10 @@
-import React from "react";
 import { connect } from "react-redux";
 
+import { roundToNearest } from "$/utils";
 import { getFormattedBeatNum } from "../../helpers/audio.helpers";
 import { getCursorPositionInBeats, getIsPlaying } from "../../reducers/navigation.reducer";
 import { getSelectedSong } from "../../reducers/songs.reducer";
 
-import { roundToNearest } from "../../utils";
 import LabeledNumber from "../LabeledNumber";
 
 const CurrentBeat = ({ displayString }) => {

@@ -7,9 +7,9 @@ import styled from "styled-components";
 
 import { COLORS, UNIT } from "$/constants";
 import { ObjectType, View } from "$/types";
+import { getMetaKeyLabel, interleave } from "$/utils";
 import * as actions from "../../actions";
 import { getHasCopiedNotes } from "../../reducers/clipboard.reducer";
-import { getMetaKeyLabel, interleave } from "../../utils";
 import { ACTION_WIDTH, HALF_ACTION_WIDTH } from "./EditorRightPanel.constants";
 
 import Heading from "../Heading";

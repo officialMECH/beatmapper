@@ -1,5 +1,5 @@
 import { Direction, ObjectPlacementMode } from "$/types";
-import { convertCartesianToPolar } from "../../utils";
+import { convertCartesianToPolar } from "$/utils";
 
 const getDirectionForStandardMode = (angle) => {
 	// We have 8 possible directions in a 360-degree circle, so each direction

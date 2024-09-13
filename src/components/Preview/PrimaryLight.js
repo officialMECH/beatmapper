@@ -3,13 +3,13 @@ import { connect } from "react-redux";
 
 import { SURFACE_WIDTH } from "$/constants";
 import { App } from "$/types";
+import { convertDegreesToRadians } from "$/utils";
 import { convertMillisecondsToBeats } from "../../helpers/audio.helpers";
 import { getColorForItem } from "../../helpers/colors.helpers";
 import useOnChange from "../../hooks/use-on-change.hook";
 import { getTracks } from "../../reducers/editor-entities.reducer/events-view.reducer";
 import { getCursorPositionInBeats } from "../../reducers/navigation.reducer";
 import { getUsableProcessingDelay } from "../../reducers/user.reducer";
-import { convertDegreesToRadians } from "../../utils";
 import { findMostRecentEventInTrack, getSpringConfigForLight } from "./Preview.helpers";
 
 import Glow from "./Glow";

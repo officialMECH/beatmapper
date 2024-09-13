@@ -1,9 +1,8 @@
-import React from "react";
 import { layers as densityIcon } from "react-icons-kit/feather/layers";
 import { connect } from "react-redux";
 
+import { roundTo } from "$/utils";
 import { getNoteDensity } from "../../reducers/editor-entities.reducer/notes-view.reducer";
-import { roundTo } from "../../utils";
 
 import CountIndicator from "./CountIndicator";
 

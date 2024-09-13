@@ -26,11 +26,11 @@ import styled from "styled-components";
 
 import { COLORS, UNIT } from "$/constants";
 import { View } from "$/types";
+import { pluralize } from "$/utils";
 import * as actions from "../../actions";
 import { getNumOfBlocks, getNumOfMines, getNumOfObstacles } from "../../reducers/editor-entities.reducer/notes-view.reducer";
 import { getBackgroundOpacity, getRowHeight, getShowLightingPreview } from "../../reducers/editor.reducer";
 import { getBeatDepth, getIsLoading, getPlayNoteTick, getPlaybackRate, getVolume } from "../../reducers/navigation.reducer";
-import { pluralize } from "../../utils";
 
 import Spacer from "../Spacer";
 import CountIndicator from "./CountIndicator";

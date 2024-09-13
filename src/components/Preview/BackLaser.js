@@ -1,12 +1,12 @@
 import { connect } from "react-redux";
 
 import { App } from "$/types";
+import { range } from "$/utils";
 import { convertMillisecondsToBeats } from "../../helpers/audio.helpers";
 import { getColorForItem } from "../../helpers/colors.helpers";
 import { getTracks } from "../../reducers/editor-entities.reducer/events-view.reducer";
 import { getCursorPositionInBeats } from "../../reducers/navigation.reducer";
 import { getUsableProcessingDelay } from "../../reducers/user.reducer";
-import { range } from "../../utils";
 import { findMostRecentEventInTrack } from "./Preview.helpers";
 
 import LaserBeam from "./LaserBeam";

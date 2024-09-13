@@ -10,7 +10,7 @@ import { createSelector } from "reselect";
 
 import { BEATS_PER_ZOOM_LEVEL, EVENT_COLORS, EVENT_EDIT_MODES, EVENT_TOOLS, NOTE_TOOLS, ZOOM_LEVEL_MAX, ZOOM_LEVEL_MIN } from "$/constants";
 import { ObjectTool, View } from "$/types";
-import { floorToNearest } from "../utils";
+import { floorToNearest } from "$/utils";
 import { getCursorPositionInBeats } from "./navigation.reducer";
 
 const initialState = {

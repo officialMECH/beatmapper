@@ -9,10 +9,10 @@ import { connect } from "react-redux";
 
 import { SNAPPING_INCREMENTS } from "$/constants";
 import { View } from "$/types";
+import { isMetaKeyPressed, throttle } from "$/utils";
 import * as actions from "../../actions";
 import { promptJumpToBeat, promptQuickSelect } from "../../helpers/prompts.helpers";
 import useMousewheel from "../../hooks/use-mousewheel.hook";
-import { isMetaKeyPressed, throttle } from "../../utils";
 
 const GlobalShortcuts = ({
 	view,

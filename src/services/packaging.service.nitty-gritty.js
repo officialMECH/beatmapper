@@ -1,8 +1,8 @@
 import { COLOR_ELEMENT_IDS, DEFAULT_GRID } from "$/constants";
 import { Difficulty } from "$/types";
+import { isEmpty, roundAwayFloatingPointNonsense } from "$/utils";
 import { convertMillisecondsToBeats } from "../helpers/audio.helpers";
 import { formatColorFromImport } from "../helpers/colors.helpers";
-import { isEmpty, roundAwayFloatingPointNonsense } from "../utils";
 
 export const getFileFromArchive = (archive, filename) => {
 	// Ideally, our .zip archive will just have all the files we need.

@@ -2,8 +2,8 @@ import { connect } from "react-redux";
 import styled from "styled-components";
 
 import { COLORS } from "$/constants";
+import { normalize } from "$/utils";
 import { getCursorPositionInBeats } from "../../reducers/navigation.reducer";
-import { normalize } from "../../utils";
 
 const CursorPositionIndicator = ({ gridWidth, cursorPositionInBeats, startBeat, endBeat, zIndex }) => {
 	const cursorOffsetInWindow = normalize(cursorPositionInBeats, startBeat, endBeat, 0, gridWidth);

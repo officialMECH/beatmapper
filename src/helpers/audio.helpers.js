@@ -1,7 +1,7 @@
 import { default as WaveformData } from "waveform-data";
 
 import { LOWEST_COMMON_MULTIPLE } from "$/constants";
-import { roundToNearest } from "../utils";
+import { roundToNearest } from "$/utils";
 
 export const createHtmlAudioElement = (url) => {
 	const elem = document.createElement("audio");

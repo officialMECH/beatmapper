@@ -3,12 +3,12 @@ import { connect } from "react-redux";
 
 import { BLOCK_PLACEMENT_SQUARE_SIZE } from "$/constants";
 import { ObjectTool } from "$/types";
+import { range } from "$/utils";
 import * as actions from "../../actions";
 import { getColorForItem } from "../../helpers/colors.helpers";
 import { convertGridColumn, convertGridRow } from "../../helpers/grid.helpers";
 import { getDefaultObstacleDuration } from "../../reducers/editor.reducer";
 import { getGridSize, getMappingMode, getSelectedSong } from "../../reducers/songs.reducer";
-import { range } from "../../utils";
 
 import GridCell from "./GridCell";
 import { getDirectionForDrag } from "./PlacementGrid.helpers";

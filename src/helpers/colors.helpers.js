@@ -3,7 +3,7 @@ import get from "lodash.get";
 
 import { COLORS, COLOR_ELEMENT_DATA, DEFAULT_BLUE, DEFAULT_RED } from "$/constants";
 import { App, EventColor, ObjectTool } from "$/types";
-import { clamp, normalize } from "../utils";
+import { clamp, normalize } from "$/utils";
 
 export const getColorForItem = (item, song) => {
 	const customColorsEnabled = get(song, "modSettings.customColors.isEnabled");

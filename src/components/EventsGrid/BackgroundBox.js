@@ -1,8 +1,7 @@
-import React from "react";
 import styled from "styled-components";
 
+import { normalize } from "$/utils";
 import { getColorForItem } from "../../helpers/colors.helpers";
-import { normalize } from "../../utils";
 
 const BackgroundBox = ({ song, box, startBeat, numOfBeatsToShow }) => {
 	const startOffset = normalize(box.beatNum, startBeat, numOfBeatsToShow + startBeat, 0, 100);

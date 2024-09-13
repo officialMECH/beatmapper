@@ -4,8 +4,8 @@ import { createSelector } from "reselect";
 
 import { EVENT_TRACKS, LIGHTING_TRACKS } from "$/constants";
 import { App, View } from "$/types";
+import { flatten } from "$/utils";
 import { nudgeEvents } from "../../helpers/events.helpers";
-import { flatten } from "../../utils";
 import { getStartAndEndBeat } from "../editor.reducer";
 
 const createInitialState = () => ({

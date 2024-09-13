@@ -2,6 +2,7 @@ import { v1 as uuid } from "uuid";
 
 import { HIGHEST_PRECISION } from "$/constants";
 import { View } from "$/types";
+import { roundAwayFloatingPointNonsense, roundToNearest } from "$/utils";
 import { getNewBookmarkColor } from "./helpers/bookmarks.helpers";
 import { getSortedBookmarksArray } from "./reducers/bookmarks.reducer";
 import { getCopiedData } from "./reducers/clipboard.reducer";
@@ -12,7 +13,6 @@ import { getSelectedCutDirection, getSelectedEventBeat, getSelectedNoteTool, get
 import { getCursorPositionInBeats, getIsPlaying, getSnapTo } from "./reducers/navigation.reducer";
 import { getGridSize, getSelectedSong } from "./reducers/songs.reducer";
 import { getStickyMapAuthorName } from "./reducers/user.reducer";
-import { roundAwayFloatingPointNonsense, roundToNearest } from "./utils";
 
 export const loadDemoSong = () => ({
 	type: "LOAD_DEMO_SONG",

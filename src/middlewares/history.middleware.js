@@ -13,9 +13,9 @@ import { getEvents, getFutureEvents, getPastEvents } from "../reducers/editor-en
 import { getFutureNotes, getFutureObstacles, getNotes, getObstacles, getPastNotes, getPastObstacles } from "../reducers/editor-entities.reducer/notes-view.reducer";
 import { getStartAndEndBeat } from "../reducers/editor.reducer";
 
+import { findUniquesWithinArrays } from "$/utils";
 import { getBeatDepth, getCursorPositionInBeats } from "../reducers/navigation.reducer";
 import { getGraphicsLevel } from "../reducers/user.reducer";
-import { findUniquesWithinArrays } from "../utils";
 
 const jumpToEarliestNote = (earlierNotes, laterNotes, earlierObstacles, laterObstacles, store) => {
 	const relevantNotes = findUniquesWithinArrays(earlierNotes, laterNotes);

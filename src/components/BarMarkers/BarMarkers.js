@@ -2,11 +2,11 @@ import React from "react";
 import { connect } from "react-redux";
 
 import { SONG_OFFSET, SURFACE_DEPTHS } from "$/constants";
+import { range } from "$/utils";
 import { convertMillisecondsToBeats } from "../../helpers/audio.helpers";
 import { getBeatDepth, getCursorPositionInBeats } from "../../reducers/navigation.reducer";
 import { getSelectedSong } from "../../reducers/songs.reducer";
 import { getGraphicsLevel } from "../../reducers/user.reducer";
-import { range } from "../../utils";
 
 import Marker from "./Marker";
 

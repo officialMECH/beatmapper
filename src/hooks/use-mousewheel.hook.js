@@ -7,7 +7,7 @@
  */
 import React from "react";
 
-import { throttle } from "../utils";
+import { throttle } from "$/utils";
 
 export default function useMousewheel(handleMouseWheel) {
 	React.useEffect(() => {

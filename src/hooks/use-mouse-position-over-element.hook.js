@@ -1,6 +1,6 @@
 import React from "react";
 
-import { clamp } from "../utils";
+import { clamp } from "$/utils";
 import useBoundingBox from "./use-bounding-box.hook";
 
 export default function useMousePositionOverElement(callback, options = {}) {

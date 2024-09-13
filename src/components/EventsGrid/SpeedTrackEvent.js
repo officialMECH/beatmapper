@@ -1,8 +1,8 @@
 import { connect } from "react-redux";
 
 import { COLORS } from "$/constants";
+import { normalize } from "$/utils";
 import * as actions from "../../actions";
-import { normalize } from "../../utils";
 
 import { getYForSpeed } from "./EventsGrid.helpers";
 

@@ -15,7 +15,7 @@ import Transition from "react-transition-group/Transition";
 import styled from "styled-components";
 
 import { COLORS } from "$/constants";
-import { hasPropChanged } from "../../utils";
+import { hasPropChanged } from "$/utils";
 
 import ScrollDisabler from "../ScrollDisabler";
 import UnstyledButton from "../UnstyledButton";

@@ -2,7 +2,7 @@ import { v1 as uuid } from "uuid";
 
 import { DEFAULT_NUM_COLS } from "$/constants";
 import { App, ObjectPlacementMode } from "$/types";
-import { clamp, normalize, roundToNearest } from "../utils";
+import { clamp, normalize, roundToNearest } from "$/utils";
 import { convertGridColumn, convertGridRow } from "./grid.helpers";
 
 // These constants relate to the conversion to/from MappingExtensions

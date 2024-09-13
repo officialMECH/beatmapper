@@ -2,12 +2,12 @@ import React from "react";
 import { connect } from "react-redux";
 
 import { App, Quality } from "$/types";
+import { range } from "$/utils";
 import { convertMillisecondsToBeats } from "../../helpers/audio.helpers";
 import useOnChange from "../../hooks/use-on-change.hook";
 import { getTracks } from "../../reducers/editor-entities.reducer/events-view.reducer";
 import { getAnimateRingMotion, getCursorPositionInBeats } from "../../reducers/navigation.reducer";
 import { getGraphicsLevel, getUsableProcessingDelay } from "../../reducers/user.reducer";
-import { range } from "../../utils";
 import { findMostRecentEventInTrack } from "./Preview.helpers";
 
 import BracketRing from "./BracketRing";

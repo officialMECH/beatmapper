@@ -2,9 +2,9 @@ import React from "react";
 import { connect } from "react-redux";
 
 import { Direction, ObjectTool, View } from "$/types";
+import { isMetaKeyPressed } from "$/utils";
 import * as actions from "../../actions";
 import { getDefaultObstacleDuration } from "../../reducers/editor.reducer";
-import { isMetaKeyPressed } from "../../utils";
 
 const KeyboardShortcuts = ({ defaultObstacleDuration, selectTool, selectNoteDirection, swapSelectedNotes, toggleSelectAll }) => {
 	const keysDepressed = React.useRef({

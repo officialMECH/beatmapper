@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 
-import { debounce } from "../utils";
+import { debounce } from "$/utils";
 
 const useBoundingBox = (dependencies = []) => {
 	// Our `ref` is needed to be passed to the component's `ref` attribute.

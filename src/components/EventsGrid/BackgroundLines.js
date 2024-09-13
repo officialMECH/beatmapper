@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 import { COLORS } from "$/constants";
-import { range } from "../../utils";
+import { range } from "$/utils";
 
 const BackgroundLines = ({ width, height, numOfBeatsToShow, primaryDivisions, secondaryDivisions }) => {
 	const segmentWidth = width / numOfBeatsToShow;

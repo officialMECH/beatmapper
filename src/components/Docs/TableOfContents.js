@@ -4,7 +4,7 @@ import { externalLink } from "react-icons-kit/feather/externalLink";
 import styled from "styled-components";
 
 import { COLORS } from "$/constants";
-import { slugify, throttle } from "../../utils";
+import { slugify, throttle } from "$/utils";
 
 import BaseLink from "../BaseLink";
 import Spacer from "../Spacer";

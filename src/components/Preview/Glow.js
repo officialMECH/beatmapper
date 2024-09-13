@@ -3,8 +3,8 @@ import { useThree } from "@react-three/fiber";
 import * as THREE from "three";
 
 import { App } from "$/types";
+import { normalize } from "$/utils";
 import useOnChange from "../../hooks/use-on-change.hook";
-import { normalize } from "../../utils";
 import { getSpringConfigForLight } from "./Preview.helpers";
 
 const ON_PROPS = { opacity: 0.75 };
