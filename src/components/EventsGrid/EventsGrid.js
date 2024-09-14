@@ -4,11 +4,11 @@ import styled from "styled-components";
 
 import { COLORS, EVENT_TRACKS, UNIT } from "$/constants";
 import { useMousePositionOverElement, usePointerUpHandler } from "$/hooks";
+import * as actions from "$/store/actions";
+import { getAreLasersLocked, getRowHeight, getSelectedEventBeat, getSelectedEventEditMode, getSelectionBox, getStartAndEndBeat } from "$/store/reducers/editor.reducer";
+import { getIsLoading, getSnapTo } from "$/store/reducers/navigation.reducer";
 import { App, EventEditMode, TrackType } from "$/types";
 import { normalize, range, roundToNearest } from "$/utils";
-import * as actions from "../../actions";
-import { getAreLasersLocked, getRowHeight, getSelectedEventBeat, getSelectedEventEditMode, getSelectionBox, getStartAndEndBeat } from "../../reducers/editor.reducer";
-import { getIsLoading, getSnapTo } from "../../reducers/navigation.reducer";
 
 import BackgroundLines from "./BackgroundLines";
 import BlockTrack from "./BlockTrack";

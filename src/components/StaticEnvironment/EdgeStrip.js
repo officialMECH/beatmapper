@@ -1,8 +1,8 @@
 import { connect } from "react-redux";
 
 import { SONG_OFFSET, SURFACE_DEPTHS } from "$/constants";
+import { getGraphicsLevel } from "$/store/reducers/user.reducer";
 import { Quality } from "$/types";
-import { getGraphicsLevel } from "../../reducers/user.reducer";
 
 import RectAreaLight from "../RectAreaLight";
 

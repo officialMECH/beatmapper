@@ -1,7 +1,7 @@
 import { connect } from "react-redux";
 import { Route, Routes } from "react-router-dom";
 
-import { getHasInitialized } from "../../reducers/global.reducer";
+import { getHasInitialized } from "$/store/reducers/global.reducer";
 
 import DevTools from "../DevTools";
 import Docs from "../Docs";

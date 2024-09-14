@@ -3,8 +3,8 @@ import styled from "styled-components";
 
 import { SIDEBAR_WIDTH } from "$/constants";
 import { useWindowDimensions } from "$/hooks";
+import { getBackgroundOpacity } from "$/store/reducers/editor.reducer";
 import { View } from "$/types";
-import { getBackgroundOpacity } from "../../reducers/editor.reducer";
 
 import EventsGrid from "../EventsGrid";
 import GlobalShortcuts from "../GlobalShortcuts";

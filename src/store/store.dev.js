@@ -2,7 +2,7 @@ import { applyMiddleware, compose, createStore } from "redux";
 import * as storage from "redux-storage";
 
 import DevTools from "../components/DevTools";
-import rootReducer from "../reducers";
+import rootReducer from "./reducers";
 
 import { createAllSharedMiddlewares, createPersistenceEngine } from "./shared";
 

@@ -2,14 +2,14 @@ import { createStateSyncMiddleware } from "redux-state-sync";
 import * as storage from "redux-storage";
 import { thunk } from "redux-thunk";
 
-import createBackupMiddleware from "../middlewares/backup.middleware";
-import createDemoMiddleware from "../middlewares/demo.middleware";
-import createHistoryMiddleware from "../middlewares/history.middleware";
-import createPackagingMiddleware from "../middlewares/packaging.middleware";
-import createSelectionMiddleware from "../middlewares/selection.middleware";
-import createSongMiddleware from "../middlewares/song.middleware";
+import createBackupMiddleware from "./middleware/backup.middleware";
+import createDemoMiddleware from "./middleware/demo.middleware";
+import createHistoryMiddleware from "./middleware/history.middleware";
+import createPackagingMiddleware from "./middleware/packaging.middleware";
+import createSelectionMiddleware from "./middleware/selection.middleware";
+import createSongMiddleware from "./middleware/song.middleware";
 
-import createEngine from "./persistence-engine";
+import createEngine from "./enhancers/persistence-engine";
 
 export const createPersistenceEngine = () => createEngine(["user", "editor", ["songs", "byId"], ["navigation", "snapTo"], ["navigation", "beatDepth"], ["navigation", "volume"], ["navigation", "playNoteTick"]]);
 

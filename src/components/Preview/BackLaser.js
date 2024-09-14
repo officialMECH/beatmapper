@@ -2,11 +2,11 @@ import { connect } from "react-redux";
 
 import { convertMillisecondsToBeats } from "$/helpers/audio.helpers";
 import { getColorForItem } from "$/helpers/colors.helpers";
+import { getTracks } from "$/store/reducers/editor-entities.reducer/events-view.reducer";
+import { getCursorPositionInBeats } from "$/store/reducers/navigation.reducer";
+import { getUsableProcessingDelay } from "$/store/reducers/user.reducer";
 import { App } from "$/types";
 import { range } from "$/utils";
-import { getTracks } from "../../reducers/editor-entities.reducer/events-view.reducer";
-import { getCursorPositionInBeats } from "../../reducers/navigation.reducer";
-import { getUsableProcessingDelay } from "../../reducers/user.reducer";
 import { findMostRecentEventInTrack } from "./Preview.helpers";
 
 import LaserBeam from "./LaserBeam";

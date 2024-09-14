@@ -1,8 +1,8 @@
 import { connect } from "react-redux";
 import styled from "styled-components";
 
-import * as actions from "../../actions";
-import { getSeenPrompts } from "../../reducers/user.reducer";
+import * as actions from "$/store/actions";
+import { getSeenPrompts } from "$/store/reducers/user.reducer";
 
 import Paragraph from "../Paragraph";
 import UnobtrusivePrompt from "../UnobtrusivePrompt";

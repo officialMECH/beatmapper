@@ -11,10 +11,10 @@ import React from "react";
 import { connect } from "react-redux";
 
 import { Controls } from "$/services/controls.service";
+import { getIsPlaying } from "$/store/reducers/navigation.reducer";
+import { getSelectedSong } from "$/store/reducers/songs.reducer";
+import { getGraphicsLevel } from "$/store/reducers/user.reducer";
 import { Quality } from "$/types";
-import { getIsPlaying } from "../../reducers/navigation.reducer";
-import { getSelectedSong } from "../../reducers/songs.reducer";
-import { getGraphicsLevel } from "../../reducers/user.reducer";
 
 import { Bloom, NoBloom } from "../BloomEffect";
 import Fog from "../Fog";

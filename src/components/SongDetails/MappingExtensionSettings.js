@@ -1,10 +1,9 @@
 import get from "lodash.get";
-import React from "react";
 import { connect } from "react-redux";
 import styled from "styled-components";
 
-import * as actions from "../../actions";
-import { getSelectedSong } from "../../reducers/songs.reducer";
+import * as actions from "$/store/actions";
+import { getSelectedSong } from "$/store/reducers/songs.reducer";
 
 import LabeledCheckbox from "../LabeledCheckbox";
 import Link from "../Link";

@@ -8,8 +8,8 @@ import styled from "styled-components";
 import { heroVideo } from "$/assets";
 import { COLORS, UNIT } from "$/constants";
 import { useWindowDimensions } from "$/hooks";
-import * as actions from "../../actions";
-import { getDemoSong } from "../../reducers/songs.reducer";
+import * as actions from "$/store/actions";
+import { getDemoSong } from "$/store/reducers/songs.reducer";
 
 import Center from "../Center";
 import Heading from "../Heading";

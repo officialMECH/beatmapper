@@ -1,10 +1,10 @@
 import { connect } from "react-redux";
 
 import { createObstacleFromMouseEvent } from "$/helpers/obstacles.helpers";
-import { getBeatDepth } from "../../reducers/navigation.reducer";
-import { getGridSize } from "../../reducers/songs.reducer";
+import { getDefaultObstacleDuration } from "$/store/reducers/editor.reducer";
+import { getBeatDepth } from "$/store/reducers/navigation.reducer";
+import { getGridSize } from "$/store/reducers/songs.reducer";
 
-import { getDefaultObstacleDuration } from "../../reducers/editor.reducer";
 import ObstacleBox from "../ObstacleBox";
 
 const TentativeObstacle = ({ mouseDownAt, color, mode, beatDepth, defaultObstacleDuration, gridRows, gridCols, gridColWidth, gridRowHeight, ...rest }) => {

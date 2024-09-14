@@ -8,8 +8,8 @@ import { sortDifficultyIds } from "$/helpers/song.helpers";
 import { useMount } from "$/hooks";
 import { getFile, saveInfoDat, saveLocalCoverArtFile, saveSongFile } from "$/services/file.service";
 import { createInfoContent } from "$/services/packaging.service";
-import * as actions from "../../actions";
-import { getEnabledFastWalls, getEnabledLightshow, getSelectedSong } from "../../reducers/songs.reducer";
+import * as actions from "$/store/actions";
+import { getEnabledFastWalls, getEnabledLightshow, getSelectedSong } from "$/store/reducers/songs.reducer";
 
 import CoverArtPicker from "../AddSongForm/CoverArtPicker";
 import SongPicker from "../AddSongForm/SongPicker";

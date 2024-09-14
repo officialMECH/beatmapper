@@ -3,9 +3,9 @@ import styled from "styled-components";
 
 import { GRID_PRESET_SLOTS, UNIT } from "$/constants";
 import { promptSaveGridPreset } from "$/helpers/prompts.helpers";
-import * as actions from "../../actions";
-import { getGridPresets } from "../../reducers/editor.reducer";
-import { getGridSize } from "../../reducers/songs.reducer";
+import * as actions from "$/store/actions";
+import { getGridPresets } from "$/store/reducers/editor.reducer";
+import { getGridSize } from "$/store/reducers/songs.reducer";
 
 import Center from "../Center";
 import Heading from "../Heading";

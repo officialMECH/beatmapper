@@ -1,11 +1,11 @@
 import { connect } from "react-redux";
 
 import { getColorForItem } from "$/helpers/colors.helpers";
+import * as actions from "$/store/actions";
+import { getVisibleObstacles } from "$/store/reducers/editor-entities.reducer/notes-view.reducer";
+import { getBeatDepth, getSnapTo } from "$/store/reducers/navigation.reducer";
+import { getSelectedSong } from "$/store/reducers/songs.reducer";
 import { ObjectSelectionMode, ObjectTool } from "$/types";
-import * as actions from "../../actions";
-import { getVisibleObstacles } from "../../reducers/editor-entities.reducer/notes-view.reducer";
-import { getBeatDepth, getSnapTo } from "../../reducers/navigation.reducer";
-import { getSelectedSong } from "../../reducers/songs.reducer";
 
 import ObstacleBox from "../ObstacleBox";
 

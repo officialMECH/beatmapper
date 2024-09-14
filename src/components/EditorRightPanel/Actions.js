@@ -4,10 +4,10 @@ import styled from "styled-components";
 
 import { UNIT } from "$/constants";
 import { promptJumpToBeat, promptQuickSelect } from "$/helpers/prompts.helpers";
+import * as actions from "$/store/actions";
+import { getHasCopiedNotes } from "$/store/reducers/clipboard.reducer";
 import { View } from "$/types";
 import { getMetaKeyLabel } from "$/utils";
-import * as actions from "../../actions";
-import { getHasCopiedNotes } from "../../reducers/clipboard.reducer";
 import { ACTION_WIDTH } from "./EditorRightPanel.constants";
 
 import Heading from "../Heading";

@@ -1,14 +1,14 @@
 import React from "react";
 import { connect } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 import { COLORS, UNIT } from "$/constants";
 import { getLabelForDifficulty } from "$/helpers/song.helpers";
-import * as actions from "../../actions";
-import { getDifficulty } from "../../reducers/editor-entities.reducer";
-import { getSelectedSong, getSelectedSongDifficultyIds } from "../../reducers/songs.reducer";
+import * as actions from "$/store/actions";
+import { getDifficulty } from "$/store/reducers/editor-entities.reducer";
+import { getSelectedSong, getSelectedSongDifficultyIds } from "$/store/reducers/songs.reducer";
 
-import { useNavigate } from "react-router-dom";
 import CoverArtImage from "../CoverArtImage";
 import CreateDifficultyForm from "../CreateDifficultyForm";
 import Dropdown from "../Dropdown";

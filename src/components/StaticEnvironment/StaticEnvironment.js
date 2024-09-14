@@ -1,7 +1,7 @@
 import { connect } from "react-redux";
 
 import { BLOCK_COLUMN_WIDTH, DEFAULT_NUM_ROWS, SONG_OFFSET, SURFACE_DEPTHS, SURFACE_HEIGHT, SURFACE_WIDTH } from "$/constants";
-import { getGraphicsLevel } from "../../reducers/user.reducer";
+import { getGraphicsLevel } from "$/store/reducers/user.reducer";
 
 import EdgeStrip from "./EdgeStrip";
 

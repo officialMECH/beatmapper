@@ -1,9 +1,9 @@
 import React from "react";
 import { connect } from "react-redux";
 
+import * as actions from "$/store/actions";
 import { EventEditMode, EventTool, View } from "$/types";
 import { isMetaKeyPressed } from "$/utils";
-import * as actions from "../../actions";
 
 const KeyboardShortcuts = ({ selectTool, selectEventEditMode, toggleSelectAll, zoomOut, zoomIn, toggleEventWindowLock, toggleLaserLock }) => {
 	const handleKeyDown = (ev) => {

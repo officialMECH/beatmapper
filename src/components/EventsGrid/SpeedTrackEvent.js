@@ -1,9 +1,8 @@
 import { connect } from "react-redux";
 
 import { COLORS } from "$/constants";
+import * as actions from "$/store/actions";
 import { normalize } from "$/utils";
-import * as actions from "../../actions";
-
 import { getYForSpeed } from "./EventsGrid.helpers";
 
 const SpeedTrackEvent = ({ event, trackId, startBeat, endBeat, parentWidth, parentHeight, areLasersLocked, deleteEvent }) => {

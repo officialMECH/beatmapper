@@ -1,8 +1,8 @@
 import { connect } from "react-redux";
 import styled from "styled-components";
 
+import * as actions from "$/store/actions";
 import { View } from "$/types";
-import * as actions from "../../actions";
 
 import EditorBottomPanel from "../EditorBottomPanel";
 import GlobalShortcuts from "../GlobalShortcuts";

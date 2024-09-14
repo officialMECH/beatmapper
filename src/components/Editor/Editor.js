@@ -4,8 +4,8 @@ import { Route, Routes, useParams } from "react-router-dom";
 import styled from "styled-components";
 
 import { COLORS, SIDEBAR_WIDTH } from "$/constants";
-import * as actions from "../../actions";
-import { getSelectedSong } from "../../reducers/songs.reducer";
+import * as actions from "$/store/actions";
+import { getSelectedSong } from "$/store/reducers/songs.reducer";
 
 import Download from "../Download";
 import EditorPrompts from "../EditorPrompts";

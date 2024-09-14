@@ -4,11 +4,11 @@ import styled from "styled-components";
 
 import { COLORS } from "$/constants";
 import { usePointerUpHandler } from "$/hooks";
+import * as actions from "$/store/actions";
+import { makeGetEventsForTrack, makeGetInitialTrackLightingColorType } from "$/store/reducers/editor-entities.reducer/events-view.reducer";
+import { getSelectedEventColor, getSelectedEventEditMode, getSelectedEventTool } from "$/store/reducers/editor.reducer";
+import { getSelectedSong } from "$/store/reducers/songs.reducer";
 import { App, EventEditMode, EventTool } from "$/types";
-import * as actions from "../../actions";
-import { makeGetEventsForTrack, makeGetInitialTrackLightingColorType } from "../../reducers/editor-entities.reducer/events-view.reducer";
-import { getSelectedEventColor, getSelectedEventEditMode, getSelectedEventTool } from "../../reducers/editor.reducer";
-import { getSelectedSong } from "../../reducers/songs.reducer";
 import { getBackgroundBoxes } from "./BlockTrack.helpers";
 
 import BackgroundBox from "./BackgroundBox";

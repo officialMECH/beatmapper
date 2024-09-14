@@ -1,9 +1,9 @@
 import { connect } from "react-redux";
 
 import { getFormattedBeatNum } from "$/helpers/audio.helpers";
+import { getCursorPositionInBeats, getIsPlaying } from "$/store/reducers/navigation.reducer";
+import { getSelectedSong } from "$/store/reducers/songs.reducer";
 import { roundToNearest } from "$/utils";
-import { getCursorPositionInBeats, getIsPlaying } from "../../reducers/navigation.reducer";
-import { getSelectedSong } from "../../reducers/songs.reducer";
 
 import LabeledNumber from "../LabeledNumber";
 

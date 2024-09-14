@@ -11,10 +11,10 @@ import React from "react";
 import { connect } from "react-redux";
 
 import { Controls } from "$/services/controls.service";
-import { getShowLightingPreview } from "../../reducers/editor.reducer";
-import { getIsPlaying } from "../../reducers/navigation.reducer";
-import { getSelectedSong } from "../../reducers/songs.reducer";
-import { getGraphicsLevel } from "../../reducers/user.reducer";
+import { getShowLightingPreview } from "$/store/reducers/editor.reducer";
+import { getIsPlaying } from "$/store/reducers/navigation.reducer";
+import { getSelectedSong } from "$/store/reducers/songs.reducer";
+import { getGraphicsLevel } from "$/store/reducers/user.reducer";
 
 import AmbientLighting from "../Preview/AmbientLighting";
 import BackLaser from "../Preview/BackLaser";

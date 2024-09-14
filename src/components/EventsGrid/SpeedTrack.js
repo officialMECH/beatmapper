@@ -4,11 +4,11 @@ import styled from "styled-components";
 
 import { COLORS } from "$/constants";
 import { useMousePositionOverElement, usePointerUpHandler } from "$/hooks";
+import * as actions from "$/store/actions";
+import { getTrackSpeedAtBeat, makeGetEventsForTrack } from "$/store/reducers/editor-entities.reducer/events-view.reducer";
+import { getSelectedEventEditMode } from "$/store/reducers/editor.reducer";
 import { EventEditMode } from "$/types";
 import { normalize, range } from "$/utils";
-import * as actions from "../../actions";
-import { getTrackSpeedAtBeat, makeGetEventsForTrack } from "../../reducers/editor-entities.reducer/events-view.reducer";
-import { getSelectedEventEditMode } from "../../reducers/editor.reducer";
 import { getYForSpeed } from "./EventsGrid.helpers";
 
 import SpeedTrackEvent from "./SpeedTrackEvent";

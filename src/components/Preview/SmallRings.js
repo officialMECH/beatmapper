@@ -3,11 +3,11 @@ import { connect } from "react-redux";
 
 import { convertMillisecondsToBeats } from "$/helpers/audio.helpers";
 import { useOnChange } from "$/hooks";
+import { getTracks } from "$/store/reducers/editor-entities.reducer/events-view.reducer";
+import { getAnimateRingMotion, getCursorPositionInBeats } from "$/store/reducers/navigation.reducer";
+import { getGraphicsLevel, getUsableProcessingDelay } from "$/store/reducers/user.reducer";
 import { App, Quality } from "$/types";
 import { range } from "$/utils";
-import { getTracks } from "../../reducers/editor-entities.reducer/events-view.reducer";
-import { getAnimateRingMotion, getCursorPositionInBeats } from "../../reducers/navigation.reducer";
-import { getGraphicsLevel, getUsableProcessingDelay } from "../../reducers/user.reducer";
 import { findMostRecentEventInTrack } from "./Preview.helpers";
 
 import BracketRing from "./BracketRing";

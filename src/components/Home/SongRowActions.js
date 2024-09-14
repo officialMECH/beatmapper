@@ -1,10 +1,9 @@
-import React from "react";
 import { Icon } from "react-icons-kit";
 import { chevronDown } from "react-icons-kit/feather/chevronDown";
 import { connect } from "react-redux";
 import styled from "styled-components";
 
-import * as actions from "../../actions";
+import * as actions from "$/store/actions";
 
 import MiniButton from "../MiniButton";
 

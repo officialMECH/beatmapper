@@ -4,11 +4,11 @@ import { connect } from "react-redux";
 import { BLOCK_PLACEMENT_SQUARE_SIZE } from "$/constants";
 import { getColorForItem } from "$/helpers/colors.helpers";
 import { convertGridColumn, convertGridRow } from "$/helpers/grid.helpers";
+import * as actions from "$/store/actions";
+import { getDefaultObstacleDuration } from "$/store/reducers/editor.reducer";
+import { getGridSize, getMappingMode, getSelectedSong } from "$/store/reducers/songs.reducer";
 import { ObjectTool } from "$/types";
 import { range } from "$/utils";
-import * as actions from "../../actions";
-import { getDefaultObstacleDuration } from "../../reducers/editor.reducer";
-import { getGridSize, getMappingMode, getSelectedSong } from "../../reducers/songs.reducer";
 import { getDirectionForDrag } from "./PlacementGrid.helpers";
 
 import GridCell from "./GridCell";

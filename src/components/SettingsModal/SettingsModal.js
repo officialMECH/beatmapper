@@ -1,13 +1,13 @@
+import { useMemo } from "react";
 import { connect } from "react-redux";
 import styled from "styled-components";
 
 import { UNIT } from "$/constants";
-import * as actions from "../../actions";
-import { getGraphicsLevel, getProcessingDelay } from "../../reducers/user.reducer";
-
+import * as actions from "$/store/actions";
+import { getGraphicsLevel, getProcessingDelay } from "$/store/reducers/user.reducer";
 import { Quality } from "$/types";
 import { capitalize } from "$/utils";
-import { useMemo } from "react";
+
 import Heading from "../Heading";
 import Modal from "../Modal";
 import QuestionTooltip from "../QuestionTooltip";

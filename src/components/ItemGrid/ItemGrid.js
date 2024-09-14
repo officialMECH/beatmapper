@@ -3,9 +3,9 @@ import styled from "styled-components";
 
 import { UNIT } from "$/constants";
 import { getColorForItem } from "$/helpers/colors.helpers";
+import * as actions from "$/store/actions";
+import { getSelectedSong } from "$/store/reducers/songs.reducer";
 import { ObjectTool, View } from "$/types";
-import * as actions from "../../actions";
-import { getSelectedSong } from "../../reducers/songs.reducer";
 
 import Heading from "../Heading";
 import IconButton from "../IconButton";

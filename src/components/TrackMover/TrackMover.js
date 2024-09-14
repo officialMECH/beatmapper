@@ -1,7 +1,7 @@
 import { a, useSpring } from "@react-spring/three";
 import { connect } from "react-redux";
 
-import { getBeatDepth, getCursorPositionInBeats } from "../../reducers/navigation.reducer";
+import { getBeatDepth, getCursorPositionInBeats } from "$/store/reducers/navigation.reducer";
 
 const TrackMover = ({ cursorPositionInBeats, beatDepth, animateBlockMotion, children }) => {
 	const zPosition = cursorPositionInBeats * beatDepth;

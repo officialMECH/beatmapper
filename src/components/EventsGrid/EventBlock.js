@@ -5,11 +5,11 @@ import styled from "styled-components";
 
 import { COLORS } from "$/constants";
 import { getColorForItem } from "$/helpers/colors.helpers";
+import * as actions from "$/store/actions";
+import { getSelectedEventEditMode } from "$/store/reducers/editor.reducer";
+import { getSelectedSong } from "$/store/reducers/songs.reducer";
 import { App, EventEditMode } from "$/types";
 import { normalize } from "$/utils";
-import * as actions from "../../actions";
-import { getSelectedEventEditMode } from "../../reducers/editor.reducer";
-import { getSelectedSong } from "../../reducers/songs.reducer";
 
 import UnstyledButton from "../UnstyledButton";
 

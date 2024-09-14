@@ -3,10 +3,10 @@ import { connect } from "react-redux";
 
 import { SONG_OFFSET, SURFACE_DEPTHS } from "$/constants";
 import { convertMillisecondsToBeats } from "$/helpers/audio.helpers";
+import { getBeatDepth, getCursorPositionInBeats } from "$/store/reducers/navigation.reducer";
+import { getSelectedSong } from "$/store/reducers/songs.reducer";
+import { getGraphicsLevel } from "$/store/reducers/user.reducer";
 import { range } from "$/utils";
-import { getBeatDepth, getCursorPositionInBeats } from "../../reducers/navigation.reducer";
-import { getSelectedSong } from "../../reducers/songs.reducer";
-import { getGraphicsLevel } from "../../reducers/user.reducer";
 
 import Marker from "./Marker";
 

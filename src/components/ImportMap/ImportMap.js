@@ -2,8 +2,8 @@ import { download as fileIcon } from "react-icons-kit/feather/download";
 import { connect } from "react-redux";
 
 import { processImportedMap } from "$/services/packaging.service";
-import * as actions from "../../actions";
-import { getAllSongs } from "../../reducers/songs.reducer";
+import * as actions from "$/store/actions";
+import { getAllSongs } from "$/store/reducers/songs.reducer";
 
 import FileUploader from "../FileUploader";
 

@@ -3,8 +3,8 @@ import { connect } from "react-redux";
 import styled from "styled-components";
 
 import { COLOR_ELEMENT_DATA, COLOR_ELEMENT_IDS, UNIT } from "$/constants";
-import * as actions from "../../actions";
-import { getCustomColors } from "../../reducers/songs.reducer";
+import * as actions from "$/store/actions";
+import { getCustomColors } from "$/store/reducers/songs.reducer";
 
 import CenteredSpinner from "../CenteredSpinner";
 import Heading from "../Heading";

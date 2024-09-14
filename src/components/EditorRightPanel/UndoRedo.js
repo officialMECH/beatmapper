@@ -3,9 +3,9 @@ import { Tooltip } from "react-tippy";
 import styled from "styled-components";
 
 import { UNIT } from "$/constants";
+import * as actions from "$/store/actions";
+import { getCanRedo, getCanUndo } from "$/store/reducers/editor-entities.reducer/notes-view.reducer";
 import { getMetaKeyLabel } from "$/utils";
-import * as actions from "../../actions";
-import { getCanRedo, getCanUndo } from "../../reducers/editor-entities.reducer/notes-view.reducer";
 
 import MiniButton from "../MiniButton";
 import Spacer from "../Spacer";

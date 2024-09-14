@@ -6,10 +6,10 @@ import { Tooltip } from "react-tippy";
 import styled from "styled-components";
 
 import { COLORS, UNIT } from "$/constants";
+import * as actions from "$/store/actions";
+import { getHasCopiedNotes } from "$/store/reducers/clipboard.reducer";
 import { ObjectType, View } from "$/types";
 import { getMetaKeyLabel, interleave } from "$/utils";
-import * as actions from "../../actions";
-import { getHasCopiedNotes } from "../../reducers/clipboard.reducer";
 import { ACTION_WIDTH, HALF_ACTION_WIDTH } from "./EditorRightPanel.constants";
 
 import Heading from "../Heading";

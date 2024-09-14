@@ -1,10 +1,10 @@
 import { connect } from "react-redux";
 
 import { convertMillisecondsToBeats } from "$/helpers/audio.helpers";
-import * as actions from "../../actions";
-import { getSortedBookmarksArray } from "../../reducers/bookmarks.reducer";
-import { getDurationInBeats } from "../../reducers/navigation.reducer";
-import { getSelectedSong } from "../../reducers/songs.reducer";
+import * as actions from "$/store/actions";
+import { getSortedBookmarksArray } from "$/store/reducers/bookmarks.reducer";
+import { getDurationInBeats } from "$/store/reducers/navigation.reducer";
+import { getSelectedSong } from "$/store/reducers/songs.reducer";
 
 import BookmarkFlag from "./BookmarkFlag";
 

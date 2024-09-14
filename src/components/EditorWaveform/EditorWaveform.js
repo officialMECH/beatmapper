@@ -3,11 +3,11 @@ import styled from "styled-components";
 
 import { UNIT } from "$/constants";
 import { useBoundingBox } from "$/hooks";
+import * as actions from "$/store/actions";
+import { getSelectedSong } from "$/store/reducers/songs.reducer";
+import { getGraphicsLevel } from "$/store/reducers/user.reducer";
 import { Quality } from "$/types";
 import { roundToNearest } from "$/utils";
-import * as actions from "../../actions";
-import { getSelectedSong } from "../../reducers/songs.reducer";
-import { getGraphicsLevel } from "../../reducers/user.reducer";
 
 import Bookmarks from "../Bookmarks";
 import CenteredSpinner from "../CenteredSpinner";

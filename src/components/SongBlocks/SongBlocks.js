@@ -3,11 +3,11 @@ import { connect } from "react-redux";
 
 import { BLOCK_COLUMN_WIDTH, HIGHEST_PRECISION, SONG_OFFSET } from "$/constants";
 import { getColorForItem } from "$/helpers/colors.helpers";
+import * as actions from "$/store/actions";
+import { getVisibleNotes } from "$/store/reducers/editor-entities.reducer/notes-view.reducer";
+import { getBeatDepth, getCursorPositionInBeats } from "$/store/reducers/navigation.reducer";
+import { getSelectedSong } from "$/store/reducers/songs.reducer";
 import { roundAwayFloatingPointNonsense } from "$/utils";
-import * as actions from "../../actions";
-import { getVisibleNotes } from "../../reducers/editor-entities.reducer/notes-view.reducer";
-import { getBeatDepth, getCursorPositionInBeats } from "../../reducers/navigation.reducer";
-import { getSelectedSong } from "../../reducers/songs.reducer";
 
 import Block from "../Block";
 import Mine from "../Mine";

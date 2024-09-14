@@ -6,8 +6,8 @@ import styled from "styled-components";
 import { COLORS, DIFFICULTIES, MEDIA_ROW_HEIGHT, UNIT } from "$/constants";
 import { getSongIdFromName } from "$/helpers/song.helpers";
 import { saveLocalCoverArtFile, saveSongFile } from "$/services/file.service";
-import * as actions from "../../actions";
-import { getAllSongIds } from "../../reducers/songs.reducer";
+import * as actions from "$/store/actions";
+import { getAllSongIds } from "$/store/reducers/songs.reducer";
 
 import Button from "../Button";
 import DifficultyTag from "../DifficultyTag";

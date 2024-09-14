@@ -11,9 +11,9 @@ import { connect } from "react-redux";
 import styled from "styled-components";
 
 import { UNIT } from "$/constants";
+import * as actions from "$/store/actions";
+import { getSelectedCutDirection, getSelectedNoteTool } from "$/store/reducers/editor.reducer";
 import { Direction, ObjectTool } from "$/types";
-import * as actions from "../../actions";
-import { getSelectedCutDirection, getSelectedNoteTool } from "../../reducers/editor.reducer";
 
 import Heading from "../Heading";
 import IconButton from "../IconButton";

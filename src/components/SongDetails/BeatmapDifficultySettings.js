@@ -6,7 +6,7 @@ import styled from "styled-components";
 import { COLORS, UNIT } from "$/constants";
 import { renderImperativePrompt } from "$/helpers/modal.helpers";
 import { getLabelForDifficulty } from "$/helpers/song.helpers";
-import * as actions from "../../actions";
+import * as actions from "$/store/actions";
 
 import CopyDifficultyForm from "../CopyDifficultyForm";
 import Heading from "../Heading";

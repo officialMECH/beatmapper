@@ -10,9 +10,9 @@ import { connect } from "react-redux";
 import { SNAPPING_INCREMENTS } from "$/constants";
 import { promptJumpToBeat, promptQuickSelect } from "$/helpers/prompts.helpers";
 import { useMousewheel } from "$/hooks";
+import * as actions from "$/store/actions";
 import { View } from "$/types";
 import { isMetaKeyPressed, throttle } from "$/utils";
-import * as actions from "../../actions";
 
 const GlobalShortcuts = ({
 	view,

@@ -12,10 +12,10 @@ import styled from "styled-components";
 
 import { COLORS, UNIT, ZOOM_LEVEL_MAX, ZOOM_LEVEL_MIN } from "$/constants";
 import { getColorForItem } from "$/helpers/colors.helpers";
+import * as actions from "$/store/actions";
+import { getAreLasersLocked, getIsLockedToCurrentWindow, getSelectedEventColor, getSelectedEventEditMode, getSelectedEventTool, getZoomLevel } from "$/store/reducers/editor.reducer";
+import { getSelectedSong } from "$/store/reducers/songs.reducer";
 import { EventColor, EventEditMode, EventTool, View } from "$/types";
-import * as actions from "../../actions";
-import { getAreLasersLocked, getIsLockedToCurrentWindow, getSelectedEventColor, getSelectedEventEditMode, getSelectedEventTool, getZoomLevel } from "../../reducers/editor.reducer";
-import { getSelectedSong } from "../../reducers/songs.reducer";
 
 import Spacer from "../Spacer";
 import UnfocusedButton from "../UnfocusedButton";

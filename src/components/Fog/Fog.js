@@ -1,6 +1,6 @@
-import React from "react";
 import { connect } from "react-redux";
-import { getGraphicsLevel } from "../../reducers/user.reducer";
+
+import { getGraphicsLevel } from "$/store/reducers/user.reducer";
 
 const Fog = ({ renderForGraphics, graphicsLevel, strength }) => {
 	if (graphicsLevel !== renderForGraphics) {

@@ -4,7 +4,7 @@ import styled from "styled-components";
 
 import { COLORS, DIFFICULTIES, DIFFICULTY_COLORS, UNIT } from "$/constants";
 import { getLabelForDifficulty } from "$/helpers/song.helpers";
-import * as actions from "../../actions";
+import * as actions from "$/store/actions";
 
 import CoverArtImage from "../CoverArtImage";
 import MiniButton from "../MiniButton";

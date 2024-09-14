@@ -25,12 +25,12 @@ import { useLocation } from "react-router-dom";
 import styled from "styled-components";
 
 import { COLORS, UNIT } from "$/constants";
+import * as actions from "$/store/actions";
+import { getNumOfBlocks, getNumOfMines, getNumOfObstacles } from "$/store/reducers/editor-entities.reducer/notes-view.reducer";
+import { getBackgroundOpacity, getRowHeight, getShowLightingPreview } from "$/store/reducers/editor.reducer";
+import { getBeatDepth, getIsLoading, getPlayNoteTick, getPlaybackRate, getVolume } from "$/store/reducers/navigation.reducer";
 import { View } from "$/types";
 import { pluralize } from "$/utils";
-import * as actions from "../../actions";
-import { getNumOfBlocks, getNumOfMines, getNumOfObstacles } from "../../reducers/editor-entities.reducer/notes-view.reducer";
-import { getBackgroundOpacity, getRowHeight, getShowLightingPreview } from "../../reducers/editor.reducer";
-import { getBeatDepth, getIsLoading, getPlayNoteTick, getPlaybackRate, getVolume } from "../../reducers/navigation.reducer";
 
 import Spacer from "../Spacer";
 import CountIndicator from "./CountIndicator";

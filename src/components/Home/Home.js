@@ -1,8 +1,8 @@
 import React from "react";
 import { connect } from "react-redux";
 
-import { getAllSongsChronologically, getProcessingImport } from "../../reducers/songs.reducer";
-import { getIsNewUser } from "../../reducers/user.reducer";
+import { getAllSongsChronologically, getProcessingImport } from "$/store/reducers/songs.reducer";
+import { getIsNewUser } from "$/store/reducers/user.reducer";
 
 import AddSongForm from "../AddSongForm";
 import BasicLayout from "../BasicLayout";

@@ -8,7 +8,7 @@ import { connect } from "react-redux";
 import styled from "styled-components";
 
 import { COLORS, SNAPPING_INCREMENTS, UNIT } from "$/constants";
-import * as actions from "../../actions";
+import * as actions from "$/store/actions";
 
 import Dropdown from "../Dropdown";
 import IconButton from "../IconButton";
