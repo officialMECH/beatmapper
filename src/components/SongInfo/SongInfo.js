@@ -1,11 +1,10 @@
 import React from "react";
-import { connect } from "react-redux";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 import { COLORS, UNIT } from "$/constants";
 import { getLabelForDifficulty } from "$/helpers/song.helpers";
-import * as actions from "$/store/actions";
 import { getDifficulty } from "$/store/reducers/editor-entities.reducer";
 import { getSelectedSong, getSelectedSongDifficultyIds } from "$/store/reducers/songs.reducer";
 
@@ -20,7 +19,10 @@ const COVER_ART_SIZES = {
 	small: 50,
 };
 
-const SongInfo = ({ showDifficultySelector, coverArtSize = "medium", song, selectedDifficulty, difficultyIds, pausePlaying }) => {
+const SongInfo = ({ showDifficultySelector, coverArtSize = "medium" }) => {
+	const song = useSelector(getSelectedSong);
+	const selectedDifficulty = useSelector(getDifficulty);
+	const difficultyIds = useSelector(getSelectedSongDifficultyIds);
 	const navigate = useNavigate();
 
 	const [showCreateDifficultyModal, setShowCreateDifficultyModal] = React.useState(false);
@@ -124,15 +126,4 @@ const Subtitle = styled.div`
   color: ${COLORS.gray[300]};
 `;
 
-const mapStateToProps = (state) => {
-	const song = getSelectedSong(state);
-	const difficultyIds = getSelectedSongDifficultyIds(state);
-
-	return { song, selectedDifficulty: getDifficulty(state), difficultyIds };
-};
-
-const mapDispatchToProps = {
-	pausePlaying: actions.pausePlaying,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(React.memo(SongInfo));
+export default React.memo(SongInfo);

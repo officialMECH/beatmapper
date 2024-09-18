@@ -1,9 +1,10 @@
-import { connect } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 
 import { UNIT } from "$/constants";
 import { useBoundingBox } from "$/hooks";
-import * as actions from "$/store/actions";
+import { scrubWaveform } from "$/store/actions";
+import { getCursorPosition, getDuration, getIsLoading } from "$/store/reducers/navigation.reducer";
 import { getSelectedSong } from "$/store/reducers/songs.reducer";
 import { getGraphicsLevel } from "$/store/reducers/user.reducer";
 import { Quality } from "$/types";
@@ -13,7 +14,14 @@ import Bookmarks from "../Bookmarks";
 import CenteredSpinner from "../CenteredSpinner";
 import ScrubbableWaveform from "../ScrubbableWaveform";
 
-const EditorWaveform = ({ height, view, song, waveformData, isLoadingSong, duration, cursorPosition, bookmarks, graphicsLevel, scrubWaveform }) => {
+const EditorWaveform = ({ height, view, bookmarks }) => {
+	const song = useSelector(getSelectedSong);
+	const waveformData = useSelector((state) => state.waveform.data);
+	const isLoadingSong = useSelector(getIsLoading);
+	const duration = useSelector(getDuration);
+	const cursorPosition = useSelector(getCursorPosition);
+	const graphicsLevel = useSelector(getGraphicsLevel);
+	const dispatch = useDispatch();
 	const [ref, boundingBox] = useBoundingBox();
 
 	// Updating this waveform is surprisingly expensive!
@@ -38,7 +46,7 @@ const EditorWaveform = ({ height, view, song, waveformData, isLoadingSong, durat
 			)}
 			{boundingBox && song && (
 				<>
-					<ScrubbableWaveform key={`${song.id}-${song.selectedDifficulty}`} view={view} width={boundingBox.width} height={height - UNIT * 2} waveformData={waveformData} duration={duration} cursorPosition={roundedCursorPosition} scrubWaveform={scrubWaveform} />
+					<ScrubbableWaveform key={`${song.id}-${song.selectedDifficulty}`} view={view} width={boundingBox.width} height={height - UNIT * 2} waveformData={waveformData} duration={duration} cursorPosition={roundedCursorPosition} scrubWaveform={(offset) => dispatch(scrubWaveform({ newOffset: offset }))} />
 					{!isLoadingSong && <Bookmarks />}
 				</>
 			)}
@@ -60,17 +68,4 @@ const SpinnerWrapper = styled.div`
   height: 100%;
 `;
 
-const mapStateToProps = (state) => {
-	return {
-		song: getSelectedSong(state),
-		waveformData: state.waveform.data,
-		isLoadingSong: state.navigation.isLoading,
-		duration: state.navigation.duration,
-		cursorPosition: state.navigation.cursorPosition,
-		graphicsLevel: getGraphicsLevel(state),
-	};
-};
-
-const mapDispatchToProps = { scrubWaveform: actions.scrubWaveform };
-
-export default connect(mapStateToProps, mapDispatchToProps)(EditorWaveform);
+export default EditorWaveform;

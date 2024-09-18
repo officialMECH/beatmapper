@@ -24,17 +24,17 @@ export function promptQuickSelect<T extends ActionCreator<UnknownAction>>(view: 
 		end = Number.POSITIVE_INFINITY;
 	}
 
-	wrappedAction(view, start, end);
+	wrappedAction({ view, start, end });
 }
 
-export function promptJumpToBeat<T extends ActionCreator<UnknownAction>>(wrappedAction: T, ...additionalArgs: Parameters<T>) {
+export function promptJumpToBeat<T extends ActionCreator<UnknownAction>>(wrappedAction: T, additionalArgs: Parameters<T>[0]) {
 	const beatNum = window.prompt("Enter the beat number you wish to jump to (eg. 16)");
 
 	if (beatNum === null || beatNum === "") {
 		return;
 	}
 
-	return wrappedAction(Number(beatNum), ...additionalArgs);
+	return wrappedAction({ beatNum: Number(beatNum), ...additionalArgs });
 }
 
 export function promptChangeObstacleDuration<T extends ActionCreator<UnknownAction>>(obstacles: App.Obstacle[], wrappedAction: T) {
@@ -62,7 +62,7 @@ export function promptChangeObstacleDuration<T extends ActionCreator<UnknownActi
 		}
 	}
 
-	return wrappedAction(Number(newDuration));
+	return wrappedAction({ newBeatDuration: Number(newDuration) });
 }
 
 export function promptSaveGridPreset<T extends ActionCreator<UnknownAction>>(gridPresets: GridPresets, wrappedAction: T) {
@@ -81,5 +81,5 @@ export function promptSaveGridPreset<T extends ActionCreator<UnknownAction>>(gri
 		window.alert("The value you provided was not accepted. Please enter 1, 2, 3, or 4.");
 	}
 
-	return wrappedAction(providedValue);
+	return wrappedAction({ presetSlot: providedValue });
 }

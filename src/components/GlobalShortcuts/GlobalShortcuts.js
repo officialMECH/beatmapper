@@ -5,45 +5,46 @@
  * - Demo
  */
 import React from "react";
-import { connect } from "react-redux";
+import { useDispatch } from "react-redux";
 
 import { SNAPPING_INCREMENTS } from "$/constants";
 import { promptJumpToBeat, promptQuickSelect } from "$/helpers/prompts.helpers";
 import { useMousewheel } from "$/hooks";
-import * as actions from "$/store/actions";
+import {
+	changeSnapping,
+	copySelection,
+	createBookmark,
+	cutSelection,
+	decrementSnapping,
+	deleteSelectedEvents,
+	deleteSelectedNotes,
+	deselectAll,
+	downloadMapFiles,
+	incrementSnapping,
+	jumpToBeat,
+	nudgeSelection,
+	pasteSelection,
+	redoEvents,
+	redoNotes,
+	scrollThroughSong,
+	seekBackwards,
+	seekForwards,
+	selectAllInRange,
+	selectColor,
+	selectNextTool,
+	selectPreviousTool,
+	skipToEnd,
+	skipToStart,
+	togglePlaying,
+	undoEvents,
+	undoNotes,
+} from "$/store/actions";
 import { View } from "$/types";
 import { isMetaKeyPressed, throttle } from "$/utils";
 
-const GlobalShortcuts = ({
-	view,
-	togglePlaying,
-	scrollThroughSong,
-	changeSnapping,
-	incrementSnapping,
-	decrementSnapping,
-	selectNextTool,
-	selectPreviousTool,
-	selectColor,
-	deselectAll,
-	selectAllInRange,
-	copySelection,
-	cutSelection,
-	pasteSelection,
-	jumpToBeat,
-	skipToStart,
-	skipToEnd,
-	undoNotes,
-	redoNotes,
-	undoEvents,
-	redoEvents,
-	deleteSelectedNotes,
-	deleteSelectedEvents,
-	seekForwards,
-	seekBackwards,
-	downloadMapFiles,
-	nudgeSelection,
-	createBookmark,
-}) => {
+const GlobalShortcuts = ({ view }) => {
+	const dispatch = useDispatch();
+
 	const keysDepressed = React.useRef({
 		space: false,
 	});
@@ -54,14 +55,14 @@ const GlobalShortcuts = ({
 		// If the user is holding Cmd/ctrl, we should scroll through snapping
 		// increments instead of the song.
 		if (holdingMeta) {
-			return direction === "forwards" ? decrementSnapping() : incrementSnapping();
+			return dispatch(direction === "forwards" ? decrementSnapping() : incrementSnapping());
 		}
 
 		if (holdingAlt) {
-			return nudgeSelection(direction, view);
+			return dispatch(nudgeSelection({ direction, view }));
 		}
 
-		scrollThroughSong(direction);
+		dispatch(scrollThroughSong({ direction }));
 	};
 
 	const handleScrollThrottled = throttle(handleScroll, 50);
@@ -78,7 +79,7 @@ const GlobalShortcuts = ({
 				return;
 			}
 
-			changeSnapping(newSnappingIncrement.value);
+			dispatch(changeSnapping({ newSnapTo: newSnappingIncrement.value }));
 		}
 
 		switch (ev.code) {
@@ -91,23 +92,16 @@ const GlobalShortcuts = ({
 
 				keysDepressed.current.space = true;
 
-				return togglePlaying();
+				return dispatch(togglePlaying());
 			}
 
 			case "Escape": {
-				return deselectAll(view);
+				return dispatch(deselectAll({ view }));
 			}
 
 			case "Tab": {
 				ev.preventDefault();
-
-				if (ev.shiftKey) {
-					selectPreviousTool(view);
-				} else {
-					selectNextTool(view);
-				}
-
-				return;
+				return dispatch(ev.shiftKey ? selectPreviousTool({ view }) : selectNextTool({ view }));
 			}
 
 			case "ArrowUp":
@@ -120,25 +114,25 @@ const GlobalShortcuts = ({
 			}
 
 			case "PageUp": {
-				return seekForwards(view);
+				return dispatch(seekForwards({ view }));
 			}
 			case "PageDown": {
-				return seekBackwards(view);
+				return dispatch(seekBackwards({ view }));
 			}
 
 			case "Home": {
-				return skipToStart();
+				return dispatch(skipToStart());
 			}
 			case "End": {
-				return skipToEnd();
+				return dispatch(skipToEnd());
 			}
 
 			case "Delete": {
 				if (view === View.LIGHTSHOW) {
-					return deleteSelectedEvents();
+					return dispatch(deleteSelectedEvents());
 				}
 				if (view === View.BEATMAP) {
-					return deleteSelectedNotes();
+					return dispatch(deleteSelectedNotes());
 				}
 
 				return;
@@ -149,30 +143,30 @@ const GlobalShortcuts = ({
 					return;
 				}
 
-				return cutSelection(view);
+				return dispatch(cutSelection({ view }));
 			}
 			case "KeyC": {
 				if (!isMetaKeyPressed(ev)) {
 					return;
 				}
-				return copySelection(view);
+				return dispatch(copySelection({ view }));
 			}
 			case "KeyV": {
 				if (!isMetaKeyPressed(ev)) {
 					return;
 				}
-				return pasteSelection(view);
+				return dispatch(pasteSelection({ view }));
 			}
 
 			case "KeyJ": {
-				return promptJumpToBeat(jumpToBeat, true);
+				return dispatch(promptJumpToBeat(jumpToBeat, { pauseTrack: true }));
 			}
 
 			case "KeyR": {
 				if (ev.shiftKey) {
 					return;
 				}
-				return selectColor(view, "red");
+				return dispatch(selectColor({ view, color: "red" }));
 			}
 			case "KeyB": {
 				if (isMetaKeyPressed(ev)) {
@@ -183,10 +177,10 @@ const GlobalShortcuts = ({
 						return;
 					}
 
-					return createBookmark(name, view);
+					return dispatch(createBookmark({ name, view }));
 				}
 				// Otherwise, toggle the note color to Blue.
-				return selectColor(view, "blue");
+				return dispatch(selectColor({ view, color: "blue" }));
 			}
 
 			case "KeyZ": {
@@ -195,10 +189,10 @@ const GlobalShortcuts = ({
 				}
 
 				if (view === View.BEATMAP) {
-					return ev.shiftKey ? redoNotes() : undoNotes();
+					return dispatch(ev.shiftKey ? redoNotes() : undoNotes());
 				}
 				if (view === View.LIGHTSHOW) {
-					return ev.shiftKey ? redoEvents() : undoEvents();
+					return dispatch(ev.shiftKey ? redoEvents() : undoEvents());
 				}
 				return;
 			}
@@ -209,11 +203,11 @@ const GlobalShortcuts = ({
 				}
 
 				ev.preventDefault();
-				return downloadMapFiles({ version: 2 });
+				return dispatch(downloadMapFiles({ version: 2 }));
 			}
 
 			case "KeyQ": {
-				return promptQuickSelect(view, selectAllInRange);
+				return dispatch(promptQuickSelect(view, selectAllInRange));
 			}
 
 			default:
@@ -251,34 +245,4 @@ const GlobalShortcuts = ({
 	return null;
 };
 
-const mapDispatchToProps = {
-	togglePlaying: actions.togglePlaying,
-	scrollThroughSong: actions.scrollThroughSong,
-	changeSnapping: actions.changeSnapping,
-	incrementSnapping: actions.incrementSnapping,
-	decrementSnapping: actions.decrementSnapping,
-	selectNextTool: actions.selectNextTool,
-	selectPreviousTool: actions.selectPreviousTool,
-	selectColor: actions.selectColor,
-	deselectAll: actions.deselectAll,
-	selectAllInRange: actions.selectAllInRange,
-	copySelection: actions.copySelection,
-	cutSelection: actions.cutSelection,
-	pasteSelection: actions.pasteSelection,
-	undoEvents: actions.undoEvents,
-	redoEvents: actions.redoEvents,
-	undoNotes: actions.undoNotes,
-	redoNotes: actions.redoNotes,
-	jumpToBeat: actions.jumpToBeat,
-	skipToStart: actions.skipToStart,
-	skipToEnd: actions.skipToEnd,
-	deleteSelectedEvents: actions.deleteSelectedEvents,
-	deleteSelectedNotes: actions.deleteSelectedNotes,
-	seekForwards: actions.seekForwards,
-	seekBackwards: actions.seekBackwards,
-	downloadMapFiles: actions.downloadMapFiles,
-	nudgeSelection: actions.nudgeSelection,
-	createBookmark: actions.createBookmark,
-};
-
-export default connect(null, mapDispatchToProps)(GlobalShortcuts);
+export default GlobalShortcuts;

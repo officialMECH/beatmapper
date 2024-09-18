@@ -1,10 +1,10 @@
 import React from "react";
-import { connect } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 
 import { COLORS, EVENT_TRACKS, UNIT } from "$/constants";
 import { useMousePositionOverElement, usePointerUpHandler } from "$/hooks";
-import * as actions from "$/store/actions";
+import { clearSelectionBox, commitSelection, drawSelectionBox, moveMouseAcrossEventsGrid } from "$/store/actions";
 import { getAreLasersLocked, getRowHeight, getSelectedEventBeat, getSelectedEventEditMode, getSelectionBox, getStartAndEndBeat } from "$/store/reducers/editor.reducer";
 import { getIsLoading, getSnapTo } from "$/store/reducers/navigation.reducer";
 import { App, EventEditMode, TrackType } from "$/types";
@@ -37,7 +37,18 @@ const convertMousePositionToBeatNum = (x, innerGridWidth, beatNums, startBeat, s
 	return roundedPositionInBeats + startBeat;
 };
 
-const EventsGrid = ({ contentWidth, startBeat, endBeat, selectedBeat, selectionBox, numOfBeatsToShow, isLoading, areLasersLocked, snapTo, rowHeight, selectedEditMode, moveMouseAcrossEventsGrid, drawSelectionBox, clearSelectionBox, commitSelection }) => {
+const EventsGrid = ({ contentWidth }) => {
+	const { startBeat, endBeat } = useSelector(getStartAndEndBeat);
+	const numOfBeatsToShow = endBeat - startBeat;
+	const selectedEditMode = useSelector(getSelectedEventEditMode);
+	const selectedBeat = useSelector(getSelectedEventBeat);
+	const isLoading = useSelector(getIsLoading);
+	const areLasersLocked = useSelector(getAreLasersLocked);
+	const snapTo = useSelector(getSnapTo);
+	const selectionBox = useSelector(getSelectionBox);
+	const rowHeight = useSelector(getRowHeight);
+	const dispatch = useDispatch();
+
 	const innerGridWidth = contentWidth - PREFIX_WIDTH;
 
 	const headerHeight = 32;
@@ -53,15 +64,15 @@ const EventsGrid = ({ contentWidth, startBeat, endBeat, selectedBeat, selectionB
 	React.useEffect(() => {
 		setMouseDownAt(null);
 		mousePositionRef.current = null;
-		clearSelectionBox();
-	}, [clearSelectionBox, selectedEditMode]);
+		dispatch(clearSelectionBox());
+	}, [dispatch]);
 
 	const handleCompleteSelection = React.useCallback(() => {
 		mouseButtonDepressed.current = null;
 		setMouseDownAt(null);
 
-		commitSelection();
-	}, [commitSelection]);
+		dispatch(commitSelection());
+	}, [dispatch]);
 
 	const shouldCompleteSelectionOnPointerUp = selectedEditMode === EventEditMode.SELECT && !!mouseDownAt;
 
@@ -98,10 +109,10 @@ const EventsGrid = ({ contentWidth, startBeat, endBeat, selectedBeat, selectionB
 				endBeat: end,
 			};
 
-			drawSelectionBox(newSelectionBox, newSelectionBoxInBeats);
+			dispatch(drawSelectionBox({ selectionBox: newSelectionBox, selectionBoxInBeats: newSelectionBoxInBeats }));
 		}
 
-		if (hoveringOverBeatNum !== selectedBeat) moveMouseAcrossEventsGrid(hoveringOverBeatNum);
+		if (hoveringOverBeatNum !== selectedBeat) dispatch(moveMouseAcrossEventsGrid({ selectedBeat: hoveringOverBeatNum }));
 	});
 
 	const mousePositionInPx = normalize(selectedBeat - startBeat, 0, beatNums.length, 0, innerGridWidth);
@@ -258,31 +269,4 @@ const MouseCursor = styled.div`
   transform: translateX(-1px);
 `;
 
-const mapStateToProps = (state, ownProps) => {
-	const { startBeat, endBeat } = getStartAndEndBeat(state);
-	const numOfBeatsToShow = endBeat - startBeat;
-	const selectedEditMode = getSelectedEventEditMode(state);
-	const selectedBeat = getSelectedEventBeat(state);
-
-	return {
-		startBeat,
-		endBeat,
-		selectedBeat,
-		numOfBeatsToShow,
-		selectedEditMode,
-		isLoading: getIsLoading(state),
-		areLasersLocked: getAreLasersLocked(state),
-		snapTo: getSnapTo(state),
-		selectionBox: getSelectionBox(state),
-		rowHeight: getRowHeight(state),
-	};
-};
-
-const mapDispatchToProps = {
-	moveMouseAcrossEventsGrid: actions.moveMouseAcrossEventsGrid,
-	drawSelectionBox: actions.drawSelectionBox,
-	clearSelectionBox: actions.clearSelectionBox,
-	commitSelection: actions.commitSelection,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(EventsGrid);
+export default EventsGrid;

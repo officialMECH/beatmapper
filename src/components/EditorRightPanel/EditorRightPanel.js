@@ -1,5 +1,5 @@
 import React from "react";
-import { connect } from "react-redux";
+import { useSelector } from "react-redux";
 import styled from "styled-components";
 
 import { UNIT } from "$/constants";
@@ -19,7 +19,15 @@ import SelectionInfo from "./SelectionInfo";
 // height!
 const bottomPanelHeight = 180;
 
-const EditorRightPanel = ({ song, mappingMode, numOfSelectedBlocks, numOfSelectedMines, numOfSelectedObstacles, isAnythingSelected }) => {
+const EditorRightPanel = () => {
+	const song = useSelector(getSelectedSong);
+	const mappingMode = useSelector(getMappingMode);
+	const selectedBlocks = useSelector(getSelectedBlocks);
+	const selectedMines = useSelector(getSelectedMines);
+	const selectedObstacles = useSelector(getSelectedObstacles);
+
+	const isAnythingSelected = selectedBlocks.length > 0 || selectedObstacles.length > 0 || selectedMines.length > 0;
+
 	// This panel adapts based on the current situation.
 	let panelContents;
 
@@ -33,7 +41,7 @@ const EditorRightPanel = ({ song, mappingMode, numOfSelectedBlocks, numOfSelecte
 				setShowGridConfig(false);
 			}
 		},
-		numOfSelectedBlocks + numOfSelectedMines + numOfSelectedObstacles,
+		selectedBlocks.length + selectedMines.length + selectedObstacles.length,
 	);
 
 	useOnKeydown(
@@ -49,7 +57,7 @@ const EditorRightPanel = ({ song, mappingMode, numOfSelectedBlocks, numOfSelecte
 	if (showGridConfig) {
 		panelContents = <GridConfig finishTweakingGrid={() => setShowGridConfig(false)} />;
 	} else if (isAnythingSelected) {
-		panelContents = <SelectionInfo numOfSelectedBlocks={numOfSelectedBlocks} numOfSelectedMines={numOfSelectedMines} numOfSelectedObstacles={numOfSelectedObstacles} />;
+		panelContents = <SelectionInfo numOfSelectedBlocks={selectedBlocks.length} numOfSelectedMines={selectedMines.length} numOfSelectedObstacles={selectedObstacles.length} />;
 	} else {
 		panelContents = (
 			<>
@@ -103,21 +111,4 @@ const Wrapper = styled.div`
   pointer-events: auto;
 `;
 
-const mapStateToProps = (state) => {
-	const selectedBlocks = getSelectedBlocks(state);
-	const selectedMines = getSelectedMines(state);
-	const selectedObstacles = getSelectedObstacles(state);
-
-	const isAnythingSelected = selectedBlocks.length > 0 || selectedObstacles.length > 0 || selectedMines.length > 0;
-
-	return {
-		song: getSelectedSong(state),
-		mappingMode: getMappingMode(state),
-		numOfSelectedBlocks: selectedBlocks.length,
-		numOfSelectedMines: selectedMines.length,
-		numOfSelectedObstacles: selectedObstacles.length,
-		isAnythingSelected,
-	};
-};
-
-export default connect(mapStateToProps)(EditorRightPanel);
+export default EditorRightPanel;

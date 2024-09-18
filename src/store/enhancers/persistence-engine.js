@@ -28,18 +28,22 @@ const createEngine = (whitelist = []) => {
 	reduxStore.config(config);
 
 	let engine = {
-		load() {
-			return reduxStore
-				.getItem(key)
-				.then((jsonState) => JSON.parse(jsonState) || {})
-				.catch(rejectWithMessage);
+		async load() {
+			try {
+				const jsonState = await reduxStore.getItem(key);
+				return JSON.parse(jsonState) || {};
+			} catch (error) {
+				return rejectWithMessage(error);
+			}
 		},
 
-		save(state) {
-			return Promise.resolve()
-				.then(() => JSON.stringify(state))
-				.then((jsonState) => reduxStore.setItem(key, jsonState))
-				.catch(rejectWithMessage);
+		async save(state) {
+			try {
+				const jsonState = JSON.stringify(state);
+				return await reduxStore.setItem(key, jsonState);
+			} catch (error) {
+				return rejectWithMessage(error);
+			}
 		},
 	};
 

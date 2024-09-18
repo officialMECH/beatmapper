@@ -1,11 +1,16 @@
-import { connect } from "react-redux";
+import { useSelector } from "react-redux";
 
 import { BLOCK_COLUMN_WIDTH, DEFAULT_NUM_ROWS, SONG_OFFSET, SURFACE_DEPTHS, SURFACE_HEIGHT, SURFACE_WIDTH } from "$/constants";
 import { getGraphicsLevel } from "$/store/reducers/user.reducer";
 
 import EdgeStrip from "./EdgeStrip";
 
-const StaticEnvironment = ({ surfaceDepth, includeEdgeStrips }) => {
+const StaticEnvironment = ({ includeEdgeStrips }) => {
+	const surfaceDepth = useSelector((state) => {
+		const graphicsLevel = getGraphicsLevel(state);
+		return SURFACE_DEPTHS[graphicsLevel];
+	});
+
 	const gridYBase = BLOCK_COLUMN_WIDTH * (DEFAULT_NUM_ROWS * -0.5);
 
 	const SURFACE_Z_CENTER = surfaceDepth / 2 + SONG_OFFSET - 1;
@@ -52,13 +57,4 @@ const StaticEnvironment = ({ surfaceDepth, includeEdgeStrips }) => {
 	);
 };
 
-const mapStateToProps = (state) => {
-	const graphicsLevel = getGraphicsLevel(state);
-	const surfaceDepth = SURFACE_DEPTHS[graphicsLevel];
-
-	return {
-		surfaceDepth,
-	};
-};
-
-export default connect(mapStateToProps)(StaticEnvironment);
+export default StaticEnvironment;

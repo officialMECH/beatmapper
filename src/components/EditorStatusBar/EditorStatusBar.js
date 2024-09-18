@@ -20,12 +20,12 @@ import { volume2 as volumeMaxIcon } from "react-icons-kit/feather/volume2";
 import { volumeX as volumeMinIcon } from "react-icons-kit/feather/volumeX";
 import { zap as showLightsIcon } from "react-icons-kit/feather/zap";
 import { zapOff as hideLightsIcon } from "react-icons-kit/feather/zapOff";
-import { connect } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import styled from "styled-components";
 
 import { COLORS, UNIT } from "$/constants";
-import * as actions from "$/store/actions";
+import { toggleNoteTick, togglePreviewLightingInEventsView, tweakEventBackgroundOpacity, tweakEventRowHeight, updateBeatDepth, updatePlaybackSpeed, updateVolume } from "$/store/actions";
 import { getNumOfBlocks, getNumOfMines, getNumOfObstacles } from "$/store/reducers/editor-entities.reducer/notes-view.reducer";
 import { getBackgroundOpacity, getRowHeight, getShowLightingPreview } from "$/store/reducers/editor.reducer";
 import { getBeatDepth, getIsLoading, getPlayNoteTick, getPlaybackRate, getVolume } from "$/store/reducers/navigation.reducer";
@@ -49,28 +49,20 @@ const getViewFromLocation = () => {
 	return View.PREVIEW;
 };
 
-const EditorStatusBar = ({
-	height,
-	isLoading,
-	numOfBlocks,
-	numOfMines,
-	numOfObstacles,
-	showLightingPreview,
-	rowHeight,
-	backgroundOpacity,
-	playbackRate,
-	beatDepth,
-	volume,
-	noteDensity,
-	playNoteTick,
-	updatePlaybackSpeed,
-	updateBeatDepth,
-	updateVolume,
-	toggleNoteTick,
-	togglePreviewLightingInEventsView,
-	tweakEventRowHeight,
-	tweakEventBackgroundOpacity,
-}) => {
+const EditorStatusBar = ({ height, noteDensity }) => {
+	const isLoading = useSelector(getIsLoading);
+	const playbackRate = useSelector(getPlaybackRate);
+	const beatDepth = useSelector(getBeatDepth);
+	const volume = useSelector(getVolume);
+	const playNoteTick = useSelector(getPlayNoteTick);
+	const numOfBlocks = useSelector(getNumOfBlocks);
+	const numOfMines = useSelector(getNumOfMines);
+	const numOfObstacles = useSelector(getNumOfObstacles);
+	const showLightingPreview = useSelector(getShowLightingPreview);
+	const rowHeight = useSelector(getRowHeight);
+	const backgroundOpacity = useSelector(getBackgroundOpacity);
+	const dispatch = useDispatch();
+
 	const view = getViewFromLocation();
 
 	let leftContent;
@@ -91,32 +83,32 @@ const EditorStatusBar = ({
 
 		rightContent = (
 			<>
-				<Toggle size={8} value={playNoteTick} onIcon={tickOnIcon} offIcon={tickOffIcon} onChange={toggleNoteTick} />
+				<Toggle size={8} value={playNoteTick} onIcon={tickOnIcon} offIcon={tickOffIcon} onChange={() => dispatch(toggleNoteTick())} />
 				<Spacer size={UNIT * 6} />
-				<SliderGroup disabled={isLoading} width={UNIT * 7} height={height} minIcon={distanceCloseIcon} maxIcon={distanceFarIcon} min={7} max={14} value={beatDepth} onChange={(value) => updateBeatDepth(value)} />
+				<SliderGroup disabled={isLoading} width={UNIT * 7} height={height} minIcon={distanceCloseIcon} maxIcon={distanceFarIcon} min={7} max={14} value={beatDepth} onChange={(value) => dispatch(updateBeatDepth({ beatDepth: value }))} />
 				<Spacer size={UNIT * 6} />
-				<SliderGroup includeMidpointTick disabled={isLoading} width={UNIT * 7} height={height} minIcon={playbackSpeedMinIcon} maxIcon={playbackSpeedMaxIcon} min={0.5} max={1.5} step={0.1} value={playbackRate} onChange={(value) => updatePlaybackSpeed(value)} />
+				<SliderGroup includeMidpointTick disabled={isLoading} width={UNIT * 7} height={height} minIcon={playbackSpeedMinIcon} maxIcon={playbackSpeedMaxIcon} min={0.5} max={1.5} step={0.1} value={playbackRate} onChange={(value) => dispatch(updatePlaybackSpeed({ playbackRate: value }))} />
 				<Spacer size={UNIT * 6} />
-				<SliderGroup width={UNIT * 7} height={height} minIcon={volumeMinIcon} maxIcon={volumeMaxIcon} min={0} max={1} value={volume} onChange={(value) => updateVolume(value)} />
+				<SliderGroup width={UNIT * 7} height={height} minIcon={volumeMinIcon} maxIcon={volumeMaxIcon} min={0} max={1} value={volume} onChange={(value) => dispatch(updateVolume({ volume: value }))} />
 			</>
 		);
 	} else if (view === View.LIGHTSHOW) {
 		leftContent = (
 			<>
-				<Toggle size={8} value={showLightingPreview} onIcon={showLightsIcon} offIcon={hideLightsIcon} onChange={togglePreviewLightingInEventsView} />
+				<Toggle size={8} value={showLightingPreview} onIcon={showLightsIcon} offIcon={hideLightsIcon} onChange={() => dispatch(togglePreviewLightingInEventsView())} />
 				<Spacer size={UNIT * 6} />
-				<SliderGroup width={UNIT * 5} height={height} minIcon={rowHeightMinIcon} maxIcon={rowHeightMaxIcon} min={25} max={50} step={1} value={rowHeight} onChange={(value) => tweakEventRowHeight(value)} />
+				<SliderGroup width={UNIT * 5} height={height} minIcon={rowHeightMinIcon} maxIcon={rowHeightMaxIcon} min={25} max={50} step={1} value={rowHeight} onChange={(value) => dispatch(tweakEventRowHeight({ rowHeight: value }))} />
 				<Spacer size={UNIT * 6} />
-				<SliderGroup disabled={isLoading} width={UNIT * 5} height={height} minIcon={backgroundOpacityMinIcon} maxIcon={backgroundOpacityMaxIcon} min={0.3} max={1} step={0.02} value={backgroundOpacity} onChange={(value) => tweakEventBackgroundOpacity(value)} />
+				<SliderGroup disabled={isLoading} width={UNIT * 5} height={height} minIcon={backgroundOpacityMinIcon} maxIcon={backgroundOpacityMaxIcon} min={0.3} max={1} step={0.02} value={backgroundOpacity} onChange={(value) => dispatch(tweakEventBackgroundOpacity({ backgroundOpacity: value }))} />
 			</>
 		);
 		rightContent = (
 			<>
-				<Toggle size={8} value={playNoteTick} onIcon={tickOnIcon} offIcon={tickOffIcon} onChange={toggleNoteTick} />
+				<Toggle size={8} value={playNoteTick} onIcon={tickOnIcon} offIcon={tickOffIcon} onChange={() => dispatch(toggleNoteTick())} />
 				<Spacer size={UNIT * 6} />
-				<SliderGroup includeMidpointTick disabled={isLoading} width={UNIT * 7} height={height} minIcon={playbackSpeedMinIcon} maxIcon={playbackSpeedMaxIcon} min={0.5} max={1.5} step={0.1} value={playbackRate} onChange={(value) => updatePlaybackSpeed(value)} />
+				<SliderGroup includeMidpointTick disabled={isLoading} width={UNIT * 7} height={height} minIcon={playbackSpeedMinIcon} maxIcon={playbackSpeedMaxIcon} min={0.5} max={1.5} step={0.1} value={playbackRate} onChange={(value) => dispatch(updatePlaybackSpeed({ playbackRate: value }))} />
 				<Spacer size={UNIT * 6} />
-				<SliderGroup width={UNIT * 7} height={height} minIcon={volumeMinIcon} maxIcon={volumeMaxIcon} min={0} max={1} value={volume} onChange={(value) => updateVolume(value)} />
+				<SliderGroup width={UNIT * 7} height={height} minIcon={volumeMinIcon} maxIcon={volumeMaxIcon} min={0} max={1} value={volume} onChange={(value) => dispatch(updateVolume({ volume: value }))} />
 			</>
 		);
 	}
@@ -156,30 +148,4 @@ const Right = styled.div`
   align-items: center;
 `;
 
-const mapStateToProps = (state) => {
-	return {
-		isLoading: getIsLoading(state),
-		playbackRate: getPlaybackRate(state),
-		beatDepth: getBeatDepth(state),
-		volume: getVolume(state),
-		playNoteTick: getPlayNoteTick(state),
-		numOfBlocks: getNumOfBlocks(state),
-		numOfMines: getNumOfMines(state),
-		numOfObstacles: getNumOfObstacles(state),
-		showLightingPreview: getShowLightingPreview(state),
-		rowHeight: getRowHeight(state),
-		backgroundOpacity: getBackgroundOpacity(state),
-	};
-};
-
-const mapDispatchToProps = {
-	updatePlaybackSpeed: actions.updatePlaybackSpeed,
-	updateBeatDepth: actions.updateBeatDepth,
-	updateVolume: actions.updateVolume,
-	toggleNoteTick: actions.toggleNoteTick,
-	togglePreviewLightingInEventsView: actions.togglePreviewLightingInEventsView,
-	tweakEventRowHeight: actions.tweakEventRowHeight,
-	tweakEventBackgroundOpacity: actions.tweakEventBackgroundOpacity,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(EditorStatusBar);
+export default EditorStatusBar;

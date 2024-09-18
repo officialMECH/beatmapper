@@ -26,7 +26,7 @@ export default function navigationReducer(state = initialState, action = undefin
 		}
 
 		case "FINISH_LOADING_SONG": {
-			const { waveformData, song } = action;
+			const { waveformData, song } = action.payload;
 			const durationInMs = waveformData.duration * 1000;
 
 			return {
@@ -38,7 +38,7 @@ export default function navigationReducer(state = initialState, action = undefin
 		}
 
 		case "RELOAD_WAVEFORM": {
-			const { waveformData } = action;
+			const { waveformData } = action.payload;
 			const durationInMs = waveformData.duration * 1000;
 
 			return {
@@ -49,7 +49,7 @@ export default function navigationReducer(state = initialState, action = undefin
 		}
 
 		case "UPDATE_SONG_DETAILS": {
-			const { offset } = action;
+			const { offset } = action.payload;
 
 			return {
 				...state,
@@ -75,48 +75,53 @@ export default function navigationReducer(state = initialState, action = undefin
 			};
 		}
 		case "STOP_PLAYING": {
+			const { offset } = action.payload;
 			return {
 				...state,
 				isPlaying: false,
 				animateBlockMotion: false,
 				animateRingMotion: false,
-				cursorPosition: action.offset,
+				cursorPosition: offset,
 			};
 		}
 
 		case "ADJUST_CURSOR_POSITION": {
+			const { newCursorPosition } = action.payload;
 			return {
 				...state,
-				cursorPosition: action.newCursorPosition,
+				cursorPosition: newCursorPosition,
 			};
 		}
 
 		case "TICK": {
+			const { timeElapsed } = action.payload;
 			return {
 				...state,
-				cursorPosition: action.timeElapsed,
+				cursorPosition: timeElapsed,
 				animateRingMotion: true,
 			};
 		}
 
 		case "SCRUB_WAVEFORM": {
+			const { newOffset } = action.payload;
 			return {
 				...state,
-				cursorPosition: action.newOffset,
+				cursorPosition: newOffset,
 				animateBlockMotion: false,
 				animateRingMotion: false,
 			};
 		}
 
 		case "JUMP_TO_BEAT": {
+			const { pauseTrack, animateJump } = action.payload;
 			// In some cases, we want to pause the track when jumping.
 			// In others, we inherit whatever the current value is.
-			const isPlaying = action.pauseTrack ? false : state.isPlaying;
+			const isPlaying = pauseTrack ? false : state.isPlaying;
 
 			return {
 				...state,
 				isPlaying,
-				animateBlockMotion: !!action.animateJump,
+				animateBlockMotion: !!animateJump,
 				animateRingMotion: false,
 			};
 		}
@@ -149,11 +154,12 @@ export default function navigationReducer(state = initialState, action = undefin
 		}
 
 		case "SKIP_TO_START": {
+			const { offset } = action.payload;
 			return {
 				...state,
 				animateBlockMotion: false,
 				animateRingMotion: false,
-				cursorPosition: action.offset,
+				cursorPosition: offset,
 			};
 		}
 		case "SKIP_TO_END": {
@@ -166,31 +172,35 @@ export default function navigationReducer(state = initialState, action = undefin
 		}
 
 		case "UPDATE_VOLUME": {
+			const { volume } = action.payload;
 			return {
 				...state,
-				volume: action.volume,
+				volume: volume,
 			};
 		}
 
 		case "UPDATE_PLAYBACK_SPEED": {
+			const { playbackRate } = action.payload;
 			return {
 				...state,
-				playbackRate: action.playbackRate,
+				playbackRate: playbackRate,
 			};
 		}
 
 		case "UPDATE_BEAT_DEPTH": {
+			const { beatDepth } = action.payload;
 			return {
 				...state,
-				beatDepth: action.beatDepth,
+				beatDepth: beatDepth,
 				animateBlockMotion: false,
 			};
 		}
 
 		case "CHANGE_SNAPPING": {
+			const { newSnapTo } = action.payload;
 			return {
 				...state,
-				snapTo: action.newSnapTo,
+				snapTo: newSnapTo,
 			};
 		}
 

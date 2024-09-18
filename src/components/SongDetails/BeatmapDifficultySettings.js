@@ -1,12 +1,12 @@
 import React from "react";
-import { connect } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useBlocker, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 import { COLORS, UNIT } from "$/constants";
 import { renderImperativePrompt } from "$/helpers/modal.helpers";
 import { getLabelForDifficulty } from "$/helpers/song.helpers";
-import * as actions from "$/store/actions";
+import { copyDifficulty, deleteBeatmap, updateBeatmapMetadata } from "$/store/actions";
 
 import CopyDifficultyForm from "../CopyDifficultyForm";
 import Heading from "../Heading";
@@ -14,7 +14,8 @@ import MiniButton from "../MiniButton";
 import Spacer from "../Spacer";
 import TextInput from "../TextInput";
 
-const BeatmapSettings = ({ song, difficultyId, updateBeatmapMetadata, copyDifficulty, deleteBeatmap, history }) => {
+const BeatmapSettings = ({ song, difficultyId, history }) => {
+	const dispatch = useDispatch();
 	const navigate = useNavigate();
 
 	const savedVersion = song.difficultiesById[difficultyId];
@@ -31,11 +32,13 @@ const BeatmapSettings = ({ song, difficultyId, updateBeatmapMetadata, copyDiffic
 
 		const modalProps = { width: 400, alignment: "top" };
 
-		renderImperativePrompt(modalProps, (triggerSuccess) => <CopyDifficultyForm song={song} idToCopy={difficultyId} afterCopy={triggerSuccess} copyDifficulty={copyDifficulty} />).then((copiedToDifficultyId) => {
-			// Redirect the user to this new difficulty, so that when they go to
-			// edit it, they're editing the right difficulty.
-			navigate(`/edit/${song.id}/${copiedToDifficultyId}/details`);
-		});
+		renderImperativePrompt(modalProps, (triggerSuccess) => <CopyDifficultyForm song={song} idToCopy={difficultyId} afterCopy={triggerSuccess} copyDifficulty={(songId, fromDifficultyId, toDifficultyId, afterCopy) => dispatch(copyDifficulty({ songId, fromDifficultyId, toDifficultyId, afterCopy }))} />).then(
+			(copiedToDifficultyId) => {
+				// Redirect the user to this new difficulty, so that when they go to
+				// edit it, they're editing the right difficulty.
+				navigate(`/edit/${song.id}/${copiedToDifficultyId}/details`);
+			},
+		);
 	};
 
 	const handleDeleteBeatmap = (ev) => {
@@ -62,7 +65,7 @@ const BeatmapSettings = ({ song, difficultyId, updateBeatmapMetadata, copyDiffic
 		// delete, let's redirect them to the next difficulty.
 		const nextDifficultyId = remainingDifficultyIds[0];
 
-		deleteBeatmap(song.id, difficultyId);
+		dispatch(deleteBeatmap({ songId: song.id, difficulty: difficultyId }));
 
 		navigate(`/edit/${song.id}/${nextDifficultyId}/details`);
 	};
@@ -75,7 +78,7 @@ const BeatmapSettings = ({ song, difficultyId, updateBeatmapMetadata, copyDiffic
 			window.alert("Start beat offset needs to be a number");
 		}
 
-		updateBeatmapMetadata(song.id, difficultyId, Number(noteJumpSpeed), Number(startBeatOffset), customLabel);
+		dispatch(updateBeatmapMetadata({ songId: song.id, difficulty: difficultyId, noteJumpSpeed: Number(noteJumpSpeed), startBeatOffset: Number(startBeatOffset), customLabel }));
 	};
 
 	const difficultyLabel = getLabelForDifficulty(difficultyId);
@@ -124,10 +127,4 @@ const Row = styled.div`
   justify-content: center;
 `;
 
-const mapDispatchToProps = {
-	updateBeatmapMetadata: actions.updateBeatmapMetadata,
-	copyDifficulty: actions.copyDifficulty,
-	deleteBeatmap: actions.deleteBeatmap,
-};
-
-export default connect(null, mapDispatchToProps)(BeatmapSettings);
+export default BeatmapSettings;

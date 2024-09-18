@@ -1,7 +1,7 @@
-import { connect } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 
-import * as actions from "$/store/actions";
+import { dismissPrompt } from "$/store/actions";
 import { getSeenPrompts } from "$/store/reducers/user.reducer";
 
 import Paragraph from "../Paragraph";
@@ -22,13 +22,20 @@ const PROMPTS = [
 	},
 ];
 
-const EditorPrompts = ({ prompt, dismissPrompt }) => {
+const EditorPrompts = () => {
+	const prompt = useSelector((state) => {
+		const seenPrompts = getSeenPrompts(state);
+		const unseenPrompts = PROMPTS.filter((prompt) => !seenPrompts.includes(prompt.id));
+		return unseenPrompts[0];
+	});
+	const dispatch = useDispatch();
+
 	if (!prompt) {
 		return null;
 	}
 
 	return (
-		<UnobtrusivePrompt title={prompt.title} onDismiss={() => dismissPrompt(prompt.id)}>
+		<UnobtrusivePrompt title={prompt.title} onDismiss={() => dispatch(dismissPrompt({ promptId: prompt.id }))}>
 			{prompt.contents()}
 		</UnobtrusivePrompt>
 	);
@@ -38,15 +45,4 @@ const ExternalLink = styled.a`
   color: inherit;
 `;
 
-const mapStateToProps = (state) => {
-	const seenPrompts = getSeenPrompts(state);
-	const unseenPrompts = PROMPTS.filter((prompt) => !seenPrompts.includes(prompt.id));
-
-	return {
-		prompt: unseenPrompts[0],
-	};
-};
-
-const mapDispatchToProps = { dismissPrompt: actions.dismissPrompt };
-
-export default connect(mapStateToProps, mapDispatchToProps)(EditorPrompts);
+export default EditorPrompts;

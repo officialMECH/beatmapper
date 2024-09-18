@@ -1,5 +1,5 @@
 import { animated, useSpring } from "@react-spring/three";
-import { connect } from "react-redux";
+import { useSelector } from "react-redux";
 
 import { SURFACE_WIDTH } from "$/constants";
 import { convertMillisecondsToBeats } from "$/helpers/audio.helpers";
@@ -19,7 +19,25 @@ const ON_PROPS = { emissiveIntensity: 0.75, opacity: 0.75 };
 const OFF_PROPS = { emissiveIntensity: 0, opacity: 0 };
 const BRIGHT_PROPS = { emissiveIntensity: 1, opacity: 1 };
 
-const PrimaryLight = ({ song, isPlaying, isBlooming, lastEvent }) => {
+const PrimaryLight = ({ song, isPlaying, isBlooming }) => {
+	const lastEvent = useSelector((state) => {
+		if (!song) {
+			return;
+		}
+		const trackId = App.TrackId[4];
+
+		const tracks = getTracks(state);
+		const events = tracks[trackId];
+
+		const currentBeat = getCursorPositionInBeats(state);
+		const processingDelay = getUsableProcessingDelay(state);
+		const processingDelayInBeats = convertMillisecondsToBeats(processingDelay, song.bpm);
+
+		const lastEvent = findMostRecentEventInTrack(events, currentBeat, processingDelayInBeats);
+
+		return lastEvent;
+	});
+
 	// TODO: laser beams for along the side and maybe along the bottom too?
 	const status = lastEvent ? lastEvent.type : App.EventType.OFF;
 	const lastEventId = lastEvent ? lastEvent.id : null;
@@ -71,24 +89,4 @@ const PrimaryLight = ({ song, isPlaying, isBlooming, lastEvent }) => {
 	);
 };
 
-const mapStateToProps = (state, { song }) => {
-	if (!song) {
-		return;
-	}
-	const trackId = App.TrackId[4];
-
-	const tracks = getTracks(state);
-	const events = tracks[trackId];
-
-	const currentBeat = getCursorPositionInBeats(state);
-	const processingDelay = getUsableProcessingDelay(state);
-	const processingDelayInBeats = convertMillisecondsToBeats(processingDelay, song.bpm);
-
-	const lastEvent = findMostRecentEventInTrack(events, currentBeat, processingDelayInBeats);
-
-	return {
-		lastEvent,
-	};
-};
-
-export default connect(mapStateToProps)(PrimaryLight);
+export default PrimaryLight;

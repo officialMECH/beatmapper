@@ -1,9 +1,9 @@
 import React from "react";
-import { connect } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { BLOCK_COLUMN_WIDTH, HIGHEST_PRECISION, SONG_OFFSET } from "$/constants";
 import { getColorForItem } from "$/helpers/colors.helpers";
-import * as actions from "$/store/actions";
+import { clickNote, finishManagingNoteSelection, mouseOverNote, startManagingNoteSelection } from "$/store/actions";
 import { getVisibleNotes } from "$/store/reducers/editor-entities.reducer/notes-view.reducer";
 import { getBeatDepth, getCursorPositionInBeats } from "$/store/reducers/navigation.reducer";
 import { getSelectedSong } from "$/store/reducers/songs.reducer";
@@ -36,7 +36,14 @@ const getPositionForBlock = (note, beatDepth) => {
 	return { x, y, z };
 };
 
-const SongBlocks = ({ song, notes, cursorPositionInBeats, beatDepth, selectionMode, clickNote, startManagingNoteSelection, finishManagingNoteSelection, mouseOverNote }) => {
+const SongBlocks = () => {
+	const song = useSelector(getSelectedSong);
+	const notes = useSelector(getVisibleNotes);
+	const cursorPositionInBeats = useSelector(getCursorPositionInBeats);
+	const beatDepth = useSelector(getBeatDepth);
+	const selectionMode = useSelector((state) => state.editor.notes.selectionMode);
+	const dispatch = useDispatch();
+
 	const zPosition = -SONG_OFFSET + cursorPositionInBeats * beatDepth;
 
 	// I can click on a block to start selecting it.
@@ -58,13 +65,13 @@ const SongBlocks = ({ song, notes, cursorPositionInBeats, beatDepth, selectionMo
 			// Without the delay, the user might accidentally add notes to the
 			// placement grid - further up in the React tree - if they release the
 			// mouse while over a grid tile.
-			window.requestAnimationFrame(finishManagingNoteSelection);
+			window.requestAnimationFrame(() => dispatch(finishManagingNoteSelection()));
 		};
 
 		window.addEventListener("mouseup", handleMouseUp);
 
 		return () => window.removeEventListener("mouseup", handleMouseUp);
-	}, [selectionMode, finishManagingNoteSelection]);
+	}, [selectionMode, dispatch]);
 
 	return notes.map((note, index) => {
 		const { x, y, z } = getPositionForBlock(note, beatDepth);
@@ -92,29 +99,12 @@ const SongBlocks = ({ song, notes, cursorPositionInBeats, beatDepth, selectionMo
 				isTransparent={adjustedNoteZPosition > -SONG_OFFSET * 2}
 				isSelected={note.selected}
 				selectionMode={selectionMode}
-				handleClick={clickNote}
-				handleStartSelecting={startManagingNoteSelection}
-				handleMouseOver={mouseOverNote}
+				handleClick={(clickType, time, lineLayer, lineIndex) => dispatch(clickNote({ clickType, time, lineLayer, lineIndex }))}
+				handleStartSelecting={(selectionMode) => dispatch(startManagingNoteSelection({ selectionMode }))}
+				handleMouseOver={(time, lineLayer, lineIndex) => dispatch(mouseOverNote({ time, lineLayer, lineIndex }))}
 			/>
 		);
 	});
 };
 
-const mapStateToProps = (state) => {
-	return {
-		song: getSelectedSong(state),
-		notes: getVisibleNotes(state),
-		cursorPositionInBeats: getCursorPositionInBeats(state),
-		beatDepth: getBeatDepth(state),
-		selectionMode: state.editor.notes.selectionMode,
-	};
-};
-
-const mapDispatchToProps = {
-	clickNote: actions.clickNote,
-	mouseOverNote: actions.mouseOverNote,
-	startManagingNoteSelection: actions.startManagingNoteSelection,
-	finishManagingNoteSelection: actions.finishManagingNoteSelection,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(SongBlocks);
+export default SongBlocks;

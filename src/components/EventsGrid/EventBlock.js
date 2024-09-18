@@ -1,11 +1,11 @@
 import Color from "color";
 import React from "react";
-import { connect } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 
 import { COLORS } from "$/constants";
 import { getColorForItem } from "$/helpers/colors.helpers";
-import * as actions from "$/store/actions";
+import { bulkDeleteEvent, deleteEvent, deselectEvent, selectEvent, switchEventColor } from "$/store/actions";
 import { getSelectedEventEditMode } from "$/store/reducers/editor.reducer";
 import { getSelectedSong } from "$/store/reducers/songs.reducer";
 import { App, EventEditMode } from "$/types";
@@ -50,7 +50,11 @@ const getBackgroundForEvent = (event, song) => {
 	}
 };
 
-const EventBlock = ({ song, event, trackWidth, startBeat, numOfBeatsToShow, deleteOnHover, areLasersLocked, selectedEditMode, selectEvent, deselectEvent, bulkDeleteEvent, switchEventColor, deleteEvent }) => {
+const EventBlock = ({ event, trackWidth, startBeat, numOfBeatsToShow, deleteOnHover, areLasersLocked }) => {
+	const song = useSelector(getSelectedSong);
+	const selectedEditMode = useSelector(getSelectedEventEditMode);
+	const dispatch = useDispatch();
+
 	const offset = normalize(event.beatNum, startBeat, numOfBeatsToShow + startBeat, 0, trackWidth);
 
 	const centeredOffset = offset - BLOCK_WIDTH / 2;
@@ -64,7 +68,7 @@ const EventBlock = ({ song, event, trackWidth, startBeat, numOfBeatsToShow, dele
 			onContextMenu={(ev) => ev.preventDefault()}
 			onPointerOver={(ev) => {
 				if (deleteOnHover) {
-					bulkDeleteEvent(event.id, event.trackId, areLasersLocked);
+					dispatch(bulkDeleteEvent({ id: event.id, trackId: event.trackId, areLasersLocked }));
 				}
 			}}
 			onPointerDown={(ev) => {
@@ -81,15 +85,15 @@ const EventBlock = ({ song, event, trackWidth, startBeat, numOfBeatsToShow, dele
 
 				if (clickType === "left") {
 					const actionToSend = event.selected ? deselectEvent : selectEvent;
-					actionToSend(event.id, event.trackId);
+					dispatch(actionToSend({ id: event.id, trackId: event.trackId }));
 				} else if (clickType === "middle") {
-					switchEventColor(event.id, event.trackId);
+					dispatch(switchEventColor({ id: event.id, trackId: event.trackId }));
 				} else if (clickType === "right") {
-					deleteEvent(event.id, event.trackId, areLasersLocked);
+					dispatch(deleteEvent({ id: event.id, trackId: event.trackId, areLasersLocked }));
 				}
 
 				if (ev.buttons === 2) {
-					deleteEvent(event.id, event.trackId, areLasersLocked);
+					dispatch(deleteEvent({ id: event.id, trackId: event.trackId, areLasersLocked }));
 				}
 			}}
 		>
@@ -119,19 +123,4 @@ const SelectedGlow = styled.div`
   opacity: 0.6;
 `;
 
-const mapStateToProps = (state) => {
-	return {
-		song: getSelectedSong(state),
-		selectedEditMode: getSelectedEventEditMode(state),
-	};
-};
-
-const mapDispatchToProps = {
-	deleteEvent: actions.deleteEvent,
-	bulkDeleteEvent: actions.bulkDeleteEvent,
-	selectEvent: actions.selectEvent,
-	deselectEvent: actions.deselectEvent,
-	switchEventColor: actions.switchEventColor,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(React.memo(EventBlock));
+export default React.memo(EventBlock);

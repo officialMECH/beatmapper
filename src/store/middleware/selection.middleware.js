@@ -1,4 +1,3 @@
-import { findNoteByProperties } from "$/helpers/notes.helpers";
 /**
  * NOTE: I don't really think this middleware is necessary.
  * I think all this stuff can be done at the component level, maybe put into
@@ -6,6 +5,8 @@ import { findNoteByProperties } from "$/helpers/notes.helpers";
  *
  * Will do a different approach for events. This is just for notes-view stuff.
  */
+
+import { findNoteByProperties } from "$/helpers/notes.helpers";
 import { ObjectSelectionMode } from "$/types";
 import { bulkDeleteNote, deleteNote, deselectNote, selectNote, toggleNoteColor } from "../actions";
 import { getNotes } from "../reducers/editor-entities.reducer/notes-view.reducer";
@@ -15,16 +16,17 @@ export default function createSelectionMiddleware() {
 		switch (action.type) {
 			case "CLICK_NOTE": {
 				const state = store.getState();
-				const note = findNoteByProperties(getNotes(state), action);
+				const { clickType, time, lineLayer, lineIndex } = action.payload;
+				const note = findNoteByProperties(getNotes(state), { time, lineLayer, lineIndex });
 
-				if (action.clickType === "middle") {
-					next(toggleNoteColor(action.time, action.lineLayer, action.lineIndex));
-				} else if (action.clickType === "right") {
-					next(deleteNote(action.time, action.lineLayer, action.lineIndex));
+				if (clickType === "middle") {
+					next(toggleNoteColor({ time, lineLayer, lineIndex }));
+				} else if (clickType === "right") {
+					next(deleteNote({ time, lineLayer, lineIndex }));
 				} else if (note.selected) {
-					next(deselectNote(action.time, action.lineLayer, action.lineIndex));
+					next(deselectNote({ time, lineLayer, lineIndex }));
 				} else {
-					next(selectNote(action.time, action.lineLayer, action.lineIndex));
+					next(selectNote({ time, lineLayer, lineIndex }));
 				}
 
 				break;
@@ -32,6 +34,7 @@ export default function createSelectionMiddleware() {
 
 			case "MOUSE_OVER_NOTE": {
 				const state = store.getState();
+				const { time, lineLayer, lineIndex } = action.payload;
 				const { selectionMode } = state.editor.notes;
 
 				// Ignore any mouseovers when not in a selection mode
@@ -40,11 +43,11 @@ export default function createSelectionMiddleware() {
 				}
 
 				// Find the note we're mousing over
-				const note = findNoteByProperties(getNotes(state), action);
+				const note = findNoteByProperties(getNotes(state), { time, lineLayer, lineIndex });
 
 				// If the selection mode is delete, we can simply remove this note.
 				if (selectionMode === ObjectSelectionMode.DELETE) {
-					return next(bulkDeleteNote(action.time, action.lineLayer, action.lineIndex));
+					return next(bulkDeleteNote({ time, lineLayer, lineIndex }));
 				}
 
 				// Ignore double-positives or double-negatives
@@ -55,9 +58,9 @@ export default function createSelectionMiddleware() {
 				}
 
 				if (note.selected) {
-					return next(deselectNote(action.time, action.lineLayer, action.lineIndex));
+					return next(deselectNote({ time, lineLayer, lineIndex }));
 				}
-				return next(selectNote(action.time, action.lineLayer, action.lineIndex));
+				return next(selectNote({ time, lineLayer, lineIndex }));
 			}
 
 			default:

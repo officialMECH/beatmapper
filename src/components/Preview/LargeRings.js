@@ -1,6 +1,6 @@
 import { useTrail } from "@react-spring/three";
 import React from "react";
-import { connect } from "react-redux";
+import { useSelector } from "react-redux";
 
 import { convertMillisecondsToBeats } from "$/helpers/audio.helpers";
 import { getColorForItem } from "$/helpers/colors.helpers";
@@ -17,7 +17,64 @@ const INITIAL_ROTATION = Math.PI * 0.25;
 const INCREMENT_ROTATION_BY = Math.PI * 0.5;
 const DISTANCE_BETWEEN_RINGS = 18;
 
-const LargeRings = ({ song, isPlaying, numOfRings, animateRingMotion, lastRotationEvent, lastLightingEvent }) => {
+const LargeRings = ({ song, isPlaying }) => {
+	const lastRotationEvent = useSelector((state) => {
+		const tracks = getTracks(state);
+
+		const rotationTrackId = App.TrackId[8];
+
+		const rotationEvents = tracks[rotationTrackId];
+
+		const currentBeat = getCursorPositionInBeats(state);
+		const processingDelay = getUsableProcessingDelay(state);
+
+		const processingDelayInBeats = convertMillisecondsToBeats(processingDelay, song.bpm);
+
+		const lastRotationEvent = findMostRecentEventInTrack(rotationEvents, currentBeat, processingDelayInBeats);
+		return lastRotationEvent;
+	});
+	const lastLightingEvent = useSelector((state) => {
+		if (!song) {
+			return;
+		}
+
+		const tracks = getTracks(state);
+
+		const lightingTrackId = App.TrackId[1];
+
+		const lightingEvents = tracks[lightingTrackId];
+
+		const currentBeat = getCursorPositionInBeats(state);
+		const processingDelay = getUsableProcessingDelay(state);
+
+		const processingDelayInBeats = convertMillisecondsToBeats(processingDelay, song.bpm);
+
+		const lastLightingEvent = findMostRecentEventInTrack(lightingEvents, currentBeat, processingDelayInBeats);
+
+		return lastLightingEvent;
+	});
+	const numOfRings = useSelector((state) => {
+		const graphicsLevel = getGraphicsLevel(state);
+
+		let numOfRings;
+		switch (graphicsLevel) {
+			case Quality.HIGH: {
+				numOfRings = 16;
+				break;
+			}
+			case Quality.MEDIUM: {
+				numOfRings = 8;
+				break;
+			}
+			case Quality.LOW: {
+				numOfRings = 4;
+				break;
+			}
+		}
+		return numOfRings;
+	});
+	const animateRingMotion = useSelector(getAnimateRingMotion);
+
 	const lastRotationEventId = lastRotationEvent ? lastRotationEvent.id : null;
 
 	const firstRingOffset = -60;
@@ -58,53 +115,4 @@ const LargeRings = ({ song, isPlaying, numOfRings, animateRingMotion, lastRotati
 	));
 };
 
-const mapStateToProps = (state, { song }) => {
-	if (!song) {
-		return;
-	}
-
-	const tracks = getTracks(state);
-
-	const rotationTrackId = App.TrackId[8];
-	const lightingTrackId = App.TrackId[1];
-
-	const rotationEvents = tracks[rotationTrackId];
-	const lightingEvents = tracks[lightingTrackId];
-
-	const currentBeat = getCursorPositionInBeats(state);
-	const processingDelay = getUsableProcessingDelay(state);
-
-	const processingDelayInBeats = convertMillisecondsToBeats(processingDelay, song.bpm);
-
-	const lastRotationEvent = findMostRecentEventInTrack(rotationEvents, currentBeat, processingDelayInBeats);
-	const lastLightingEvent = findMostRecentEventInTrack(lightingEvents, currentBeat, processingDelayInBeats);
-
-	const graphicsLevel = getGraphicsLevel(state);
-
-	let numOfRings;
-	switch (graphicsLevel) {
-		case Quality.HIGH: {
-			numOfRings = 16;
-			break;
-		}
-		case Quality.MEDIUM: {
-			numOfRings = 8;
-			break;
-		}
-		case Quality.LOW: {
-			numOfRings = 4;
-			break;
-		}
-	}
-
-	const animateRingMotion = getAnimateRingMotion(state);
-
-	return {
-		lastRotationEvent,
-		lastLightingEvent,
-		numOfRings,
-		animateRingMotion,
-	};
-};
-
-export default connect(mapStateToProps)(LargeRings);
+export default LargeRings;

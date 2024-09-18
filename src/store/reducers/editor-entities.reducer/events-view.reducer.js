@@ -25,7 +25,8 @@ const eventsView = undoable(
 			}
 
 			case "LOAD_BEATMAP_ENTITIES": {
-				if (!action.events || action.events.length === 0) {
+				const { events } = action.payload;
+				if (!events || events.length === 0) {
 					return createInitialState();
 				}
 
@@ -33,7 +34,7 @@ const eventsView = undoable(
 				// I'm noticing some weird bug where I get SO MANY EVENTS.
 				// Remove all duplicates.
 				const uniqueEvents = [];
-				action.events.forEach((event) => {
+				for (const event of events) {
 					const alreadyExists = uniqueEvents.some((uniqEvent) => {
 						return uniqEvent.trackId === event.trackId && uniqEvent.beatNum === event.beatNum;
 					});
@@ -41,7 +42,7 @@ const eventsView = undoable(
 					if (!alreadyExists) {
 						uniqueEvents.push(event);
 					}
-				});
+				}
 
 				// Entities are loaded all in 1 big array, since that's how they're saved
 				// to disk. Reduce them into a map based on trackId
@@ -62,7 +63,7 @@ const eventsView = undoable(
 			}
 
 			case "PLACE_EVENT": {
-				const { id, trackId, beatNum, eventType, eventColorType, areLasersLocked } = action;
+				const { id, trackId, beatNum, eventType, eventColorType, areLasersLocked } = action.payload;
 
 				const newEvent = {
 					id,
@@ -111,7 +112,7 @@ const eventsView = undoable(
 			}
 
 			case "CHANGE_LASER_SPEED": {
-				const { id, trackId, beatNum, speed, areLasersLocked } = action;
+				const { id, trackId, beatNum, speed, areLasersLocked } = action.payload;
 
 				const newEvent = {
 					id,
@@ -147,7 +148,7 @@ const eventsView = undoable(
 
 			case "DELETE_EVENT":
 			case "BULK_DELETE_EVENT": {
-				const { id, trackId, areLasersLocked } = action;
+				const { id, trackId, areLasersLocked } = action.payload;
 
 				return produce(state, (draftState) => {
 					draftState.tracks[trackId] = draftState.tracks[trackId].filter((ev) => ev.id !== id);
@@ -166,30 +167,31 @@ const eventsView = undoable(
 				return produce(state, (draftState) => {
 					const trackIds = Object.keys(draftState.tracks);
 
-					trackIds.forEach((trackId) => {
+					for (const trackId of trackIds) {
 						draftState.tracks[trackId] = draftState.tracks[trackId].filter((event) => !event.selected);
-					});
+					}
 				});
 			}
 
 			case "CUT_SELECTION": {
-				if (action.view !== View.LIGHTSHOW) {
+				const { view } = action.payload;
+				if (view !== View.LIGHTSHOW) {
 					return state;
 				}
 
 				return produce(state, (draftState) => {
 					const trackIds = Object.keys(draftState.tracks);
 
-					trackIds.forEach((trackId) => {
+					for (const trackId of trackIds) {
 						draftState.tracks[trackId] = draftState.tracks[trackId].filter((event) => {
 							return !event.selected;
 						});
-					});
+					}
 				});
 			}
 
 			case "PASTE_SELECTION": {
-				const { view, data, pasteAtBeat } = action;
+				const { view, data, pasteAtBeat } = action.payload;
 
 				if (view !== View.LIGHTSHOW) {
 					return state;
@@ -208,15 +210,15 @@ const eventsView = undoable(
 						beatNum: event.beatNum + deltaBetweenPeriods,
 					}));
 
-					timeShiftedData.forEach((event) => {
+					for (const event of timeShiftedData) {
 						// Shift the event by the delta between
 						draftState.tracks[event.trackId].push(event);
-					});
+					}
 				});
 			}
 
 			case "SWITCH_EVENT_COLOR": {
-				const { id, trackId } = action;
+				const { id, trackId } = action.payload;
 
 				return produce(state, (draftState) => {
 					const eventIndex = state.tracks[trackId].findIndex((ev) => ev.id === id);
@@ -229,7 +231,7 @@ const eventsView = undoable(
 
 			case "SELECT_EVENT":
 			case "DESELECT_EVENT": {
-				const { id, trackId } = action;
+				const { id, trackId } = action.payload;
 
 				const eventIndex = state.tracks[trackId].findIndex((ev) => ev.id === id);
 
@@ -239,7 +241,7 @@ const eventsView = undoable(
 			}
 
 			case "SELECT_ALL": {
-				const { view, metadata } = action;
+				const { view, metadata } = action.payload;
 
 				if (view !== View.LIGHTSHOW) {
 					return state;
@@ -248,20 +250,20 @@ const eventsView = undoable(
 				return produce(state, (draftState) => {
 					const trackIds = Object.keys(draftState.tracks);
 
-					trackIds.forEach((trackId) => {
+					for (const trackId of trackIds) {
 						// Set all events within our frame as selected, and deselect any
 						// selected events outside of it
-						draftState.tracks[trackId].forEach((event) => {
+						for (const event of draftState.tracks[trackId]) {
 							const shouldBeSelected = event.beatNum >= metadata.startBeat && event.beatNum < metadata.endBeat;
 
 							event.selected = shouldBeSelected;
-						});
-					});
+						}
+					}
 				});
 			}
 
 			case "DESELECT_ALL": {
-				const { view } = action;
+				const { view } = action.payload;
 
 				if (view !== View.LIGHTSHOW) {
 					return state;
@@ -273,7 +275,7 @@ const eventsView = undoable(
 			}
 
 			case "SELECT_ALL_IN_RANGE": {
-				const { start, end, view } = action;
+				const { start, end, view } = action.payload;
 
 				if (view !== View.LIGHTSHOW) {
 					return state;
@@ -282,15 +284,15 @@ const eventsView = undoable(
 				return produce(state, (draftState) => {
 					const trackIds = Object.keys(draftState.tracks);
 
-					trackIds.forEach((trackId) => {
+					for (const trackId of trackIds) {
 						// Set all events within our frame as selected, and deselect any
 						// selected events outside of it
-						draftState.tracks[trackId].forEach((event) => {
+						for (const event of draftState.tracks[trackId]) {
 							const shouldBeSelected = event.beatNum >= start && event.beatNum < end;
 
 							event.selected = shouldBeSelected;
-						});
-					});
+						}
+					}
 				});
 			}
 
@@ -298,28 +300,28 @@ const eventsView = undoable(
 				return produce(state, (draftState) => {
 					const trackIds = Object.keys(draftState.tracks);
 
-					trackIds.forEach((trackId) => {
-						draftState.tracks[trackId].forEach((event) => {
+					for (const trackId of trackIds) {
+						for (const event of draftState.tracks[trackId]) {
 							if (event.selected === "tentative") {
 								event.selected = true;
 							}
-						});
-					});
+						}
+					}
 				});
 			}
 
 			case "DRAW_SELECTION_BOX": {
-				const { selectionBoxInBeats, metadata } = action;
+				const { selectionBoxInBeats, metadata } = action.payload;
 
 				return produce(state, (draftState) => {
 					const trackIds = Object.keys(draftState.tracks);
 
-					trackIds.forEach((trackId) => {
+					for (const trackId of trackIds) {
 						const trackIndex = EVENT_TRACKS.findIndex((track) => track.id === trackId);
 
 						const isTrackIdWithinBox = trackIndex >= selectionBoxInBeats.startTrackIndex && trackIndex <= selectionBoxInBeats.endTrackIndex;
 
-						draftState.tracks[trackId].forEach((event) => {
+						for (const event of draftState.tracks[trackId]) {
 							const isInWindow = event.beatNum >= metadata.window.startBeat && event.beatNum <= metadata.window.endBeat;
 
 							if (!isInWindow) {
@@ -335,13 +337,13 @@ const eventsView = undoable(
 									event.selected = false;
 								}
 							}
-						});
-					});
+						}
+					}
 				});
 			}
 
 			case "NUDGE_SELECTION": {
-				const { view, direction, amount } = action;
+				const { view, direction, amount } = action.payload;
 
 				if (view !== View.LIGHTSHOW) {
 					return state;
@@ -350,9 +352,9 @@ const eventsView = undoable(
 				return produce(state, (draftState) => {
 					const trackIds = Object.keys(draftState.tracks);
 
-					trackIds.forEach((trackId) => {
+					for (const trackId of trackIds) {
 						nudgeEvents(direction, amount, draftState.tracks[trackId]);
-					});
+					}
 				});
 			}
 
@@ -383,11 +385,11 @@ const eventsView = undoable(
 const deselectAll = (draftState) => {
 	const trackIds = Object.keys(draftState.tracks);
 
-	trackIds.forEach((trackId) => {
-		draftState.tracks[trackId].forEach((event) => {
+	for (const trackId of trackIds) {
+		for (const event of draftState.tracks[trackId]) {
 			event.selected = false;
-		});
-	});
+		}
+	}
 
 	return draftState;
 };

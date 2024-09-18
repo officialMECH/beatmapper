@@ -1,4 +1,4 @@
-import { connect } from "react-redux";
+import { useSelector } from "react-redux";
 import { Route, Routes } from "react-router-dom";
 
 import { getHasInitialized } from "$/store/reducers/global.reducer";
@@ -12,7 +12,9 @@ import LoadingScreen from "../LoadingScreen";
 
 import "react-tippy/dist/tippy.css";
 
-const App = ({ hasInitialized }) => {
+const App = () => {
+	const hasInitialized = useSelector(getHasInitialized);
+
 	if (!hasInitialized) {
 		return <LoadingScreen />;
 	}
@@ -30,8 +32,4 @@ const App = ({ hasInitialized }) => {
 	);
 };
 
-const mapStateToProps = (state) => ({
-	hasInitialized: getHasInitialized(state),
-});
-
-export default connect(mapStateToProps)(App);
+export default App;

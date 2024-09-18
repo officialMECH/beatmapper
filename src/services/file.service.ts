@@ -1,7 +1,7 @@
 import localforage from "localforage";
 
 import { defaultCoverArtPath } from "$/assets";
-import type { Difficulty, Member } from "$/types";
+import type { BeatmapId, Difficulty, Member, SongId } from "$/types";
 
 // These are the types of things we'll need to save.
 export const FileType = {
@@ -19,7 +19,7 @@ export type Saveable = File | Blob | ArrayBuffer | string;
 // an array of the filename and its file (or blob).
 type SaveReturn<T extends Saveable> = Promise<[string, T]>;
 
-type Metadata = { extension?: string; difficulty?: Difficulty };
+type Metadata = { extension?: string; difficulty?: BeatmapId };
 
 const filestore = localforage.createInstance({
 	name: "BeatMapper files",
@@ -80,7 +80,7 @@ function getExtension(filename: string, defaultExtension = "") {
  * @example getFilenameForThing(123, 'beatmap', { difficulty: 'ExpertPlus' })
  *  -> `123_ExpertPlus.dat`
  */
-export function getFilenameForThing(songId: string, type: FileType, metadata: Metadata = {}) {
+export function getFilenameForThing(songId: SongId, type: FileType, metadata: Metadata = {}) {
 	switch (type) {
 		case FileType.SONG: {
 			return `${songId}_song.ogg`;
@@ -193,7 +193,7 @@ export function saveCoverArtFromBlob(songId: string, coverArtBlob?: Blob, origin
 	return saveBackupCoverArt(songId);
 }
 
-export function saveBeatmap(songId: string, difficulty: Difficulty, beatmapContents: string) {
+export function saveBeatmap(songId: SongId, difficulty: BeatmapId, beatmapContents: string) {
 	const beatmapFilename = getFilenameForThing(songId, FileType.BEATMAP, {
 		difficulty,
 	});
@@ -207,7 +207,7 @@ export function saveBeatmap(songId: string, difficulty: Difficulty, beatmapConte
 	return saveFile(beatmapFilename, beatmapContentsString);
 }
 
-export function saveInfoDat(songId: string, infoContent: string) {
+export function saveInfoDat(songId: SongId, infoContent: string) {
 	const infoDatFilename = getFilenameForThing(songId, FileType.INFO);
 
 	return saveFile(infoDatFilename, infoContent);

@@ -38,7 +38,7 @@ export default function createSongMiddleware() {
 			case "START_LOADING_SONG": {
 				next(action);
 
-				const { songId, difficulty } = action;
+				const { songId, difficulty } = action.payload;
 
 				const state = store.getState();
 				const song = getSongById(state, songId);
@@ -95,7 +95,7 @@ export default function createSongMiddleware() {
 					const convertedEvents = convertEventsToRedux(unshiftedEvents);
 					const convertedBookmarks = convertBookmarksToRedux(beatmapJson._customData?._bookmarks);
 
-					next(loadBeatmapEntities(unshiftedNotes, convertedEvents, convertedObstacles, convertedBookmarks));
+					next(loadBeatmapEntities({ notes: unshiftedNotes, events: convertedEvents, obstacles: convertedObstacles, bookmarks: convertedBookmarks }));
 
 					next(ReduxUndoActionCreators.clearHistory());
 				}
@@ -110,13 +110,13 @@ export default function createSongMiddleware() {
 
 				const waveform = await generateWaveformForSongFile(file);
 
-				next(finishLoadingSong(song, waveform));
+				next(finishLoadingSong({ song, waveformData: waveform }));
 
 				break;
 			}
 
 			case "CREATE_DIFFICULTY": {
-				const { difficulty, afterCreate } = action;
+				const { difficulty, afterCreate } = action.payload;
 
 				const state = store.getState();
 				const song = getSelectedSong(state);
@@ -148,7 +148,7 @@ export default function createSongMiddleware() {
 			}
 
 			case "COPY_DIFFICULTY": {
-				const { songId, fromDifficultyId, toDifficultyId, afterCopy } = action;
+				const { songId, fromDifficultyId, toDifficultyId, afterCopy } = action.payload;
 
 				// First, we need to load the file which contains the notes, events, etc
 				// for the difficulty we want to copy.
@@ -193,7 +193,7 @@ export default function createSongMiddleware() {
 			}
 
 			case "START_PLAYING": {
-				next({ type: "START_PLAYING", timeElapsed: 0 });
+				next({ type: "START_PLAYING", payload: { timeElapsed: 0 } });
 
 				audioSample.play();
 
@@ -229,21 +229,22 @@ export default function createSongMiddleware() {
 					} else {
 						next({
 							type: "TICK",
-							timeElapsed: currentTime,
+							payload: { timeElapsed: currentTime },
 						});
 					}
 
 					lastBeat = currentBeat;
 
-					animationFrameId = window.requestAnimationFrame(tick);
+					animationFrameId = window.requestAnimationFrame(() => tick());
 				}
 
-				animationFrameId = window.requestAnimationFrame(tick);
+				animationFrameId = window.requestAnimationFrame(() => tick());
 				break;
 			}
 
 			case "SCRUB_WAVEFORM": {
 				next(action);
+				const { newOffset } = action.payload;
 
 				// When the song is playing, `cursorPosition` is fluid, moving every 16
 				// milliseconds to a new fractional value.
@@ -251,11 +252,11 @@ export default function createSongMiddleware() {
 				const state = store.getState();
 				const song = getSelectedSong(state);
 
-				const roundedCursorPosition = snapToNearestBeat(action.newOffset, song.bpm, song.offset);
+				const roundedCursorPosition = snapToNearestBeat(newOffset, song.bpm, song.offset);
 
 				// Dispatch this new cursor position, but also seek to this place
 				// in the audio, so that it is in sync.
-				next(adjustCursorPosition(roundedCursorPosition));
+				next(adjustCursorPosition({ newCursorPosition: roundedCursorPosition }));
 				audioSample.setCurrentTime(roundedCursorPosition / 1000);
 
 				break;
@@ -263,43 +264,46 @@ export default function createSongMiddleware() {
 
 			case "UPDATE_SONG_DETAILS": {
 				next(action);
+				const { songFilename, offset } = action.payload;
 
 				// It's possible we updated the song file.
 				// We should reload it, so that the audio is properly updated.
-				const file = await getFile(action.songFilename);
+				const file = await getFile(songFilename);
 
 				const arrayBuffer = await convertFileToArrayBuffer(file);
 
 				audioSample = new AudioSample(audioSample.gain, audioSample.playbackRate);
 				await audioSample.load(arrayBuffer);
 
-				audioSample.setCurrentTime(action.offset / 1000);
+				audioSample.setCurrentTime(offset / 1000);
 
 				const waveform = await generateWaveformForSongFile(file);
-				next(reloadWaveform(waveform));
+				next(reloadWaveform({ waveformData: waveform }));
 
 				break;
 			}
 
 			case "SCRUB_EVENTS_HEADER": {
 				next(action);
+				const { selectedBeat } = action.payload;
 
 				const state = store.getState();
 				const song = getSelectedSong(state);
-				const newCursorPosition = convertBeatsToMilliseconds(action.selectedBeat, song.bpm) + song.offset;
+				const newCursorPosition = convertBeatsToMilliseconds(selectedBeat, song.bpm) + song.offset;
 
-				next(adjustCursorPosition(newCursorPosition));
+				next(adjustCursorPosition({ newCursorPosition }));
 				audioSample.setCurrentTime(newCursorPosition / 1000);
 
 				break;
 			}
 
 			case "SELECT_ALL_IN_RANGE": {
+				const { start } = action.payload;
 				const state = store.getState();
 				const song = getSelectedSong(state);
-				const newCursorPosition = convertBeatsToMilliseconds(action.start, song.bpm) + song.offset;
+				const newCursorPosition = convertBeatsToMilliseconds(start, song.bpm) + song.offset;
 
-				next(adjustCursorPosition(newCursorPosition));
+				next(adjustCursorPosition({ newCursorPosition }));
 				audioSample.setCurrentTime(newCursorPosition / 1000);
 				audioSample.pause();
 
@@ -310,15 +314,16 @@ export default function createSongMiddleware() {
 
 			case "JUMP_TO_BEAT": {
 				next(action);
+				const { beatNum, pauseTrack } = action.payload;
 
 				const state = store.getState();
 				const song = getSelectedSong(state);
-				const newCursorPosition = convertBeatsToMilliseconds(action.beatNum, song.bpm) + song.offset;
+				const newCursorPosition = convertBeatsToMilliseconds(beatNum, song.bpm) + song.offset;
 
-				next(adjustCursorPosition(newCursorPosition));
+				next(adjustCursorPosition({ newCursorPosition }));
 				audioSample.setCurrentTime(newCursorPosition / 1000);
 
-				if (action.pauseTrack) {
+				if (pauseTrack) {
 					audioSample.pause();
 				}
 
@@ -327,7 +332,7 @@ export default function createSongMiddleware() {
 
 			case "SEEK_FORWARDS":
 			case "SEEK_BACKWARDS": {
-				const { view } = action;
+				const { view } = action.payload;
 
 				next(action);
 
@@ -364,7 +369,7 @@ export default function createSongMiddleware() {
 
 				newCursorPosition = clamp(newCursorPosition, 0, state.navigation.duration);
 
-				next(adjustCursorPosition(newCursorPosition));
+				next(adjustCursorPosition({ newCursorPosition }));
 				audioSample.setCurrentTime(newCursorPosition / 1000);
 
 				break;
@@ -383,7 +388,7 @@ export default function createSongMiddleware() {
 
 				const state = store.getState();
 				const song = getSelectedSong(state);
-				const { direction } = action;
+				const { direction } = action.payload;
 
 				// We want to jump by the amount that we're snapping to.
 				const incrementInMs = convertBeatsToMilliseconds(state.navigation.snapTo, song.bpm);
@@ -394,7 +399,7 @@ export default function createSongMiddleware() {
 
 				audioSample.setCurrentTime(newCursorPosition / 1000);
 
-				next(adjustCursorPosition(newCursorPosition));
+				next(adjustCursorPosition({ newCursorPosition }));
 
 				break;
 			}
@@ -424,7 +429,7 @@ export default function createSongMiddleware() {
 
 				// Dispatch this new cursor position, but also seek to this place
 				// in the audio, so that it is in sync.
-				next(adjustCursorPosition(roundedCursorPosition));
+				next(adjustCursorPosition({ newCursorPosition: roundedCursorPosition }));
 				audioSample.setCurrentTime(roundedCursorPosition / 1000);
 
 				break;
@@ -432,13 +437,14 @@ export default function createSongMiddleware() {
 
 			case "STOP_PLAYING": {
 				next(action);
+				const { offset } = action.payload;
 
 				window.cancelAnimationFrame(animationFrameId);
 
 				if (audioSample) {
 					audioSample.pause();
 
-					stopAndRewindAudio(audioSample, action.offset);
+					stopAndRewindAudio(audioSample, offset);
 				}
 
 				break;
@@ -446,7 +452,8 @@ export default function createSongMiddleware() {
 
 			case "SKIP_TO_START": {
 				next(action);
-				audioSample.setCurrentTime(action.offset / 1000);
+				const { offset } = action.payload;
+				audioSample.setCurrentTime(offset / 1000);
 				break;
 			}
 
@@ -463,7 +470,7 @@ export default function createSongMiddleware() {
 
 				const newCursorPosition = convertBeatsToMilliseconds(lastBeatInSong - 8, song.bpm) + song.offset;
 
-				next(adjustCursorPosition(newCursorPosition));
+				next(adjustCursorPosition({ newCursorPosition }));
 				audioSample.setCurrentTime(newCursorPosition / 1000);
 
 				break;
@@ -471,18 +478,20 @@ export default function createSongMiddleware() {
 
 			case "UPDATE_VOLUME": {
 				next(action);
-				audioSample.changeVolume(action.volume);
+				const { volume } = action.payload;
+				audioSample.changeVolume(volume);
 				break;
 			}
 
 			case "UPDATE_PLAYBACK_SPEED": {
 				next(action);
-				audioSample.changePlaybackRate(action.playbackRate);
+				const { playbackRate } = action.payload;
+				audioSample.changePlaybackRate(playbackRate);
 				break;
 			}
 
 			case "DELETE_BEATMAP": {
-				const { songId, difficulty } = action;
+				const { songId, difficulty } = action.payload;
 
 				// Our reducer will handle the redux state part, but we also need to
 				// delete the corresponding beatmap from the filesystem.
@@ -497,7 +506,8 @@ export default function createSongMiddleware() {
 
 			case "DELETE_SONG": {
 				const state = store.getState();
-				const song = getSongById(state, action.songId);
+				const { songId } = action.payload;
+				const song = getSongById(state, songId);
 
 				deleteAllSongFiles(song);
 

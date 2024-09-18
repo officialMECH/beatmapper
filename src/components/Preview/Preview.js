@@ -1,7 +1,5 @@
-import { connect } from "react-redux";
 import styled from "styled-components";
 
-import * as actions from "$/store/actions";
 import { View } from "$/types";
 
 import EditorBottomPanel from "../EditorBottomPanel";
@@ -10,7 +8,7 @@ import ReduxForwardingCanvas from "../ReduxForwardingCanvas";
 // import KeyboardShortcuts from './KeyboardShortcuts';
 import LightingPreview from "./LightingPreview";
 
-const Preview = ({ isPlaying, scrollThroughSong }) => {
+const Preview = () => {
 	return (
 		<Wrapper>
 			<ReduxForwardingCanvas>
@@ -30,12 +28,4 @@ const Wrapper = styled.div`
   height: 100%;
 `;
 
-const mapStateToProps = (state) => ({
-	isPlaying: state.navigation.isPlaying,
-});
-
-const mapDispatchToProps = {
-	scrollThroughSong: actions.scrollThroughSong,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Preview);
+export default Preview;

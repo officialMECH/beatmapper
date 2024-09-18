@@ -1,9 +1,9 @@
 import React from "react";
-import { connect } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 
 import { COLOR_ELEMENT_DATA, COLOR_ELEMENT_IDS, UNIT } from "$/constants";
-import * as actions from "$/store/actions";
+import { toggleModForSong, updateModColor, updateModColorOverdrive } from "$/store/actions";
 import { getCustomColors } from "$/store/reducers/songs.reducer";
 
 import CenteredSpinner from "../CenteredSpinner";
@@ -16,10 +16,13 @@ import Spacer from "../Spacer";
 
 const ColorPicker = React.lazy(() => import("../ColorPicker"));
 
-const CustomColorSettings = ({ customColors, toggleModForSong, updateModColor, updateModColorOverdrive }) => {
+const CustomColorSettings = () => {
+	const customColors = useSelector(getCustomColors);
+	const dispatch = useDispatch();
+
 	return (
 		<Wrapper>
-			<LabeledCheckbox id="enable-colors" checked={customColors.isEnabled} onChange={() => toggleModForSong("customColors")}>
+			<LabeledCheckbox id="enable-colors" checked={customColors.isEnabled} onChange={() => dispatch(toggleModForSong({ mod: "customColors" }))}>
 				Enable custom colors{" "}
 				<QuestionTooltip>
 					Override the default red/blue color scheme. Use "overdrive" to produce some neat effects.{" "}
@@ -40,23 +43,13 @@ const CustomColorSettings = ({ customColors, toggleModForSong, updateModColor, u
 
 							return (
 								<Cell key={elementId}>
-									<ColorPicker colorId={elementId} color={color} updateColor={updateModColor} overdrive={overdrive} />
+									<ColorPicker colorId={elementId} color={color} updateColor={(element, color) => dispatch(updateModColor({ element, color }))} overdrive={overdrive} />
 									<Spacer size={UNIT * 2} />
 									<Heading size={3}>{COLOR_ELEMENT_DATA[elementId].label}</Heading>
 									<Spacer size={UNIT * 3} />
 									<Heading size={4}>Overdrive</Heading>
 									<Spacer size={UNIT * 1} />
-									<MiniSlider
-										width={50}
-										height={16}
-										min={0}
-										max={1}
-										step={0.01}
-										value={overdrive}
-										onChange={(ev) => {
-											updateModColorOverdrive(elementId, Number(ev.target.value));
-										}}
-									/>
+									<MiniSlider width={50} height={16} min={0} max={1} step={0.01} value={overdrive} onChange={(ev) => dispatch(updateModColorOverdrive({ element: elementId, overdrive: Number(ev.target.value) }))} />
 								</Cell>
 							);
 						})}
@@ -84,14 +77,4 @@ const Cell = styled.div`
   align-items: center;
 `;
 
-const mapStateToProps = (state) => ({
-	customColors: getCustomColors(state),
-});
-
-const mapDispatchToProps = {
-	toggleModForSong: actions.toggleModForSong,
-	updateModColor: actions.updateModColor,
-	updateModColorOverdrive: actions.updateModColorOverdrive,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(CustomColorSettings);
+export default CustomColorSettings;

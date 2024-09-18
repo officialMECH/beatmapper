@@ -22,7 +22,7 @@ const initialState = {
 export default function songsReducer(state: State = initialState, action: any = undefined) {
 	switch (action.type) {
 		case "START_LOADING_SONG": {
-			const { songId, difficulty } = action;
+			const { songId, difficulty } = action.payload;
 
 			return produce(state, (draftState: State) => {
 				draftState.selectedId = songId;
@@ -31,7 +31,7 @@ export default function songsReducer(state: State = initialState, action: any = 
 		}
 
 		case "FINISH_LOADING_SONG": {
-			const { song, lastOpenedAt } = action;
+			const { song, lastOpenedAt } = action.payload;
 
 			return produce(state, (draftState: State) => {
 				const draftSong = draftState.byId[song.id];
@@ -63,7 +63,7 @@ export default function songsReducer(state: State = initialState, action: any = 
 		}
 
 		case "CREATE_NEW_SONG": {
-			const { coverArtFilename, songFilename, songId, name, subName, artistName, bpm, offset, selectedDifficulty, mapAuthorName, createdAt, lastOpenedAt } = action;
+			const { coverArtFilename, songFilename, songId, name, subName, artistName, bpm, offset, selectedDifficulty, mapAuthorName, createdAt, lastOpenedAt } = action.payload;
 
 			return produce(state, (draftState: State) => {
 				draftState.selectedId = songId;
@@ -102,7 +102,7 @@ export default function songsReducer(state: State = initialState, action: any = 
 				createdAt,
 				lastOpenedAt,
 				songData: { songId, songFilename, coverArtFilename, name, subName, artistName, mapAuthorName, bpm, offset, swingAmount, swingPeriod, previewStartTime, previewDuration, environment, difficultiesById, demo, modSettings = {}, enabledFastWalls = false, enabledLightshow = false },
-			} = action;
+			} = action.payload;
 
 			// @ts-ignore
 			const selectedDifficulty: Difficulty = Object.keys(difficultiesById)[0];
@@ -137,7 +137,7 @@ export default function songsReducer(state: State = initialState, action: any = 
 		}
 
 		case "UPDATE_SONG_DETAILS": {
-			const { type, songId, ...fieldsToUpdate } = action;
+			const { type, songId, ...fieldsToUpdate } = action.payload;
 
 			return produce(state, (draftState: State) => {
 				draftState.byId[songId] = {
@@ -148,7 +148,7 @@ export default function songsReducer(state: State = initialState, action: any = 
 		}
 
 		case "CREATE_DIFFICULTY": {
-			const { difficulty } = action;
+			const { difficulty } = action.payload;
 
 			return produce(state, (draftState: State) => {
 				const selectedSongId = state.selectedId;
@@ -171,7 +171,7 @@ export default function songsReducer(state: State = initialState, action: any = 
 		}
 
 		case "COPY_DIFFICULTY": {
-			const { songId, fromDifficultyId, toDifficultyId } = action;
+			const { songId, fromDifficultyId, toDifficultyId } = action.payload;
 
 			return produce(state, (draftState: State) => {
 				const song = draftState.byId[songId];
@@ -187,7 +187,7 @@ export default function songsReducer(state: State = initialState, action: any = 
 		}
 
 		case "CHANGE_SELECTED_DIFFICULTY": {
-			const { songId, difficulty } = action;
+			const { songId, difficulty } = action.payload;
 
 			return produce(state, (draftState: State) => {
 				const song = draftState.byId[songId];
@@ -197,7 +197,7 @@ export default function songsReducer(state: State = initialState, action: any = 
 		}
 
 		case "DELETE_BEATMAP": {
-			const { songId, difficulty } = action;
+			const { songId, difficulty } = action.payload;
 
 			return produce(state, (draftState: State) => {
 				delete draftState.byId[songId].difficultiesById[difficulty];
@@ -205,7 +205,7 @@ export default function songsReducer(state: State = initialState, action: any = 
 		}
 
 		case "UPDATE_BEATMAP_METADATA": {
-			const { songId, difficulty, noteJumpSpeed, startBeatOffset, customLabel } = action;
+			const { songId, difficulty, noteJumpSpeed, startBeatOffset, customLabel } = action.payload;
 
 			return produce(state, (draftState: State) => {
 				const currentBeatmapDifficulty = draftState.byId[songId].difficultiesById[difficulty];
@@ -217,7 +217,7 @@ export default function songsReducer(state: State = initialState, action: any = 
 		}
 
 		case "DELETE_SONG": {
-			const { songId } = action;
+			const { songId } = action.payload;
 
 			return produce(state, (draftState: State) => {
 				delete draftState.byId[songId];
@@ -225,7 +225,7 @@ export default function songsReducer(state: State = initialState, action: any = 
 		}
 
 		case "TOGGLE_MOD_FOR_SONG": {
-			const { mod } = action;
+			const { mod } = action.payload;
 
 			return produce(state, (draftState: any) => {
 				// Should-be-impossible edge-case where no selected song exists
@@ -255,7 +255,7 @@ export default function songsReducer(state: State = initialState, action: any = 
 		}
 
 		case "UPDATE_MOD_COLOR": {
-			const { element, color } = action;
+			const { element, color } = action.payload;
 
 			return produce(state, (draftState: State) => {
 				const song = grabSelectedSong(draftState);
@@ -274,7 +274,7 @@ export default function songsReducer(state: State = initialState, action: any = 
 		}
 
 		case "UPDATE_MOD_COLOR_OVERDRIVE": {
-			const { element, overdrive } = action;
+			const { element, overdrive } = action.payload;
 
 			const elementOverdriveKey = `${element}Overdrive`;
 
@@ -295,7 +295,7 @@ export default function songsReducer(state: State = initialState, action: any = 
 		}
 
 		case "UPDATE_GRID": {
-			const { numRows, numCols, colWidth, rowHeight } = action;
+			const { numRows, numCols, colWidth, rowHeight } = action.payload;
 
 			return produce(state, (draftState: State) => {
 				const song = grabSelectedSong(draftState);
@@ -331,7 +331,7 @@ export default function songsReducer(state: State = initialState, action: any = 
 		}
 
 		case "LOAD_GRID_PRESET": {
-			const { grid } = action;
+			const { grid } = action.payload;
 
 			return produce(state, (draftState: State) => {
 				const song = grabSelectedSong(draftState);
@@ -348,7 +348,7 @@ export default function songsReducer(state: State = initialState, action: any = 
 		}
 
 		case "TOGGLE_PROPERTY_FOR_SELECTED_SONG": {
-			const { property } = action;
+			const { property } = action.payload;
 
 			return produce(state, (draftState: State) => {
 				const song = grabSelectedSong(draftState);

@@ -1,11 +1,13 @@
-import { connect } from "react-redux";
+import { useDispatch } from "react-redux";
 
 import { COLORS } from "$/constants";
-import * as actions from "$/store/actions";
+import { deleteEvent } from "$/store/actions";
 import { normalize } from "$/utils";
 import { getYForSpeed } from "./EventsGrid.helpers";
 
-const SpeedTrackEvent = ({ event, trackId, startBeat, endBeat, parentWidth, parentHeight, areLasersLocked, deleteEvent }) => {
+const SpeedTrackEvent = ({ event, trackId, startBeat, endBeat, parentWidth, parentHeight, areLasersLocked }) => {
+	const dispatch = useDispatch();
+
 	const x = normalize(event.beatNum, startBeat, endBeat, 0, parentWidth);
 	const y = getYForSpeed(parentHeight, event.laserSpeed);
 
@@ -21,15 +23,11 @@ const SpeedTrackEvent = ({ event, trackId, startBeat, endBeat, parentWidth, pare
 			}}
 			onPointerDown={(ev) => {
 				if (ev.button === 2) {
-					deleteEvent(event.id, trackId, areLasersLocked);
+					dispatch(deleteEvent({ id: event.id, trackId, areLasersLocked }));
 				}
 			}}
 		/>
 	);
 };
 
-const mapDispatchToProps = {
-	deleteEvent: actions.deleteEvent,
-};
-
-export default connect(null, mapDispatchToProps)(SpeedTrackEvent);
+export default SpeedTrackEvent;

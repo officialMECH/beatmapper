@@ -1,4 +1,4 @@
-import { connect } from "react-redux";
+import { useSelector } from "react-redux";
 
 import { convertMillisecondsToBeats } from "$/helpers/audio.helpers";
 import { getColorForItem } from "$/helpers/colors.helpers";
@@ -11,7 +11,26 @@ import { findMostRecentEventInTrack } from "./Preview.helpers";
 
 import LaserBeam from "./LaserBeam";
 
-const BackLaser = ({ song, isPlaying, lastEvent, secondsSinceSongStart }) => {
+const BackLaser = ({ song, isPlaying, secondsSinceSongStart }) => {
+	const lastEvent = useSelector((state) => {
+		if (!song) {
+			return;
+		}
+
+		const trackId = App.TrackId[0];
+
+		const tracks = getTracks(state);
+		const events = tracks[trackId];
+
+		const currentBeat = getCursorPositionInBeats(state);
+		const processingDelay = getUsableProcessingDelay(state);
+		const processingDelayInBeats = convertMillisecondsToBeats(processingDelay, song.bpm);
+
+		const lastEvent = findMostRecentEventInTrack(events, currentBeat, processingDelayInBeats);
+
+		return lastEvent;
+	});
+
 	const NUM_OF_BEAMS_PER_SIDE = 5;
 	const laserIndices = range(0, NUM_OF_BEAMS_PER_SIDE);
 
@@ -37,25 +56,4 @@ const BackLaser = ({ song, isPlaying, lastEvent, secondsSinceSongStart }) => {
 	});
 };
 
-const mapStateToProps = (state, { song }) => {
-	if (!song) {
-		return;
-	}
-
-	const trackId = App.TrackId[0];
-
-	const tracks = getTracks(state);
-	const events = tracks[trackId];
-
-	const currentBeat = getCursorPositionInBeats(state);
-	const processingDelay = getUsableProcessingDelay(state);
-	const processingDelayInBeats = convertMillisecondsToBeats(processingDelay, song.bpm);
-
-	const lastEvent = findMostRecentEventInTrack(events, currentBeat, processingDelayInBeats);
-
-	return {
-		lastEvent,
-	};
-};
-
-export default connect(mapStateToProps)(BackLaser);
+export default BackLaser;

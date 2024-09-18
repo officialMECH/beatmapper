@@ -1,16 +1,23 @@
 import React from "react";
-import { connect } from "react-redux";
+import { useSelector } from "react-redux";
 
 import { SONG_OFFSET, SURFACE_DEPTHS } from "$/constants";
 import { convertMillisecondsToBeats } from "$/helpers/audio.helpers";
-import { getBeatDepth, getCursorPositionInBeats } from "$/store/reducers/navigation.reducer";
+import { getBeatDepth, getCursorPositionInBeats, getDuration } from "$/store/reducers/navigation.reducer";
 import { getSelectedSong } from "$/store/reducers/songs.reducer";
 import { getGraphicsLevel } from "$/store/reducers/user.reducer";
 import { range } from "$/utils";
 
 import Marker from "./Marker";
 
-const BarMarkers = ({ duration, bpm, cursorPositionInBeats, beatDepth, graphicsLevel }) => {
+const BarMarkers = () => {
+	const song = useSelector(getSelectedSong);
+	const duration = useSelector(getDuration);
+	const bpm = song ? song.bpm : null;
+	const cursorPositionInBeats = useSelector(getCursorPositionInBeats);
+	const beatDepth = useSelector(getBeatDepth);
+	const graphicsLevel = useSelector(getGraphicsLevel);
+
 	const surfaceDepth = SURFACE_DEPTHS[graphicsLevel];
 	const numToRender = surfaceDepth / beatDepth;
 
@@ -36,16 +43,4 @@ const BarMarkers = ({ duration, bpm, cursorPositionInBeats, beatDepth, graphicsL
 	});
 };
 
-const mapStateToProps = (state) => {
-	const song = getSelectedSong(state);
-
-	return {
-		duration: state.navigation.duration,
-		bpm: song ? song.bpm : null,
-		cursorPositionInBeats: getCursorPositionInBeats(state),
-		beatDepth: getBeatDepth(state),
-		graphicsLevel: getGraphicsLevel(state),
-	};
-};
-
-export default connect(mapStateToProps)(BarMarkers);
+export default BarMarkers;

@@ -1,4 +1,4 @@
-import { connect } from "react-redux";
+import { useSelector } from "react-redux";
 import styled from "styled-components";
 
 import { SIDEBAR_WIDTH } from "$/constants";
@@ -14,7 +14,9 @@ import EventLightingPreview from "./EventLightingPreview";
 import GridControls from "./GridControls";
 import KeyboardShortcuts from "./KeyboardShortcuts";
 
-const Events = ({ backgroundOpacity }) => {
+const Events = () => {
+	const backgroundOpacity = useSelector(getBackgroundOpacity);
+
 	const { width: windowWidth } = useWindowDimensions();
 	const contentWidth = windowWidth - SIDEBAR_WIDTH;
 
@@ -69,10 +71,4 @@ const MainUI = styled.div`
   flex-direction: column;
 `;
 
-const mapStateToProps = (state) => {
-	return {
-		backgroundOpacity: getBackgroundOpacity(state),
-	};
-};
-
-export default connect(mapStateToProps)(Events);
+export default Events;

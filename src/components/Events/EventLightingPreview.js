@@ -8,7 +8,7 @@
 
 import { useFrame } from "@react-three/fiber";
 import React from "react";
-import { connect } from "react-redux";
+import { useSelector } from "react-redux";
 
 import { Controls } from "$/services/controls.service";
 import { getShowLightingPreview } from "$/store/reducers/editor.reducer";
@@ -64,7 +64,12 @@ const EventLightingPreviewPresentational = ({ song, isPlaying, graphicsLevel }) 
 	);
 };
 
-const EventLightingPreview = ({ song, isPlaying, graphicsLevel, showLightingPreview }) => {
+const EventLightingPreview = () => {
+	const song = useSelector(getSelectedSong);
+	const isPlaying = useSelector(getIsPlaying);
+	const graphicsLevel = useSelector(getGraphicsLevel);
+	const showLightingPreview = useSelector(getShowLightingPreview);
+
 	if (!showLightingPreview) {
 		return null;
 	}
@@ -76,13 +81,4 @@ const EventLightingPreview = ({ song, isPlaying, graphicsLevel, showLightingPrev
 	);
 };
 
-const mapStateToProps = (state) => {
-	return {
-		song: getSelectedSong(state),
-		isPlaying: getIsPlaying(state),
-		graphicsLevel: getGraphicsLevel(state),
-		showLightingPreview: getShowLightingPreview(state),
-	};
-};
-
-export default connect(mapStateToProps)(EventLightingPreview);
+export default EventLightingPreview;

@@ -1,10 +1,10 @@
 import React from "react";
-import { connect, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Route, Routes, useParams } from "react-router-dom";
 import styled from "styled-components";
 
 import { COLORS, SIDEBAR_WIDTH } from "$/constants";
-import * as actions from "$/store/actions";
+import { leaveEditor, startLoadingSong } from "$/store/actions";
 import { getSelectedSong } from "$/store/reducers/songs.reducer";
 
 import Download from "../Download";
@@ -15,13 +15,13 @@ import NotesEditor from "../NotesEditor";
 import Preview from "../Preview";
 import Sidebar from "../Sidebar";
 import SongDetails from "../SongDetails";
-
 import EditorErrors from "./EditorErrors";
 
-const Editor = ({ startLoadingSong, leaveEditor }) => {
+const Editor = () => {
 	const { songId, difficulty } = useParams();
 
-	const selectedSongFromRedux = useSelector((state) => getSelectedSong(state));
+	const selectedSongFromRedux = useSelector(getSelectedSong);
+	const dispatch = useDispatch();
 
 	const isCorrectSongSelected = selectedSongFromRedux && songId === selectedSongFromRedux.id;
 
@@ -33,14 +33,14 @@ const Editor = ({ startLoadingSong, leaveEditor }) => {
 	// Our locally-persisted state might be out of date. We need to fix that
 	// before we do anything else.
 	React.useEffect(() => {
-		startLoadingSong(songId, difficulty);
-	}, [startLoadingSong, songId, difficulty]);
+		dispatch(startLoadingSong({ songId, difficulty }));
+	}, [dispatch, songId, difficulty]);
 
 	React.useEffect(() => {
 		return () => {
-			leaveEditor();
+			dispatch(leaveEditor());
 		};
-	}, [leaveEditor]);
+	}, [dispatch]);
 
 	if (!isCorrectSongSelected) {
 		return <LoadingScreen />;
@@ -76,9 +76,4 @@ const Wrapper = styled.div`
   background: ${COLORS.blueGray[1000]};
 `;
 
-const mapDispatchToProps = {
-	startLoadingSong: actions.startLoadingSong,
-	leaveEditor: actions.leaveEditor,
-};
-
-export default connect(null, mapDispatchToProps)(Editor);
+export default Editor;

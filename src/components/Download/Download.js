@@ -1,9 +1,9 @@
-import { connect } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 
 import { UNIT } from "$/constants";
 import { useMount } from "$/hooks";
-import * as actions from "$/store/actions";
+import { downloadMapFiles, pausePlaying } from "$/store/actions";
 import { getIsPlaying } from "$/store/reducers/navigation.reducer";
 import { getSelectedSong } from "$/store/reducers/songs.reducer";
 
@@ -13,7 +13,11 @@ import MiniButton from "../MiniButton";
 import Paragraph from "../Paragraph";
 import Spacer from "../Spacer";
 
-const Download = ({ song, isPlaying, downloadMapFiles, pausePlaying }) => {
+const Download = () => {
+	const song = useSelector(getSelectedSong);
+	const isPlaying = useSelector(getIsPlaying);
+	const dispatch = useDispatch();
+
 	// When this component mounts, if the song is playing, pause it.
 	useMount(() => {
 		if (isPlaying) {
@@ -27,13 +31,13 @@ const Download = ({ song, isPlaying, downloadMapFiles, pausePlaying }) => {
 			<Spacer size={UNIT * 2} />
 			<Paragraph>Click to download a .zip containing all of the files needed to transfer your map onto a device for testing, or to submit for uploading.</Paragraph>
 			<Spacer size={UNIT * 2} />
-			<Button style={{ margin: "auto" }} onClick={() => downloadMapFiles({ version: 2 })}>
+			<Button style={{ margin: "auto" }} onClick={() => dispatch(downloadMapFiles({ version: 2 }))}>
 				Download map files
 			</Button>
 			<Spacer size={UNIT * 6} />
 			<Paragraph>If you wish to import your map into other map software, you may need to download a legacy version of the map files.</Paragraph>
 			<Spacer size={UNIT * 2} />
-			<MiniButton style={{ margin: "auto" }} onClick={() => downloadMapFiles({ version: 1 })}>
+			<MiniButton style={{ margin: "auto" }} onClick={() => dispatch(downloadMapFiles({ version: 1 }))}>
 				Download legacy files
 			</MiniButton>
 		</Wrapper>
@@ -48,16 +52,4 @@ const Wrapper = styled.div`
   text-align: center;
 `;
 
-const mapStateToProps = (state) => {
-	return {
-		song: getSelectedSong(state),
-		isPlaying: getIsPlaying(state),
-	};
-};
-
-const mapDispatchToProps = {
-	downloadMapFiles: actions.downloadMapFiles,
-	pausePlaying: actions.pausePlaying,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Download);
+export default Download;

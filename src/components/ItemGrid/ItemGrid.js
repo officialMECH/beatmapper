@@ -1,9 +1,10 @@
-import { connect } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 
 import { UNIT } from "$/constants";
 import { getColorForItem } from "$/helpers/colors.helpers";
-import * as actions from "$/store/actions";
+import { selectTool } from "$/store/actions";
+import { getSelectedNoteTool } from "$/store/reducers/editor.reducer";
 import { getSelectedSong } from "$/store/reducers/songs.reducer";
 import { ObjectTool, View } from "$/types";
 
@@ -14,7 +15,11 @@ import BlockIcon from "./BlockIcon";
 import MineIcon from "./MineIcon";
 import ObstacleIcon from "./ObstacleIcon";
 
-const ItemGrid = ({ song, selectedTool, selectTool }) => {
+const ItemGrid = () => {
+	const song = useSelector(getSelectedSong);
+	const selectedTool = useSelector(getSelectedNoteTool);
+	const dispatch = useDispatch();
+
 	const buttonSize = 36;
 	return (
 		<Wrapper>
@@ -24,19 +29,19 @@ const ItemGrid = ({ song, selectedTool, selectTool }) => {
 
 			<Grid>
 				<Row>
-					<IconButton size={buttonSize} isToggled={selectedTool === ObjectTool.LEFT_NOTE} onClick={() => selectTool(View.BEATMAP, ObjectTool.LEFT_NOTE)}>
+					<IconButton size={buttonSize} isToggled={selectedTool === ObjectTool.LEFT_NOTE} onClick={() => dispatch(selectTool({ view: View.BEATMAP, tool: ObjectTool.LEFT_NOTE }))}>
 						<BlockIcon color={getColorForItem(ObjectTool.LEFT_NOTE, song)} />
 					</IconButton>
 					<Spacer size={1} />
-					<IconButton size={buttonSize} isToggled={selectedTool === ObjectTool.RIGHT_NOTE} onClick={() => selectTool(View.BEATMAP, ObjectTool.RIGHT_NOTE)}>
+					<IconButton size={buttonSize} isToggled={selectedTool === ObjectTool.RIGHT_NOTE} onClick={() => dispatch(selectTool({ view: View.BEATMAP, tool: ObjectTool.RIGHT_NOTE }))}>
 						<BlockIcon color={getColorForItem(ObjectTool.RIGHT_NOTE, song)} />
 					</IconButton>
 					<Spacer size={1} />
-					<IconButton size={buttonSize} isToggled={selectedTool === ObjectTool.BOMB_NOTE} onClick={() => selectTool(View.BEATMAP, ObjectTool.BOMB_NOTE)}>
+					<IconButton size={buttonSize} isToggled={selectedTool === ObjectTool.BOMB_NOTE} onClick={() => dispatch(selectTool({ view: View.BEATMAP, tool: ObjectTool.BOMB_NOTE }))}>
 						<MineIcon size={20} />
 					</IconButton>
 					<Spacer size={1} />
-					<IconButton size={buttonSize} isToggled={selectedTool === ObjectTool.OBSTACLE} onClick={() => selectTool(View.BEATMAP, ObjectTool.OBSTACLE)}>
+					<IconButton size={buttonSize} isToggled={selectedTool === ObjectTool.OBSTACLE} onClick={() => dispatch(selectTool({ view: View.BEATMAP, tool: ObjectTool.OBSTACLE }))}>
 						<ObstacleIcon size={20} />
 					</IconButton>
 				</Row>
@@ -57,11 +62,4 @@ const Row = styled.div`
   display: flex;
 `;
 
-const mapStateToProps = (state) => ({
-	song: getSelectedSong(state),
-	selectedTool: state.editor.notes.selectedTool,
-});
-
-const mapDispatchToProps = { selectTool: actions.selectTool };
-
-export default connect(mapStateToProps, mapDispatchToProps)(ItemGrid);
+export default ItemGrid;

@@ -1,4 +1,4 @@
-import { connect } from "react-redux";
+import { useSelector } from "react-redux";
 
 import { createObstacleFromMouseEvent } from "$/helpers/obstacles.helpers";
 import { getDefaultObstacleDuration } from "$/store/reducers/editor.reducer";
@@ -7,7 +7,11 @@ import { getGridSize } from "$/store/reducers/songs.reducer";
 
 import ObstacleBox from "../ObstacleBox";
 
-const TentativeObstacle = ({ mouseDownAt, color, mode, beatDepth, defaultObstacleDuration, gridRows, gridCols, gridColWidth, gridRowHeight, ...rest }) => {
+const TentativeObstacle = ({ mouseDownAt, color, mode, ...rest }) => {
+	const { numRows: gridRows, numCols: gridCols, colWidth: gridColWidth, rowHeight: gridRowHeight } = useSelector(getGridSize);
+	const beatDepth = useSelector(getBeatDepth);
+	const defaultObstacleDuration = useSelector(getDefaultObstacleDuration);
+
 	// If no mouseOverAt is provided, it ought to be the same as the mouseDownAt.
 	// They've clicked but haven't moved yet, ergo only one row/col is at play.
 	let { mouseOverAt } = rest;
@@ -36,17 +40,4 @@ const TentativeObstacle = ({ mouseDownAt, color, mode, beatDepth, defaultObstacl
 	);
 };
 
-const mapStateToProps = (state) => {
-	const gridSize = getGridSize(state);
-
-	return {
-		beatDepth: getBeatDepth(state),
-		defaultObstacleDuration: getDefaultObstacleDuration(state),
-		gridRows: gridSize.numRows,
-		gridCols: gridSize.numCols,
-		gridColWidth: gridSize.colWidth,
-		gridRowHeight: gridSize.rowHeight,
-	};
-};
-
-export default connect(mapStateToProps)(TentativeObstacle);
+export default TentativeObstacle;

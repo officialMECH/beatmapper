@@ -1,16 +1,18 @@
 import { Icon } from "react-icons-kit";
 import { chevronDown } from "react-icons-kit/feather/chevronDown";
-import { connect } from "react-redux";
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
 
-import * as actions from "$/store/actions";
+import { deleteSong, downloadMapFiles } from "$/store/actions";
 
 import MiniButton from "../MiniButton";
 
-const SongRowActions = ({ songId, size, deleteSong, downloadMapFiles }) => {
+const SongRowActions = ({ songId, size }) => {
+	const dispatch = useDispatch();
+
 	const handleDelete = () => {
 		if (window.confirm("Are you sure? This action cannot be undone 😱")) {
-			deleteSong(songId);
+			dispatch(deleteSong({ songId }));
 		}
 	};
 
@@ -31,7 +33,7 @@ const SongRowActions = ({ songId, size, deleteSong, downloadMapFiles }) => {
 						case "delete":
 							return handleDelete();
 						case "download":
-							return downloadMapFiles({ songId });
+							return dispatch(downloadMapFiles({ songId }));
 						default:
 							throw new Error(`Unrecognized action: ${ev.target.value}`);
 					}
@@ -67,4 +69,4 @@ const Select = styled.select`
   }
 `;
 
-export default connect(null, { deleteSong: actions.deleteSong, downloadMapFiles: actions.downloadMapFiles })(SongRowActions);
+export default SongRowActions;

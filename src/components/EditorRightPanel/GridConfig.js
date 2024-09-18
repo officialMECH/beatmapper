@@ -1,9 +1,9 @@
-import { connect } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 
 import { GRID_PRESET_SLOTS, UNIT } from "$/constants";
 import { promptSaveGridPreset } from "$/helpers/prompts.helpers";
-import * as actions from "$/store/actions";
+import { deleteGridPreset, loadGridPreset, resetGrid, saveGridPreset, updateGrid } from "$/store/actions";
 import { getGridPresets } from "$/store/reducers/editor.reducer";
 import { getGridSize } from "$/store/reducers/songs.reducer";
 
@@ -14,13 +14,16 @@ import SpacedChildren from "../SpacedChildren";
 import Spacer from "../Spacer";
 import TextInput from "../TextInput";
 
-const GridConfig = ({ finishTweakingGrid, numRows, numCols, colWidth, rowHeight, gridPresets, updateGrid, resetGrid, saveGridPreset, loadGridPreset, deleteGridPreset }) => {
+const GridConfig = ({ finishTweakingGrid }) => {
+	const { numRows, numCols, colWidth, rowHeight } = useSelector(getGridSize);
+	const gridPresets = useSelector(getGridPresets);
+	const dispatch = useDispatch();
 	const showPresets = Object.keys(gridPresets).length > 0;
 
 	return (
 		<>
 			<Buttons>
-				<MiniButton onClick={resetGrid}>Reset</MiniButton>
+				<MiniButton onClick={() => dispatch(resetGrid())}>Reset</MiniButton>
 			</Buttons>
 			<Spacer size={UNIT * 4} />
 
@@ -36,12 +39,12 @@ const GridConfig = ({ finishTweakingGrid, numRows, numCols, colWidth, rowHeight,
 									disabled={!gridPresets[slot]}
 									onClick={(ev) => {
 										if (ev.buttons === 0) {
-											loadGridPreset(gridPresets[slot]);
+											dispatch(loadGridPreset({ presetSlot: gridPresets[slot] }));
 										}
 									}}
 									onContextMenu={(ev) => {
 										ev.preventDefault();
-										deleteGridPreset(slot);
+										dispatch(deleteGridPreset({ presetSlot: slot }));
 									}}
 								>
 									{slot}
@@ -64,7 +67,7 @@ const GridConfig = ({ finishTweakingGrid, numRows, numCols, colWidth, rowHeight,
 						ev.stopPropagation();
 					}}
 					onChange={(ev) => {
-						updateGrid(Number(ev.target.value), numRows, colWidth, rowHeight);
+						dispatch(updateGrid({ numCols: Number(ev.target.value), numRows, colWidth, rowHeight }));
 					}}
 				/>
 				<Spacer size={UNIT * 2} />
@@ -78,7 +81,7 @@ const GridConfig = ({ finishTweakingGrid, numRows, numCols, colWidth, rowHeight,
 						ev.stopPropagation();
 					}}
 					onChange={(ev) => {
-						updateGrid(numCols, Number(ev.target.value), colWidth, rowHeight);
+						dispatch(updateGrid({ numCols, numRows: Number(ev.target.value), colWidth, rowHeight }));
 					}}
 				/>
 			</Row>
@@ -95,7 +98,7 @@ const GridConfig = ({ finishTweakingGrid, numRows, numCols, colWidth, rowHeight,
 						ev.stopPropagation();
 					}}
 					onChange={(ev) => {
-						updateGrid(numCols, numRows, Number(ev.target.value), rowHeight);
+						dispatch(updateGrid({ numCols, numRows, colWidth: Number(ev.target.value), rowHeight }));
 					}}
 				/>
 				<Spacer size={UNIT * 2} />
@@ -110,14 +113,14 @@ const GridConfig = ({ finishTweakingGrid, numRows, numCols, colWidth, rowHeight,
 						ev.stopPropagation();
 					}}
 					onChange={(ev) => {
-						updateGrid(numCols, numRows, colWidth, Number(ev.target.value));
+						dispatch(updateGrid({ numCols, numRows, colWidth, rowHeight: Number(ev.target.value) }));
 					}}
 				/>
 			</Row>
 
 			<Spacer size={UNIT * 4} />
 			<Buttons>
-				<MiniButton onClick={() => promptSaveGridPreset(gridPresets, saveGridPreset)}>Save Preset</MiniButton>
+				<MiniButton onClick={() => dispatch(promptSaveGridPreset(gridPresets, saveGridPreset))}>Save Preset</MiniButton>
 				<Spacer size={UNIT * 1} />
 				<MiniButton onClick={finishTweakingGrid}>Finish Customizing</MiniButton>
 			</Buttons>
@@ -144,24 +147,4 @@ const Buttons = styled.div`
   }
 `;
 
-const mapStateToProps = (state) => {
-	const gridSize = getGridSize(state);
-
-	return {
-		numRows: gridSize.numRows,
-		numCols: gridSize.numCols,
-		colWidth: gridSize.colWidth,
-		rowHeight: gridSize.rowHeight,
-		gridPresets: getGridPresets(state),
-	};
-};
-
-const mapDispatchToProps = {
-	updateGrid: actions.updateGrid,
-	resetGrid: actions.resetGrid,
-	saveGridPreset: actions.saveGridPreset,
-	loadGridPreset: actions.loadGridPreset,
-	deleteGridPreset: actions.deleteGridPreset,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(GridConfig);
+export default GridConfig;

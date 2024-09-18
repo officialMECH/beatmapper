@@ -8,7 +8,7 @@
 
 import { useFrame } from "@react-three/fiber";
 import React from "react";
-import { connect } from "react-redux";
+import { useSelector } from "react-redux";
 
 import { Controls } from "$/services/controls.service";
 import { getIsPlaying } from "$/store/reducers/navigation.reducer";
@@ -26,7 +26,11 @@ import PrimaryLight from "./PrimaryLight";
 import SideLaser from "./SideLaser";
 import SmallRings from "./SmallRings";
 
-const LightingPreview = ({ song, isPlaying, graphicsLevel }) => {
+const LightingPreview = () => {
+	const song = useSelector(getSelectedSong);
+	const isPlaying = useSelector(getIsPlaying);
+	const graphicsLevel = useSelector(getGraphicsLevel);
+
 	const controls = React.useRef(null);
 
 	const isBlooming = graphicsLevel === Quality.HIGH;
@@ -78,12 +82,4 @@ const LightingPreview = ({ song, isPlaying, graphicsLevel }) => {
 	);
 };
 
-const mapStateToProps = (state) => {
-	return {
-		song: getSelectedSong(state),
-		isPlaying: getIsPlaying(state),
-		graphicsLevel: getGraphicsLevel(state),
-	};
-};
-
-export default connect(mapStateToProps)(LightingPreview);
+export default LightingPreview;

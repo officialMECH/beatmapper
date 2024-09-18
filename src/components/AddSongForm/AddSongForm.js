@@ -1,12 +1,12 @@
 import React from "react";
-import { connect } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 import { COLORS, DIFFICULTIES, MEDIA_ROW_HEIGHT, UNIT } from "$/constants";
 import { getSongIdFromName } from "$/helpers/song.helpers";
 import { saveLocalCoverArtFile, saveSongFile } from "$/services/file.service";
-import * as actions from "$/store/actions";
+import { createNewSong } from "$/store/actions";
 import { getAllSongIds } from "$/store/reducers/songs.reducer";
 
 import Button from "../Button";
@@ -19,7 +19,9 @@ import TextInput from "../TextInput";
 import CoverArtPicker from "./CoverArtPicker";
 import SongPicker from "./SongPicker";
 
-const AddSongForm = ({ createNewSong, currentSongIds }) => {
+const AddSongForm = () => {
+	const currentSongIds = useSelector(getAllSongIds);
+	const dispatch = useDispatch();
 	const navigate = useNavigate();
 
 	// These files are sent to the redux middleware.
@@ -70,7 +72,7 @@ const AddSongForm = ({ createNewSong, currentSongIds }) => {
 			const [coverArtFilename] = await saveLocalCoverArtFile(songId, coverArtFile);
 			const [songFilename] = await saveSongFile(songId, songFile);
 
-			createNewSong(coverArtFilename, coverArtFile, songFilename, songFile, songId, name, subName, artistName, bpm, offset, selectedDifficulty);
+			createNewSong({ coverArtFilename, coverArtFile, songFilename, songFile, songId, name, subName, artistName, bpm, offset, selectedDifficulty });
 
 			// Wait for the `createNewSong` action to flush, and then redirect the
 			// user to the new song page!
@@ -202,10 +204,4 @@ const Flipped = styled.div`
   flex-direction: column-reverse;
 `;
 
-const mapStateToProps = (state) => {
-	return {
-		currentSongIds: getAllSongIds(state),
-	};
-};
-
-export default connect(mapStateToProps, { createNewSong: actions.createNewSong })(AddSongForm);
+export default AddSongForm;

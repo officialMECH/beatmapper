@@ -1,23 +1,24 @@
-import { connect } from "react-redux";
+import { useDispatch } from "react-redux";
 import { Tooltip } from "react-tippy";
 import styled from "styled-components";
 
 import { COLORS, DIFFICULTIES, DIFFICULTY_COLORS, UNIT } from "$/constants";
 import { getLabelForDifficulty } from "$/helpers/song.helpers";
-import * as actions from "$/store/actions";
+import { changeSelectedDifficulty } from "$/store/actions";
 
 import CoverArtImage from "../CoverArtImage";
 import MiniButton from "../MiniButton";
 import Spacer from "../Spacer";
 import UnstyledButton from "../UnstyledButton";
-
 import SongRowActions from "./SongRowActions";
 
 const SQUARE_SIZE = 12;
 const SQUARE_PADDING = 4;
 const CELL_HEIGHT = 40;
 
-const SongsTableRow = ({ song, location, changeSelectedDifficulty }) => {
+const SongsTableRow = ({ song, location }) => {
+	const dispatch = useDispatch();
+
 	const difficultyToLoad = song.selectedDifficulty || Object.keys(song.difficultiesById)[0];
 
 	return (
@@ -46,7 +47,7 @@ const SongsTableRow = ({ song, location, changeSelectedDifficulty }) => {
 										const difficultyExists = !!song.difficultiesById[difficulty];
 
 										if (difficultyExists) {
-											changeSelectedDifficulty(song.id, difficulty);
+											dispatch(changeSelectedDifficulty({ songId: song.id, difficulty }));
 										}
 									}}
 								/>
@@ -156,8 +157,4 @@ const Artist = styled.div`
   color: ${COLORS.gray[300]};
 `;
 
-const mapDispatchToProps = {
-	changeSelectedDifficulty: actions.changeSelectedDifficulty,
-};
-
-export default connect(null, mapDispatchToProps)(SongsTableRow);
+export default SongsTableRow;

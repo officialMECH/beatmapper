@@ -6,13 +6,13 @@ import { plus as placeToolIcon } from "react-icons-kit/feather/plus";
 import { repeat as repeatWindowIcon } from "react-icons-kit/feather/repeat";
 import { zoomIn as zoomInIcon } from "react-icons-kit/feather/zoomIn";
 import { zoomOut as zoomOutIcon } from "react-icons-kit/feather/zoomOut";
-import { connect } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Tooltip } from "react-tippy";
 import styled from "styled-components";
 
 import { COLORS, UNIT, ZOOM_LEVEL_MAX, ZOOM_LEVEL_MIN } from "$/constants";
 import { getColorForItem } from "$/helpers/colors.helpers";
-import * as actions from "$/store/actions";
+import { selectEventColor, selectEventEditMode, selectTool, toggleEventWindowLock, toggleLaserLock, zoomIn, zoomOut } from "$/store/actions";
 import { getAreLasersLocked, getIsLockedToCurrentWindow, getSelectedEventColor, getSelectedEventEditMode, getSelectedEventTool, getZoomLevel } from "$/store/reducers/editor.reducer";
 import { getSelectedSong } from "$/store/reducers/songs.reducer";
 import { EventColor, EventEditMode, EventTool, View } from "$/types";
@@ -23,25 +23,34 @@ import ControlItem from "./ControlItem";
 import ControlItemToggleButton from "./ControlItemToggleButton";
 import EventToolIcon from "./EventToolIcon";
 
-const GridControls = ({ contentWidth, song, selectedEditMode, selectedTool, selectedColor, isLockedToCurrentWindow, areLasersLocked, zoomLevel, selectEventEditMode, selectTool, selectEventColor, toggleEventWindowLock, toggleLaserLock, zoomIn, zoomOut }) => {
+const GridControls = ({ contentWidth }) => {
+	const song = useSelector(getSelectedSong);
+	const selectedEditMode = useSelector(getSelectedEventEditMode);
+	const selectedTool = useSelector(getSelectedEventTool);
+	const selectedColor = useSelector(getSelectedEventColor);
+	const isLockedToCurrentWindow = useSelector(getIsLockedToCurrentWindow);
+	const areLasersLocked = useSelector(getAreLasersLocked);
+	const zoomLevel = useSelector(getZoomLevel);
+	const dispatch = useDispatch();
+
 	return (
 		<Wrapper style={{ width: contentWidth }}>
 			<Left>
 				<ControlItem label="Edit Mode">
-					<ControlItemToggleButton value={EventEditMode.PLACE} isToggled={selectedEditMode === EventEditMode.PLACE} onToggle={() => selectEventEditMode(EventEditMode.PLACE)}>
+					<ControlItemToggleButton value={EventEditMode.PLACE} isToggled={selectedEditMode === EventEditMode.PLACE} onToggle={() => dispatch(selectEventEditMode({ editMode: EventEditMode.PLACE }))}>
 						<Icon icon={placeToolIcon} />
 					</ControlItemToggleButton>
 
-					<ControlItemToggleButton value={EventEditMode.SELECT} isToggled={selectedEditMode === EventEditMode.SELECT} onToggle={() => selectEventEditMode(EventEditMode.SELECT)}>
+					<ControlItemToggleButton value={EventEditMode.SELECT} isToggled={selectedEditMode === EventEditMode.SELECT} onToggle={() => dispatch(selectEventEditMode({ editMode: EventEditMode.SELECT }))}>
 						<Icon icon={selectToolIcon} />
 					</ControlItemToggleButton>
 				</ControlItem>
 				<Spacer size={UNIT * 4} />
 				<ControlItem label="Light Color">
-					<ControlItemToggleButton value={EventColor.PRIMARY} isToggled={selectedColor === EventColor.PRIMARY} onToggle={selectEventColor}>
+					<ControlItemToggleButton value={EventColor.PRIMARY} isToggled={selectedColor === EventColor.PRIMARY} onToggle={(value) => dispatch(selectEventColor({ color: value }))}>
 						<Box color={getColorForItem(EventColor.PRIMARY, song)} />
 					</ControlItemToggleButton>
-					<ControlItemToggleButton value={EventColor.SECONDARY} isToggled={selectedColor === EventColor.SECONDARY} onToggle={selectEventColor}>
+					<ControlItemToggleButton value={EventColor.SECONDARY} isToggled={selectedColor === EventColor.SECONDARY} onToggle={(value) => dispatch(selectEventColor({ color: value }))}>
 						<Box color={getColorForItem(EventColor.SECONDARY, song)} />
 					</ControlItemToggleButton>
 				</ControlItem>
@@ -49,29 +58,29 @@ const GridControls = ({ contentWidth, song, selectedEditMode, selectedTool, sele
 				<Spacer size={UNIT * 4} />
 
 				<ControlItem label="Effect">
-					<ControlItemToggleButton value={EventTool.ON} isToggled={selectedTool === EventTool.ON} onToggle={() => selectTool(View.LIGHTSHOW, EventTool.ON)}>
+					<ControlItemToggleButton value={EventTool.ON} isToggled={selectedTool === EventTool.ON} onToggle={() => dispatch(selectTool({ view: View.LIGHTSHOW, tool: EventTool.ON }))}>
 						<EventToolIcon tool={EventTool.ON} color={getColorForItem(selectedColor, song)} />
 					</ControlItemToggleButton>
-					<ControlItemToggleButton value={EventTool.OFF} isToggled={selectedTool === EventTool.OFF} onToggle={() => selectTool(View.LIGHTSHOW, EventTool.OFF)}>
+					<ControlItemToggleButton value={EventTool.OFF} isToggled={selectedTool === EventTool.OFF} onToggle={() => dispatch(selectTool({ view: View.LIGHTSHOW, tool: EventTool.OFF }))}>
 						<EventToolIcon tool={EventTool.OFF} />
 					</ControlItemToggleButton>
-					<ControlItemToggleButton value={EventTool.FLASH} isToggled={selectedTool === EventTool.FLASH} onToggle={() => selectTool(View.LIGHTSHOW, EventTool.FLASH)}>
+					<ControlItemToggleButton value={EventTool.FLASH} isToggled={selectedTool === EventTool.FLASH} onToggle={() => dispatch(selectTool({ view: View.LIGHTSHOW, tool: EventTool.FLASH }))}>
 						<EventToolIcon tool={EventTool.FLASH} color={getColorForItem(selectedColor, song)} />
 					</ControlItemToggleButton>
-					<ControlItemToggleButton value={EventTool.FADE} isToggled={selectedTool === EventTool.FADE} onToggle={() => selectTool(View.LIGHTSHOW, EventTool.FADE)}>
+					<ControlItemToggleButton value={EventTool.FADE} isToggled={selectedTool === EventTool.FADE} onToggle={() => dispatch(selectTool({ view: View.LIGHTSHOW, tool: EventTool.FADE }))}>
 						<EventToolIcon tool={EventTool.FADE} color={getColorForItem(selectedColor, song)} />
 					</ControlItemToggleButton>
 				</ControlItem>
 				<Spacer size={UNIT * 4} />
 				<ControlItem label="Locks">
 					<Tooltip delay={[500, 0]} title="Loop playback within the current event window (L)">
-						<ControlItemToggleButton value={null} isToggled={isLockedToCurrentWindow} onToggle={toggleEventWindowLock}>
+						<ControlItemToggleButton value={null} isToggled={isLockedToCurrentWindow} onToggle={() => dispatch(toggleEventWindowLock())}>
 							<Icon icon={repeatWindowIcon} />
 						</ControlItemToggleButton>
 					</Tooltip>
 
 					<Tooltip delay={[500, 0]} title="Pair side lasers for symmetrical left/right events">
-						<ControlItemToggleButton value={null} isToggled={areLasersLocked} onToggle={toggleLaserLock}>
+						<ControlItemToggleButton value={null} isToggled={areLasersLocked} onToggle={() => dispatch(toggleLaserLock())}>
 							<Icon icon={lockIcon} />
 						</ControlItemToggleButton>
 					</Tooltip>
@@ -80,10 +89,10 @@ const GridControls = ({ contentWidth, song, selectedEditMode, selectedTool, sele
 
 			<Right>
 				<ControlItem label="Zoom" align="right">
-					<ZoomBtn onClick={zoomOut} disabled={zoomLevel === ZOOM_LEVEL_MIN}>
+					<ZoomBtn onClick={() => dispatch(zoomOut())} disabled={zoomLevel === ZOOM_LEVEL_MIN}>
 						<Icon size={14} icon={zoomOutIcon} />
 					</ZoomBtn>
-					<ZoomBtn onClick={zoomIn} disabled={zoomLevel === ZOOM_LEVEL_MAX}>
+					<ZoomBtn onClick={() => dispatch(zoomIn())} disabled={zoomLevel === ZOOM_LEVEL_MAX}>
 						<Icon size={14} icon={zoomInIcon} />
 					</ZoomBtn>
 				</ControlItem>
@@ -140,26 +149,4 @@ const ZoomBtn = styled(UnfocusedButton)`
   }
 `;
 
-const mapStateToProps = (state) => {
-	return {
-		song: getSelectedSong(state),
-		selectedEditMode: getSelectedEventEditMode(state),
-		selectedTool: getSelectedEventTool(state),
-		selectedColor: getSelectedEventColor(state),
-		isLockedToCurrentWindow: getIsLockedToCurrentWindow(state),
-		areLasersLocked: getAreLasersLocked(state),
-		zoomLevel: getZoomLevel(state),
-	};
-};
-
-const mapDispatchToProps = {
-	selectTool: actions.selectTool,
-	selectEventColor: actions.selectEventColor,
-	selectEventEditMode: actions.selectEventEditMode,
-	toggleEventWindowLock: actions.toggleEventWindowLock,
-	toggleLaserLock: actions.toggleLaserLock,
-	zoomIn: actions.zoomIn,
-	zoomOut: actions.zoomOut,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(GridControls);
+export default GridControls;

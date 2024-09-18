@@ -2,13 +2,13 @@ import React from "react";
 import { box } from "react-icons-kit/feather/box";
 import { download } from "react-icons-kit/feather/download";
 import { filePlus } from "react-icons-kit/feather/filePlus";
-import { connect } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 
 import { heroVideo } from "$/assets";
 import { COLORS, UNIT } from "$/constants";
 import { useWindowDimensions } from "$/hooks";
-import * as actions from "$/store/actions";
+import { loadDemoMap } from "$/store/actions";
 import { getDemoSong } from "$/store/reducers/songs.reducer";
 
 import Center from "../Center";
@@ -19,7 +19,10 @@ import OptionColumn from "./OptionColumn";
 const WRAPPER_MAX_WIDTH = 850;
 const WRAPPER_PADDING = UNIT * 2;
 
-const FirstTimeHome = ({ loadDemoMap, setModal, demoSong }) => {
+const FirstTimeHome = ({ setModal }) => {
+	const demoSong = useSelector(getDemoSong);
+	const dispatch = useDispatch();
+
 	const { width: windowWidth } = useWindowDimensions();
 
 	const [isLoadingDemo, setIsLoadingDemo] = React.useState(false);
@@ -57,7 +60,7 @@ const FirstTimeHome = ({ loadDemoMap, setModal, demoSong }) => {
 					handleClick={() => {
 						if (!demoSong) {
 							setIsLoadingDemo(true);
-							loadDemoMap();
+							dispatch(loadDemoMap());
 						}
 					}}
 				/>
@@ -103,12 +106,4 @@ const Divider = styled.div`
   border-left: 1px dotted ${COLORS.blueGray[500]};
 `;
 
-const mapStateToProps = (state) => ({
-	demoSong: getDemoSong(state),
-});
-
-const mapDispatchToProps = {
-	loadDemoMap: actions.loadDemoMap,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(FirstTimeHome);
+export default FirstTimeHome;

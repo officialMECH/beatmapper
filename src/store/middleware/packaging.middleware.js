@@ -12,7 +12,7 @@ export default function createPackagingMiddleware() {
 			return next(action);
 		}
 
-		const { version, songId } = action;
+		const { version, songId } = action.payload;
 
 		const state = store.getState();
 

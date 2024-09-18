@@ -40,11 +40,12 @@ const notes = (state = initialState.notes, action = undefined) => {
 		}
 
 		case "LOAD_BEATMAP_ENTITIES": {
-			return action.notes || [];
+			const { notes } = action.payload;
+			return notes || [];
 		}
 
 		case "CLICK_PLACEMENT_GRID": {
-			const { rowIndex, colIndex, cursorPositionInBeats, selectedDirection, selectedTool } = action;
+			const { rowIndex, colIndex, cursorPositionInBeats, selectedDirection, selectedTool } = action.payload;
 
 			// Make sure there isn't already a note in this location.
 			const alreadyExists = state.some((note) => note._time === cursorPositionInBeats && note._lineIndex === colIndex && note._lineLayer === rowIndex);
@@ -67,7 +68,7 @@ const notes = (state = initialState.notes, action = undefined) => {
 		}
 
 		case "CLEAR_CELL_OF_NOTES": {
-			const { rowIndex, colIndex, cursorPositionInBeats } = action;
+			const { rowIndex, colIndex, cursorPositionInBeats } = action.payload;
 
 			const matchedNoteIndex = state.findIndex((block) => {
 				return block._lineIndex === colIndex && block._lineLayer === rowIndex && block._time === cursorPositionInBeats;
@@ -86,7 +87,7 @@ const notes = (state = initialState.notes, action = undefined) => {
 			// user moves the mouse, the direction changes, and so the block needs
 			// to be replaced. While in `CLICK_PLACEMENT_GRID` we ignore duplicate
 			// blocks, in this case we need to swap it out.
-			const { direction, rowIndex, colIndex, cursorPositionInBeats, selectedTool } = action;
+			const { direction, rowIndex, colIndex, cursorPositionInBeats, selectedTool } = action.payload;
 
 			const existingBlockIndex = state.findIndex((note) => note._time === cursorPositionInBeats && note._lineIndex === colIndex && note._lineLayer === rowIndex);
 
@@ -107,7 +108,8 @@ const notes = (state = initialState.notes, action = undefined) => {
 
 		case "DELETE_NOTE":
 		case "BULK_DELETE_NOTE": {
-			const noteIndex = findNoteIndexByProperties(state, action);
+			const { time, lineLayer, lineIndex } = action.payload;
+			const noteIndex = findNoteIndexByProperties(state, { time, lineLayer, lineIndex });
 
 			if (noteIndex === -1) {
 				// This shouldn't be possible, but if it does somehow happen, it
@@ -123,7 +125,8 @@ const notes = (state = initialState.notes, action = undefined) => {
 		}
 
 		case "CUT_SELECTION": {
-			if (action.view !== View.BEATMAP) {
+			const { view } = action.payload;
+			if (view !== View.BEATMAP) {
 				return state;
 			}
 
@@ -131,7 +134,7 @@ const notes = (state = initialState.notes, action = undefined) => {
 		}
 
 		case "PASTE_SELECTION": {
-			const { pasteAtBeat, view, data } = action;
+			const { pasteAtBeat, view, data } = action.payload;
 
 			if (view !== View.BEATMAP || data.length === 0) {
 				return state;
@@ -182,7 +185,8 @@ const notes = (state = initialState.notes, action = undefined) => {
 		}
 
 		case "TOGGLE_NOTE_COLOR": {
-			const noteIndex = findNoteIndexByProperties(state, action);
+			const { time, lineLayer, lineIndex } = action.payload;
+			const noteIndex = findNoteIndexByProperties(state, { time, lineLayer, lineIndex });
 
 			const note = state[noteIndex];
 
@@ -203,7 +207,8 @@ const notes = (state = initialState.notes, action = undefined) => {
 
 		case "SELECT_NOTE":
 		case "DESELECT_NOTE": {
-			const noteIndex = findNoteIndexByProperties(state, action);
+			const { time, lineLayer, lineIndex } = action.payload;
+			const noteIndex = findNoteIndexByProperties(state, { time, lineLayer, lineIndex });
 
 			const selected = action.type === "SELECT_NOTE";
 
@@ -226,7 +231,8 @@ const notes = (state = initialState.notes, action = undefined) => {
 		}
 
 		case "SELECT_ALL": {
-			if (action.view !== View.BEATMAP) {
+			const { view } = action.payload;
+			if (view !== View.BEATMAP) {
 				return state;
 			}
 			return state.map((note) => ({
@@ -235,7 +241,8 @@ const notes = (state = initialState.notes, action = undefined) => {
 			}));
 		}
 		case "DESELECT_ALL": {
-			if (action.view !== View.BEATMAP) {
+			const { view } = action.payload;
+			if (view !== View.BEATMAP) {
 				return state;
 			}
 			return state.map((note) => ({
@@ -245,7 +252,7 @@ const notes = (state = initialState.notes, action = undefined) => {
 		}
 
 		case "SELECT_ALL_IN_RANGE": {
-			const { start, end, view } = action;
+			const { start, end, view } = action.payload;
 
 			if (view !== View.BEATMAP) {
 				return state;
@@ -262,12 +269,12 @@ const notes = (state = initialState.notes, action = undefined) => {
 		}
 
 		case "SWAP_SELECTED_NOTES": {
-			const { axis } = action;
+			const { axis } = action.payload;
 			return swapNotes(axis, state);
 		}
 
 		case "NUDGE_SELECTION": {
-			const { view, direction, amount } = action;
+			const { view, direction, amount } = action.payload;
 
 			if (view !== View.BEATMAP) {
 				return state;
@@ -277,7 +284,7 @@ const notes = (state = initialState.notes, action = undefined) => {
 		}
 
 		case "DESELECT_ALL_OF_TYPE": {
-			const { itemType } = action;
+			const { itemType } = action.payload;
 
 			if (itemType === ObjectType.OBSTACLE) {
 				return state;
@@ -317,17 +324,18 @@ const obstacles = (state = initialState.obstacles, action = undefined) => {
 		}
 
 		case "LOAD_BEATMAP_ENTITIES": {
-			return action.obstacles || [];
+			const { obstacles } = action.payload;
+			return obstacles || [];
 		}
 
 		case "CREATE_NEW_OBSTACLE": {
-			const { obstacle } = action;
+			const { obstacle } = action.payload;
 
 			return [...state, obstacle];
 		}
 
 		case "RESIZE_OBSTACLE": {
-			const { id, newBeatDuration } = action;
+			const { id, newBeatDuration } = action.payload;
 
 			const obstacleIndex = state.findIndex((o) => o.id === id);
 
@@ -338,19 +346,20 @@ const obstacles = (state = initialState.obstacles, action = undefined) => {
 		}
 
 		case "RESIZE_SELECTED_OBSTACLES": {
-			const { newBeatDuration } = action;
+			const { newBeatDuration } = action.payload;
 
 			return produce(state, (draftState) => {
-				draftState.forEach((obstacle) => {
+				for (const obstacle of draftState) {
 					if (obstacle.selected) {
 						obstacle.beatDuration = newBeatDuration;
 					}
-				});
+				}
 			});
 		}
 
 		case "DELETE_OBSTACLE": {
-			return state.filter((obstacle) => obstacle.id !== action.id);
+			const { id } = action.payload;
+			return state.filter((obstacle) => obstacle.id !== id);
 		}
 
 		case "DELETE_SELECTED_NOTES": {
@@ -358,14 +367,15 @@ const obstacles = (state = initialState.obstacles, action = undefined) => {
 		}
 
 		case "CUT_SELECTION": {
-			if (action.view !== View.BEATMAP) {
+			const { view } = action.payload;
+			if (view !== View.BEATMAP) {
 				return state;
 			}
 
 			return state.filter((obstacle) => !obstacle.selected);
 		}
 		case "PASTE_SELECTION": {
-			const { pasteAtBeat, view, data } = action;
+			const { pasteAtBeat, view, data } = action.payload;
 
 			if (view !== View.BEATMAP || data.length === 0) {
 				return state;
@@ -397,7 +407,7 @@ const obstacles = (state = initialState.obstacles, action = undefined) => {
 		}
 
 		case "SELECT_OBSTACLE": {
-			const { id } = action;
+			const { id } = action.payload;
 			const obstacleIndex = state.findIndex((o) => o.id === id);
 
 			return produce(state, (draftState) => {
@@ -405,7 +415,7 @@ const obstacles = (state = initialState.obstacles, action = undefined) => {
 			});
 		}
 		case "DESELECT_OBSTACLE": {
-			const { id } = action;
+			const { id } = action.payload;
 			const obstacleIndex = state.findIndex((o) => o.id === id);
 
 			return produce(state, (draftState) => {
@@ -414,7 +424,8 @@ const obstacles = (state = initialState.obstacles, action = undefined) => {
 		}
 
 		case "SELECT_ALL": {
-			if (action.view !== View.BEATMAP) {
+			const { view } = action.payload;
+			if (view !== View.BEATMAP) {
 				return state;
 			}
 			return state.map((obstacle) => ({
@@ -423,7 +434,8 @@ const obstacles = (state = initialState.obstacles, action = undefined) => {
 			}));
 		}
 		case "DESELECT_ALL": {
-			if (action.view !== View.BEATMAP) {
+			const { view } = action.payload;
+			if (view !== View.BEATMAP) {
 				return state;
 			}
 			return state.map((obstacle) => ({
@@ -433,7 +445,7 @@ const obstacles = (state = initialState.obstacles, action = undefined) => {
 		}
 
 		case "SELECT_ALL_IN_RANGE": {
-			const { start, end, view } = action;
+			const { start, end, view } = action.payload;
 
 			if (view !== View.BEATMAP) {
 				return state;
@@ -450,12 +462,12 @@ const obstacles = (state = initialState.obstacles, action = undefined) => {
 		}
 
 		case "SWAP_SELECTED_NOTES": {
-			const { axis } = action;
+			const { axis } = action.payload;
 			return swapObstacles(axis, state);
 		}
 
 		case "NUDGE_SELECTION": {
-			const { view, direction, amount } = action;
+			const { view, direction, amount } = action.payload;
 
 			if (view !== View.BEATMAP) {
 				return state;
@@ -483,7 +495,7 @@ const obstacles = (state = initialState.obstacles, action = undefined) => {
 		}
 
 		case "DESELECT_ALL_OF_TYPE": {
-			const { itemType } = action;
+			const { itemType } = action.payload;
 
 			if (itemType !== ObjectType.OBSTACLE) {
 				return state;

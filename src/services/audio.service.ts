@@ -10,8 +10,8 @@ export class AudioSample {
 	gain: number;
 	playbackRate: number;
 	context: AudioContext;
-	startTime: number | null;
-	playbackRateLastSetAt: number | null;
+	startTime: number;
+	playbackRateLastSetAt: number;
 	startOffset: number;
 	isPlaying: boolean;
 	gainNode: GainNode;
@@ -26,10 +26,10 @@ export class AudioSample {
 		// Audio contexts have an always-incrementing `currentTime` ticker.
 		// When we start the file, we might be 20 seconds into that process, so
 		// we'll store the currentTime position that the audio started playing.
-		this.startTime = null;
+		this.startTime = 0;
 
 		// If playback rate changes, we need track when for computation
-		this.playbackRateLastSetAt = null;
+		this.playbackRateLastSetAt = 0;
 
 		// When we pause the song, we might be 55 seconds into its playback.
 		// Store the number 55, so that we know where to resume from.
@@ -53,11 +53,11 @@ export class AudioSample {
 		// we first need to calculate how much elapsed with the old rate,
 		// offset the start time to compensate, and then start a new segment
 		const rateAdjustedElapsed = this.getRateAdjustedElapsed();
-		const realElapsed = this.context.currentTime - (this.playbackRateLastSetAt ?? 0);
+		const realElapsed = this.context.currentTime - this.playbackRateLastSetAt;
 
 		// We have to shift the playback head pointer backwards or forwards,
 		// to make up for changes in playback rate
-		this.startTime = (this.startTime ?? 0) + realElapsed - rateAdjustedElapsed;
+		this.startTime = this.startTime + realElapsed - rateAdjustedElapsed;
 
 		this.playbackRateLastSetAt = this.context.currentTime;
 		this.playbackRate = playbackRate;
@@ -106,7 +106,7 @@ export class AudioSample {
 		this.isPlaying = false;
 		this.source.stop();
 		// Measure how much time passed since the last pause.
-		this.startOffset += this.context.currentTime - (this.startTime ?? 0);
+		this.startOffset += this.context.currentTime - this.startTime;
 	}
 
 	isBufferLoaded() {
@@ -114,11 +114,11 @@ export class AudioSample {
 	}
 
 	getCurrentTime() {
-		return this.getRateAdjustedElapsed() + (this.playbackRateLastSetAt ?? 0 - (this.startTime ?? 0));
+		return this.getRateAdjustedElapsed() + (this.playbackRateLastSetAt - this.startTime);
 	}
 
 	getRateAdjustedElapsed() {
-		return (this.context.currentTime - (this.playbackRateLastSetAt ?? 0)) * this.playbackRate;
+		return (this.context.currentTime - this.playbackRateLastSetAt) * this.playbackRate;
 	}
 
 	setCurrentTime(time: number) {

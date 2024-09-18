@@ -37,5 +37,5 @@ export function save(state: any) {
 }
 
 export default () => {
-	save;
+	return { save };
 };

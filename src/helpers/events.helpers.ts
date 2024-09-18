@@ -1,7 +1,11 @@
 import { v1 as uuid } from "uuid";
 
-import { LIGHT_EVENTS_ARRAY, LIGHT_EVENT_TYPES, TRACK_IDS_ARRAY, TRACK_ID_MAP } from "$/constants";
+import { LIGHTING_TRACKS, LIGHT_EVENTS_ARRAY, LIGHT_EVENT_TYPES, TRACK_IDS_ARRAY, TRACK_ID_MAP } from "$/constants";
 import { App, type Json } from "$/types";
+
+export function isLightEvent(event: App.Event): event is App.LightingEvent {
+	return LIGHTING_TRACKS.includes(event.trackId);
+}
 
 /**
  * WARNING: This method mutates the `events` array supplied.

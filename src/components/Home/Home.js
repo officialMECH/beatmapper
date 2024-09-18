@@ -1,18 +1,21 @@
 import React from "react";
-import { connect } from "react-redux";
+import { useSelector } from "react-redux";
 
 import { getAllSongsChronologically, getProcessingImport } from "$/store/reducers/songs.reducer";
 import { getIsNewUser } from "$/store/reducers/user.reducer";
 
 import AddSongForm from "../AddSongForm";
 import BasicLayout from "../BasicLayout";
-import Modal from "../Modal";
-
 import ImportMapForm from "../ImportMapForm";
+import Modal from "../Modal";
 import FirstTimeHome from "./FirstTimeHome";
 import ReturningHome from "./ReturningHome";
 
-const Home = ({ isNewUser, songs, isProcessingImport }) => {
+const Home = () => {
+	const isNewUser = useSelector(getIsNewUser);
+	const songs = useSelector(getAllSongsChronologically);
+	const isProcessingImport = useSelector(getProcessingImport);
+
 	const [modal, setModal] = React.useState(false);
 
 	return (
@@ -29,12 +32,4 @@ const Home = ({ isNewUser, songs, isProcessingImport }) => {
 	);
 };
 
-const mapStateToProps = (state) => {
-	return {
-		isNewUser: getIsNewUser(state),
-		songs: getAllSongsChronologically(state),
-		isProcessingImport: getProcessingImport(state),
-	};
-};
-
-export default connect(mapStateToProps)(Home);
+export default Home;

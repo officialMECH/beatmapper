@@ -15,7 +15,7 @@ export function getNewBookmarkColor(bookmarks: Pick<App.Bookmark, "color">[]) {
 		return isColorUnused;
 	});
 
-	return firstUnusedColor;
+	return firstUnusedColor ?? BOOKMARK_COLORS[0];
 }
 
 export function convertBookmarksToExportableJson<T extends App.Bookmark>(bookmarks: T[]): Json.Bookmark[] {

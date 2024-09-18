@@ -23,11 +23,13 @@ const initialState = {
 const difficulty = (state = initialState, action = undefined) => {
 	switch (action.type) {
 		case "CREATE_NEW_SONG": {
-			return action.selectedDifficulty;
+			const { selectedDifficulty } = action.payload;
+			return selectedDifficulty;
 		}
 
 		case "START_LOADING_SONG": {
-			return action.difficulty;
+			const { difficulty } = action.payload;
+			return difficulty;
 		}
 
 		default:

@@ -22,7 +22,8 @@ const initialState = {
 export default function user(state = initialState, action = undefined) {
 	switch (action.type) {
 		case "IMPORT_EXISTING_SONG": {
-			if (action.songData.demo) {
+			const { songData } = action.payload;
+			if (songData.demo) {
 				return state;
 			}
 
@@ -41,30 +42,34 @@ export default function user(state = initialState, action = undefined) {
 		}
 
 		case "UPDATE_SONG_DETAILS": {
+			const { mapAuthorName } = action.payload;
 			return {
 				...state,
-				stickyMapAuthorName: action.mapAuthorName,
+				stickyMapAuthorName: mapAuthorName,
 			};
 		}
 
 		case "DISMISS_PROMPT": {
+			const { promptId } = action.payload;
 			return {
 				...state,
-				seenPrompts: [...state.seenPrompts, action.promptId],
+				seenPrompts: [...state.seenPrompts, promptId],
 			};
 		}
 
 		case "UPDATE_PROCESSING_DELAY": {
+			const { newDelay } = action.payload;
 			return {
 				...state,
-				processingDelay: action.newDelay,
+				processingDelay: newDelay,
 			};
 		}
 
 		case "UPDATE_GRAPHICS_LEVEL": {
+			const { newGraphicsLevel } = action.payload;
 			return {
 				...state,
-				graphicsLevel: action.newGraphicsLevel,
+				graphicsLevel: newGraphicsLevel,
 			};
 		}
 

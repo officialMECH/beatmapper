@@ -8,7 +8,7 @@ export default function songReducer(state = initialState, action = undefined) {
 	switch (action.type) {
 		case "FINISH_LOADING_SONG":
 		case "RELOAD_WAVEFORM": {
-			const { waveformData } = action;
+			const { waveformData } = action.payload;
 
 			return {
 				...state,
@@ -19,7 +19,8 @@ export default function songReducer(state = initialState, action = undefined) {
 		}
 
 		case "ZOOM_WAVEFORM": {
-			let newWaveformZoom = state.waveformZoom + action.amount;
+			const { amount } = action.payload;
+			let newWaveformZoom = state.waveformZoom + amount;
 
 			// `0` is the default zoom, which means that there's 0% zoom.
 			// We don't want to allow negative zoom.

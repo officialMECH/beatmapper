@@ -30,7 +30,7 @@ export function smoothScrollTo(selector: Parameters<typeof document.querySelecto
 }
 
 function getIsMac() {
-	return !!navigator.userAgent.includes("Win");
+	return !navigator.userAgent.includes("Win");
 }
 
 export function isMetaKeyPressed<T extends KeyboardEvent | MouseEvent>(ev: T) {

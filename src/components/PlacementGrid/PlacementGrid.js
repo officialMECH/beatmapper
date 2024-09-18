@@ -1,11 +1,11 @@
 import React from "react";
-import { connect } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { BLOCK_PLACEMENT_SQUARE_SIZE } from "$/constants";
 import { getColorForItem } from "$/helpers/colors.helpers";
 import { convertGridColumn, convertGridRow } from "$/helpers/grid.helpers";
-import * as actions from "$/store/actions";
-import { getDefaultObstacleDuration } from "$/store/reducers/editor.reducer";
+import { clearCellOfNotes, clickPlacementGrid, createNewObstacle, setBlockByDragging } from "$/store/actions";
+import { getDefaultObstacleDuration, getSelectedNoteTool } from "$/store/reducers/editor.reducer";
 import { getGridSize, getMappingMode, getSelectedSong } from "$/store/reducers/songs.reducer";
 import { ObjectTool } from "$/types";
 import { range } from "$/utils";
@@ -15,7 +15,15 @@ import GridCell from "./GridCell";
 import TentativeBlock from "./TentativeBlock";
 import TentativeObstacle from "./TentativeObstacle";
 
-const PlacementGrid = ({ width, gridPosition, song, selectedTool, selectionMode, mappingMode, defaultObstacleDuration, numRows, numCols, colWidth, rowHeight, clickPlacementGrid, setBlockByDragging, createNewObstacle, clearCellOfNotes }) => {
+const PlacementGrid = ({ width, gridPosition }) => {
+	const song = useSelector(getSelectedSong);
+	const { numRows, numCols, colWidth, rowHeight } = useSelector(getGridSize);
+	const selectedTool = useSelector(getSelectedNoteTool);
+	const selectionMode = useSelector((state) => state.editor.notes.selectionMode);
+	const mappingMode = useSelector(getMappingMode);
+	const defaultObstacleDuration = useSelector(getDefaultObstacleDuration);
+	const dispatch = useDispatch();
+
 	const renderColWidth = colWidth * BLOCK_PLACEMENT_SQUARE_SIZE;
 	const renderRowHeight = rowHeight * BLOCK_PLACEMENT_SQUARE_SIZE;
 
@@ -70,7 +78,7 @@ const PlacementGrid = ({ width, gridPosition, song, selectedTool, selectionMode,
 
 				// If this is the first move event that creates this tentative block,
 				// delete any pre-existing block in this cell
-				clearCellOfNotes(effectiveRowIndex, effectiveColIndex);
+				dispatch(clearCellOfNotes({ rowIndex: effectiveRowIndex, colIndex: effectiveColIndex }));
 
 				evenMoreTentativeBlock = {
 					direction,
@@ -88,7 +96,7 @@ const PlacementGrid = ({ width, gridPosition, song, selectedTool, selectionMode,
 		const handleMouseUp = (ev) => {
 			window.requestAnimationFrame(() => {
 				if (evenMoreTentativeBlock) {
-					setBlockByDragging(evenMoreTentativeBlock.direction, evenMoreTentativeBlock.rowIndex, evenMoreTentativeBlock.colIndex, evenMoreTentativeBlock.selectedTool);
+					dispatch(setBlockByDragging({ direction: evenMoreTentativeBlock.direction, rowIndex: evenMoreTentativeBlock.rowIndex, colIndex: evenMoreTentativeBlock.colIndex, selectedTool: evenMoreTentativeBlock.selectedTool }));
 					setTentativeBlock(null);
 				}
 				setMouseDownAt(null);
@@ -108,7 +116,7 @@ const PlacementGrid = ({ width, gridPosition, song, selectedTool, selectionMode,
 			window.removeEventListener("mouseup", handleMouseUp);
 		};
 		// eslint-disable-next-line
-	}, [mouseDownAt, selectedTool]);
+	}, [mouseDownAt, selectedTool, dispatch]);
 
 	return (
 		<>
@@ -137,8 +145,8 @@ const PlacementGrid = ({ width, gridPosition, song, selectedTool, selectionMode,
 							defaultObstacleDuration={defaultObstacleDuration}
 							selectionMode={selectionMode}
 							setHoveredCell={setHoveredCell}
-							clickPlacementGrid={clickPlacementGrid}
-							createNewObstacle={createNewObstacle}
+							clickPlacementGrid={(rowIndex, colIndex) => dispatch(clickPlacementGrid({ rowIndex, colIndex }))}
+							createNewObstacle={(obstacle) => dispatch(createNewObstacle({ obstacle }))}
 						/>
 					);
 				}),
@@ -151,26 +159,4 @@ const PlacementGrid = ({ width, gridPosition, song, selectedTool, selectionMode,
 	);
 };
 
-const mapStateToProps = (state) => {
-	const song = getSelectedSong(state);
-	const gridSize = getGridSize(state);
-
-	return {
-		song,
-		selectedTool: state.editor.notes.selectedTool,
-		selectionMode: state.editor.notes.selectionMode,
-		mappingMode: getMappingMode(state),
-		defaultObstacleDuration: getDefaultObstacleDuration(state),
-		numRows: gridSize.numRows,
-		numCols: gridSize.numCols,
-		colWidth: gridSize.colWidth,
-		rowHeight: gridSize.rowHeight,
-	};
-};
-
-export default connect(mapStateToProps, {
-	clickPlacementGrid: actions.clickPlacementGrid,
-	setBlockByDragging: actions.setBlockByDragging,
-	createNewObstacle: actions.createNewObstacle,
-	clearCellOfNotes: actions.clearCellOfNotes,
-})(PlacementGrid);
+export default PlacementGrid;

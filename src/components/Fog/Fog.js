@@ -1,8 +1,10 @@
-import { connect } from "react-redux";
+import { useSelector } from "react-redux";
 
 import { getGraphicsLevel } from "$/store/reducers/user.reducer";
 
-const Fog = ({ renderForGraphics, graphicsLevel, strength }) => {
+const Fog = ({ renderForGraphics, strength }) => {
+	const graphicsLevel = useSelector(getGraphicsLevel);
+
 	if (graphicsLevel !== renderForGraphics) {
 		return null;
 	}
@@ -10,10 +12,4 @@ const Fog = ({ renderForGraphics, graphicsLevel, strength }) => {
 	return <fogExp2 attach="fog" args={[0x000000, strength]} />;
 };
 
-const mapStateToProps = (state) => {
-	return {
-		graphicsLevel: getGraphicsLevel(state),
-	};
-};
-
-export default connect(mapStateToProps)(Fog);
+export default Fog;

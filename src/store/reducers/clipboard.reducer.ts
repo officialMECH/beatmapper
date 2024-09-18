@@ -27,7 +27,7 @@ export default function clipboard(state: State = initialState, action: any = und
 	switch (action.type) {
 		case "CUT_SELECTION":
 		case "COPY_SELECTION": {
-			const { view, data } = action;
+			const { view, data } = action.payload;
 
 			// We want to sort the data so that it goes from earliest beat to latest
 			// beat. This is made slightly tricky by the fact that notes have a

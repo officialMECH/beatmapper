@@ -8,7 +8,7 @@ import { sortDifficultyIds } from "$/helpers/song.helpers";
 import { useMount } from "$/hooks";
 import { getFile, saveInfoDat, saveLocalCoverArtFile, saveSongFile } from "$/services/file.service";
 import { createInfoContent } from "$/services/packaging.service";
-import * as actions from "$/store/actions";
+import { stopPlaying, togglePropertyForSelectedSong, updateSongDetails } from "$/store/actions";
 import { getEnabledFastWalls, getEnabledLightshow, getSelectedSong } from "$/store/reducers/songs.reducer";
 
 import CoverArtPicker from "../AddSongForm/CoverArtPicker";
@@ -22,12 +22,11 @@ import QuestionTooltip from "../QuestionTooltip";
 import Spacer from "../Spacer";
 import Spinner from "../Spinner";
 import TextInput from "../TextInput";
-
 import BeatmapDifficultySettings from "./BeatmapDifficultySettings";
 import CustomColorSettings from "./CustomColorSettings";
 import MappingExtensionSettings from "./MappingExtensionSettings";
 
-const SongDetails = ({ stopPlaying, updateSongDetails, togglePropertyForSelectedSong }) => {
+const SongDetails = () => {
 	const dispatch = useDispatch();
 	const song = useSelector(getSelectedSong);
 	const enabledFastWalls = useSelector(getEnabledFastWalls);
@@ -62,7 +61,7 @@ const SongDetails = ({ stopPlaying, updateSongDetails, togglePropertyForSelected
 		// In addition to seeming like a reasonable idea, it helps prevent any
 		// weirdness around editing the audio file when it's in a non-zero
 		// position.
-		dispatch(actions.stopPlaying(song.offset));
+		dispatch(stopPlaying({ offset: song.offset }));
 
 		if (song.songFilename) {
 			getFile(song.songFilename).then((initialSongFile) => {
@@ -114,7 +113,7 @@ const SongDetails = ({ stopPlaying, updateSongDetails, togglePropertyForSelected
 		}
 
 		// Update our redux state
-		dispatch(actions.updateSongDetails(song.id, newSongObject));
+		dispatch(updateSongDetails({ songId: song.id, songData: newSongObject }));
 
 		// Back up our latest data!
 		await saveInfoDat(
@@ -251,7 +250,7 @@ const SongDetails = ({ stopPlaying, updateSongDetails, togglePropertyForSelected
 				<Spacer size={UNIT * 2} />
 				<MappingExtensionSettings />
 				<Spacer size={UNIT * 2} />
-				<LabeledCheckbox id="enable-lightshow" checked={!!enabledLightshow} onChange={() => dispatch(actions.togglePropertyForSelectedSong("enabledLightshow"))}>
+				<LabeledCheckbox id="enable-lightshow" checked={!!enabledLightshow} onChange={() => dispatch(togglePropertyForSelectedSong({ property: "enabledLightshow" }))}>
 					Includes "Lightshow" difficulty{" "}
 					<QuestionTooltip>
 						If enabled, adds a non-standard difficulty with all blocks removed. Nice to include if your lighting is spectacular{" "}
@@ -261,7 +260,7 @@ const SongDetails = ({ stopPlaying, updateSongDetails, togglePropertyForSelected
 					</QuestionTooltip>
 				</LabeledCheckbox>
 				<Spacer size={UNIT * 2} />
-				<LabeledCheckbox id="enable-fast-walls" checked={!!enabledFastWalls} onChange={() => dispatch(actions.togglePropertyForSelectedSong("enabledFastWalls"))}>
+				<LabeledCheckbox id="enable-fast-walls" checked={!!enabledFastWalls} onChange={() => dispatch(togglePropertyForSelectedSong({ property: "enabledFastWalls" }))}>
 					Enable "fast walls"{" "}
 					<QuestionTooltip>
 						Fast walls exploit a loophole in the game to allow walls to blur by at high speed{" "}

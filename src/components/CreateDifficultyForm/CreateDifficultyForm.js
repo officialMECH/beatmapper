@@ -1,13 +1,13 @@
 import React from "react";
 import { Icon } from "react-icons-kit";
 import { sliders } from "react-icons-kit/feather/sliders";
-import { connect } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Tooltip } from "react-tippy";
 import styled from "styled-components";
 
 import { DIFFICULTIES, UNIT } from "$/constants";
 import { getLabelForDifficulty } from "$/helpers/song.helpers";
-import * as actions from "$/store/actions";
+import { createDifficulty } from "$/store/actions";
 import { getDifficulty } from "$/store/reducers/editor-entities.reducer";
 import { getSelectedSongDifficultyIds, getSelectedSongId } from "$/store/reducers/songs.reducer";
 
@@ -18,7 +18,12 @@ import Link from "../Link";
 import Paragraph from "../Paragraph";
 import Spacer from "../Spacer";
 
-const CreateDifficultyForm = ({ afterCreate, songId, currentDifficulty, difficultyIds, createDifficulty }) => {
+const CreateDifficultyForm = ({ afterCreate }) => {
+	const songId = useSelector(getSelectedSongId);
+	const currentDifficulty = useSelector(getDifficulty);
+	const difficultyIds = useSelector(getSelectedSongDifficultyIds);
+	const dispatch = useDispatch();
+
 	const [selectedId, setSelectedId] = React.useState(null);
 
 	// If we already have all difficulties, let the user know
@@ -63,12 +68,7 @@ const CreateDifficultyForm = ({ afterCreate, songId, currentDifficulty, difficul
 				})}
 			</DifficultiesWrapper>
 			<Spacer size={UNIT * 4} />
-			<Button
-				style={{ width: 275, margin: "auto" }}
-				onClick={() => {
-					createDifficulty(selectedId, afterCreate);
-				}}
-			>
+			<Button style={{ width: 275, margin: "auto" }} onClick={() => dispatch(createDifficulty({ difficulty: selectedId, afterCreate }))}>
 				Create {getLabelForDifficulty(selectedId)} beatmap
 			</Button>
 		</Wrapper>
@@ -92,16 +92,4 @@ const DifficultiesWrapper = styled.div`
   align-items: center;
 `;
 
-const mapStateToProps = (state) => {
-	return {
-		songId: getSelectedSongId(state),
-		currentDifficulty: getDifficulty(state),
-		difficultyIds: getSelectedSongDifficultyIds(state),
-	};
-};
-
-const mapDispatchToProps = {
-	createDifficulty: actions.createDifficulty,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(CreateDifficultyForm);
+export default CreateDifficultyForm;

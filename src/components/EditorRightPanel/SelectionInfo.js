@@ -1,12 +1,12 @@
 import { arrowDown } from "react-icons-kit/feather/arrowDown";
 import { arrowUp } from "react-icons-kit/feather/arrowUp";
 import { maximize2 as swapIcon } from "react-icons-kit/feather/maximize2";
-import { connect } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Tooltip } from "react-tippy";
 import styled from "styled-components";
 
 import { COLORS, UNIT } from "$/constants";
-import * as actions from "$/store/actions";
+import { copySelection, cutSelection, deselectAll, deselectAllOfType, nudgeSelection, pasteSelection, swapSelectedNotes } from "$/store/actions";
 import { getHasCopiedNotes } from "$/store/reducers/clipboard.reducer";
 import { ObjectType, View } from "$/types";
 import { getMetaKeyLabel, interleave } from "$/utils";
@@ -33,18 +33,21 @@ const SelectionCount = ({ num, label, onClick }) => {
 	);
 };
 
-const SelectionInfo = ({ numOfSelectedBlocks, numOfSelectedMines, numOfSelectedObstacles, hasCopiedNotes, deselectAll, swapSelectedNotes, nudgeSelection, cutSelection, copySelection, pasteSelection, deselectAllOfType }) => {
+const SelectionInfo = ({ numOfSelectedBlocks, numOfSelectedMines, numOfSelectedObstacles }) => {
+	const hasCopiedNotes = useSelector(getHasCopiedNotes);
+	const dispatch = useDispatch();
+
 	const hasSelectedObstacles = numOfSelectedObstacles >= 1;
 
 	let numbers = [];
 	if (numOfSelectedBlocks) {
-		numbers.push(<SelectionCount key="blocks" num={numOfSelectedBlocks} label="block" onClick={() => deselectAllOfType(ObjectType.NOTE)} />);
+		numbers.push(<SelectionCount key="blocks" num={numOfSelectedBlocks} label="block" onClick={() => dispatch(deselectAllOfType({ itemType: ObjectType.NOTE }))} />);
 	}
 	if (numOfSelectedMines) {
-		numbers.push(<SelectionCount key="mines" num={numOfSelectedMines} label="mine" onClick={() => deselectAllOfType(ObjectType.BOMB)} />);
+		numbers.push(<SelectionCount key="mines" num={numOfSelectedMines} label="mine" onClick={() => dispatch(deselectAllOfType({ itemType: ObjectType.BOMB }))} />);
 	}
 	if (numOfSelectedObstacles) {
-		numbers.push(<SelectionCount key="obstacles" num={numOfSelectedObstacles} label="wall" onClick={() => deselectAllOfType(ObjectType.OBSTACLE)} />);
+		numbers.push(<SelectionCount key="obstacles" num={numOfSelectedObstacles} label="wall" onClick={() => dispatch(deselectAllOfType({ itemType: ObjectType.OBSTACLE }))} />);
 	}
 
 	numbers = interleave(numbers, ", ");
@@ -72,11 +75,11 @@ const SelectionInfo = ({ numOfSelectedBlocks, numOfSelectedMines, numOfSelectedO
 
 			<Row>
 				<Tooltip delay={[1000, 0]} title="Swap horizontally (H)">
-					<IconButton rotation={45} icon={swapIcon} onClick={() => swapSelectedNotes("horizontal")} />
+					<IconButton rotation={45} icon={swapIcon} onClick={() => dispatch(swapSelectedNotes({ axis: "horizontal" }))} />
 				</Tooltip>
 				<Spacer size={UNIT} />
 				<Tooltip delay={[1000, 0]} title="Swap vertically (V)">
-					<IconButton rotation={-45} icon={swapIcon} onClick={() => swapSelectedNotes("vertical")} />
+					<IconButton rotation={-45} icon={swapIcon} onClick={() => dispatch(swapSelectedNotes({ axis: "vertical" }))} />
 				</Tooltip>
 			</Row>
 
@@ -84,18 +87,18 @@ const SelectionInfo = ({ numOfSelectedBlocks, numOfSelectedMines, numOfSelectedO
 
 			<Row>
 				<Tooltip delay={[1000, 0]} title={`Nudge forwards (${metaKeyLabel} + ↑)`}>
-					<IconButton icon={arrowUp} onClick={() => nudgeSelection("forwards", View.BEATMAP)} />
+					<IconButton icon={arrowUp} onClick={() => dispatch(nudgeSelection({ direction: "forwards", view: View.BEATMAP }))} />
 				</Tooltip>
 				<Spacer size={UNIT} />
 				<Tooltip delay={[1000, 0]} title={`Nudge backwards (${metaKeyLabel} + ↓)`}>
-					<IconButton icon={arrowDown} onClick={() => nudgeSelection("backwards", View.BEATMAP)} />
+					<IconButton icon={arrowDown} onClick={() => dispatch(nudgeSelection({ direction: "backwards", view: View.BEATMAP }))} />
 				</Tooltip>
 			</Row>
 
 			<Spacer size={UNIT * 2} />
 
 			<Tooltip delay={[1000, 0]} title="Clear selection (Escape)">
-				<MiniButton width={ACTION_WIDTH} onClick={() => deselectAll(View.BEATMAP)}>
+				<MiniButton width={ACTION_WIDTH} onClick={() => dispatch(deselectAll({ view: View.BEATMAP }))}>
 					Deselect
 				</MiniButton>
 			</Tooltip>
@@ -107,13 +110,13 @@ const SelectionInfo = ({ numOfSelectedBlocks, numOfSelectedMines, numOfSelectedO
 
 			<Row>
 				<Tooltip delay={[1000, 0]} title={`copy and remove selection (${getMetaKeyLabel()} + X)`}>
-					<MiniButton width={HALF_ACTION_WIDTH} onClick={() => cutSelection(View.BEATMAP)}>
+					<MiniButton width={HALF_ACTION_WIDTH} onClick={() => dispatch(cutSelection({ view: View.BEATMAP }))}>
 						Cut
 					</MiniButton>
 				</Tooltip>
 				<Spacer size={UNIT} />
 				<Tooltip delay={[1000, 0]} title={`Copy selection (${getMetaKeyLabel()} + C)`}>
-					<MiniButton width={HALF_ACTION_WIDTH} onClick={() => copySelection(View.BEATMAP)}>
+					<MiniButton width={HALF_ACTION_WIDTH} onClick={() => dispatch(copySelection({ view: View.BEATMAP }))}>
 						Copy
 					</MiniButton>
 				</Tooltip>
@@ -122,7 +125,7 @@ const SelectionInfo = ({ numOfSelectedBlocks, numOfSelectedMines, numOfSelectedO
 			<Spacer size={UNIT} />
 
 			<Tooltip delay={[1000, 0]} title={`Paste copied notes and obstacles (${getMetaKeyLabel()} + V)`}>
-				<MiniButton width={ACTION_WIDTH} disabled={!hasCopiedNotes} onClick={() => pasteSelection(View.BEATMAP)}>
+				<MiniButton width={ACTION_WIDTH} disabled={!hasCopiedNotes} onClick={() => dispatch(pasteSelection({ view: View.BEATMAP }))}>
 					Paste
 				</MiniButton>
 			</Tooltip>
@@ -144,20 +147,4 @@ const Highlight = styled.span`
   color: ${COLORS.yellow[500]};
 `;
 
-const mapStateToProps = (state) => {
-	return {
-		hasCopiedNotes: getHasCopiedNotes(state),
-	};
-};
-
-const mapDispatchToProps = {
-	deselectAll: actions.deselectAll,
-	swapSelectedNotes: actions.swapSelectedNotes,
-	nudgeSelection: actions.nudgeSelection,
-	cutSelection: actions.cutSelection,
-	copySelection: actions.copySelection,
-	pasteSelection: actions.pasteSelection,
-	deselectAllOfType: actions.deselectAllOfType,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(SelectionInfo);
+export default SelectionInfo;

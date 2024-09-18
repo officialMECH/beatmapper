@@ -1,10 +1,10 @@
 import React from "react";
-import { connect } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 
 import { COLORS } from "$/constants";
 import { useMousePositionOverElement, usePointerUpHandler } from "$/hooks";
-import * as actions from "$/store/actions";
+import { changeLaserSpeed } from "$/store/actions";
 import { getTrackSpeedAtBeat, makeGetEventsForTrack } from "$/store/reducers/editor-entities.reducer/events-view.reducer";
 import { getSelectedEventEditMode } from "$/store/reducers/editor.reducer";
 import { EventEditMode } from "$/types";
@@ -21,14 +21,20 @@ const INITIAL_TENTATIVE_EVENT = {
 	visible: false,
 };
 
-const SpeedTrack = ({ trackId, width, height, startBeat, numOfBeatsToShow, cursorAtBeat, events, startSpeed, endSpeed, isDisabled, areLasersLocked, selectedEditMode, changeLaserSpeed, deleteEvent, bulkDeleteEvent, ...delegated }) => {
+const SpeedTrack = ({ trackId, width, height, startBeat, numOfBeatsToShow, cursorAtBeat, isDisabled, areLasersLocked, ...delegated }) => {
+	const getEventsForTrack = makeGetEventsForTrack(trackId);
+	const events = useSelector(getEventsForTrack);
+	const startSpeed = useSelector((state) => getTrackSpeedAtBeat(state, trackId, startBeat));
+	const endSpeed = useSelector((state) => getTrackSpeedAtBeat(state, trackId, startBeat + numOfBeatsToShow));
+	const selectedEditMode = useSelector(getSelectedEventEditMode);
+	const dispatch = useDispatch();
 	const [tentativeEvent, setTentativeEvent] = React.useState(INITIAL_TENTATIVE_EVENT);
 
 	const commitChanges = React.useCallback(() => {
-		changeLaserSpeed(trackId, tentativeEvent.beatNum, tentativeEvent.laserSpeed, areLasersLocked);
+		dispatch(changeLaserSpeed({ trackId, beatNum: tentativeEvent.beatNum, speed: tentativeEvent.laserSpeed, areLasersLocked }));
 
 		setTentativeEvent(INITIAL_TENTATIVE_EVENT);
-	}, [trackId, tentativeEvent, areLasersLocked, changeLaserSpeed]);
+	}, [trackId, tentativeEvent, areLasersLocked, dispatch]);
 
 	usePointerUpHandler(tentativeEvent.visible, commitChanges);
 
@@ -167,30 +173,4 @@ const Svg = styled.svg`
 
 const Background = styled.g``;
 
-const makeMapStateToProps = (state, { trackId }) => {
-	const getEventsForTrack = makeGetEventsForTrack(trackId);
-
-	const mapStateToProps = (state, ownProps) => {
-		const events = getEventsForTrack(state, ownProps.trackId, ownProps.startBeat, ownProps.numOfBeatsToShow);
-		const startSpeed = getTrackSpeedAtBeat(state, ownProps.trackId, ownProps.startBeat);
-		const endSpeed = getTrackSpeedAtBeat(state, ownProps.trackId, ownProps.startBeat + ownProps.numOfBeatsToShow);
-		const selectedEditMode = getSelectedEventEditMode(state);
-
-		return {
-			events,
-			startSpeed,
-			endSpeed,
-			selectedEditMode,
-		};
-	};
-
-	return mapStateToProps;
-};
-
-const mapDispatchToProps = {
-	changeLaserSpeed: actions.changeLaserSpeed,
-	deleteEvent: actions.deleteEvent,
-	bulkDeleteEvent: actions.bulkDeleteEvent,
-};
-
-export default connect(makeMapStateToProps, mapDispatchToProps)(SpeedTrack);
+export default SpeedTrack;

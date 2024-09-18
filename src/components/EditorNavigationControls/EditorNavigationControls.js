@@ -4,21 +4,26 @@ import { play } from "react-icons-kit/feather/play";
 import { rewind } from "react-icons-kit/feather/rewind";
 import { skipBack } from "react-icons-kit/feather/skipBack";
 import { skipForward } from "react-icons-kit/feather/skipForward";
-import { connect } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 
 import { COLORS, SNAPPING_INCREMENTS, UNIT } from "$/constants";
-import * as actions from "$/store/actions";
+import { changeSnapping, pausePlaying, seekBackwards, seekForwards, skipToEnd, skipToStart, startPlaying } from "$/store/actions";
+import { getIsLoading, getIsPlaying, getSnapTo } from "$/store/reducers/navigation.reducer";
 
 import Dropdown from "../Dropdown";
 import IconButton from "../IconButton";
 import SpacedChildren from "../SpacedChildren";
 import Spacer from "../Spacer";
-
 import CurrentBeat from "./CurrentBeat";
 import CurrentTime from "./CurrentTime";
 
-const EditorNavigationControls = ({ height, view, isPlaying, isLoadingSong, snapTo, startPlaying, pausePlaying, skipToStart, skipToEnd, seekForwards, seekBackwards, changeSnapping }) => {
+const EditorNavigationControls = ({ height, view }) => {
+	const isPlaying = useSelector(getIsPlaying);
+	const isLoadingSong = useSelector(getIsLoading);
+	const snapTo = useSelector(getSnapTo);
+	const dispatch = useDispatch();
+
 	const playButtonAction = isPlaying ? pausePlaying : startPlaying;
 
 	// TODO: Use `height`
@@ -26,7 +31,7 @@ const EditorNavigationControls = ({ height, view, isPlaying, isLoadingSong, snap
 	return (
 		<Wrapper>
 			<Left>
-				<Dropdown label="Snap to" value={snapTo} onChange={(ev) => changeSnapping(Number(ev.target.value))} width={165}>
+				<Dropdown label="Snap to" value={snapTo} onChange={(ev) => dispatch(changeSnapping({ newSnapTo: Number(ev.target.value) }))} width={165}>
 					{SNAPPING_INCREMENTS.map(({ value, label, shortcutLabel }) => (
 						<option key={value} value={value} when-selected={label}>
 							{label} {shortcutLabel && `(${shortcutLabel})`}
@@ -36,25 +41,11 @@ const EditorNavigationControls = ({ height, view, isPlaying, isLoadingSong, snap
 			</Left>
 			<Center>
 				<SpacedChildren spacing={UNIT}>
-					<IconButton disabled={isLoadingSong} color={COLORS.white} icon={skipBack} onClick={skipToStart} />
-					<IconButton
-						disabled={isLoadingSong}
-						color={COLORS.white}
-						icon={rewind}
-						onClick={(ev) => {
-							seekBackwards(view);
-						}}
-					/>
-					<IconButton disabled={isLoadingSong} color={COLORS.white} icon={isPlaying ? pause : play} onClick={playButtonAction} />
-					<IconButton
-						disabled={isLoadingSong}
-						color={COLORS.white}
-						icon={fastForward}
-						onClick={(ev) => {
-							seekForwards(view);
-						}}
-					/>
-					<IconButton disabled={isLoadingSong} color={COLORS.white} icon={skipForward} onClick={skipToEnd} />
+					<IconButton disabled={isLoadingSong} color={COLORS.white} icon={skipBack} onClick={() => dispatch(skipToStart())} />
+					<IconButton disabled={isLoadingSong} color={COLORS.white} icon={rewind} onClick={(ev) => dispatch(seekBackwards({ view }))} />
+					<IconButton disabled={isLoadingSong} color={COLORS.white} icon={isPlaying ? pause : play} onClick={() => dispatch(playButtonAction())} />
+					<IconButton disabled={isLoadingSong} color={COLORS.white} icon={fastForward} onClick={(ev) => dispatch(seekForwards({ view }))} />
+					<IconButton disabled={isLoadingSong} color={COLORS.white} icon={skipForward} onClick={() => dispatch(skipToEnd())} />
 				</SpacedChildren>
 			</Center>
 			<Right>
@@ -86,20 +77,4 @@ const Right = styled(Column)`
   justify-content: flex-end;
 `;
 
-const mapStateToProps = (state) => ({
-	isPlaying: state.navigation.isPlaying,
-	isLoadingSong: state.navigation.isLoading,
-	snapTo: state.navigation.snapTo,
-});
-
-const mapDispatchToProps = {
-	startPlaying: actions.startPlaying,
-	pausePlaying: actions.pausePlaying,
-	seekForwards: actions.seekForwards,
-	seekBackwards: actions.seekBackwards,
-	skipToStart: actions.skipToStart,
-	skipToEnd: actions.skipToEnd,
-	changeSnapping: actions.changeSnapping,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(EditorNavigationControls);
+export default EditorNavigationControls;

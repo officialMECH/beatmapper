@@ -1,4 +1,4 @@
-import { connect } from "react-redux";
+import { useSelector } from "react-redux";
 
 import { convertMillisecondsToBeats } from "$/helpers/audio.helpers";
 import { getColorForItem } from "$/helpers/colors.helpers";
@@ -42,7 +42,53 @@ const getSinRotationValue = (side, beamIndex, secondsSinceSongStart, laserSpeed)
 	return normalize(sinValue, -1, 1, defaultRotation, defaultRotation * -1);
 };
 
-const SideLaser = ({ song, isPlaying, side, lastEvent, laserSpeed, secondsSinceSongStart }) => {
+const SideLaser = ({ song, isPlaying, side }) => {
+	const lastEvent = useSelector((state) => {
+		if (!song) {
+			return;
+		}
+
+		const tracks = getTracks(state);
+
+		const trackId = side === "left" ? App.TrackId[2] : App.TrackId[3];
+		const speedTrackId = side === "left" ? App.TrackId[12] : App.TrackId[13];
+
+		const lightEvents = tracks[trackId];
+		const speedEvents = tracks[speedTrackId];
+
+		const currentBeat = getCursorPositionInBeats(state);
+		const processingDelay = getUsableProcessingDelay(state);
+
+		const processingDelayInBeats = convertMillisecondsToBeats(processingDelay, song.bpm);
+
+		const lastEvent = findMostRecentEventInTrack(lightEvents, currentBeat, processingDelayInBeats);
+		return lastEvent;
+	});
+	const laserSpeed = useSelector((state) => {
+		if (!song) {
+			return;
+		}
+
+		const tracks = getTracks(state);
+
+		const trackId = side === "left" ? App.TrackId[2] : App.TrackId[3];
+		const speedTrackId = side === "left" ? App.TrackId[12] : App.TrackId[13];
+
+		const lightEvents = tracks[trackId];
+		const speedEvents = tracks[speedTrackId];
+
+		const currentBeat = getCursorPositionInBeats(state);
+		const processingDelay = getUsableProcessingDelay(state);
+
+		const processingDelayInBeats = convertMillisecondsToBeats(processingDelay, song.bpm);
+
+		const lastSpeedEvent = findMostRecentEventInTrack(speedEvents, currentBeat, processingDelayInBeats);
+
+		const laserSpeed = lastSpeedEvent ? lastSpeedEvent.laserSpeed : 0;
+		return laserSpeed;
+	});
+	const secondsSinceSongStart = useSelector((state) => getCursorPosition(state) / 1000);
+
 	const NUM_OF_HORIZONTAL_BEAMS = 4;
 	const laserIndices = range(0, NUM_OF_HORIZONTAL_BEAMS);
 
@@ -86,36 +132,4 @@ const SideLaser = ({ song, isPlaying, side, lastEvent, laserSpeed, secondsSinceS
 	);
 };
 
-const mapStateToProps = (state, { song, side }) => {
-	if (!song) {
-		return;
-	}
-
-	const tracks = getTracks(state);
-
-	const trackId = side === "left" ? App.TrackId[2] : App.TrackId[3];
-	const speedTrackId = side === "left" ? App.TrackId[12] : App.TrackId[13];
-
-	const lightEvents = tracks[trackId];
-	const speedEvents = tracks[speedTrackId];
-
-	const currentBeat = getCursorPositionInBeats(state);
-	const processingDelay = getUsableProcessingDelay(state);
-
-	const processingDelayInBeats = convertMillisecondsToBeats(processingDelay, song.bpm);
-
-	const lastEvent = findMostRecentEventInTrack(lightEvents, currentBeat, processingDelayInBeats);
-	const lastSpeedEvent = findMostRecentEventInTrack(speedEvents, currentBeat, processingDelayInBeats);
-
-	const laserSpeed = lastSpeedEvent ? lastSpeedEvent.laserSpeed : 0;
-
-	const secondsSinceSongStart = getCursorPosition(state) / 1000;
-
-	return {
-		lastEvent,
-		laserSpeed,
-		secondsSinceSongStart,
-	};
-};
-
-export default connect(mapStateToProps)(SideLaser);
+export default SideLaser;

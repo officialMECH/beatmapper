@@ -1,11 +1,13 @@
-import { connect } from "react-redux";
+import { useSelector } from "react-redux";
 import styled from "styled-components";
 
 import { COLORS } from "$/constants";
 import { getCursorPositionInBeats } from "$/store/reducers/navigation.reducer";
 import { normalize } from "$/utils";
 
-const CursorPositionIndicator = ({ gridWidth, cursorPositionInBeats, startBeat, endBeat, zIndex }) => {
+const CursorPositionIndicator = ({ gridWidth, startBeat, endBeat, zIndex }) => {
+	const cursorPositionInBeats = useSelector(getCursorPositionInBeats);
+
 	const cursorOffsetInWindow = normalize(cursorPositionInBeats, startBeat, endBeat, 0, gridWidth);
 
 	return (
@@ -29,10 +31,4 @@ const Elem = styled.div`
   pointer-events: none;
 `;
 
-const mapStateToProps = (state) => {
-	return {
-		cursorPositionInBeats: getCursorPositionInBeats(state),
-	};
-};
-
-export default connect(mapStateToProps)(CursorPositionIndicator);
+export default CursorPositionIndicator;

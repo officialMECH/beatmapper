@@ -45,7 +45,7 @@ const jumpToEarliestNote = (earlierNotes, laterNotes, earlierObstacles, laterObs
 	const isEntityVisible = entityTime > closeLimit && entityTime < farLimit;
 
 	if (!isEntityVisible) {
-		store.dispatch(jumpToBeat(entityTime, true, true));
+		store.dispatch(jumpToBeat({ beatNum: entityTime, pauseTrack: true, animateJump: true }));
 	}
 };
 
@@ -75,7 +75,7 @@ const switchEventPagesIfNecessary = (earlierEvents, currentEvents, store) => {
 		return;
 	}
 
-	store.dispatch(jumpToBeat(earliestBeatOutOfWindow.beatNum, true, true));
+	store.dispatch(jumpToBeat({ beatNum: earliestBeatOutOfWindow.beatNum, pauseTrack: true, animateJump: true }));
 };
 
 export default function createHistoryMiddleware() {

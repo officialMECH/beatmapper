@@ -1,10 +1,10 @@
-import { connect } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Tooltip } from "react-tippy";
 import styled from "styled-components";
 
 import { UNIT } from "$/constants";
 import { promptJumpToBeat, promptQuickSelect } from "$/helpers/prompts.helpers";
-import * as actions from "$/store/actions";
+import { jumpToBeat, pasteSelection, selectAllInRange } from "$/store/actions";
 import { getHasCopiedNotes } from "$/store/reducers/clipboard.reducer";
 import { View } from "$/types";
 import { getMetaKeyLabel } from "$/utils";
@@ -15,19 +15,9 @@ import MiniButton from "../MiniButton";
 import Spacer from "../Spacer";
 import UndoRedo from "./UndoRedo";
 
-const Actions = ({
-	song,
-	handleGridConfigClick,
-
-	canUndo,
-	canRedo,
-	hasCopiedNotes,
-	selectAllInRange,
-	jumpToBeat,
-	undoNotes,
-	redoNotes,
-	pasteSelection,
-}) => {
+const Actions = ({ song, handleGridConfigClick, canUndo, canRedo }) => {
+	const hasCopiedNotes = useSelector(getHasCopiedNotes);
+	const dispatch = useDispatch();
 	const mappingExtensionsEnabled = song?.modSettings?.mappingExtensions?.isEnabled;
 
 	return (
@@ -40,7 +30,7 @@ const Actions = ({
 			<Spacer size={UNIT} />
 
 			<Tooltip delay={[1000, 0]} title={`Paste previously-copied notes (${getMetaKeyLabel()} + V)`}>
-				<MiniButton disabled={!hasCopiedNotes} width={ACTION_WIDTH} onClick={() => pasteSelection(View.BEATMAP)}>
+				<MiniButton disabled={!hasCopiedNotes} width={ACTION_WIDTH} onClick={() => dispatch(pasteSelection({ view: View.BEATMAP }))}>
 					Paste Selection
 				</MiniButton>
 			</Tooltip>
@@ -48,7 +38,7 @@ const Actions = ({
 			<Spacer size={UNIT} />
 
 			<Tooltip delay={[1000, 0]} title="Select everything over a time period (Q)">
-				<MiniButton width={ACTION_WIDTH} onClick={() => promptQuickSelect(View.BEATMAP, selectAllInRange)}>
+				<MiniButton width={ACTION_WIDTH} onClick={() => dispatch(promptQuickSelect(View.BEATMAP, selectAllInRange))}>
 					Quick-select
 				</MiniButton>
 			</Tooltip>
@@ -56,7 +46,7 @@ const Actions = ({
 			<Spacer size={UNIT} />
 
 			<Tooltip delay={[1000, 0]} title="Jump to a specific beat number (J)">
-				<MiniButton width={ACTION_WIDTH} onClick={() => promptJumpToBeat(jumpToBeat, true)}>
+				<MiniButton width={ACTION_WIDTH} onClick={() => dispatch(promptJumpToBeat(jumpToBeat, { pauseTrack: true }))}>
 					Jump to Beat
 				</MiniButton>
 			</Tooltip>
@@ -80,16 +70,4 @@ const Wrapper = styled.div`
   align-items: center;
 `;
 
-const mapStateToProps = (state) => {
-	return {
-		hasCopiedNotes: getHasCopiedNotes(state),
-	};
-};
-
-const mapDispatchToProps = {
-	selectAllInRange: actions.selectAllInRange,
-	jumpToBeat: actions.jumpToBeat,
-	pasteSelection: actions.pasteSelection,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Actions);
+export default Actions;

@@ -12,29 +12,30 @@ export default function bookmarksReducer(state = initialState, action = undefine
 		}
 
 		case "LOAD_BEATMAP_ENTITIES": {
+			const { bookmarks } = action.payload;
 			// The initial data is loaded as an array, we need to convert it to a map.
-			return action.bookmarks.reduce((acc, bookmark) => {
-				return {
-					...acc,
-					[bookmark.beatNum]: bookmark,
-				};
+			return bookmarks.reduce((acc, bookmark) => {
+				acc[bookmark.beatNum] = bookmark;
+				return acc;
 			}, {});
 		}
 
 		case "CREATE_BOOKMARK": {
+			const { beatNum, name, color } = action.payload;
 			return {
 				...state,
-				[action.beatNum]: {
-					beatNum: action.beatNum,
-					name: action.name,
-					color: action.color,
+				[beatNum]: {
+					beatNum: beatNum,
+					name: name,
+					color: color,
 				},
 			};
 		}
 
 		case "DELETE_BOOKMARK": {
+			const { beatNum } = action.payload;
 			return produce(state, (draftState) => {
-				delete draftState[action.beatNum];
+				delete draftState[beatNum];
 			});
 		}
 

@@ -1,11 +1,13 @@
 import React from "react";
-import { connect } from "react-redux";
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
 
 import { COLORS } from "$/constants";
-import * as actions from "$/store/actions";
+import { scrubEventsHeader } from "$/store/actions";
 
-const GridHeader = ({ height, beatNums, selectedBeat, scrubEventsHeader }) => {
+const GridHeader = ({ height, beatNums, selectedBeat }) => {
+	const dispatch = useDispatch();
+
 	const [isScrubbing, setIsScrubbing] = React.useState(false);
 	const lastActionDispatchedFor = React.useRef(null);
 
@@ -14,7 +16,7 @@ const GridHeader = ({ height, beatNums, selectedBeat, scrubEventsHeader }) => {
 			style={{ height }}
 			onPointerDown={() => {
 				setIsScrubbing(true);
-				scrubEventsHeader(selectedBeat);
+				dispatch(scrubEventsHeader({ selectedBeat }));
 				lastActionDispatchedFor.current = selectedBeat;
 			}}
 			onPointerUp={() => {
@@ -31,7 +33,7 @@ const GridHeader = ({ height, beatNums, selectedBeat, scrubEventsHeader }) => {
 				const shouldDispatchAction = lastActionDispatchedFor.current !== selectedBeat;
 
 				if (shouldDispatchAction) {
-					scrubEventsHeader(selectedBeat);
+					dispatch(scrubEventsHeader({ selectedBeat }));
 					lastActionDispatchedFor.current = selectedBeat;
 				}
 			}}
@@ -68,8 +70,4 @@ const BeatNums = styled.span`
   }
 `;
 
-const mapDispatchToProps = {
-	scrubEventsHeader: actions.scrubEventsHeader,
-};
-
-export default connect(null, mapDispatchToProps)(GridHeader);
+export default GridHeader;

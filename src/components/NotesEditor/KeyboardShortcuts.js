@@ -1,12 +1,15 @@
 import React from "react";
-import { connect } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
-import * as actions from "$/store/actions";
+import { selectNoteDirection, selectTool, swapSelectedNotes, toggleSelectAll } from "$/store/actions";
 import { getDefaultObstacleDuration } from "$/store/reducers/editor.reducer";
 import { Direction, ObjectTool, View } from "$/types";
 import { isMetaKeyPressed } from "$/utils";
 
-const KeyboardShortcuts = ({ defaultObstacleDuration, selectTool, selectNoteDirection, swapSelectedNotes, toggleSelectAll }) => {
+const KeyboardShortcuts = () => {
+	const defaultObstacleDuration = useSelector(getDefaultObstacleDuration);
+	const dispatch = useDispatch();
+
 	const keysDepressed = React.useRef({
 		w: false,
 		a: false,
@@ -21,32 +24,32 @@ const KeyboardShortcuts = ({ defaultObstacleDuration, selectTool, selectNoteDire
 				if (isMetaKeyPressed(ev)) {
 					return;
 				}
-				return selectTool(View.BEATMAP, ObjectTool.LEFT_NOTE);
+				return dispatch(selectTool({ view: View.BEATMAP, tool: ObjectTool.LEFT_NOTE }));
 			case "Digit2":
 				if (isMetaKeyPressed(ev)) {
 					return;
 				}
-				return selectTool(View.BEATMAP, ObjectTool.RIGHT_NOTE);
+				return dispatch(selectTool({ view: View.BEATMAP, tool: ObjectTool.RIGHT_NOTE }));
 			case "Digit3":
 				if (isMetaKeyPressed(ev)) {
 					return;
 				}
-				return selectTool(View.BEATMAP, ObjectTool.BOMB_NOTE);
+				return dispatch(selectTool({ view: View.BEATMAP, tool: ObjectTool.BOMB_NOTE }));
 			case "Digit4":
 				if (isMetaKeyPressed(ev)) {
 					return;
 				}
-				return selectTool(View.BEATMAP, ObjectTool.OBSTACLE);
+				return dispatch(selectTool({ view: View.BEATMAP, tool: ObjectTool.OBSTACLE }));
 
 			case "KeyH": {
-				return swapSelectedNotes("horizontal");
+				return dispatch(swapSelectedNotes({ axis: "horizontal" }));
 			}
 			case "KeyV": {
 				// If the user is pasting with Meta+V, ignore.
 				if (isMetaKeyPressed(ev)) {
 					return;
 				}
-				return swapSelectedNotes("vertical");
+				return dispatch(swapSelectedNotes({ axis: "vertical" }));
 			}
 
 			case "KeyW": {
@@ -56,12 +59,12 @@ const KeyboardShortcuts = ({ defaultObstacleDuration, selectTool, selectNoteDire
 				keysDepressed.current.w = true;
 
 				if (keysDepressed.current.a) {
-					return selectNoteDirection(Direction.UP_RIGHT);
+					return dispatch(selectNoteDirection({ direction: Direction.UP_RIGHT }));
 				}
 				if (keysDepressed.current.d) {
-					return selectNoteDirection(Direction.UP_LEFT);
+					return dispatch(selectNoteDirection({ direction: Direction.UP_LEFT }));
 				}
-				return selectNoteDirection(Direction.UP);
+				return dispatch(selectNoteDirection({ direction: Direction.UP }));
 			}
 			case "KeyA": {
 				if (ev.shiftKey) {
@@ -69,18 +72,18 @@ const KeyboardShortcuts = ({ defaultObstacleDuration, selectTool, selectNoteDire
 				}
 				if (isMetaKeyPressed(ev)) {
 					ev.preventDefault();
-					return toggleSelectAll(View.BEATMAP);
+					return dispatch(toggleSelectAll({ view: View.BEATMAP }));
 				}
 
 				keysDepressed.current.a = true;
 
 				if (keysDepressed.current.w) {
-					return selectNoteDirection(Direction.UP_LEFT);
+					return dispatch(selectNoteDirection({ direction: Direction.UP_LEFT }));
 				}
 				if (keysDepressed.current.s) {
-					return selectNoteDirection(Direction.DOWN_LEFT);
+					return dispatch(selectNoteDirection({ direction: Direction.DOWN_LEFT }));
 				}
-				return selectNoteDirection(Direction.LEFT);
+				return dispatch(selectNoteDirection({ direction: Direction.LEFT }));
 			}
 			case "KeyS": {
 				if (ev.shiftKey) {
@@ -89,12 +92,12 @@ const KeyboardShortcuts = ({ defaultObstacleDuration, selectTool, selectNoteDire
 				keysDepressed.current.s = true;
 
 				if (keysDepressed.current.a) {
-					return selectNoteDirection(Direction.DOWN_LEFT);
+					return dispatch(selectNoteDirection({ direction: Direction.DOWN_LEFT }));
 				}
 				if (keysDepressed.current.d) {
-					return selectNoteDirection(Direction.DOWN_RIGHT);
+					return dispatch(selectNoteDirection({ direction: Direction.DOWN_RIGHT }));
 				}
-				return selectNoteDirection(Direction.DOWN);
+				return dispatch(selectNoteDirection({ direction: Direction.DOWN }));
 			}
 			case "KeyD": {
 				if (ev.shiftKey) {
@@ -103,12 +106,12 @@ const KeyboardShortcuts = ({ defaultObstacleDuration, selectTool, selectNoteDire
 				keysDepressed.current.d = true;
 
 				if (keysDepressed.current.w) {
-					return selectNoteDirection(Direction.UP_RIGHT);
+					return dispatch(selectNoteDirection({ direction: Direction.UP_RIGHT }));
 				}
 				if (keysDepressed.current.s) {
-					return selectNoteDirection(Direction.DOWN_RIGHT);
+					return dispatch(selectNoteDirection({ direction: Direction.DOWN_RIGHT }));
 				}
-				return selectNoteDirection(Direction.RIGHT);
+				return dispatch(selectNoteDirection({ direction: Direction.RIGHT }));
 			}
 
 			case "KeyF": {
@@ -116,35 +119,35 @@ const KeyboardShortcuts = ({ defaultObstacleDuration, selectTool, selectNoteDire
 					return;
 				}
 
-				return selectNoteDirection(Direction.ANY);
+				return dispatch(selectNoteDirection({ direction: Direction.ANY }));
 			}
 
 			case "Numpad1": {
-				return selectNoteDirection(Direction.DOWN_LEFT);
+				return dispatch(selectNoteDirection({ direction: Direction.DOWN_LEFT }));
 			}
 			case "Numpad2": {
-				return selectNoteDirection(Direction.DOWN);
+				return dispatch(selectNoteDirection({ direction: Direction.DOWN }));
 			}
 			case "Numpad3": {
-				return selectNoteDirection(Direction.DOWN_RIGHT);
+				return dispatch(selectNoteDirection({ direction: Direction.DOWN_RIGHT }));
 			}
 			case "Numpad4": {
-				return selectNoteDirection(Direction.LEFT);
+				return dispatch(selectNoteDirection({ direction: Direction.LEFT }));
 			}
 			case "Numpad5": {
-				return selectNoteDirection(Direction.ANY);
+				return dispatch(selectNoteDirection({ direction: Direction.ANY }));
 			}
 			case "Numpad6": {
-				return selectNoteDirection(Direction.RIGHT);
+				return dispatch(selectNoteDirection({ direction: Direction.RIGHT }));
 			}
 			case "Numpad7": {
-				return selectNoteDirection(Direction.UP_LEFT);
+				return dispatch(selectNoteDirection({ direction: Direction.UP_LEFT }));
 			}
 			case "Numpad8": {
-				return selectNoteDirection(Direction.UP);
+				return dispatch(selectNoteDirection({ direction: Direction.UP }));
 			}
 			case "Numpad9": {
-				return selectNoteDirection(Direction.UP_RIGHT);
+				return dispatch(selectNoteDirection({ direction: Direction.UP_RIGHT }));
 			}
 
 			default:
@@ -189,17 +192,4 @@ const KeyboardShortcuts = ({ defaultObstacleDuration, selectTool, selectNoteDire
 	return null;
 };
 
-const mapStateToProps = (state) => {
-	return {
-		defaultObstacleDuration: getDefaultObstacleDuration(state),
-	};
-};
-
-const mapDispatchToProps = {
-	selectTool: actions.selectTool,
-	selectNoteDirection: actions.selectNoteDirection,
-	swapSelectedNotes: actions.swapSelectedNotes,
-	toggleSelectAll: actions.toggleSelectAll,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(KeyboardShortcuts);
+export default KeyboardShortcuts;

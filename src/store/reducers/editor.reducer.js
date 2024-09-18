@@ -41,7 +41,7 @@ const initialState = {
 function notes(state = initialState.notes, action = undefined) {
 	switch (action.type) {
 		case "SELECT_NOTE_DIRECTION": {
-			const { direction } = action;
+			const { direction } = action.payload;
 			return {
 				...state,
 				selectedDirection: direction,
@@ -49,7 +49,7 @@ function notes(state = initialState.notes, action = undefined) {
 		}
 
 		case "SELECT_TOOL": {
-			const { view, tool } = action;
+			const { view, tool } = action.payload;
 
 			if (view !== View.BEATMAP) {
 				return state;
@@ -63,7 +63,7 @@ function notes(state = initialState.notes, action = undefined) {
 
 		case "SELECT_NEXT_TOOL":
 		case "SELECT_PREVIOUS_TOOL": {
-			const { view } = action;
+			const { view } = action.payload;
 
 			if (view !== View.BEATMAP) {
 				return state;
@@ -83,12 +83,13 @@ function notes(state = initialState.notes, action = undefined) {
 		}
 
 		case "SELECT_COLOR": {
-			if (action.view !== View.BEATMAP) {
+			const { view, color } = action.payload;
+			if (view !== View.BEATMAP) {
 				return state;
 			}
 
 			let toolName;
-			if (action.color === "red") {
+			if (color === "red") {
 				toolName = ObjectTool.LEFT_NOTE;
 			} else {
 				toolName = ObjectTool.RIGHT_NOTE;
@@ -101,9 +102,10 @@ function notes(state = initialState.notes, action = undefined) {
 		}
 
 		case "START_MANAGING_NOTE_SELECTION": {
+			const { selectionMode } = action.payload;
 			return {
 				...state,
-				selectionMode: action.selectionMode,
+				selectionMode: selectionMode,
 			};
 		}
 		case "FINISH_MANAGING_NOTE_SELECTION": {
@@ -115,14 +117,15 @@ function notes(state = initialState.notes, action = undefined) {
 
 		case "RESIZE_OBSTACLE":
 		case "RESIZE_SELECTED_OBSTACLES": {
+			const { newBeatDuration } = action.payload;
 			return {
 				...state,
-				defaultObstacleDuration: action.newBeatDuration,
+				defaultObstacleDuration: newBeatDuration,
 			};
 		}
 
 		case "SAVE_GRID_PRESET": {
-			const { grid, presetSlot } = action;
+			const { grid, presetSlot } = action.payload;
 
 			return {
 				...state,
@@ -134,7 +137,7 @@ function notes(state = initialState.notes, action = undefined) {
 		}
 
 		case "DELETE_GRID_PRESET": {
-			const { presetSlot } = action;
+			const { presetSlot } = action.payload;
 
 			return produce(state, (draftState) => {
 				delete draftState.gridPresets[presetSlot];
@@ -149,16 +152,18 @@ function notes(state = initialState.notes, action = undefined) {
 function events(state = initialState.events, action = undefined) {
 	switch (action.type) {
 		case "MOVE_MOUSE_ACROSS_EVENTS_GRID": {
+			const { selectedBeat } = action.payload;
 			return {
 				...state,
-				selectedBeat: action.selectedBeat,
+				selectedBeat: selectedBeat,
 			};
 		}
 
 		case "DRAW_SELECTION_BOX": {
+			const { selectionBox } = action.payload;
 			return {
 				...state,
-				selectionBox: action.selectionBox,
+				selectionBox: selectionBox,
 			};
 		}
 		case "CLEAR_SELECTION_BOX": {
@@ -181,7 +186,7 @@ function events(state = initialState.events, action = undefined) {
 		}
 
 		case "SELECT_COLOR": {
-			const { view, color } = action;
+			const { view, color } = action.payload;
 
 			if (view !== View.LIGHTSHOW) {
 				return state;
@@ -194,7 +199,7 @@ function events(state = initialState.events, action = undefined) {
 		}
 
 		case "SELECT_TOOL": {
-			const { view, tool } = action;
+			const { view, tool } = action.payload;
 
 			if (view !== View.LIGHTSHOW) {
 				return state;
@@ -208,7 +213,7 @@ function events(state = initialState.events, action = undefined) {
 
 		case "SELECT_NEXT_TOOL":
 		case "SELECT_PREVIOUS_TOOL": {
-			const { view } = action;
+			const { view } = action.payload;
 
 			if (view !== View.LIGHTSHOW) {
 				return state;
@@ -228,17 +233,19 @@ function events(state = initialState.events, action = undefined) {
 		}
 
 		case "SELECT_EVENT_EDIT_MODE": {
+			const { editMode } = action.payload;
 			return {
 				...state,
-				selectedEditMode: action.editMode,
+				selectedEditMode: editMode,
 			};
 		}
 
 		case "START_MANAGING_EVENT_SELECTION": {
+			const { selectionMode, trackId } = action.payload;
 			return {
 				...state,
-				selectionMode: action.selectionMode,
-				selectionModeTrackId: action.trackId,
+				selectionMode: selectionMode,
+				selectionModeTrackId: trackId,
 			};
 		}
 		case "FINISH_MANAGING_EVENT_SELECTION": {
@@ -286,15 +293,17 @@ function events(state = initialState.events, action = undefined) {
 			};
 		}
 		case "TWEAK_EVENT_ROW_HEIGHT": {
+			const { newHeight } = action.payload;
 			return {
 				...state,
-				rowHeight: action.newHeight,
+				rowHeight: newHeight,
 			};
 		}
 		case "TWEAK_EVENT_BACKGROUND_OPACITY": {
+			const { newOpacity } = action.payload;
 			return {
 				...state,
-				backgroundOpacity: action.newOpacity,
+				backgroundOpacity: newOpacity,
 			};
 		}
 

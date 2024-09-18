@@ -8,8 +8,8 @@ import { processImportedMap } from "$/services/packaging.service";
 import { importExistingSong } from "../actions";
 import { getIsNewUser } from "../reducers/user.reducer";
 
-export default () => (store) => (next) => {
-	return (action) => {
+export default function createDemoMiddleware() {
+	return (store) => (next) => (action) => {
 		next(action);
 
 		if (action.type === "LOAD_DEMO_MAP") {
@@ -23,7 +23,7 @@ export default () => (store) => (next) => {
 					.then((blob) => processImportedMap(blob, []))
 					.then((songData) => {
 						songData.demo = true;
-						next(importExistingSong(songData));
+						next(importExistingSong({ songData }));
 					})
 					.then(() => {
 						// HACK: Should pull data from demoSong
@@ -32,4 +32,4 @@ export default () => (store) => (next) => {
 			}
 		}
 	};
-};
+}

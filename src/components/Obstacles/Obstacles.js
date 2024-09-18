@@ -1,7 +1,7 @@
-import { connect } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { getColorForItem } from "$/helpers/colors.helpers";
-import * as actions from "$/store/actions";
+import { deleteObstacle, deselectObstacle, resizeObstacle, selectObstacle } from "$/store/actions";
 import { getVisibleObstacles } from "$/store/reducers/editor-entities.reducer/notes-view.reducer";
 import { getBeatDepth, getSnapTo } from "$/store/reducers/navigation.reducer";
 import { getSelectedSong } from "$/store/reducers/songs.reducer";
@@ -9,7 +9,14 @@ import { ObjectSelectionMode, ObjectTool } from "$/types";
 
 import ObstacleBox from "../ObstacleBox";
 
-const Obstacles = ({ song, obstacles, beatDepth, selectionMode, snapTo, deleteObstacle, resizeObstacle, selectObstacle, deselectObstacle }) => {
+const Obstacles = () => {
+	const song = useSelector(getSelectedSong);
+	const obstacles = useSelector(getVisibleObstacles);
+	const beatDepth = useSelector(getBeatDepth);
+	const selectionMode = useSelector((state) => state.editor.notes.selectionMode);
+	const snapTo = useSelector(getSnapTo);
+	const dispatch = useDispatch();
+
 	const obstacleColor = getColorForItem(ObjectTool.OBSTACLE, song);
 
 	return obstacles.map((obstacle) => (
@@ -19,37 +26,20 @@ const Obstacles = ({ song, obstacles, beatDepth, selectionMode, snapTo, deleteOb
 			color={obstacleColor}
 			beatDepth={beatDepth}
 			snapTo={snapTo}
-			handleDelete={deleteObstacle}
-			handleResize={resizeObstacle}
-			handleClick={() => (obstacle.selected ? deselectObstacle(obstacle.id) : selectObstacle(obstacle.id))}
+			handleDelete={(id) => dispatch(deleteObstacle({ id }))}
+			handleResize={(id, newBeatDuration) => dispatch(resizeObstacle({ id, newBeatDuration }))}
+			handleClick={() => dispatch(obstacle.selected ? deselectObstacle({ id: obstacle.id }) : selectObstacle({ id: obstacle.id }))}
 			handleMouseOver={() => {
 				if (selectionMode === ObjectSelectionMode.SELECT && !obstacle.selected) {
-					selectObstacle(obstacle.id);
+					dispatch(selectObstacle({ id: obstacle.id }));
 				} else if (selectionMode === ObjectSelectionMode.DESELECT && obstacle.selected) {
-					deselectObstacle(obstacle.id);
+					dispatch(deselectObstacle({ id: obstacle.id }));
 				} else if (selectionMode === ObjectSelectionMode.DELETE) {
-					deleteObstacle(obstacle.id);
+					dispatch(deleteObstacle({ id: obstacle.id }));
 				}
 			}}
 		/>
 	));
 };
 
-const mapStateToProps = (state) => {
-	return {
-		song: getSelectedSong(state),
-		obstacles: getVisibleObstacles(state),
-		beatDepth: getBeatDepth(state),
-		selectionMode: state.editor.notes.selectionMode,
-		snapTo: getSnapTo(state),
-	};
-};
-
-const mapDispatchToProps = {
-	deleteObstacle: actions.deleteObstacle,
-	resizeObstacle: actions.resizeObstacle,
-	selectObstacle: actions.selectObstacle,
-	deselectObstacle: actions.deselectObstacle,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Obstacles);
+export default Obstacles;
