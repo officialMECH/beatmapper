@@ -4,9 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { BLOCK_COLUMN_WIDTH, HIGHEST_PRECISION, SONG_OFFSET } from "$/constants";
 import { getColorForItem } from "$/helpers/colors.helpers";
 import { clickNote, finishManagingNoteSelection, mouseOverNote, startManagingNoteSelection } from "$/store/actions";
-import { getVisibleNotes } from "$/store/reducers/editor-entities.reducer/notes-view.reducer";
-import { getBeatDepth, getCursorPositionInBeats } from "$/store/reducers/navigation.reducer";
-import { getSelectedSong } from "$/store/reducers/songs.reducer";
+import { getBeatDepth, getCursorPositionInBeats, getNoteSelectionMode, getSelectedSong, getVisibleNotes } from "$/store/selectors";
 import { roundAwayFloatingPointNonsense } from "$/utils";
 
 import Block from "../Block";
@@ -41,7 +39,7 @@ const SongBlocks = () => {
 	const notes = useSelector(getVisibleNotes);
 	const cursorPositionInBeats = useSelector(getCursorPositionInBeats);
 	const beatDepth = useSelector(getBeatDepth);
-	const selectionMode = useSelector((state) => state.editor.notes.selectionMode);
+	const selectionMode = useSelector(getNoteSelectionMode);
 	const dispatch = useDispatch();
 
 	const zPosition = -SONG_OFFSET + cursorPositionInBeats * beatDepth;

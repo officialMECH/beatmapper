@@ -4,7 +4,7 @@ import styled from "styled-components";
 
 import { UNIT } from "$/constants";
 import { updateGraphicsLevel, updateProcessingDelay } from "$/store/actions";
-import { getGraphicsLevel, getProcessingDelay } from "$/store/reducers/user.reducer";
+import { getGraphicsLevel, getProcessingDelay } from "$/store/selectors";
 import { Quality } from "$/types";
 import { capitalize } from "$/utils";
 

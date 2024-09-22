@@ -5,8 +5,8 @@
 
 import { demoFileUrl } from "$/assets";
 import { processImportedMap } from "$/services/packaging.service";
-import { importExistingSong } from "../actions";
-import { getIsNewUser } from "../reducers/user.reducer";
+import { importExistingSong } from "$/store/actions";
+import { getIsNewUser } from "$/store/selectors";
 
 export default function createDemoMiddleware() {
 	return (store) => (next) => (action) => {

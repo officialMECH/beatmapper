@@ -3,8 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { UNIT } from "$/constants";
 import { promptChangeObstacleDuration } from "$/helpers/prompts.helpers";
 import { resizeSelectedObstacles, toggleFastWallsForSelectedObstacles } from "$/store/actions";
-import { getSelectedObstacles } from "$/store/reducers/editor-entities.reducer/notes-view.reducer";
-import { getEnabledFastWalls } from "$/store/reducers/songs.reducer";
+import { getEnabledFastWalls, getSelectedObstacles } from "$/store/selectors";
 
 import Heading from "../Heading";
 import MiniButton from "../MiniButton";

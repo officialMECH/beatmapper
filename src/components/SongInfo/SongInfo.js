@@ -5,8 +5,7 @@ import styled from "styled-components";
 
 import { COLORS, UNIT } from "$/constants";
 import { getLabelForDifficulty } from "$/helpers/song.helpers";
-import { getDifficulty } from "$/store/reducers/editor-entities.reducer";
-import { getSelectedSong, getSelectedSongDifficultyIds } from "$/store/reducers/songs.reducer";
+import { getDifficulty, getSelectedSong, getSelectedSongDifficultyIds } from "$/store/selectors";
 
 import CoverArtImage from "../CoverArtImage";
 import CreateDifficultyForm from "../CreateDifficultyForm";

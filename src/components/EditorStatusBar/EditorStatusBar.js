@@ -26,9 +26,7 @@ import styled from "styled-components";
 
 import { COLORS, UNIT } from "$/constants";
 import { toggleNoteTick, togglePreviewLightingInEventsView, tweakEventBackgroundOpacity, tweakEventRowHeight, updateBeatDepth, updatePlaybackSpeed, updateVolume } from "$/store/actions";
-import { getNumOfBlocks, getNumOfMines, getNumOfObstacles } from "$/store/reducers/editor-entities.reducer/notes-view.reducer";
-import { getBackgroundOpacity, getRowHeight, getShowLightingPreview } from "$/store/reducers/editor.reducer";
-import { getBeatDepth, getIsLoading, getPlayNoteTick, getPlaybackRate, getVolume } from "$/store/reducers/navigation.reducer";
+import { getBackgroundOpacity, getBeatDepth, getIsLoading, getNumOfBlocks, getNumOfMines, getNumOfObstacles, getPlayNoteTick, getPlaybackRate, getRowHeight, getShowLightingPreview, getVolume } from "$/store/selectors";
 import { View } from "$/types";
 import { pluralize } from "$/utils";
 

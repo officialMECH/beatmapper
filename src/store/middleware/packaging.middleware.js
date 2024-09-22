@@ -1,7 +1,6 @@
 import { getFile, saveBeatmap, saveFile, saveInfoDat } from "$/services/file.service";
 import { createBeatmapContentsFromState, createInfoContent, saveEventsToAllDifficulties, zipFiles } from "$/services/packaging.service";
-import { getDifficulty } from "../reducers/editor-entities.reducer";
-import { getSelectedSong, getSongById } from "../reducers/songs.reducer";
+import { getDifficulty, getSelectedSong, getSongById } from "$/store/selectors";
 
 window.saveFile = saveFile;
 window.getFile = getFile;

@@ -5,7 +5,7 @@ import styled from "styled-components";
 import { UNIT } from "$/constants";
 import { promptJumpToBeat, promptQuickSelect } from "$/helpers/prompts.helpers";
 import { jumpToBeat, pasteSelection, selectAllInRange } from "$/store/actions";
-import { getHasCopiedNotes } from "$/store/reducers/clipboard.reducer";
+import { getHasCopiedNotes } from "$/store/selectors";
 import { View } from "$/types";
 import { getMetaKeyLabel } from "$/utils";
 import { ACTION_WIDTH } from "./EditorRightPanel.constants";

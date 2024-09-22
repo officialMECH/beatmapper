@@ -9,7 +9,7 @@ import { heroVideo } from "$/assets";
 import { COLORS, UNIT } from "$/constants";
 import { useWindowDimensions } from "$/hooks";
 import { loadDemoMap } from "$/store/actions";
-import { getDemoSong } from "$/store/reducers/songs.reducer";
+import { getDemoSong } from "$/store/selectors";
 
 import Center from "../Center";
 import Heading from "../Heading";

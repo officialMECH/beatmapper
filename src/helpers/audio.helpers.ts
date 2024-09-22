@@ -28,7 +28,7 @@ export function getWaveformDataForFile(file: Blob | MediaSource) {
 	const fileBlobUrl = URL.createObjectURL(file);
 	const audioContext = new AudioContext();
 
-	return new Promise((resolve, reject) => {
+	return new Promise<WaveformData>((resolve, reject) => {
 		fetch(fileBlobUrl)
 			.then((response) => response.arrayBuffer())
 			.then((buffer) => {

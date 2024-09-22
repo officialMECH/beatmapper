@@ -9,7 +9,7 @@ import { useMount } from "$/hooks";
 import { getFile, saveInfoDat, saveLocalCoverArtFile, saveSongFile } from "$/services/file.service";
 import { createInfoContent } from "$/services/packaging.service";
 import { stopPlaying, togglePropertyForSelectedSong, updateSongDetails } from "$/store/actions";
-import { getEnabledFastWalls, getEnabledLightshow, getSelectedSong } from "$/store/reducers/songs.reducer";
+import { getEnabledFastWalls, getEnabledLightshow, getSelectedSong } from "$/store/selectors";
 
 import CoverArtPicker from "../AddSongForm/CoverArtPicker";
 import SongPicker from "../AddSongForm/SongPicker";

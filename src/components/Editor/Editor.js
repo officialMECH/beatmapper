@@ -5,7 +5,7 @@ import styled from "styled-components";
 
 import { COLORS, SIDEBAR_WIDTH } from "$/constants";
 import { leaveEditor, startLoadingSong } from "$/store/actions";
-import { getSelectedSong } from "$/store/reducers/songs.reducer";
+import { getSelectedSong } from "$/store/selectors";
 
 import Download from "../Download";
 import EditorPrompts from "../EditorPrompts";

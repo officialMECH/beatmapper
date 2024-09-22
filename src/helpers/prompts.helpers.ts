@@ -3,7 +3,7 @@
  * Currently uses window.prompt, but I should build something prettier.
  */
 
-import type { ActionCreator, UnknownAction } from "redux";
+import type { ActionCreator, UnknownAction } from "@reduxjs/toolkit";
 
 import { GRID_PRESET_SLOTS } from "$/constants";
 import type { App, GridPresets, View } from "$/types";

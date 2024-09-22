@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { processImportedMap } from "$/services/packaging.service";
 import { cancelImportingSong, importExistingSong, startImportingSong } from "$/store/actions";
-import { getAllSongs } from "$/store/reducers/songs.reducer";
+import { getAllSongs } from "$/store/selectors";
 
 import FileUploader from "../FileUploader";
 

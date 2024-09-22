@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 
 import { dismissPrompt } from "$/store/actions";
-import { getSeenPrompts } from "$/store/reducers/user.reducer";
+import { getSeenPrompts } from "$/store/selectors";
 
 import Paragraph from "../Paragraph";
 import UnobtrusivePrompt from "../UnobtrusivePrompt";

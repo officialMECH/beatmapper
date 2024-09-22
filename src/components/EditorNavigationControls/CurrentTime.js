@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
 
 import { getFormattedTimestamp } from "$/helpers/audio.helpers";
-import { getCursorPosition } from "$/store/reducers/navigation.reducer";
+import { getCursorPosition } from "$/store/selectors";
 
 import LabeledNumber from "../LabeledNumber";
 

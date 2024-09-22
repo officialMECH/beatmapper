@@ -16,14 +16,10 @@ import { deleteAllSongFiles, deleteFile, getBeatmap, getFile, getFilenameForThin
 import { createBeatmapContents, createInfoContent } from "$/services/packaging.service";
 import { shiftEntitiesByOffset, unshiftEntitiesByOffset } from "$/services/packaging.service.nitty-gritty";
 import { Sfx } from "$/services/sfx.service";
+import { adjustCursorPosition, finishLoadingSong, loadBeatmapEntities, pausePlaying, reloadWaveform, startPlaying } from "$/store/actions";
+import { getAllEventsAsArray, getBeatsPerZoomLevel, getCursorPositionInBeats, getPlaybackRate, getProcessingDelay, getSelectedSong, getSongById, getVolume } from "$/store/selectors";
 import { View } from "$/types";
 import { clamp, roundToNearest } from "$/utils";
-import { adjustCursorPosition, finishLoadingSong, loadBeatmapEntities, pausePlaying, reloadWaveform, startPlaying } from "../actions";
-import { getAllEventsAsArray } from "../reducers/editor-entities.reducer/events-view.reducer";
-import { getBeatsPerZoomLevel } from "../reducers/editor.reducer";
-import { getCursorPositionInBeats, getPlaybackRate, getVolume } from "../reducers/navigation.reducer";
-import { getSelectedSong, getSongById } from "../reducers/songs.reducer";
-import { getProcessingDelay } from "../reducers/user.reducer";
 import { calculateIfPlaybackShouldBeCommandeered, generateWaveformForSongFile, stopAndRewindAudio, triggerTickerIfNecessary } from "./song.middleware.helpers";
 
 export default function createSongMiddleware() {
@@ -450,7 +446,7 @@ export default function createSongMiddleware() {
 				break;
 			}
 
-			case "SKIP_TO_START": {
+			case "SKIP_TO_START/fulfilled": {
 				next(action);
 				const { offset } = action.payload;
 				audioSample.setCurrentTime(offset / 1000);

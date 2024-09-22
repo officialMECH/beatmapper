@@ -12,7 +12,7 @@ import styled from "styled-components";
 
 import { UNIT } from "$/constants";
 import { selectNoteDirection } from "$/store/actions";
-import { getSelectedCutDirection, getSelectedNoteTool } from "$/store/reducers/editor.reducer";
+import { getSelectedCutDirection, getSelectedNoteTool } from "$/store/selectors";
 import { Direction, ObjectTool } from "$/types";
 
 import Heading from "../Heading";

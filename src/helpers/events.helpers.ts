@@ -72,7 +72,7 @@ export function convertEventsToExportableJson<T extends App.Event>(events: T[]) 
 	});
 }
 
-export function convertEventsToRedux<T extends Json.Event>(events: T[]) {
+export function convertEventsToRedux<T extends Json.Event>(events: T[]): App.Event[] {
 	return events.map((event) => {
 		const id = uuid();
 		const trackId = TRACK_IDS_ARRAY[event._type];

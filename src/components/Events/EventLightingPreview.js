@@ -11,10 +11,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 
 import { Controls } from "$/services/controls.service";
-import { getShowLightingPreview } from "$/store/reducers/editor.reducer";
-import { getIsPlaying } from "$/store/reducers/navigation.reducer";
-import { getSelectedSong } from "$/store/reducers/songs.reducer";
-import { getGraphicsLevel } from "$/store/reducers/user.reducer";
+import { getGraphicsLevel, getIsPlaying, getSelectedSong, getShowLightingPreview } from "$/store/selectors";
 
 import AmbientLighting from "../Preview/AmbientLighting";
 import BackLaser from "../Preview/BackLaser";

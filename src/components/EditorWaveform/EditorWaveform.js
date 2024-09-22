@@ -4,9 +4,7 @@ import styled from "styled-components";
 import { UNIT } from "$/constants";
 import { useBoundingBox } from "$/hooks";
 import { scrubWaveform } from "$/store/actions";
-import { getCursorPosition, getDuration, getIsLoading } from "$/store/reducers/navigation.reducer";
-import { getSelectedSong } from "$/store/reducers/songs.reducer";
-import { getGraphicsLevel } from "$/store/reducers/user.reducer";
+import { getCursorPosition, getDuration, getGraphicsLevel, getIsLoading, getSelectedSong, getWaveformData } from "$/store/selectors";
 import { Quality } from "$/types";
 import { roundToNearest } from "$/utils";
 
@@ -16,7 +14,7 @@ import ScrubbableWaveform from "../ScrubbableWaveform";
 
 const EditorWaveform = ({ height, view, bookmarks }) => {
 	const song = useSelector(getSelectedSong);
-	const waveformData = useSelector((state) => state.waveform.data);
+	const waveformData = useSelector(getWaveformData);
 	const isLoadingSong = useSelector(getIsLoading);
 	const duration = useSelector(getDuration);
 	const cursorPosition = useSelector(getCursorPosition);

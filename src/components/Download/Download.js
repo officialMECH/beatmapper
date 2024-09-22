@@ -4,8 +4,7 @@ import styled from "styled-components";
 import { UNIT } from "$/constants";
 import { useMount } from "$/hooks";
 import { downloadMapFiles, pausePlaying } from "$/store/actions";
-import { getIsPlaying } from "$/store/reducers/navigation.reducer";
-import { getSelectedSong } from "$/store/reducers/songs.reducer";
+import { getIsPlaying, getSelectedSong } from "$/store/selectors";
 
 import Button from "../Button";
 import Heading from "../Heading";

@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
 
-import { getGraphicsLevel } from "$/store/reducers/user.reducer";
+import { getGraphicsLevel } from "$/store/selectors";
 
 const Fog = ({ renderForGraphics, strength }) => {
 	const graphicsLevel = useSelector(getGraphicsLevel);

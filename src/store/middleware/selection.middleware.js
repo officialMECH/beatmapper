@@ -7,9 +7,9 @@
  */
 
 import { findNoteByProperties } from "$/helpers/notes.helpers";
+import { bulkDeleteNote, deleteNote, deselectNote, selectNote, toggleNoteColor } from "$/store/actions";
+import { getNotes } from "$/store/selectors";
 import { ObjectSelectionMode } from "$/types";
-import { bulkDeleteNote, deleteNote, deselectNote, selectNote, toggleNoteColor } from "../actions";
-import { getNotes } from "../reducers/editor-entities.reducer/notes-view.reducer";
 
 export default function createSelectionMiddleware() {
 	return (store) => (next) => (action) => {

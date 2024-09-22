@@ -2,7 +2,7 @@ import { useSelector } from "react-redux";
 import styled from "styled-components";
 
 import { COLORS } from "$/constants";
-import { getCursorPositionInBeats } from "$/store/reducers/navigation.reducer";
+import { getCursorPositionInBeats } from "$/store/selectors";
 import { normalize } from "$/utils";
 
 const CursorPositionIndicator = ({ gridWidth, startBeat, endBeat, zIndex }) => {

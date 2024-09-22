@@ -2,9 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { getColorForItem } from "$/helpers/colors.helpers";
 import { deleteObstacle, deselectObstacle, resizeObstacle, selectObstacle } from "$/store/actions";
-import { getVisibleObstacles } from "$/store/reducers/editor-entities.reducer/notes-view.reducer";
-import { getBeatDepth, getSnapTo } from "$/store/reducers/navigation.reducer";
-import { getSelectedSong } from "$/store/reducers/songs.reducer";
+import { getBeatDepth, getNoteSelectionMode, getSelectedSong, getSnapTo, getVisibleObstacles } from "$/store/selectors";
 import { ObjectSelectionMode, ObjectTool } from "$/types";
 
 import ObstacleBox from "../ObstacleBox";
@@ -13,7 +11,7 @@ const Obstacles = () => {
 	const song = useSelector(getSelectedSong);
 	const obstacles = useSelector(getVisibleObstacles);
 	const beatDepth = useSelector(getBeatDepth);
-	const selectionMode = useSelector((state) => state.editor.notes.selectionMode);
+	const selectionMode = useSelector(getNoteSelectionMode);
 	const snapTo = useSelector(getSnapTo);
 	const dispatch = useDispatch();
 

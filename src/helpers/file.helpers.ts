@@ -1,9 +1,9 @@
 export function convertFileToArrayBuffer(file: Blob) {
-	return new Promise((resolve, reject) => {
+	return new Promise<ArrayBuffer>((resolve, reject) => {
 		const fileReader = new FileReader();
 
 		fileReader.onload = function (e) {
-			resolve(this.result);
+			resolve(this.result as ArrayBuffer);
 		};
 		fileReader.onerror = (err) => {
 			reject(err);

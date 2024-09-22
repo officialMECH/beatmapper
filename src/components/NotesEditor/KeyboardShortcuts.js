@@ -2,7 +2,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { selectNoteDirection, selectTool, swapSelectedNotes, toggleSelectAll } from "$/store/actions";
-import { getDefaultObstacleDuration } from "$/store/reducers/editor.reducer";
+import { getDefaultObstacleDuration } from "$/store/selectors";
 import { Direction, ObjectTool, View } from "$/types";
 import { isMetaKeyPressed } from "$/utils";
 

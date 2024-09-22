@@ -1,4 +1,4 @@
-import type { EntityId } from "../shared";
+import type { EntityId } from "@reduxjs/toolkit";
 import type { EventColorType, LaserSpeedEventType, LaserSpeedTrackId, LightingEventType, LightingTrackId, RingEventType, RingTrackId, TrackId } from "./shared";
 
 export interface BaseEvent {

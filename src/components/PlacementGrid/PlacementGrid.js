@@ -5,8 +5,7 @@ import { BLOCK_PLACEMENT_SQUARE_SIZE } from "$/constants";
 import { getColorForItem } from "$/helpers/colors.helpers";
 import { convertGridColumn, convertGridRow } from "$/helpers/grid.helpers";
 import { clearCellOfNotes, clickPlacementGrid, createNewObstacle, setBlockByDragging } from "$/store/actions";
-import { getDefaultObstacleDuration, getSelectedNoteTool } from "$/store/reducers/editor.reducer";
-import { getGridSize, getMappingMode, getSelectedSong } from "$/store/reducers/songs.reducer";
+import { getDefaultObstacleDuration, getGridSize, getMappingMode, getNoteSelectionMode, getSelectedNoteTool, getSelectedSong } from "$/store/selectors";
 import { ObjectTool } from "$/types";
 import { range } from "$/utils";
 import { getDirectionForDrag } from "./PlacementGrid.helpers";
@@ -19,7 +18,7 @@ const PlacementGrid = ({ width, gridPosition }) => {
 	const song = useSelector(getSelectedSong);
 	const { numRows, numCols, colWidth, rowHeight } = useSelector(getGridSize);
 	const selectedTool = useSelector(getSelectedNoteTool);
-	const selectionMode = useSelector((state) => state.editor.notes.selectionMode);
+	const selectionMode = useSelector(getNoteSelectionMode);
 	const mappingMode = useSelector(getMappingMode);
 	const defaultObstacleDuration = useSelector(getDefaultObstacleDuration);
 	const dispatch = useDispatch();

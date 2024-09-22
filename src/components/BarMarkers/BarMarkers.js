@@ -3,9 +3,7 @@ import { useSelector } from "react-redux";
 
 import { SONG_OFFSET, SURFACE_DEPTHS } from "$/constants";
 import { convertMillisecondsToBeats } from "$/helpers/audio.helpers";
-import { getBeatDepth, getCursorPositionInBeats, getDuration } from "$/store/reducers/navigation.reducer";
-import { getSelectedSong } from "$/store/reducers/songs.reducer";
-import { getGraphicsLevel } from "$/store/reducers/user.reducer";
+import { getBeatDepth, getCursorPositionInBeats, getDuration, getGraphicsLevel, getSelectedSong } from "$/store/selectors";
 import { range } from "$/utils";
 
 import Marker from "./Marker";

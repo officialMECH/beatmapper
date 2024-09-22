@@ -6,8 +6,7 @@ import styled from "styled-components";
 import { COLORS } from "$/constants";
 import { getColorForItem } from "$/helpers/colors.helpers";
 import { bulkDeleteEvent, deleteEvent, deselectEvent, selectEvent, switchEventColor } from "$/store/actions";
-import { getSelectedEventEditMode } from "$/store/reducers/editor.reducer";
-import { getSelectedSong } from "$/store/reducers/songs.reducer";
+import { getSelectedEventEditMode, getSelectedSong } from "$/store/selectors";
 import { App, EventEditMode } from "$/types";
 import { normalize } from "$/utils";
 

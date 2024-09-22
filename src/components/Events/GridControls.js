@@ -13,8 +13,7 @@ import styled from "styled-components";
 import { COLORS, UNIT, ZOOM_LEVEL_MAX, ZOOM_LEVEL_MIN } from "$/constants";
 import { getColorForItem } from "$/helpers/colors.helpers";
 import { selectEventColor, selectEventEditMode, selectTool, toggleEventWindowLock, toggleLaserLock, zoomIn, zoomOut } from "$/store/actions";
-import { getAreLasersLocked, getIsLockedToCurrentWindow, getSelectedEventColor, getSelectedEventEditMode, getSelectedEventTool, getZoomLevel } from "$/store/reducers/editor.reducer";
-import { getSelectedSong } from "$/store/reducers/songs.reducer";
+import { getAreLasersLocked, getIsLockedToCurrentWindow, getSelectedEventColor, getSelectedEventEditMode, getSelectedEventTool, getSelectedSong, getZoomLevel } from "$/store/selectors";
 import { EventColor, EventEditMode, EventTool, View } from "$/types";
 
 import Spacer from "../Spacer";

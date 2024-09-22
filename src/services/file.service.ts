@@ -1,7 +1,7 @@
 import localforage from "localforage";
 
 import { defaultCoverArtPath } from "$/assets";
-import type { BeatmapId, Difficulty, Member, SongId } from "$/types";
+import type { BeatmapId, Member, SongId } from "$/types";
 
 // These are the types of things we'll need to save.
 export const FileType = {
@@ -119,7 +119,7 @@ export function getFilenameForThing(songId: SongId, type: FileType, metadata: Me
  * in one place, and isn't spread across the app.
  */
 
-export const getBeatmap = (songId: string, difficulty: Difficulty): Promise<object> => {
+export const getBeatmap = (songId: SongId, difficulty: BeatmapId): Promise<object> => {
 	// Start by getting the entities (notes, events, etc) for this map
 	const beatmapFilename = getFilenameForThing(songId, FileType.BEATMAP, {
 		difficulty,
@@ -137,12 +137,12 @@ export const getBeatmap = (songId: string, difficulty: Difficulty): Promise<obje
 	});
 };
 
-export const saveSongFile = (songId: string, songFile: File | Blob) => {
+export const saveSongFile = (songId: SongId, songFile: File | Blob) => {
 	const songFilename = getFilenameForThing(songId, FileType.SONG);
 	return saveFile(songFilename, songFile);
 };
 
-async function saveBackupCoverArt(songId: string): SaveReturn<Blob> {
+async function saveBackupCoverArt(songId: SongId): SaveReturn<Blob> {
 	// If the user doesn't have a cover image yet, we'll supply a default.
 	// Ideally we'd need a File, to be consistent with the File we get from
 	// a locally-selected file, but a Blob is near-identical.
@@ -161,7 +161,7 @@ async function saveBackupCoverArt(songId: string): SaveReturn<Blob> {
 	return await saveFile(coverArtFilename, blob);
 }
 
-export function saveLocalCoverArtFile(songId: string, coverArtFile?: File): SaveReturn<Blob> {
+export function saveLocalCoverArtFile(songId: SongId, coverArtFile?: File): SaveReturn<Blob> {
 	if (coverArtFile) {
 		const extension = getExtension(coverArtFile.name, "unknown");
 		const coverArtFilename = getFilenameForThing(songId, FileType.COVER, {
@@ -173,7 +173,7 @@ export function saveLocalCoverArtFile(songId: string, coverArtFile?: File): Save
 	return saveBackupCoverArt(songId);
 }
 
-export function saveCoverArtFromBlob(songId: string, coverArtBlob?: Blob, originalCoverArtFilename?: string): SaveReturn<Blob> {
+export function saveCoverArtFromBlob(songId: SongId, coverArtBlob?: Blob, originalCoverArtFilename?: string): SaveReturn<Blob> {
 	if (coverArtBlob) {
 		// When uploading a .zip file, we don't have a File object for the image,
 		// we get a Blob instead. Blobs don't have a `name` property, so instead we

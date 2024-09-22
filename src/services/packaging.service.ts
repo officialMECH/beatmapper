@@ -13,10 +13,8 @@ import { convertEventsToExportableJson } from "$/helpers/events.helpers";
 import { convertNotesToMappingExtensions } from "$/helpers/notes.helpers";
 import { convertObstaclesToExportableJson } from "$/helpers/obstacles.helpers";
 import { getSongIdFromName, sortDifficultyIds } from "$/helpers/song.helpers";
-import { getSortedBookmarksArray } from "$/store/reducers/bookmarks.reducer";
-import { getAllEventsAsArray } from "$/store/reducers/editor-entities.reducer/events-view.reducer";
-import { getNotes, getObstacles } from "$/store/reducers/editor-entities.reducer/notes-view.reducer";
-import { getSelectedSong, getSelectedSongDifficultyIds } from "$/store/reducers/songs.reducer";
+import { getAllEventsAsArray, getNotes, getObstacles, getSelectedSong, getSelectedSongDifficultyIds } from "$/store/selectors";
+import type { RootState } from "$/store/setup";
 import { App, Difficulty, type Json, type SongId } from "$/types";
 import { omit } from "$/utils";
 import { FileType, getFile, getFilenameForThing, saveCoverArtFromBlob, saveFile, saveSongFile } from "./file.service";
@@ -256,11 +254,11 @@ export function createBeatmapContents(
 	return JSON.stringify(contents, null, 2);
 }
 
-export function createBeatmapContentsFromState(state: any, song: Pick<App.Song, "offset" | "bpm">) {
+export function createBeatmapContentsFromState(state: RootState, song: Pick<App.Song, "offset" | "bpm">) {
 	const notes = getNotes(state);
 	const events = convertEventsToExportableJson(getAllEventsAsArray(state));
 	const obstacles = convertObstaclesToExportableJson(getObstacles(state));
-	const bookmarks = convertBookmarksToExportableJson(getSortedBookmarksArray(state));
+	const bookmarks = convertBookmarksToExportableJson(Object.values(state.bookmarks));
 
 	// It's important that notes are sorted by their _time property primarily,
 	// and then by _lineLayer secondarily.
@@ -270,7 +268,7 @@ export function createBeatmapContentsFromState(state: any, song: Pick<App.Song, 
 	const shiftedObstacles = shiftEntitiesByOffset(obstacles, song.offset, song.bpm);
 
 	// Deselect all entities before saving, we don't want to persist that info.
-	const deselect = (entity: any) => ({
+	const deselect = <T extends object>(entity: T) => ({
 		...entity,
 		selected: false,
 	});
@@ -478,7 +476,7 @@ export async function processImportedMap(zipFile: Parameters<typeof JSZip.loadAs
 	const infoDatJson = JSON.parse(infoDatString);
 	const songId = getSongIdFromName(infoDatJson._songName);
 
-	const songIdAlreadyExists = currentSongIds.some((id: string) => id === songId);
+	const songIdAlreadyExists = currentSongIds.some((id) => id === songId);
 	if (songIdAlreadyExists) {
 		const shouldOverwrite = window.confirm("This song appears to be a duplicate. Would you like to overwrite your existing song?");
 
@@ -587,7 +585,7 @@ export async function processImportedMap(zipFile: Parameters<typeof JSZip.loadAs
 	};
 }
 
-export function saveEventsToAllDifficulties(state: any) {
+export function saveEventsToAllDifficulties(state: RootState) {
 	const song = getSelectedSong(state);
 	const difficulties = getSelectedSongDifficultyIds(state);
 

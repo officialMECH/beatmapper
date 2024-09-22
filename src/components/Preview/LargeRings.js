@@ -5,9 +5,7 @@ import { useSelector } from "react-redux";
 import { convertMillisecondsToBeats } from "$/helpers/audio.helpers";
 import { getColorForItem } from "$/helpers/colors.helpers";
 import { useOnChange } from "$/hooks";
-import { getTracks } from "$/store/reducers/editor-entities.reducer/events-view.reducer";
-import { getAnimateRingMotion, getCursorPositionInBeats } from "$/store/reducers/navigation.reducer";
-import { getGraphicsLevel, getUsableProcessingDelay } from "$/store/reducers/user.reducer";
+import { getAnimateRingMotion, getCursorPositionInBeats, getGraphicsLevel, getTracks, getUsableProcessingDelay } from "$/store/selectors";
 import { App, Quality } from "$/types";
 import { findMostRecentEventInTrack } from "./Preview.helpers";
 

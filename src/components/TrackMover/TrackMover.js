@@ -1,7 +1,7 @@
 import { a, useSpring } from "@react-spring/three";
 import { useSelector } from "react-redux";
 
-import { getAnimateBlockMotion, getBeatDepth, getCursorPositionInBeats } from "$/store/reducers/navigation.reducer";
+import { getAnimateBlockMotion, getBeatDepth, getCursorPositionInBeats } from "$/store/selectors";
 
 const TrackMover = ({ children }) => {
 	const cursorPositionInBeats = useSelector(getCursorPositionInBeats);

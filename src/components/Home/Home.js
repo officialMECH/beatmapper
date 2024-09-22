@@ -1,8 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
 
-import { getAllSongsChronologically, getProcessingImport } from "$/store/reducers/songs.reducer";
-import { getIsNewUser } from "$/store/reducers/user.reducer";
+import { getAllSongsChronologically, getIsNewUser, getProcessingImport } from "$/store/selectors";
 
 import AddSongForm from "../AddSongForm";
 import BasicLayout from "../BasicLayout";

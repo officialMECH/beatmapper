@@ -7,7 +7,7 @@ import styled from "styled-components";
 
 import { COLORS, UNIT } from "$/constants";
 import { copySelection, cutSelection, deselectAll, deselectAllOfType, nudgeSelection, pasteSelection, swapSelectedNotes } from "$/store/actions";
-import { getHasCopiedNotes } from "$/store/reducers/clipboard.reducer";
+import { getHasCopiedNotes } from "$/store/selectors";
 import { ObjectType, View } from "$/types";
 import { getMetaKeyLabel, interleave } from "$/utils";
 import { ACTION_WIDTH, HALF_ACTION_WIDTH } from "./EditorRightPanel.constants";

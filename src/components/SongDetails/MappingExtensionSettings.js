@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 
 import { toggleModForSong } from "$/store/actions";
-import { getSelectedSong } from "$/store/reducers/songs.reducer";
+import { getSelectedSong } from "$/store/selectors";
 
 import LabeledCheckbox from "../LabeledCheckbox";
 import Link from "../Link";

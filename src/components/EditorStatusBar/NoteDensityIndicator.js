@@ -1,7 +1,7 @@
 import { layers as densityIcon } from "react-icons-kit/feather/layers";
 import { useSelector } from "react-redux";
 
-import { getNoteDensity } from "$/store/reducers/editor-entities.reducer/notes-view.reducer";
+import { getNoteDensity } from "$/store/selectors";
 import { roundTo } from "$/utils";
 
 import CountIndicator from "./CountIndicator";

@@ -1950,6 +1950,26 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@reduxjs/toolkit@npm:^2.2.7":
+  version: 2.2.7
+  resolution: "@reduxjs/toolkit@npm:2.2.7"
+  dependencies:
+    immer: "npm:^10.0.3"
+    redux: "npm:^5.0.1"
+    redux-thunk: "npm:^3.1.0"
+    reselect: "npm:^5.1.0"
+  peerDependencies:
+    react: ^16.9.0 || ^17.0.0 || ^18
+    react-redux: ^7.2.1 || ^8.1.3 || ^9.0.0
+  peerDependenciesMeta:
+    react:
+      optional: true
+    react-redux:
+      optional: true
+  checksum: 10/6bd1b5b44b12dbd53486c7dd05afc6d4bb7dc341ee3a44b5ed576b814db65babd5f81c5e3878ed5b2791dd4be01d4991e3a88e01ac5af11c260f4b9e4d5c30d9
+  languageName: node
+  linkType: hard
+
 "@remix-run/router@npm:1.19.1":
   version: 1.19.1
   resolution: "@remix-run/router@npm:1.19.1"
@@ -2645,12 +2665,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/redux-storage@npm:^4.1.3":
-  version: 4.1.3
-  resolution: "@types/redux-storage@npm:4.1.3"
+"@types/redux-state-sync@npm:^3.1.10":
+  version: 3.1.10
+  resolution: "@types/redux-state-sync@npm:3.1.10"
   dependencies:
-    redux: "npm:^3.6.0 || ^4.0.0"
-  checksum: 10/52ff5fe9bfcd412d7e5037ef19734eb0ff0d6989362438b759224256cb8d7266d6c6403d925f65dc76851feeb985759a735bb13bbae53cab452850cf5da96338
+    broadcast-channel: "npm:^2.1.8"
+    redux: "npm:^4.0.1"
+  checksum: 10/ea600e96d1be42f02bff1044e5a2a0475277de1137b082d6ee6f476d72fd22df22fbf93144461c731059ef30a9dc7397c22b696681f2332319b9488612b2a9a3
   languageName: node
   linkType: hard
 
@@ -3114,6 +3135,7 @@ __metadata:
     "@mdx-js/rollup": "npm:^3.0.1"
     "@react-spring/three": "npm:^9.7.4"
     "@react-three/fiber": "npm:^8.17.7"
+    "@reduxjs/toolkit": "npm:^2.2.7"
     "@types/color": "npm:^3.0.6"
     "@types/file-saver": "npm:^2.0.7"
     "@types/howler": "npm:^2.2.11"
@@ -3124,7 +3146,7 @@ __metadata:
     "@types/react-dom": "npm:^18.3.0"
     "@types/react-helmet": "npm:^6.1.11"
     "@types/react-outside-click-handler": "npm:^1.3.3"
-    "@types/redux-storage": "npm:^4.1.3"
+    "@types/redux-state-sync": "npm:^3.1.10"
     "@types/three": "npm:^0.168.0"
     "@types/uuid": "npm:^10.0.0"
     "@vitejs/plugin-react": "npm:^4.3.1"
@@ -3150,7 +3172,6 @@ __metadata:
     react-router-dom: "npm:^6.26.1"
     react-tippy: "npm:^1.4.0"
     react-transition-group: "npm:^4.4.5"
-    redux: "npm:^5.0.1"
     redux-devtools: "npm:^3.7.0"
     redux-devtools-dock-monitor: "npm:^1.2.0"
     redux-devtools-filter-actions: "npm:^1.2.2"
@@ -3167,7 +3188,6 @@ __metadata:
     remark-gfm: "npm:^4.0.0"
     remark-mdx-frontmatter: "npm:^5.0.0"
     remark-mdx-toc: "npm:^0.3.1"
-    reselect: "npm:^5.1.1"
     slugify: "npm:^1.6.6"
     styled-components: "npm:^6.1.13"
     three: "npm:^0.168.0"
@@ -3204,6 +3224,21 @@ __metadata:
   dependencies:
     balanced-match: "npm:^1.0.0"
   checksum: 10/a61e7cd2e8a8505e9f0036b3b6108ba5e926b4b55089eeb5550cd04a471fe216c96d4fe7e4c7f995c728c554ae20ddfc4244cad10aef255e72b62930afd233d1
+  languageName: node
+  linkType: hard
+
+"broadcast-channel@npm:^2.1.8":
+  version: 2.3.4
+  resolution: "broadcast-channel@npm:2.3.4"
+  dependencies:
+    "@babel/runtime": "npm:^7.6.2"
+    detect-node: "npm:^2.0.4"
+    js-sha3: "npm:0.8.0"
+    microseconds: "npm:0.1.0"
+    nano-time: "npm:1.0.0"
+    rimraf: "npm:2.6.3"
+    unload: "npm:2.2.0"
+  checksum: 10/02e5fa0261c7294402596d325bd8b3f2d841510d14c51ce19447a18c8f80f354329adbef329dd935edc89deaf45c8d730e14fec5005e75c8342b85415fa32c2e
   languageName: node
   linkType: hard
 
@@ -4913,7 +4948,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"immer@npm:^10.1.1":
+"immer@npm:^10.0.3, immer@npm:^10.1.1":
   version: 10.1.1
   resolution: "immer@npm:10.1.1"
   checksum: 10/9dacf1e8c201d69191ccd88dc5d733bafe166cd45a5a360c5d7c88f1de0dff974a94114d72b35f3106adfe587fcfb131c545856184a2247d89d735ad25589863
@@ -6489,6 +6524,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"microseconds@npm:0.1.0":
+  version: 0.1.0
+  resolution: "microseconds@npm:0.1.0"
+  checksum: 10/e239e14534f73e9a58e94b441f35078d5c39b1291a0d92ab48a1303725c3963d9627a1f1b733e7fb17f2021ffb9e09bcbbb5a934986294892d3ed47d1091ae47
+  languageName: node
+  linkType: hard
+
 "microseconds@npm:0.2.0":
   version: 0.2.0
   resolution: "microseconds@npm:0.2.0"
@@ -7621,7 +7663,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"redux@npm:^3.6.0 || ^4.0.0":
+"redux@npm:^4.0.1":
   version: 4.2.1
   resolution: "redux@npm:4.2.1"
   dependencies:
@@ -7839,7 +7881,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"reselect@npm:^5.1.1":
+"reselect@npm:^5.1.0":
   version: 5.1.1
   resolution: "reselect@npm:5.1.1"
   checksum: 10/1fdae11a39ed9c8d85a24df19517c8372ee24fefea9cce3fae9eaad8e9cefbba5a3d4940c6fe31296b6addf76e035588c55798f7e6e147e1b7c0855f119e7fa5
@@ -7876,6 +7918,17 @@ __metadata:
   version: 0.12.0
   resolution: "retry@npm:0.12.0"
   checksum: 10/1f914879f97e7ee931ad05fe3afa629bd55270fc6cf1c1e589b6a99fab96d15daad0fa1a52a00c729ec0078045fe3e399bd4fd0c93bcc906957bdc17f89cb8e6
+  languageName: node
+  linkType: hard
+
+"rimraf@npm:2.6.3":
+  version: 2.6.3
+  resolution: "rimraf@npm:2.6.3"
+  dependencies:
+    glob: "npm:^7.1.3"
+  bin:
+    rimraf: ./bin.js
+  checksum: 10/756419f2fa99aa119c46a9fc03e09d84ecf5421a80a72d1944c5088c9e4671e77128527a900a313ed9d3fdbdd37e2ae05486cd7e9116d5812d8c31f2399d7c86
   languageName: node
   linkType: hard
 

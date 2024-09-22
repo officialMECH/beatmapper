@@ -8,8 +8,7 @@ import styled from "styled-components";
 import { DIFFICULTIES, UNIT } from "$/constants";
 import { getLabelForDifficulty } from "$/helpers/song.helpers";
 import { createDifficulty } from "$/store/actions";
-import { getDifficulty } from "$/store/reducers/editor-entities.reducer";
-import { getSelectedSongDifficultyIds, getSelectedSongId } from "$/store/reducers/songs.reducer";
+import { getDifficulty, getSelectedSongDifficultyIds, getSelectedSongId } from "$/store/selectors";
 
 import Button from "../Button";
 import DifficultyTag from "../DifficultyTag";

@@ -3,15 +3,15 @@ import { Tooltip } from "react-tippy";
 import styled from "styled-components";
 
 import { UNIT } from "$/constants";
-import { getCanRedo, getCanUndo } from "$/store/reducers/editor-entities.reducer/notes-view.reducer";
+import { redoNotes, undoNotes } from "$/store/actions";
+import { getCanRedo, getCanUndo } from "$/store/selectors";
 import { getMetaKeyLabel } from "$/utils";
+import { HALF_ACTION_WIDTH } from "./EditorRightPanel.constants";
 
 import MiniButton from "../MiniButton";
 import Spacer from "../Spacer";
 
-import { HALF_ACTION_WIDTH } from "./EditorRightPanel.constants";
-
-const UndoRedo = ({ undoNotes, redoNotes }) => {
+const UndoRedo = () => {
 	const canUndo = useSelector(getCanUndo);
 	const canRedo = useSelector(getCanRedo);
 	const dispatch = useDispatch();

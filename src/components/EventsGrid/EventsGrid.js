@@ -5,8 +5,7 @@ import styled from "styled-components";
 import { COLORS, EVENT_TRACKS, UNIT } from "$/constants";
 import { useMousePositionOverElement, usePointerUpHandler } from "$/hooks";
 import { clearSelectionBox, commitSelection, drawSelectionBox, moveMouseAcrossEventsGrid } from "$/store/actions";
-import { getAreLasersLocked, getRowHeight, getSelectedEventBeat, getSelectedEventEditMode, getSelectionBox, getStartAndEndBeat } from "$/store/reducers/editor.reducer";
-import { getIsLoading, getSnapTo } from "$/store/reducers/navigation.reducer";
+import { getAreLasersLocked, getIsLoading, getRowHeight, getSelectedEventBeat, getSelectedEventEditMode, getSelectionBox, getSnapTo, getStartAndEndBeat } from "$/store/selectors";
 import { App, EventEditMode, TrackType } from "$/types";
 import { normalize, range, roundToNearest } from "$/utils";
 

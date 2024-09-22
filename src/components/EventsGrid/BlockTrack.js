@@ -5,9 +5,7 @@ import styled from "styled-components";
 import { COLORS } from "$/constants";
 import { usePointerUpHandler } from "$/hooks";
 import { placeEvent } from "$/store/actions";
-import { makeGetEventsForTrack, makeGetInitialTrackLightingColorType } from "$/store/reducers/editor-entities.reducer/events-view.reducer";
-import { getSelectedEventColor, getSelectedEventEditMode, getSelectedEventTool } from "$/store/reducers/editor.reducer";
-import { getSelectedSong } from "$/store/reducers/songs.reducer";
+import { getSelectedEventColor, getSelectedEventEditMode, getSelectedEventTool, getSelectedSong, makeGetEventsForTrack, makeGetInitialTrackLightingColorType } from "$/store/selectors";
 import { App, EventEditMode, EventTool } from "$/types";
 import { getBackgroundBoxes } from "./BlockTrack.helpers";
 

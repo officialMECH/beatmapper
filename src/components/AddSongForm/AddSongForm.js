@@ -7,7 +7,7 @@ import { COLORS, DIFFICULTIES, MEDIA_ROW_HEIGHT, UNIT } from "$/constants";
 import { getSongIdFromName } from "$/helpers/song.helpers";
 import { saveLocalCoverArtFile, saveSongFile } from "$/services/file.service";
 import { createNewSong } from "$/store/actions";
-import { getAllSongIds } from "$/store/reducers/songs.reducer";
+import { getAllSongIds } from "$/store/selectors";
 
 import Button from "../Button";
 import DifficultyTag from "../DifficultyTag";

@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 import { SIDEBAR_WIDTH } from "$/constants";
 import { useWindowDimensions } from "$/hooks";
-import { getBackgroundOpacity } from "$/store/reducers/editor.reducer";
+import { getBackgroundOpacity } from "$/store/selectors";
 import { View } from "$/types";
 
 import EventsGrid from "../EventsGrid";

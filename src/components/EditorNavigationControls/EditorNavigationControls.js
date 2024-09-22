@@ -9,7 +9,7 @@ import styled from "styled-components";
 
 import { COLORS, SNAPPING_INCREMENTS, UNIT } from "$/constants";
 import { changeSnapping, pausePlaying, seekBackwards, seekForwards, skipToEnd, skipToStart, startPlaying } from "$/store/actions";
-import { getIsLoading, getIsPlaying, getSnapTo } from "$/store/reducers/navigation.reducer";
+import { getIsLoading, getIsPlaying, getSnapTo } from "$/store/selectors";
 
 import Dropdown from "../Dropdown";
 import IconButton from "../IconButton";

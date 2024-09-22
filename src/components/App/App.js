@@ -1,9 +1,8 @@
 import { useSelector } from "react-redux";
 import { Route, Routes } from "react-router-dom";
 
-import { getHasInitialized } from "$/store/reducers/global.reducer";
+import { getHasInitialized } from "$/store/selectors";
 
-import DevTools from "../DevTools";
 import Docs from "../Docs";
 import Editor from "../Editor";
 import GlobalStyles from "../GlobalStyles";
@@ -26,7 +25,6 @@ const App = () => {
 				<Route path="/edit/:songId/:difficulty/*" element={<Editor />} />
 				<Route path="/docs/*" element={<Docs />} />
 			</Routes>
-			<DevTools />
 			<GlobalStyles />
 		</>
 	);

@@ -2,14 +2,12 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { convertMillisecondsToBeats } from "$/helpers/audio.helpers";
 import { deleteBookmark, jumpToBeat } from "$/store/actions";
-import { getSortedBookmarksArray } from "$/store/reducers/bookmarks.reducer";
-import { getDurationInBeats } from "$/store/reducers/navigation.reducer";
-import { getSelectedSong } from "$/store/reducers/songs.reducer";
+import { getDurationInBeats, getSelectedSong } from "$/store/selectors";
 
 import BookmarkFlag from "./BookmarkFlag";
 
 const Bookmarks = () => {
-	const bookmarks = useSelector(getSortedBookmarksArray);
+	const bookmarks = useSelector((state) => Object.values(state.bookmarks).sort((a, b) => a.beatNum - b.beatNum));
 	const durationInBeats = useSelector(getDurationInBeats);
 	const offsetInBeats = useSelector((state) => {
 		const selectedSong = getSelectedSong(state);

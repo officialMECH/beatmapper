@@ -4,8 +4,7 @@ import styled from "styled-components";
 import { UNIT } from "$/constants";
 import { getColorForItem } from "$/helpers/colors.helpers";
 import { selectTool } from "$/store/actions";
-import { getSelectedNoteTool } from "$/store/reducers/editor.reducer";
-import { getSelectedSong } from "$/store/reducers/songs.reducer";
+import { getSelectedNoteTool, getSelectedSong } from "$/store/selectors";
 import { ObjectTool, View } from "$/types";
 
 import Heading from "../Heading";

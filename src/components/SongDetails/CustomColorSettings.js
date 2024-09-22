@@ -4,7 +4,7 @@ import styled from "styled-components";
 
 import { COLOR_ELEMENT_DATA, COLOR_ELEMENT_IDS, UNIT } from "$/constants";
 import { toggleModForSong, updateModColor, updateModColorOverdrive } from "$/store/actions";
-import { getCustomColors } from "$/store/reducers/songs.reducer";
+import { getCustomColors } from "$/store/selectors";
 
 import CenteredSpinner from "../CenteredSpinner";
 import Heading from "../Heading";

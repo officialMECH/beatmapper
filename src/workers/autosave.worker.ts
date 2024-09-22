@@ -1,7 +1,6 @@
 import { saveBeatmap } from "$/services/file.service";
 import { createBeatmapContentsFromState } from "$/services/packaging.service";
-import { getDifficulty } from "$/store/reducers/editor-entities.reducer";
-import { getSelectedSong } from "$/store/reducers/songs.reducer";
+import { getDifficulty, getSelectedSong } from "$/store/selectors";
 
 // A mechanism already exists to back up the Redux state to our persistence
 // layer, so that the state can be rehydrated on return visits.

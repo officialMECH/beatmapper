@@ -8,14 +8,9 @@
  */
 
 import { calculateVisibleRange } from "$/helpers/editor.helpers";
-import { jumpToBeat } from "../actions";
-import { getEvents, getFutureEvents, getPastEvents } from "../reducers/editor-entities.reducer/events-view.reducer";
-import { getFutureNotes, getFutureObstacles, getNotes, getObstacles, getPastNotes, getPastObstacles } from "../reducers/editor-entities.reducer/notes-view.reducer";
-import { getStartAndEndBeat } from "../reducers/editor.reducer";
-
+import { jumpToBeat } from "$/store/actions";
+import { getBeatDepth, getCursorPositionInBeats, getEvents, getFutureEvents, getFutureNotes, getFutureObstacles, getGraphicsLevel, getNotes, getObstacles, getPastEvents, getPastNotes, getPastObstacles, getStartAndEndBeat } from "$/store/selectors";
 import { findUniquesWithinArrays } from "$/utils";
-import { getBeatDepth, getCursorPositionInBeats } from "../reducers/navigation.reducer";
-import { getGraphicsLevel } from "../reducers/user.reducer";
 
 const jumpToEarliestNote = (earlierNotes, laterNotes, earlierObstacles, laterObstacles, store) => {
 	const relevantNotes = findUniquesWithinArrays(earlierNotes, laterNotes);

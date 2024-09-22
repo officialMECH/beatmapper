@@ -1,9 +1,7 @@
 import { useSelector } from "react-redux";
 
 import { createObstacleFromMouseEvent } from "$/helpers/obstacles.helpers";
-import { getDefaultObstacleDuration } from "$/store/reducers/editor.reducer";
-import { getBeatDepth } from "$/store/reducers/navigation.reducer";
-import { getGridSize } from "$/store/reducers/songs.reducer";
+import { getBeatDepth, getDefaultObstacleDuration, getGridSize } from "$/store/selectors";
 
 import ObstacleBox from "../ObstacleBox";
 

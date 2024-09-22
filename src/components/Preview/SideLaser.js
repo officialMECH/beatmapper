@@ -2,9 +2,7 @@ import { useSelector } from "react-redux";
 
 import { convertMillisecondsToBeats } from "$/helpers/audio.helpers";
 import { getColorForItem } from "$/helpers/colors.helpers";
-import { getTracks } from "$/store/reducers/editor-entities.reducer/events-view.reducer";
-import { getCursorPosition, getCursorPositionInBeats } from "$/store/reducers/navigation.reducer";
-import { getUsableProcessingDelay } from "$/store/reducers/user.reducer";
+import { getCursorPosition, getCursorPositionInBeats, getTracks, getUsableProcessingDelay } from "$/store/selectors";
 import { App } from "$/types";
 import { convertDegreesToRadians, normalize, range } from "$/utils";
 import { findMostRecentEventInTrack } from "./Preview.helpers";

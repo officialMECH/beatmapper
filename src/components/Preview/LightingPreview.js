@@ -11,9 +11,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 
 import { Controls } from "$/services/controls.service";
-import { getIsPlaying } from "$/store/reducers/navigation.reducer";
-import { getSelectedSong } from "$/store/reducers/songs.reducer";
-import { getGraphicsLevel } from "$/store/reducers/user.reducer";
+import { getGraphicsLevel, getIsPlaying, getSelectedSong } from "$/store/selectors";
 import { Quality } from "$/types";
 
 import { Bloom, NoBloom } from "../BloomEffect";

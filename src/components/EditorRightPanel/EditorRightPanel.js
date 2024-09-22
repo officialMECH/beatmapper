@@ -4,8 +4,7 @@ import styled from "styled-components";
 
 import { UNIT } from "$/constants";
 import { useOnChange, useOnKeydown } from "$/hooks";
-import { getSelectedBlocks, getSelectedMines, getSelectedObstacles } from "$/store/reducers/editor-entities.reducer/notes-view.reducer";
-import { getMappingMode, getSelectedSong } from "$/store/reducers/songs.reducer";
+import { getMappingMode, getSelectedBlocks, getSelectedMines, getSelectedObstacles, getSelectedSong } from "$/store/selectors";
 import { ObjectPlacementMode } from "$/types";
 
 import ItemGrid from "../ItemGrid";
