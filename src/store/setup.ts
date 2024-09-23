@@ -1,27 +1,28 @@
 import { type DevToolsEnhancerOptions, configureStore } from "@reduxjs/toolkit";
-import { createLoader, reducer as storageReducer } from "redux-storage";
+import { createLoader } from "redux-storage";
 
 import { tick } from "./actions";
+import { storage } from "./enhancers";
 import root from "./features";
-import { createAllSharedMiddlewares, createPersistenceEngine } from "./shared";
+import { createAllSharedMiddlewares } from "./middleware";
+import { createPersistenceEngine } from "./shared";
 
 function createStore() {
-	const persistenceEngine = createPersistenceEngine();
-	const middleware = createAllSharedMiddlewares(persistenceEngine);
-
-	const reducer = storageReducer(root.reducer);
+	const engine = createPersistenceEngine();
+	const middleware = createAllSharedMiddlewares(engine);
 
 	const devTools: DevToolsEnhancerOptions = {
 		actionsDenylist: [tick.type],
 	};
 
 	const store = configureStore({
-		reducer: reducer,
+		reducer: root.reducer,
 		devTools: import.meta.env.VITE_ENABLE_DEVTOOLS ? devTools : undefined,
 		middleware: (native) => native({ serializableCheck: false, immutableCheck: false }).concat(...middleware),
+		enhancers: (native) => native().concat(storage(engine)),
 	});
 
-	const load = createLoader(persistenceEngine);
+	const load = createLoader(engine);
 	load(store).then(
 		() => {},
 		(err) => console.error("Failed to load previous state", err),
