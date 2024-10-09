@@ -2,10 +2,9 @@ import { type DependencyList, useEffect, useRef, useState } from "react";
 
 import { debounce } from "$/utils";
 
-export function useBoundingBox(dependencies: DependencyList = []) {
+export function useBoundingBox<T extends HTMLElement>(dependencies: DependencyList = []) {
 	// Our `ref` is needed to be passed to the component's `ref` attribute.
-	// $FlowFixMe
-	const ref = useRef<HTMLCanvasElement>(null);
+	const ref = useRef<T>(null);
 
 	// We're using `useRef` for our boundingBox just as an instance variable.
 	// Some bit of mutable state that doesn't require re-renders.
@@ -19,8 +18,7 @@ export function useBoundingBox(dependencies: DependencyList = []) {
 		setBoundingBox(ref.current.getBoundingClientRect());
 	}, [...dependencies]);
 
-	// We want to re-capture the bounding box whenever the user scrolls or
-	// resizes the window.
+	// We want to re-capture the bounding box whenever the user scrolls or resizes the window.
 	useEffect(() => {
 		if (!ref.current) {
 			return;

@@ -38,4 +38,4 @@ export const Direction = {
 	DOWN_RIGHT: 7,
 	ANY: 8,
 } as const;
-export type Direction = Member<typeof Direction>;
+export type Direction = Accept<Member<typeof Direction>, number>;

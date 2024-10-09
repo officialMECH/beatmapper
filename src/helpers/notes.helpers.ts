@@ -1,7 +1,7 @@
 import { v1 as uuid } from "uuid";
 
 import { HUMANIZED_DIRECTIONS } from "$/constants";
-import { type Accept, App, Direction, type Json } from "$/types";
+import { App, Direction, type Json } from "$/types";
 
 type ReduxNote = Json.Note & { selected?: boolean };
 
@@ -46,7 +46,7 @@ export function findNoteIndexByProperties<T extends ReduxNote>(notes: T[], query
 	});
 }
 
-function getHorizontallyFlippedCutDirection(cutDirection: Accept<Direction, number>) {
+function getHorizontallyFlippedCutDirection(cutDirection: Direction) {
 	//  4 0 5
 	//  2 8 3
 	//  6 1 7
@@ -70,7 +70,7 @@ function getHorizontallyFlippedCutDirection(cutDirection: Accept<Direction, numb
 			throw new Error(`Unrecognized cut direction: ${cutDirection}`);
 	}
 }
-function getVerticallyFlippedCutDirection(cutDirection: Accept<Direction, number>) {
+function getVerticallyFlippedCutDirection(cutDirection: Direction) {
 	//  4 0 5
 	//  2 8 3
 	//  6 1 7

@@ -1,3 +1,5 @@
+import { useEffect, useRef } from "react";
+
 /**
  * A common pattern in this application is this:
  * - The user clicks and holds the left click button and moves the mouse, to
@@ -36,8 +38,6 @@
  * So the first argument to this hook is whether or not we're currently in
  * a state where we want to fire the callback upon pointerup.
  */
-import { useEffect, useRef } from "react";
-
 export function usePointerUpHandler(shouldFire: boolean, callback: (ev: PointerEvent) => void) {
 	const savedCallback = useRef(callback);
 

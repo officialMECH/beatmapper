@@ -32,5 +32,6 @@ function createStore() {
 }
 
 export type RootState = ReturnType<typeof root.reducer>;
+export type AppDispatch = ReturnType<typeof createStore>["dispatch"];
 
 export default createStore;

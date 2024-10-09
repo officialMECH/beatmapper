@@ -8,8 +8,8 @@ interface Options {
 	onlyTriggerInside: boolean;
 }
 
-export function useMousePositionOverElement(callback: (x: number, y: number, event: MouseEvent) => void, options: Partial<Options> = {}) {
-	const [ref, bb] = useBoundingBox(options.boxDependencies);
+export function useMousePositionOverElement<T extends HTMLElement>(callback: (x: number, y: number, event: MouseEvent) => void, options: Partial<Options> = {}) {
+	const [ref, bb] = useBoundingBox<T>(options.boxDependencies);
 
 	useEffect(() => {
 		function handleMouseMove(ev: MouseEvent) {

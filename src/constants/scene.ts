@@ -1,3 +1,5 @@
+import type { Vector3Tuple } from "three";
+
 import { Quality } from "$/types";
 
 export const BLOCK_SIZE = 1;
@@ -24,4 +26,4 @@ export const LASER_COLORS = {
 	off: "#000000",
 } as const;
 
-export const GRID_POSITION = [0, 0, -SONG_OFFSET];
+export const GRID_POSITION: Vector3Tuple = [0, 0, -SONG_OFFSET] as const;

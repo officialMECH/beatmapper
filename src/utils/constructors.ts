@@ -1,4 +1,4 @@
-export function range(a: number, b: number, step = 1) {
+export function range(a: number, b?: number, step = 1) {
 	let [start, stop] = [a, b];
 	if (typeof stop === "undefined") {
 		// one param defined

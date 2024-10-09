@@ -1,4 +1,3 @@
-import type { Accept } from "../../utils";
 import type { Direction } from "../shared";
 
 export interface Note {
@@ -6,7 +5,7 @@ export interface Note {
 	_lineIndex: number;
 	_lineLayer: number;
 	_type: number;
-	_cutDirection: Accept<Direction, number>;
+	_cutDirection: Direction;
 }
 
 export interface Obstacle {

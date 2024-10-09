@@ -10,7 +10,7 @@ export const HUMANIZED_DIRECTIONS = Object.freeze(Object.values(App.Direction));
 export const TRACK_ID_MAP = Object.freeze(
 	Object.entries(App.TrackId).reduce(
 		(acc, [index, value]) => {
-			acc[value] = Number(index);
+			acc[`${value}`] = Number(index);
 			return acc;
 		},
 		{} as Record<App.TrackId, number>,
@@ -115,7 +115,7 @@ export const COLOR_ELEMENT_DATA = {
 	},
 } as const;
 
-export const ENVIRONMENT_DISPLAY_MAP = {
+export const ENVIRONMENT_DISPLAY_MAP: Record<Environment, string> = {
 	[Environment.THE_FIRST]: "The First",
 	[Environment.ORIGINS]: "Origins",
 	[Environment.TRIANGLE]: "Triangle",

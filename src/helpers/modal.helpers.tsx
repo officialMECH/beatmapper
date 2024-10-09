@@ -1,3 +1,4 @@
+import type { ComponentProps } from "react";
 import { render, unmountComponentAtNode } from "react-dom";
 import type { JSX } from "react/jsx-runtime";
 
@@ -5,7 +6,7 @@ import Modal from "../components/Modal";
 
 let mountPoint: Element | DocumentFragment;
 
-export function renderImperativePrompt(modalProps: JSX.IntrinsicClassAttributes<Modal>, generateChildren: (triggerSuccess: (data: unknown) => void, triggerClose: () => void) => JSX.Element) {
+export function renderImperativePrompt(modalProps: ComponentProps<typeof Modal>, generateChildren: (triggerSuccess: (data: unknown) => void, triggerClose: () => void) => JSX.Element) {
 	if (!mountPoint) {
 		mountPoint = window.document.createElement("div");
 		window.document.body.appendChild(mountPoint);

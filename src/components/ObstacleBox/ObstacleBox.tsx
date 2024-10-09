@@ -1,6 +1,6 @@
-import { extend } from "@react-three/fiber";
-import React from "react";
-import * as THREE from "three";
+import { type ThreeEvent, extend } from "@react-three/fiber";
+import { Fragment, useEffect, useMemo, useState } from "react";
+import { BoxGeometry, DoubleSide, Mesh, MeshPhongMaterial } from "three";
 import { Font, TextGeometry } from "three-stdlib";
 
 import { oswaldGlyphs } from "$/assets";
@@ -14,45 +14,46 @@ interface Props {
 	color: string;
 	snapTo: number;
 	beatDepth: number;
-	handleDelete: (id: string) => void;
-	handleResize: (id: string, newBeatDuration: number) => void;
-	handleClick: (id: string) => void;
-	handleMouseOver: (ev: any) => void;
+	gridRows?: number;
+	gridCols?: number;
+	handleDelete: (id: App.Obstacle["id"]) => void;
+	handleResize: (id: App.Obstacle["id"], newBeatDuration: number) => void;
+	handleClick: (id: App.Obstacle["id"]) => void;
+	handleMouseOver?: (ev: ThreeEvent<PointerEvent>) => void;
 }
 
 const RESIZE_THRESHOLD = 30;
 
-const ObstacleBox: React.FC<Props> = ({ obstacle, color, beatDepth, snapTo, handleDelete, handleResize, handleClick, handleMouseOver }) => {
+const ObstacleBox = ({ obstacle, color, beatDepth, snapTo, handleDelete, handleResize, handleClick, handleMouseOver }: Props) => {
 	const obstacleDimensions = getDimensionsForObstacle(obstacle, beatDepth);
 
-	const mesh = React.useMemo(() => {
-		const geometry = new THREE.BoxGeometry(obstacleDimensions.width, obstacleDimensions.height, obstacleDimensions.depth);
-		const material = new THREE.MeshPhongMaterial({
+	const mesh = useMemo(() => {
+		const geometry = new BoxGeometry(obstacleDimensions.width, obstacleDimensions.height, obstacleDimensions.depth);
+		const material = new MeshPhongMaterial({
 			color,
 			transparent: true,
 			opacity: obstacle.tentative ? 0.15 : 0.4,
 			polygonOffset: true,
 			polygonOffsetFactor: 1, // positive value pushes polygon further away
 			polygonOffsetUnits: 1,
-			side: THREE.DoubleSide,
+			side: DoubleSide,
 			emissive: "yellow",
 			emissiveIntensity: obstacle.selected ? 0.5 : 0,
 		});
 
-		return new THREE.Mesh(geometry, material);
+		return new Mesh(geometry, material);
 	}, [color, obstacleDimensions.depth, obstacleDimensions.height, obstacle.tentative, obstacleDimensions.width, obstacle.selected]);
 
 	const actualPosition = getPositionForObstacle(obstacle, obstacleDimensions, beatDepth);
 
-	const [mouseDownAt, setMouseDownAt] = React.useState(false);
+	const [mouseDownAt, setMouseDownAt] = useState<number | null>(null);
 
-	React.useEffect(() => {
-		const handlePointerMove = (ev: any) => {
+	useEffect(() => {
+		const handlePointerMove = (ev: PointerEvent) => {
 			if (!mouseDownAt) {
 				return;
 			}
 
-			// @ts-ignore
 			const delta = ev.pageX - mouseDownAt;
 			if (Math.abs(delta) > RESIZE_THRESHOLD) {
 				// Check how many "steps" away this is from the mouse-down position
@@ -73,7 +74,6 @@ const ObstacleBox: React.FC<Props> = ({ obstacle, color, beatDepth, snapTo, hand
 
 		const handlePointerUp = () => {
 			if (mouseDownAt) {
-				// @ts-ignore
 				setMouseDownAt(null);
 			}
 		};
@@ -85,8 +85,7 @@ const ObstacleBox: React.FC<Props> = ({ obstacle, color, beatDepth, snapTo, hand
 			window.removeEventListener("pointermove", handlePointerMove);
 			window.removeEventListener("pointerup", handlePointerUp);
 		};
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [mouseDownAt, handleResize]);
+	}, [mouseDownAt, obstacle, snapTo, handleResize]);
 
 	const font = new Font(oswaldGlyphs as unknown as Pick<Font, "data">["data"]);
 	const textGeometryOptions = {
@@ -97,7 +96,7 @@ const ObstacleBox: React.FC<Props> = ({ obstacle, color, beatDepth, snapTo, hand
 	};
 
 	return (
-		<>
+		<Fragment>
 			{obstacle.fast && (
 				<mesh position={actualPosition}>
 					<textGeometry attach="geometry" args={["F", textGeometryOptions]} />
@@ -105,11 +104,10 @@ const ObstacleBox: React.FC<Props> = ({ obstacle, color, beatDepth, snapTo, hand
 				</mesh>
 			)}
 
-			{/* @ts-ignore */}
 			<primitive
 				object={mesh}
 				position={actualPosition}
-				onPointerUp={(ev: any) => {
+				onPointerUp={(ev: ThreeEvent<PointerEvent>) => {
 					if (obstacle.tentative) {
 						return;
 					}
@@ -130,18 +128,18 @@ const ObstacleBox: React.FC<Props> = ({ obstacle, color, beatDepth, snapTo, hand
 
 					handleClick(obstacle.id);
 				}}
-				onPointerDown={(ev: any) => {
+				onPointerDown={(ev: ThreeEvent<PointerEvent>) => {
 					ev.stopPropagation();
 
 					if (ev.buttons === 2) {
 						handleDelete(obstacle.id);
 					} else {
-						setMouseDownAt(ev.pageX);
+						setMouseDownAt(ev.nativeEvent.pageX);
 					}
 				}}
 				onPointerOver={handleMouseOver}
 			/>
-		</>
+		</Fragment>
 	);
 };
 

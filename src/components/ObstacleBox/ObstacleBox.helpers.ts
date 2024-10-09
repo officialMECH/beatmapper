@@ -1,14 +1,12 @@
 import { BLOCK_PLACEMENT_SQUARE_SIZE, SONG_OFFSET } from "$/constants";
 import { App } from "$/types";
 
-export const getPositionForObstacle = (obstacle: App.Obstacle, obstacleDimensions: { width: number; height: number; depth: number }, zOffset: number): [number, number, number] => {
+export function getPositionForObstacle(obstacle: App.Obstacle, obstacleDimensions: { width: number; height: number; depth: number }, zOffset: number): [number, number, number] {
 	const position = { x: 0, y: 0, z: 0 };
 
 	// ----------- X ------------
-	// Our initial X should be 1.5 blocks to the left
-	// (an 'X' of 0 would be the dividing line between the 2nd and 3rd column,
-	// so I need it to move 1.5 units to the left, to sit in the center of the
-	// 1st column)
+	// Our initial X should be 1.5 blocks to the left (an 'X' of 0 would be the dividing line between the 2nd and 3rd column,
+	// so I need it to move 1.5 units to the left, to sit in the center of the 1st column)
 	const OFFSET_X = BLOCK_PLACEMENT_SQUARE_SIZE * 1.5 * -1;
 	position.x = obstacle.lane * BLOCK_PLACEMENT_SQUARE_SIZE + OFFSET_X;
 	position.x += obstacle.colspan * (BLOCK_PLACEMENT_SQUARE_SIZE / 2) - BLOCK_PLACEMENT_SQUARE_SIZE / 2;
@@ -29,9 +27,9 @@ export const getPositionForObstacle = (obstacle: App.Obstacle, obstacleDimension
 	position.z = zFront - obstacleDimensions.depth / 2 + 0.05;
 
 	return [position.x, position.y, position.z];
-};
+}
 
-export const getDimensionsForObstacle = (obstacle: App.Obstacle, beatDepth: number) => {
+export function getDimensionsForObstacle(obstacle: App.Obstacle, beatDepth: number) {
 	let width: number;
 	let height: number;
 	let depth: number;
@@ -53,4 +51,4 @@ export const getDimensionsForObstacle = (obstacle: App.Obstacle, beatDepth: numb
 	}
 
 	return { width, height, depth };
-};
+}

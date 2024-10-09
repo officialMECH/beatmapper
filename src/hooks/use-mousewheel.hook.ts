@@ -10,11 +10,11 @@ import { useEffect } from "react";
 
 import { throttle } from "$/utils";
 
-export function useMousewheel(handleMouseWheel: (event: MouseEvent) => void) {
+export function useMousewheel(handleMouseWheel: (event: WheelEvent) => void) {
 	useEffect(() => {
 		const throttledHandler = throttle(handleMouseWheel, 100);
 
-		function wrappedHandler(ev: MouseEvent) {
+		function wrappedHandler(ev: WheelEvent) {
 			ev.preventDefault();
 
 			throttledHandler(ev);

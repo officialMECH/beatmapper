@@ -5,7 +5,7 @@ import { COLORS, COLOR_ELEMENT_DATA, DEFAULT_BLUE, DEFAULT_RED } from "$/constan
 import { App, EventColor, ObjectTool } from "$/types";
 import { clamp, normalize } from "$/utils";
 
-export function getColorForItem<T extends string | number>(item: T, song: App.Song) {
+export function getColorForItem<T extends string | number>(item: T | undefined, song: App.Song) {
 	const customColorsEnabled = get(song, "modSettings.customColors.isEnabled");
 
 	switch (item) {

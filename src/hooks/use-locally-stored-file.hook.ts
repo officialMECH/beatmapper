@@ -65,7 +65,7 @@ export function useLocallyStoredFile<T extends string | ArrayBuffer>(filename: s
 		setLoading(true);
 	}, [filename]);
 
-	const returnedOutput = output || cache[filename];
+	const returnedOutput = output || (cache[filename] as T | undefined);
 
-	return [returnedOutput, loading];
+	return [returnedOutput, loading] as const;
 }

@@ -1,4 +1,4 @@
-import { type EntityId, createAction, createAsyncThunk } from "@reduxjs/toolkit";
+import { createAction, createAsyncThunk } from "@reduxjs/toolkit";
 import { v1 as uuid } from "uuid";
 import type WaveformData from "waveform-data";
 
@@ -123,7 +123,7 @@ export const deleteBookmark = createAction("DELETE_BOOKMARK", (args: { beatNum: 
 	return { payload: { ...args } };
 });
 
-export const clickPlacementGrid = createAsyncThunk("CLICK_PLACEMENT_GRID", (args: { rowIndex: number; colIndex: number; direction: Direction; tool: ObjectTool }, api) => {
+export const clickPlacementGrid = createAsyncThunk("CLICK_PLACEMENT_GRID", (args: { rowIndex: number; colIndex: number; direction?: Direction; tool?: ObjectTool }, api) => {
 	const state = api.getState() as RootState;
 	const cursorPositionInBeats = getCursorPositionInBeats(state);
 	if (cursorPositionInBeats === null) return api.rejectWithValue("Invalid beat number.");
@@ -215,11 +215,11 @@ export const deselectNote = createAction("DESELECT_NOTE", (args: { time: number;
 	return { payload: { ...args } };
 });
 
-export const selectObstacle = createAction("SELECT_OBSTACLE", (args: { id: string }) => {
+export const selectObstacle = createAction("SELECT_OBSTACLE", (args: { id: App.Obstacle["id"] }) => {
 	return { payload: { ...args } };
 });
 
-export const deselectObstacle = createAction("DESELECT_OBSTACLE", (args: { id: string }) => {
+export const deselectObstacle = createAction("DESELECT_OBSTACLE", (args: { id: App.Obstacle["id"] }) => {
 	return { payload: { ...args } };
 });
 
@@ -292,7 +292,7 @@ export const moveMouseAcrossEventsGrid = createAction("MOVE_MOUSE_ACROSS_EVENTS_
 	return { payload: { ...args } };
 });
 
-export const downloadMapFiles = createAction("DOWNLOAD_MAP_FILES", (args: { version?: number; songId?: string }) => {
+export const downloadMapFiles = createAction("DOWNLOAD_MAP_FILES", (args: { version?: number; songId?: SongId }) => {
 	return { payload: { ...args, version: args.version ?? 2 } };
 });
 
@@ -330,11 +330,11 @@ export const createNewObstacle = createAsyncThunk("CREATE_NEW_OBSTACLE", (args: 
 	});
 });
 
-export const deleteObstacle = createAction("DELETE_OBSTACLE", (args: { id: EntityId }) => {
+export const deleteObstacle = createAction("DELETE_OBSTACLE", (args: { id: App.Obstacle["id"] }) => {
 	return { payload: { ...args } };
 });
 
-export const resizeObstacle = createAction("RESIZE_OBSTACLE", (args: { id: EntityId; newBeatDuration: number }) => {
+export const resizeObstacle = createAction("RESIZE_OBSTACLE", (args: { id: App.Obstacle["id"]; newBeatDuration: number }) => {
 	return { payload: { ...args } };
 });
 
@@ -388,21 +388,21 @@ export const changeLaserSpeed = createAction("CHANGE_LASER_SPEED", (args: { trac
 	return { payload: { ...args, id: uuid() } };
 });
 
-export const deleteEvent = createAction("DELETE_EVENT", (args: { id: string; trackId: App.TrackId; areLasersLocked: boolean }) => {
+export const deleteEvent = createAction("DELETE_EVENT", (args: { id: App.Event["id"]; trackId: App.TrackId; areLasersLocked: boolean }) => {
 	return { payload: { ...args } };
 });
 
-export const bulkDeleteEvent = createAction("BULK_DELETE_EVENT", (args: { id: string; trackId: App.TrackId; areLasersLocked: boolean }) => {
+export const bulkDeleteEvent = createAction("BULK_DELETE_EVENT", (args: { id: App.Event["id"]; trackId: App.TrackId; areLasersLocked: boolean }) => {
 	return { payload: { ...args } };
 });
 
 export const deleteSelectedEvents = createAction("DELETE_SELECTED_EVENTS");
 
-export const selectEvent = createAction("SELECT_EVENT", (args: { id: string; trackId: App.TrackId }) => {
+export const selectEvent = createAction("SELECT_EVENT", (args: { id: App.Event["id"]; trackId: App.TrackId }) => {
 	return { payload: { ...args } };
 });
 
-export const deselectEvent = createAction("DESELECT_EVENT", (args: { id: string; trackId: App.TrackId }) => {
+export const deselectEvent = createAction("DESELECT_EVENT", (args: { id: App.Event["id"]; trackId: App.TrackId }) => {
 	return { payload: { ...args } };
 });
 
@@ -410,7 +410,7 @@ export const selectColor = createAction("SELECT_COLOR", (args: { view: View; col
 	return { payload: { ...args } };
 });
 
-export const switchEventColor = createAction("SWITCH_EVENT_COLOR", (args: { id: string; trackId: App.TrackId }) => {
+export const switchEventColor = createAction("SWITCH_EVENT_COLOR", (args: { id: App.Event["id"]; trackId: App.TrackId }) => {
 	return { payload: { ...args } };
 });
 
