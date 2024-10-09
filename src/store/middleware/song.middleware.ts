@@ -82,7 +82,9 @@ function calculateIfPlaybackShouldBeCommandeered(state: RootState, currentBeat: 
 	}
 }
 
-/** This middleware manages playback concerns. */
+/**
+ * This middleware manages playback concerns.
+ */
 export default function createSongMiddleware() {
 	let animationFrameId: number;
 
@@ -105,7 +107,7 @@ export default function createSongMiddleware() {
 				return;
 			}
 			// Fetch the json for this beatmap from our local store.
-			let beatmapJson: any;
+			let beatmapJson: Json.Beatmap | null = null;
 			try {
 				beatmapJson = await getBeatmap(songId, difficulty);
 			} catch (err) {
@@ -132,7 +134,7 @@ export default function createSongMiddleware() {
 				// So I need to convert the ugly JSON format to something manageable.
 				const convertedObstacles = convertObstaclesToRedux(unshiftedObstacles as Json.Obstacle[]);
 				const convertedEvents = convertEventsToRedux(unshiftedEvents as Json.Event[]);
-				const convertedBookmarks = convertBookmarksToRedux(beatmapJson._customData?._bookmarks);
+				const convertedBookmarks = beatmapJson._customData?._bookmarks ? convertBookmarksToRedux(beatmapJson._customData._bookmarks) : [];
 				api.dispatch(loadBeatmapEntities({ notes: unshiftedNotes as Json.Note[], events: convertedEvents, obstacles: convertedObstacles, bookmarks: convertedBookmarks }));
 				api.dispatch(ReduxUndoActionCreators.clearHistory());
 			}

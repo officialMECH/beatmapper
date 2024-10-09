@@ -9,8 +9,7 @@ export function getColorForItem<T extends string | number>(item: T | undefined, 
 	const customColorsEnabled = get(song, "modSettings.customColors.isEnabled");
 
 	switch (item) {
-		// In our notes view, the tool will be labeled "left-block", while the
-		// underlying data structure treats colors as a number: 0, 1, 3.
+		// In our notes view, the tool will be labeled "left-block", while the underlying data structure treats colors as a number: 0, 1, 3.
 		case ObjectTool.LEFT_NOTE:
 		case 0: {
 			const defaultColor = DEFAULT_RED;
@@ -36,8 +35,7 @@ export function getColorForItem<T extends string | number>(item: T | undefined, 
 			return customColorsEnabled ? customColor : defaultColor;
 		}
 
-		// In the events view, our formal name is `envColorLeft`, but the events
-		// themselves still use the original colors 'red' / 'blue'.
+		// In the events view, our formal name is `envColorLeft`, but the events themselves still use the original colors 'red' / 'blue'.
 		case App.BeatmapColorKey.ENV_LEFT:
 		case App.EventColorType.PRIMARY:
 		case EventColor.PRIMARY: {
@@ -55,8 +53,7 @@ export function getColorForItem<T extends string | number>(item: T | undefined, 
 			return customColorsEnabled ? customColor : defaultColor;
 		}
 
-		// Event view has two other event types: rotate and off. They have unique
-		// colors.
+		// Event view has two other event types: rotate and off. They have unique colors.
 		case App.EventType.TRIGGER:
 			return COLORS.green[500];
 		case App.EventType.OFF:
@@ -69,9 +66,7 @@ export function getColorForItem<T extends string | number>(item: T | undefined, 
 
 export function formatColorForMods(element: App.BeatmapColorKey, hex: string, overdrive = 0) {
 	// For overdrive: every element ranges from 0 (no overdrive) to 1 (full).
-	// Different elements are affected by different amounts, though.
-	// left/right environment colors range from 1 to 3, whereas obstacles range
-	// from 1 to 10.
+	// Different elements are affected by different amounts, though: left/right environment colors range from 1 to 3, whereas obstacles range from 1 to 10.
 	const overdriveMultiple = normalize(overdrive, 0, 1, 1, COLOR_ELEMENT_DATA[element].maxValue);
 
 	const rgb = Color(hex).rgb().unitArray();
@@ -84,9 +79,7 @@ export function formatColorForMods(element: App.BeatmapColorKey, hex: string, ov
 }
 
 // Turn the imported color into a hex string
-// NOTE: This is NOT used for maps re-imported; we use _editorSettings
-// to store the hex values directly. This is done since we lose "overdrive"
-// information when we do it this way :(
+// This is NOT used for maps re-imported; we use _editorSettings to store the hex values directly. This is done since we lose "overdrive" information when we do it this way :(
 // This is only used when importing maps from other editors.
 export function formatColorFromImport(rgb: { r: number; g: number; b: number }) {
 	const normalizedRgb = [clamp(Math.round(rgb.r * 255), 0, 255), clamp(Math.round(rgb.g * 255), 0, 255), clamp(Math.round(rgb.b * 255), 0, 255)];

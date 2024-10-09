@@ -50,11 +50,9 @@ function getDirectionForStandardMode(angle: number) {
 }
 
 export const getDirectionForMappingExtensions = (angle: number) => {
-	// Angles in JS start at the 3 o'clock position (to the right), and count
-	// clockwise from 0 to 360.
-	// For mapping extensions, we need to start at 6 o'clock (down), and
-	// count clockwise from 1000 to 1360.
-	//
+	// Angles in JS start at the 3 o'clock position (to the right), and count clockwise from 0 to 360.
+	// For mapping extensions, we need to start at 6 o'clock (down), and count clockwise from 1000 to 1360.
+
 	// First, let's reorient the JS angle to start down and go from 0 to 360.
 	const reorientedAngle = (angle + 270) % 360;
 

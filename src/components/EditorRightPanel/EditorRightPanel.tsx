@@ -14,7 +14,7 @@ import Actions from "./Actions";
 import GridConfig from "./GridConfig";
 import SelectionInfo from "./SelectionInfo";
 
-// HACK: This should be a constant somewhere, used to set bottom panel height!
+// TODO: This should be a constant somewhere, used to set bottom panel height!
 const bottomPanelHeight = 180;
 
 const EditorRightPanel = () => {
@@ -34,8 +34,7 @@ const EditorRightPanel = () => {
 	useOnChange(
 		() => {
 			if (showGridConfig && isAnythingSelected) {
-				// If the user selects something while the grid panel is open,
-				// switch to the selection panel
+				// If the user selects something while the grid panel is open, switch to the selection panel
 				setShowGridConfig(false);
 			}
 		},
@@ -72,10 +71,8 @@ const EditorRightPanel = () => {
 		<OuterWrapper
 			onWheel={(ev) => {
 				// On smaller windows, the content won't fit in the side panel.
-				// By default we disable all mousewheel action since it causes problems
-				// with our main view, but if the cursor is over this panel, we'll
-				// allow it to behave normally by not bubbling that event to the
-				// window handler (which prevents it).
+				// By default we disable all mousewheel action since it causes problems with our main view,
+				// but if the cursor is over this panel, we'll allow it to behave normally by not bubbling that event to the window handler (which prevents it).
 				ev.stopPropagation();
 			}}
 		>

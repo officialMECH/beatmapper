@@ -2,7 +2,8 @@ import { type UnknownAction, combineReducers } from "@reduxjs/toolkit";
 import undoable, { type FilterFunction, groupByActionTypes, type GroupByFunction, includeAction } from "redux-undo";
 
 import { bulkDeleteEvent, changeLaserSpeed, cutSelection, deleteEvent, deleteSelectedEvents, nudgeSelection, pasteSelection, placeEvent, redoEvents, switchEventColor, undoEvents } from "$/store/actions";
-import tracks from "./tracks";
+
+import tracks from "./tracks.slice";
 
 const reducer = combineReducers({
 	tracks: tracks.reducer,

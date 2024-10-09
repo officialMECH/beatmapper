@@ -1,7 +1,7 @@
 import { App, Difficulty, Environment } from "$/types/beatmap";
 import { TrackType } from "$/types/editor";
-import { DEFAULT_BLUE, DEFAULT_RED } from "./theme";
-import { EVENT_TRACKS } from "./tracks";
+import { DEFAULT_BLUE, DEFAULT_RED } from "./theme.constants";
+import { EVENT_TRACKS } from "./tracks.constants";
 
 export const DIFFICULTIES = Object.freeze(Object.values(Difficulty));
 

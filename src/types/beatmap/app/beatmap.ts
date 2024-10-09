@@ -1,7 +1,7 @@
 import type { EntityId } from "@reduxjs/toolkit";
 import type { Direction, ObstacleType, SaberColor } from "./shared";
 
-/** NOTE: This type is unused. Planning to migrate to it, but for now I'm using the raw "note" type, with all the underscore-prefixed fields used in-game. */
+// NOTE: This type is unused. Planning to migrate to it, but for now I'm using the raw "note" type, with all the underscore-prefixed fields used in-game.
 export interface BlockNext {
 	id: EntityId;
 	color: SaberColor;

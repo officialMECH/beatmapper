@@ -1,3 +1,5 @@
+// TODO: This code is largely duplicated with Block.js. There's probably a smart abstraction, but for now the duplication doesn't bug me much.
+
 import { memo } from "react";
 import type { ColorRepresentation, Mesh, Vector3Tuple } from "three";
 
@@ -25,9 +27,6 @@ interface Props {
 
 /**
  * Mines are an anti-block; you don't want to hit them with your saber.
- *
- * NOTE: This code is largely duplicated with Block.js. There's probably a
- * smart abstraction, but for now the duplication doesn't bug me much.
  */
 const Mine = ({ x, y, z, time, lineLayer, lineIndex, color, size = 1, isTransparent, isSelected, handleClick, handleStartSelecting, handleMouseOver }: Props) => {
 	const position: Vector3Tuple = [x, y, z];
@@ -72,13 +71,13 @@ const Mine = ({ x, y, z, time, lineLayer, lineIndex, color, size = 1, isTranspar
 					const clickType = ev.button === 0 ? "left" : ev.button === 1 ? "middle" : ev.button === 2 ? "right" : undefined;
 
 					if (clickType) {
-						if (handleClick && time && lineLayer && lineIndex) handleClick(clickType, time, lineLayer, lineIndex);
+						if (handleClick && time !== undefined && lineLayer !== undefined && lineIndex !== undefined) handleClick(clickType, time, lineLayer, lineIndex);
 					}
 				}}
 				onPointerOver={(ev) => {
 					// While selecting/deselecting/deleting notes, pointer-over events are important and should trump others.
 					ev.stopPropagation();
-					if (handleMouseOver && time && lineLayer && lineIndex) handleMouseOver(time, lineLayer, lineIndex);
+					if (handleMouseOver && time !== undefined && lineLayer !== undefined && lineIndex !== undefined) handleMouseOver(time, lineLayer, lineIndex);
 				}}
 			>
 				<primitive object={geometry} attach="geometry" />

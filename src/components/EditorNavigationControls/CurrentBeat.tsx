@@ -13,12 +13,10 @@ const CurrentBeat = () => {
 		let displayString = "--";
 		if (song) {
 			const cursorPositionInBeats = getCursorPositionInBeats(state);
-			if (!cursorPositionInBeats) return displayString;
+			if (cursorPositionInBeats === null) return displayString;
 
-			// When the song is playing, this number will move incredibly quickly.
-			// It's a hot blurry mess.
-			// Instead of trying to debounce rendering, let's just round the value
-			// aggressively
+			// When the song is playing, this number will move incredibly quickly. It's a hot blurry mess.
+			// Instead of trying to debounce rendering, let's just round the value aggressively
 			const roundedCursorPosition = isPlaying ? roundToNearest(cursorPositionInBeats, 0.5) : cursorPositionInBeats;
 
 			displayString = getFormattedBeatNum(roundedCursorPosition);

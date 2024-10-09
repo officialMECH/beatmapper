@@ -1,11 +1,9 @@
-/**
- * This mini-service wraps the AudioSample service to provide an easy-to-use
- * tick SFX.
- */
-
 import { defaultSfxPath } from "$/assets";
 import { AudioSample } from "./audio.service";
 
+/**
+ * This mini-service wraps the AudioSample service to provide an easy-to-use tick SFX.
+ */
 export class Sfx {
 	audioSample: AudioSample;
 	constructor(sfxPath = defaultSfxPath) {

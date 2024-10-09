@@ -7,7 +7,6 @@ import type JSZip from "jszip";
 
 export function getFileFromArchive(archive: JSZip, filename: string) {
 	// Ideally, our .zip archive will just have all the files we need.
-	// For usability, though, I'd like to also support selecting a
 	const allFilenamesInArchive = Object.keys(archive.files);
 	const matchingFilename = allFilenamesInArchive.find((name) => name.toLowerCase().includes(filename.toLowerCase()));
 	if (!matchingFilename) return null;
@@ -15,7 +14,6 @@ export function getFileFromArchive(archive: JSZip, filename: string) {
 }
 
 export function getDifficultyRankForDifficulty(difficulty: Pick<App.Beatmap, "id">) {
-	// prettier-ignore
 	switch (difficulty.id) {
 		case Difficulty.EASY:
 			return 1;
@@ -34,8 +32,7 @@ export function getDifficultyRankForDifficulty(difficulty: Pick<App.Beatmap, "id
 
 export function getArchiveVersion(archive: JSZip) {
 	// We could be importing a v1 or v2 song, we don't know which.
-	// For now, I'm going to do the very lazy thing of just assuming based on
-	// the file type; v1 has `info.json` while v2 has `Info.dat`
+	// For now, I'm going to do the very lazy thing of just assuming based on the file type; v1 has `info.json` while v2 has `Info.dat`
 	// TODO: More reliable version checking
 	return getFileFromArchive(archive, "Info.dat") ? 2 : 1;
 }
@@ -44,8 +41,7 @@ function shiftEntitiesByOffsetInBeats<T extends { _time: number }>(entities: T[]
 	return entities.map((entity) => {
 		let time = roundAwayFloatingPointNonsense(entity._time + offsetInBeats);
 
-		// For some reason, with offsets we can end up with a time of -0, which
-		// doesn't really make sense.
+		// For some reason, with offsets we can end up with a time of -0, which doesn't really make sense.
 		if (time === 0) {
 			time = 0;
 		}
@@ -88,8 +84,7 @@ export function deriveDefaultModSettingsFromBeatmap(beatmapSet: Json.BeatmapSet)
 		}
 
 		if (!modSettings.customColors) {
-			// Multiple beatmap difficulties might set custom colors, but Beatmapper
-			// only supports a single set of colors for all difficulties.
+			// Multiple beatmap difficulties might set custom colors, but Beatmapper only supports a single set of colors for all difficulties.
 			// If we set any custom colors on previous beatmaps, we can skip this.
 			const customColors = {} as Record<App.BeatmapColorKey, string>;
 
@@ -102,9 +97,7 @@ export function deriveDefaultModSettingsFromBeatmap(beatmapSet: Json.BeatmapSet)
 			}
 
 			// Only add `customColors` if we have at least 1 of these fields set.
-			// If this difficulty doesn't set custom settings, we want to do nothing,
-			// since this is how the app knows whether custom colors are enabled
-			// or not.
+			// If this difficulty doesn't set custom settings, we want to do nothing, since this is how the app knows whether custom colors are enabled or not.
 			if (!isEmpty(customColors)) {
 				modSettings.customColors = {
 					isEnabled: true,

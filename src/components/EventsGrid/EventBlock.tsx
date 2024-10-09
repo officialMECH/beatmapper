@@ -81,15 +81,12 @@ const EventBlock = ({ event, trackWidth, startBeat, numOfBeatsToShow, deleteOnHo
 				}
 			}}
 			onPointerDown={(ev) => {
-				// When in "select" mode, clicking the grid creates a selection box.
-				// We don't want to do that when the user clicks directly on a block.
-				// In "place" mode, we need the event to propagate to enable bulk
-				// delete.
+				// When in "select" mode, clicking the grid creates a selection box. We don't want to do that when the user clicks directly on a block.
+				// In "place" mode, we need the event to propagate to enable bulk delete.
 				if (selectedEditMode === EventEditMode.SELECT) {
 					ev.stopPropagation();
 				}
 
-				// prettier-ignore
 				const clickType = ev.button === 0 ? "left" : ev.button === 1 ? "middle" : ev.button === 2 ? "right" : undefined;
 
 				if (clickType === "left") {

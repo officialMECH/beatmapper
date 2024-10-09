@@ -6,7 +6,24 @@ import { HIGHEST_PRECISION } from "$/constants";
 import { getNewBookmarkColor } from "$/helpers/bookmarks.helpers";
 import { type App, type BeatmapId, type Direction, type EventColor, type EventEditMode, type EventTool, type IGrid, type ISelectionBox, type ISelectionBoxInBeats, type Json, type ObjectSelectionMode, type ObjectTool, type ObjectType, type Quality, type SongId, View } from "$/types";
 import { roundAwayFloatingPointNonsense, roundToNearest } from "$/utils";
-import { getAllEventsAsArray, getCopiedData, getCursorPositionInBeats, getGridSize, getIsPlaying, getNotes, getObstacles, getSelectedEventBeat, getSelectedSong, getSelection, getSnapTo, getStartAndEndBeat, getStickyMapAuthorName } from "./selectors";
+import {
+	getAllEventsAsArray,
+	getCopiedData,
+	getCursorPositionInBeats,
+	getGridSize,
+	getIsPlaying,
+	getNotes,
+	getObstacles,
+	getSelectedCutDirection,
+	getSelectedEventBeat,
+	getSelectedNoteTool,
+	getSelectedSong,
+	getSelection,
+	getSnapTo,
+	getSortedBookmarksArray,
+	getStartAndEndBeat,
+	getStickyMapAuthorName,
+} from "./selectors";
 import type { RootState } from "./setup";
 
 export const loadDemoSong = createAction("LOAD_DEMO_SONG");
@@ -110,7 +127,7 @@ export const adjustCursorPosition = createAction("ADJUST_CURSOR_POSITION", (args
 
 export const createBookmark = createAsyncThunk("CREATE_BOOKMARK", (args: { name: string; view: View }, api) => {
 	const state = api.getState() as RootState;
-	const existingBookmarks = Object.values(state.bookmarks).sort((a, b) => a.beatNum - b.beatNum);
+	const existingBookmarks = getSortedBookmarksArray(state);
 	const color = getNewBookmarkColor(existingBookmarks);
 	// For the notes view, we want to use the cursorPosition to figure out when to create the bookmark for.
 	// For the events view, we want it to be based on the mouse position.
@@ -125,10 +142,12 @@ export const deleteBookmark = createAction("DELETE_BOOKMARK", (args: { beatNum: 
 
 export const clickPlacementGrid = createAsyncThunk("CLICK_PLACEMENT_GRID", (args: { rowIndex: number; colIndex: number; direction?: Direction; tool?: ObjectTool }, api) => {
 	const state = api.getState() as RootState;
+	const selectedDirection = getSelectedCutDirection(state);
+	const selectedTool = getSelectedNoteTool(state);
 	const cursorPositionInBeats = getCursorPositionInBeats(state);
 	if (cursorPositionInBeats === null) return api.rejectWithValue("Invalid beat number.");
 	const adjustedCursorPosition = adjustNoteCursorPosition(cursorPositionInBeats, state);
-	return api.fulfillWithValue({ ...args, cursorPositionInBeats: adjustedCursorPosition });
+	return api.fulfillWithValue({ ...args, cursorPositionInBeats: adjustedCursorPosition, direction: selectedDirection, tool: selectedTool });
 });
 
 export const clearCellOfNotes = createAsyncThunk("CLEAR_CELL_OF_NOTES", (args: { rowIndex: number; colIndex: number }, api) => {

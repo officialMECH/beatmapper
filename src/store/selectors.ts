@@ -9,18 +9,19 @@ import { floorToNearest } from "$/utils";
 import { selectHistory } from "./helpers";
 import type { RootState } from "./setup";
 
-import clipboard from "./features/clipboard";
-import beatmap from "./features/editor/beatmap";
-import lightshow from "./features/editor/lightshow";
-import notes from "./features/entities/beatmap/notes";
-import obstacles from "./features/entities/beatmap/obstacles";
-import difficulty from "./features/entities/difficulty";
-import tracks from "./features/entities/lightshow/tracks";
-import global from "./features/global";
-import navigation from "./features/navigation";
-import songs from "./features/songs";
-import user from "./features/user";
-import waveform from "./features/waveform";
+import bookmarks from "./features/bookmarks.slice";
+import clipboard from "./features/clipboard.slice";
+import beatmap from "./features/editor/beatmap.slice";
+import lightshow from "./features/editor/lightshow.slice";
+import notes from "./features/entities/beatmap/notes.slice";
+import obstacles from "./features/entities/beatmap/obstacles.slice";
+import difficulty from "./features/entities/difficulty.slice";
+import tracks from "./features/entities/lightshow/tracks.slice";
+import global from "./features/global.slice";
+import navigation from "./features/navigation.slice";
+import songs from "./features/songs.slice";
+import user from "./features/user.slice";
+import waveform from "./features/waveform.slice";
 
 export const { getHasInitialized } = global.getSelectors((state: RootState) => {
 	return state.global;
@@ -186,7 +187,9 @@ export function getSelection(view: View) {
 	});
 }
 
-// TODO: exporting bookmark selectors causes a circular dependency for some reason. needs investigating.
+export const { getBookmarks, getSortedBookmarksArray } = bookmarks.getSelectors((state: RootState) => {
+	return state.bookmarks;
+});
 
 export const { getCopiedData, getHasCopiedNotes } = clipboard.getSelectors((state: RootState) => {
 	return state.clipboard;

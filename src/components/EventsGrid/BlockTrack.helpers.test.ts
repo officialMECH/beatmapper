@@ -1,28 +1,22 @@
-/**
- * These tests have comments to quickly explain the situation they're testing:
- * R [__0_B___]
- *
- * To read this:
- * - The "array" holds 8 beats, representing the event-grid for a given frame.
- * - The frame can have `R` events (Red light on), `B` events (Blue light on),
- *   or `0` (light off)
- * - The letter to the left of the array represents the initial light value,
- *   the value it held before the current frame started
- */
-
 import { App, type IBackgroundBox } from "$/types";
 import { describe, expect, it } from "vitest";
 import { getBackgroundBoxes } from "./BlockTrack.helpers";
 
 const LIGHTING_TRACK_ID = App.TrackId[4];
 
+// These tests have comments to quickly explain the situation they're testing:
+//   R [__0_B___]
+// To read this:
+// - The "array" holds 8 beats, representing the event-grid for a given frame.
+// - The frame can have `R` events (Red light on), `B` events (Blue light on), or `0` (light off)
+// - The letter to the left of the array represents the initial light value, the value it held before the current frame started
+
 describe("BlockTrack helpers", () => {
 	describe("getBackgroundBoxes", () => {
 		it("exits early if it is not a lighting track", () => {
 			const trackId = App.TrackId[12];
 			const events = [
-				// Technically these events are illegal; this is just testing that it
-				// doesn't even look at events when the trackId isn't lighting
+				// Technically these events are illegal; this is just testing that it doesn't even look at events when the trackId isn't lighting
 				{
 					trackId,
 					beatNum: 3,

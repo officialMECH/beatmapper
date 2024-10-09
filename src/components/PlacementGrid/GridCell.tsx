@@ -32,21 +32,15 @@ interface Props {
 }
 
 const GridSquare = ({ rowIndex, colIndex, numRows, numCols, rowHeight, colWidth, isHovered, gridPosition, mouseDownAt, setMouseDownAt, setMouseOverAt, mappingMode, defaultObstacleDuration, selectionMode, selectedTool, setHoveredCell, clickPlacementGrid, createNewObstacle }: Props) => {
-	// Our `rowHeight` is in units compared to the default, so a
-	// non-map-extension grid would have a height and width of 1.
-	// A rowHeight of 2 means it's 2x as big as that default.
-	// `renderRowHeight` is how tall our grid cell should be in terms of
-	// rendering height.
+	// Our `rowHeight` is in units compared to the default, so a non-map-extension grid would have a height and width of 1. A rowHeight of 2 means it's 2x as big as that default.
+	// `renderRowHeight` is how tall our grid cell should be in terms of rendering height.
 	const renderRowHeight = rowHeight * BLOCK_PLACEMENT_SQUARE_SIZE;
 	const renderColWidth = colWidth * BLOCK_PLACEMENT_SQUARE_SIZE;
 
-	// Because we want grids to be centered, the wider the grid, the more
-	// each position is pushed further from this position.
+	// Because we want grids to be centered, the wider the grid, the more each position is pushed further from this position.
 	// After sketching out the math, the formula looks like:
-	//
 	// x = -0.5T + 0.5 + I       // T = Total Columns
 	//                           // I = Column Index
-	//
 	const x = (numCols * -0.5 + 0.5 + colIndex) * renderColWidth;
 
 	const VERTICAL_OFFSET = -BLOCK_PLACEMENT_SQUARE_SIZE;
@@ -59,16 +53,12 @@ const GridSquare = ({ rowIndex, colIndex, numRows, numCols, rowHeight, colWidth,
 			onClick={(ev) => {
 				ev.stopPropagation();
 
-				// If we're in the process of selecting/deselecting/deleting
-				// notes, and the user happens to finish while over the
-				// placement grid, don't create new blocks.
+				// If we're in the process of selecting/deselecting/deleting notes, and the user happens to finish while over the placement grid, don't create new blocks.
 				if (selectionMode) {
 					return;
 				}
 
-				// Because this is really one big canvas, `onClick`
-				// fires even if the mouse starts somewhere else and
-				// releases over a placement grid tile.
+				// Because this is really one big canvas, `onClick` fires even if the mouse starts somewhere else and releases over a placement grid tile.
 				// This causes problems when resizing obstacles.
 				if (!mouseDownAt) {
 					return;
@@ -79,29 +69,24 @@ const GridSquare = ({ rowIndex, colIndex, numRows, numCols, rowHeight, colWidth,
 					return;
 				}
 
-				// If we clicked down on one grid and up on another, don't
-				// count it.
+				// If we clicked down on one grid and up on another, don't count it.
 				if (mouseDownAt && (mouseDownAt.rowIndex !== rowIndex || mouseDownAt.colIndex !== colIndex)) {
 					return;
 				}
 
-				// With mapping extensions enabled, it's possible we need to
-				// convert the rowIndex/colIndex to one appropriate for the
-				// current grid!
+				// With mapping extensions enabled, it's possible we need to convert the rowIndex/colIndex to one appropriate for the current grid!
 				const effectiveColIndex = convertGridColumn(colIndex, numCols, colWidth);
 				const effectiveRowIndex = convertGridRow(rowIndex, numRows, rowHeight);
 
 				clickPlacementGrid(effectiveRowIndex, effectiveColIndex);
 			}}
 			onPointerDown={(ev) => {
-				// Only pay attention to left-clicks when it comes to the
-				// placement grid. Right-clicks should pass through.
+				// Only pay attention to left-clicks when it comes to the placement grid. Right-clicks should pass through.
 				if (ev.buttons !== 1) {
 					return;
 				}
 
-				// If the user is placing an obstacle, the idea of a hovered
-				// cell suddenly doesn't make as much sense.
+				// If the user is placing an obstacle, the idea of a hovered cell suddenly doesn't make as much sense.
 				if (selectedTool === ObjectTool.OBSTACLE && isHovered) {
 					setHoveredCell(null);
 				}
@@ -129,23 +114,19 @@ const GridSquare = ({ rowIndex, colIndex, numRows, numCols, rowHeight, colWidth,
 			onPointerOver={(ev) => {
 				setMouseOverAt({ rowIndex, colIndex });
 
-				// Don't update 'hoveredCell' if I'm clicking and dragging
-				// a block
+				// Don't update 'hoveredCell' if I'm clicking and dragging a block
 				if (!mouseDownAt) {
 					setHoveredCell({ rowIndex, colIndex });
 				}
 			}}
 			onPointerOut={(ev) => {
-				// If the user is in the middle of placing a block, ignore
-				// this event
+				// If the user is in the middle of placing a block, ignore this event
 				if (mouseDownAt) {
 					return;
 				}
 
-				// A strange quirk/bug can mean that the `pointerOut` event
-				// fires AFTER the user has already entered a new cell.
-				// Only unset the hovered cell if they haven't already
-				// moved onto a new cell.
+				// A strange quirk/bug can mean that the `pointerOut` event fires AFTER the user has already entered a new cell.
+				// Only unset the hovered cell if they haven't already moved onto a new cell.
 				if (isHovered) {
 					setHoveredCell(null);
 				}

@@ -1,4 +1,4 @@
-import Doc, { frontMatter, tableOfContents } from "../../../docs/manual/notes-view.mdx";
+import Doc, { frontMatter, tableOfContents } from "$/docs/manual/notes-view.mdx";
 
 import DocPage from "../DocPage";
 

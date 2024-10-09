@@ -56,14 +56,14 @@ const slice = createSlice({
 		getSongById: (state, songId: SongId) => state.byId[songId],
 		getSelectedSongId: (state) => state.selectedId,
 		getSelectedSong: grabSelectedSong(true),
-		getSelectedSongDifficultyIds: createSelector(grabSelectedSong(true), (song) => {
+		getSelectedSongDifficultyIds: createSelector(grabSelectedSong(true), (song: App.Song) => {
 			const ids = Object.keys(song.difficultiesById) as Difficulty[];
 			return sortDifficultyIds(ids);
 		}),
 		getDemoSong: (state) => {
 			return Object.values(state.byId).find((song) => song.demo);
 		},
-		getGridSize: createSelector(grabSelectedSong(true), (song) => {
+		getGridSize: createSelector(grabSelectedSong(true), (song: App.Song) => {
 			const mappingExtensions = song.modSettings.mappingExtensions;
 			// In legacy states, `mappingExtensions` was a boolean, and it was possible to not have the key at all.
 			const isLegacy = typeof mappingExtensions === "boolean" || !mappingExtensions;
@@ -76,24 +76,24 @@ const slice = createSlice({
 				rowHeight: mappingExtensions.rowHeight || DEFAULT_ROW_HEIGHT,
 			};
 		}),
-		getEnabledMods: createSelector(grabSelectedSong(true), (song) => {
+		getEnabledMods: createSelector(grabSelectedSong(true), (song: App.Song) => {
 			return {
-				mappingExtensions: song.modSettings.mappingExtensions.isEnabled,
-				customColors: song.modSettings.customColors.isEnabled,
+				mappingExtensions: song.modSettings.mappingExtensions?.isEnabled,
+				customColors: song.modSettings.customColors?.isEnabled,
 			};
 		}),
-		getEnabledFastWalls: createSelector(grabSelectedSong(true), (song) => {
+		getEnabledFastWalls: createSelector(grabSelectedSong(true), (song: App.Song) => {
 			return song.enabledFastWalls;
 		}),
-		getEnabledLightshow: createSelector(grabSelectedSong(true), (song) => {
+		getEnabledLightshow: createSelector(grabSelectedSong(true), (song: App.Song) => {
 			return song.enabledLightshow;
 		}),
-		getCustomColors: createSelector(grabSelectedSong(true), (song) => {
+		getCustomColors: createSelector(grabSelectedSong(true), (song: App.Song) => {
 			const colors = song.modSettings.customColors;
 			if (!colors) return DEFAULT_MOD_SETTINGS.customColors;
 			return { ...DEFAULT_MOD_SETTINGS.customColors, ...colors };
 		}),
-		getMappingMode: createSelector(grabSelectedSong(true), (song) => {
+		getMappingMode: createSelector(grabSelectedSong(true), (song: App.Song) => {
 			return song.modSettings.mappingExtensions?.isEnabled ? ObjectPlacementMode.EXTENSIONS : ObjectPlacementMode.NORMAL;
 		}),
 	},
@@ -233,7 +233,7 @@ const slice = createSlice({
 			// For a brief moment, modSettings was being set to an empty object, before the children were required. Update that now, if so.
 			song.modSettings ??= DEFAULT_MOD_SETTINGS;
 			// Also for a brief moment, modSettings didn't always have properties for each mod
-			// @ts-ignore
+			// @ts-ignore false positive
 			song.modSettings[mod] ??= DEFAULT_MOD_SETTINGS[mod];
 			const isModEnabled = song.modSettings;
 			song.modSettings[mod].isEnabled = !isModEnabled;
@@ -280,7 +280,7 @@ const slice = createSlice({
 			const { property } = action.payload;
 			const song = grabSelectedSong(false)(state);
 			if (!song) return;
-			// @ts-ignore
+			// @ts-ignore false positive
 			song[property] = !song[property];
 		});
 		builder.addDefaultCase((state) => state);

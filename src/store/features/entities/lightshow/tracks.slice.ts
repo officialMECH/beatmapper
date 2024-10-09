@@ -45,8 +45,6 @@ function getSymmetricalId(id: EntityId) {
 /**
  * In addition to returning an index so that the caller knows where to insert the event,
  * this method also returns whether or not there is already an event at the exact same beatNum.
- *
- * @returns [ index: number, overlaps: boolean ]
  */
 function findIndexForNewEvent<T extends App.Event>(beatNum: number, relevantEvents: T[]) {
 	// Find the spot for this event. All events should be added in chronological order.
@@ -66,13 +64,13 @@ function findIndexForNewEvent<T extends App.Event>(beatNum: number, relevantEven
 		}
 	}
 
-	return [indexToInsertAt, eventOverlaps] as const;
+	return [indexToInsertAt, eventOverlaps] as [index: number, overlaps: boolean];
 }
 
 /**
  * Iterate through all tracks and mark all events as deselected.
  *
- * @warning This method mutates the argument passed in. It's meant to be used within a `produce` callback.
+ * WARNING: This method mutates the argument passed in. It's meant to be used within a `produce` callback.
  */
 const deselectAllEvents = (draftState: typeof initialState) => {
 	const trackIds = Object.keys(draftState) as App.TrackId[];

@@ -1,4 +1,4 @@
-import Doc, { frontMatter, tableOfContents } from "../../../docs/fast-walls.mdx";
+import Doc, { frontMatter, tableOfContents } from "$/docs/fast-walls.mdx";
 
 import DocPage from "../DocPage";
 

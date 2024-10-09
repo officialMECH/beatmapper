@@ -50,8 +50,7 @@ const getRotationForDirection = (direction: Direction) => {
 	//   2  8  3
 	//   6  1  7
 	//
-	// Our block by default points downwards, so we'll do x-axis rotations
-	// depending on the number
+	// Our block by default points downwards, so we'll do x-axis rotations depending on the number
 	switch (direction) {
 		case Direction.UP:
 			return Math.PI;
@@ -137,7 +136,7 @@ const Block = ({ x, y, z, time, lineLayer, lineIndex, direction, size = 1, color
 		const clickType = ev.button === 0 ? "left" : ev.button === 1 ? "middle" : ev.button === 2 ? "right" : undefined;
 
 		if (clickType) {
-			if (handleClick && time && lineLayer && lineIndex) handleClick(clickType, time, lineLayer, lineIndex);
+			if (handleClick && time !== undefined && lineLayer !== undefined && lineIndex !== undefined) handleClick(clickType, time, lineLayer, lineIndex);
 		}
 	};
 
@@ -145,7 +144,7 @@ const Block = ({ x, y, z, time, lineLayer, lineIndex, direction, size = 1, color
 		// While selecting/deselecting/deleting notes, pointer-over events are important and should trump others.
 		if (selectionMode) {
 			ev.stopPropagation();
-			if (handleMouseOver && time && lineLayer && lineIndex) handleMouseOver(time, lineLayer, lineIndex);
+			if (handleMouseOver && time !== undefined && lineLayer !== undefined && lineIndex !== undefined) handleMouseOver(time, lineLayer, lineIndex);
 		}
 	};
 

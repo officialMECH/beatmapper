@@ -22,7 +22,7 @@ const GridHeader = ({ height, beatNums, selectedBeat }: Props) => {
 			style={{ height }}
 			onPointerDown={() => {
 				setIsScrubbing(true);
-				if (selectedBeat) dispatch(scrubEventsHeader({ selectedBeat }));
+				if (selectedBeat !== null) dispatch(scrubEventsHeader({ selectedBeat }));
 				lastActionDispatchedFor.current = selectedBeat;
 			}}
 			onPointerUp={() => {
@@ -34,12 +34,11 @@ const GridHeader = ({ height, beatNums, selectedBeat }: Props) => {
 					return;
 				}
 
-				// If this is our very first scrub of this pointer-down, we should use
-				// it by default.
+				// If this is our very first scrub of this pointer-down, we should use it by default.
 				const shouldDispatchAction = lastActionDispatchedFor.current !== selectedBeat;
 
 				if (shouldDispatchAction) {
-					if (selectedBeat) dispatch(scrubEventsHeader({ selectedBeat }));
+					if (selectedBeat !== null) dispatch(scrubEventsHeader({ selectedBeat }));
 					lastActionDispatchedFor.current = selectedBeat;
 				}
 			}}

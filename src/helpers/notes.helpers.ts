@@ -5,12 +5,7 @@ import { App, Direction, type Json } from "$/types";
 
 type ReduxNote = Json.Note & { selected?: boolean };
 
-/**
- * NOTE: Currently, the "redux" variant of the blocks format isn't used.
- * I use the proprietary json format everywhere.
- * I want to refactor this, to keep everything in line between blocks,
- * obstacles, and mines. TODO.
- */
+// TODO: Currently, the "redux" variant of the blocks format isn't used. I use the proprietary json format everywhere. I want to refactor this, to keep everything in line between blocks, obstacles, and mines.
 export function convertBlocksToRedux<T extends Json.Note>(blocks: T[]) {
 	return blocks.map((b) => {
 		return {
@@ -174,15 +169,12 @@ export function calculateNoteDensity(numOfNotes: number, segmentLengthInBeats: n
 
 export function convertNotesToMappingExtensions<T extends Pick<Json.Note, "_lineIndex" | "_lineLayer">>(notes: T[]) {
 	return notes.map((note) => {
-		// Normally, notes go from 0 to 3 for lineIndex, and 0 to 2 for lineLayer.
-		// With custom grids, this could be -99 to 99 for both, in theory.
-		// But, because we want to support decimal values, we need to switch to the
-		// alternate format, where the values omit everything from -999 to 999.
-		//
-		// 0 -> 1000
-		// 1 -> 2000
-		// 2 -> 3000
-		// -1 -> -2000
+		// Normally, notes go from 0 to 3 for lineIndex, and 0 to 2 for lineLayer. With custom grids, this could be -99 to 99 for both, in theory.
+		// But, because we want to support decimal values, we need to switch to the alternate format, where the values omit everything from -999 to 999.
+		//   0 -> 1000
+		//   1 -> 2000
+		//   2 -> 3000
+		//  -1 -> -2000
 		const newLineIndex = note._lineIndex < 0 ? note._lineIndex * 1000 - 1000 : note._lineIndex * 1000 + 1000;
 		const newLineLayer = note._lineLayer < 0 ? note._lineLayer * 1000 - 1000 : note._lineLayer * 1000 + 1000;
 
@@ -196,15 +188,12 @@ export function convertNotesToMappingExtensions<T extends Pick<Json.Note, "_line
 
 export function convertNotesFromMappingExtensions<T extends Pick<Json.Note, "_lineIndex" | "_lineLayer">>(notes: T[]) {
 	return notes.map((note) => {
-		// Normally, notes go from 0 to 3 for lineIndex, and 0 to 2 for lineLayer.
-		// With custom grids, this could be -99 to 99 for both, in theory.
-		// But, because we want to support decimal values, we need to switch to the
-		// alternate format, where the values omit everything from -999 to 999.
-		//
-		// 0 -> 1000
-		// 1 -> 2000
-		// 2 -> 3000
-		// -1 -> -2000
+		// Normally, notes go from 0 to 3 for lineIndex, and 0 to 2 for lineLayer. With custom grids, this could be -99 to 99 for both, in theory.
+		// But, because we want to support decimal values, we need to switch to the alternate format, where the values omit everything from -999 to 999.
+		//   0 -> 1000
+		//   1 -> 2000
+		//   2 -> 3000
+		//  -1 -> -2000
 		const newLineIndex = note._lineIndex < 0 ? note._lineIndex / 1000 + 1 : note._lineIndex / 1000 - 1;
 		const newLineLayer = note._lineLayer < 0 ? note._lineLayer / 1000 + 1 : note._lineLayer / 1000 - 1;
 

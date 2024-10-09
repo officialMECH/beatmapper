@@ -12,16 +12,16 @@ export interface IGrid {
 
 export type GridPresets = Record<string, IGrid>;
 
-export type ISelectionBox = Pick<DOMRect, "left" | "right" | "top" | "bottom"> & {
+export interface ISelectionBox extends Pick<DOMRect, "left" | "right" | "top" | "bottom"> {
 	height?: number;
 	width?: number;
-};
-export type ISelectionBoxInBeats = {
+}
+export interface ISelectionBoxInBeats {
 	startBeat: number;
 	endBeat: number;
 	startTrackIndex: number;
 	endTrackIndex: number;
-};
+}
 
 export interface IBackgroundBox {
 	id: EntityId;

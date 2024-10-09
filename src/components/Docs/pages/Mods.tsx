@@ -1,4 +1,4 @@
-import Doc, { frontMatter, tableOfContents } from "../../../docs/mods.mdx";
+import Doc, { frontMatter, tableOfContents } from "$/docs/mods.mdx";
 
 import DocPage from "../DocPage";
 

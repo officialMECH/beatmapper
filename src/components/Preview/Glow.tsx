@@ -40,8 +40,7 @@ const Glow = ({ x, y, z, color, size, status, lastEventId, isPlaying, isBlooming
 
 	const spring = useSpring(springConfig);
 
-	// When blooming, the `c` uniform makes it white and obnoxious, so tune the
-	// effect down in this case.
+	// When blooming, the `c` uniform makes it white and obnoxious, so tune the effect down in this case.
 	const maxCValue = isBlooming ? 0.2 : 0.001;
 
 	const PValueRange = isBlooming ? [40, 1] : [28, 7];

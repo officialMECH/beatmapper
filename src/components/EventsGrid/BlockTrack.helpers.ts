@@ -32,9 +32,8 @@ export function getBackgroundBoxes(events: App.Event[], trackId: App.TrackId, in
 
 	const backgroundBoxes: IBackgroundBox[] = [];
 
-	// If the initial lighting value is true, we wanna convert it into a pseudo-
-	// event. It's simpler if we treat it as an 'on' event at the very first beat
-	// of the section.
+	// If the initial lighting value is true, we wanna convert it into a pseudo-event.
+	// It's simpler if we treat it as an 'on' event at the very first beat of the section.
 	const workableEvents = [...events] as App.LightingEvent[];
 	if (initialTrackLightingColorType) {
 		const pseudoInitialEvent = {
@@ -101,9 +100,8 @@ export function getBackgroundBoxes(events: App.Event[], trackId: App.TrackId, in
 		}
 	}
 
-	// If there's still a tentative box after iterating through all events, it
-	// means that it should remain on after the current window. Stretch it to
-	// fill the available space.
+	// If there's still a tentative box after iterating through all events, it means that it should remain on after the current window.
+	// Stretch it to fill the available space.
 	if (tentativeBox) {
 		const endBeat = startBeat + numOfBeatsToShow;
 		const durationRemaining = endBeat - tentativeBox.beatNum;

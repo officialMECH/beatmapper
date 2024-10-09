@@ -1,7 +1,7 @@
 import { combineReducers } from "@reduxjs/toolkit";
 
 import beatmap from "./beatmap";
-import difficulty from "./difficulty";
+import difficulty from "./difficulty.slice";
 import lightshow from "./lightshow";
 
 const reducer = combineReducers({

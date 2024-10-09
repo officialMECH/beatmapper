@@ -15,11 +15,9 @@ import TrackMover from "../TrackMover";
 import Lighting from "./Lighting";
 
 /**
- * This component holds all of the internal 3D stuff, everything
- * you see in the main part of the map editor.
+ * This component holds all of the internal 3D stuff, everything you see in the main part of the map editor.
  *
- * It does NOT include the 2D stuff like the toolbar or the track
- * controls.
+ * It does NOT include the 2D stuff like the toolbar or the track controls.
  */
 const MapVisualization = () => {
 	const controls = useRef<Controls | null>(null);

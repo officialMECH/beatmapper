@@ -1348,15 +1348,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/runtime@npm:^7.9.2":
-  version: 7.25.7
-  resolution: "@babel/runtime@npm:7.25.7"
-  dependencies:
-    regenerator-runtime: "npm:^0.14.0"
-  checksum: 10/73411fe0f1bff3a962586cef05b30f49e554b6563767e6d84f7d79d605b2c20e7fc3df291a3aebef69043181a8f893afdab9e6672557a5c2d08b9377d6f678cd
-  languageName: node
-  linkType: hard
-
 "@babel/template@npm:^7.24.7, @babel/template@npm:^7.25.0":
   version: 7.25.0
   resolution: "@babel/template@npm:7.25.0"
@@ -2452,13 +2443,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/base16@npm:*, @types/base16@npm:^1.0.2":
-  version: 1.0.5
-  resolution: "@types/base16@npm:1.0.5"
-  checksum: 10/caa391944e9af95d395ad8a489ad7e6bc3b358f73f876215313e8a2f97a18d109d8ab3d6d92bd473d9a1c782639a82921a3c30124922f2492082b550a2e9f6a6
-  languageName: node
-  linkType: hard
-
 "@types/color-convert@npm:*":
   version: 2.0.3
   resolution: "@types/color-convert@npm:2.0.3"
@@ -2553,15 +2537,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/lodash.debounce@npm:^4.0.6":
-  version: 4.0.9
-  resolution: "@types/lodash.debounce@npm:4.0.9"
-  dependencies:
-    "@types/lodash": "npm:*"
-  checksum: 10/8183a152e01928e3b97ca773f6ae6038b8695e76493ba8bf6b743ec143948a62294fbc9d49fa4a78b52265b3ba4892ef57534e0c13d04aa0f111671b5a944feb
-  languageName: node
-  linkType: hard
-
 "@types/lodash.get@npm:^4.4.9":
   version: 4.4.9
   resolution: "@types/lodash.get@npm:4.4.9"
@@ -2575,13 +2550,6 @@ __metadata:
   version: 4.14.144
   resolution: "@types/lodash@npm:4.14.144"
   checksum: 10/3ca53fd05b6224d6a4944f8943e6d6b06d8a798d6c26044f90a63b0d2159e4580472b7391654f62a886f5b814eb1070b827860c2049053e6b392836060d72f23
-  languageName: node
-  linkType: hard
-
-"@types/lodash@npm:^4.14.178":
-  version: 4.17.7
-  resolution: "@types/lodash@npm:4.17.7"
-  checksum: 10/b8177f19cf962414a66989837481b13f546afc2e98e8d465bec59e6ac03a59c584eb7053ce511cde3a09c5f3096d22a5ae22cfb56b23f3b0da75b0743b6b1a44
   languageName: node
   linkType: hard
 
@@ -2637,13 +2605,6 @@ __metadata:
   version: 15.7.1
   resolution: "@types/prop-types@npm:15.7.1"
   checksum: 10/aea5aa41851e24b872ce8b7956e82917f9d697ee499b548ba5c8893c979d17ce922d96023ca1906b18652695586f202e0de9b66aacb4f9466b5e1c6eeabb5db7
-  languageName: node
-  linkType: hard
-
-"@types/prop-types@npm:^15.7.3":
-  version: 15.7.12
-  resolution: "@types/prop-types@npm:15.7.12"
-  checksum: 10/ac16cc3d0a84431ffa5cfdf89579ad1e2269549f32ce0c769321fdd078f84db4fbe1b461ed5a1a496caf09e637c0e367d600c541435716a55b1d9713f5035dfe
   languageName: node
   linkType: hard
 
@@ -2727,15 +2688,6 @@ __metadata:
   dependencies:
     "@types/react": "npm:*"
   checksum: 10/d04c087376daa503e187b390e416530904152046a7ac79a1c94e43cb4855fc8078ba8947792b88f3aff953defd9cae331c44fba717ebd650f40556e8f4bbb2a2
-  languageName: node
-  linkType: hard
-
-"@types/redux-devtools-themes@npm:^1.0.0":
-  version: 1.0.3
-  resolution: "@types/redux-devtools-themes@npm:1.0.3"
-  dependencies:
-    "@types/base16": "npm:*"
-  checksum: 10/dc7bae296681efc9b144f7e6be0bd6c370bfa325bba7372febfda45d8e86c0f2c414237a8e2e55cda3303f7ac3d1fc1466b7ae89cdab988ffbaf01231c2ab151
   languageName: node
   linkType: hard
 
@@ -3195,13 +3147,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"base16@npm:^1.0.0":
-  version: 1.0.0
-  resolution: "base16@npm:1.0.0"
-  checksum: 10/7fdd91cc01c0ff8301f500c75f4dcf80e2e05124c137fa91a11955f74dacb7babceac11c7a8db232f49429c33f27d2dee29a36a3a347d2f2c4d319715056d348
-  languageName: node
-  linkType: hard
-
 "base64-js@npm:^1.3.1, base64-js@npm:^1.5.1":
   version: 1.5.1
   resolution: "base64-js@npm:1.5.1"
@@ -3258,10 +3203,6 @@ __metadata:
     react-router-dom: "npm:^6.26.1"
     react-tippy: "npm:^1.4.0"
     react-transition-group: "npm:^4.4.5"
-    redux-devtools: "npm:^3.7.0"
-    redux-devtools-dock-monitor: "npm:^1.2.0"
-    redux-devtools-filter-actions: "npm:^1.2.2"
-    redux-devtools-log-monitor: "npm:^2.1.0"
     redux-state-sync: "npm:^3.1.4"
     redux-storage: "npm:^4.1.2"
     redux-storage-decorator-debounce: "npm:^1.1.3"
@@ -3567,7 +3508,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"color-convert@npm:^1.9.0, color-convert@npm:^1.9.3":
+"color-convert@npm:^1.9.0":
   version: 1.9.3
   resolution: "color-convert@npm:1.9.3"
   dependencies:
@@ -3599,7 +3540,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"color-string@npm:^1.6.0, color-string@npm:^1.9.0":
+"color-string@npm:^1.9.0":
   version: 1.9.1
   resolution: "color-string@npm:1.9.1"
   dependencies:
@@ -3615,16 +3556,6 @@ __metadata:
   bin:
     color-support: bin.js
   checksum: 10/4bcfe30eea1498fe1cabc852bbda6c9770f230ea0e4faf4611c5858b1b9e4dde3730ac485e65f54ca182f4c50b626c1bea7c8441ceda47367a54a818c248aa7a
-  languageName: node
-  linkType: hard
-
-"color@npm:^3.2.1":
-  version: 3.2.1
-  resolution: "color@npm:3.2.1"
-  dependencies:
-    color-convert: "npm:^1.9.3"
-    color-string: "npm:^1.6.0"
-  checksum: 10/bf70438e0192f4f62f4bfbb303e7231289e8cc0d15ff6b6cbdb722d51f680049f38d4fdfc057a99cb641895cf5e350478c61d98586400b060043afc44285e7ae
   languageName: node
   linkType: hard
 
@@ -3759,7 +3690,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"csstype@npm:3.1.3, csstype@npm:^3.0.10":
+"csstype@npm:3.1.3":
   version: 3.1.3
   resolution: "csstype@npm:3.1.3"
   checksum: 10/f593cce41ff5ade23f44e77521e3a1bcc2c64107041e1bf6c3c32adc5187d0d60983292fda326154d20b01079e24931aa5b08e4467cc488b60bb1e7f6d478ade
@@ -5681,20 +5612,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lodash-es@npm:^4.2.1":
-  version: 4.17.21
-  resolution: "lodash-es@npm:4.17.21"
-  checksum: 10/03f39878ea1e42b3199bd3f478150ab723f93cc8730ad86fec1f2804f4a07c6e30deaac73cad53a88e9c3db33348bb8ceeb274552390e7a75d7849021c02df43
-  languageName: node
-  linkType: hard
-
-"lodash.curry@npm:^4.1.1":
-  version: 4.1.1
-  resolution: "lodash.curry@npm:4.1.1"
-  checksum: 10/ce6c2bc42eacc25c5697b90a6fc42a121fec2b3c944fd324b61f93a6e1b4c8bb4875dc8c32b89ca4ce5f7be7346f485ed8410d3f4728eceebcbca9760bcac3d1
-  languageName: node
-  linkType: hard
-
 "lodash.debounce@npm:^4.0.8":
   version: 4.0.8
   resolution: "lodash.debounce@npm:4.0.8"
@@ -5765,14 +5682,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lodash@npm:^4.12.0, lodash@npm:^4.17.11":
+"lodash@npm:^4.17.11":
   version: 4.17.11
   resolution: "lodash@npm:4.17.11"
   checksum: 10/f384a12ebcb77447306cc8988e6715a1cab3f07056929e4c163ad8cc9527ac426963ea61e52d44806fc284073aebeb4778e16ec9658a0de89340e8ab57b43d13
   languageName: node
   linkType: hard
 
-"lodash@npm:^4.17.19, lodash@npm:^4.17.20, lodash@npm:^4.17.21, lodash@npm:^4.2.1":
+"lodash@npm:^4.17.20, lodash@npm:^4.17.21":
   version: 4.17.21
   resolution: "lodash@npm:4.17.21"
   checksum: 10/c08619c038846ea6ac754abd6dd29d2568aa705feb69339e836dfa8d8b09abbb2f859371e86863eda41848221f9af43714491467b5b0299122431e202bb0c532
@@ -6996,13 +6913,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"parse-key@npm:^0.2.1":
-  version: 0.2.1
-  resolution: "parse-key@npm:0.2.1"
-  checksum: 10/f36d545c8bf0ab599096c04b6d9c426ab019e555f7da11b4721a143fa145be61c847a100bef6a50e78d06bf2369a9076ed6d488743d8e273f59d4bfc0e0c3ca9
-  languageName: node
-  linkType: hard
-
 "path-is-absolute@npm:^1.0.0":
   version: 1.0.1
   resolution: "path-is-absolute@npm:1.0.1"
@@ -7241,20 +7151,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-base16-styling@npm:^0.8.0":
-  version: 0.8.2
-  resolution: "react-base16-styling@npm:0.8.2"
-  dependencies:
-    "@types/base16": "npm:^1.0.2"
-    "@types/lodash": "npm:^4.14.178"
-    base16: "npm:^1.0.0"
-    color: "npm:^3.2.1"
-    csstype: "npm:^3.0.10"
-    lodash.curry: "npm:^4.1.1"
-  checksum: 10/501158d6a144e2dbd930c4cbd56e03f4a28fdf57f2b3a2eed4a307154909c3565163b9fe9d4c33fb95b31af7fc5617c62435b171a228a96044d4e6fddd7792b7
-  languageName: node
-  linkType: hard
-
 "react-color@npm:^2.19.3":
   version: 2.19.3
   resolution: "react-color@npm:2.19.3"
@@ -7269,20 +7165,6 @@ __metadata:
   peerDependencies:
     react: "*"
   checksum: 10/7d3e01a735e91896795422af20187afae79df9301d0658ac017cfff75d905af27dac25f5009c68c29b3e0d8ce03d220360ba0fe8ee0379cbb8a3535e73de934b
-  languageName: node
-  linkType: hard
-
-"react-dock@npm:^0.3.0":
-  version: 0.3.0
-  resolution: "react-dock@npm:0.3.0"
-  dependencies:
-    "@types/prop-types": "npm:^15.7.3"
-    lodash.debounce: "npm:^4.0.8"
-    prop-types: "npm:^15.7.2"
-  peerDependencies:
-    "@types/react": ^16.3.18
-    react: ^16.3.0
-  checksum: 10/d4541999db3ac6f8d56459a470dbefdf8e1ae646daab48009922debbeacc8f91c35ae7f51f85ce72e50191b1c6c5ba289f6aff3f34714e98f05ab206da19499f
   languageName: node
   linkType: hard
 
@@ -7362,20 +7244,6 @@ __metadata:
   version: 16.11.0
   resolution: "react-is@npm:16.11.0"
   checksum: 10/b021e1fe587c134608560e2dd629407fe3bc5e01d26ca87a61e6b07574cb187470eed894b1f532903683a9c402096776ed69802a7a9833d308fb1f12a9f4b04f
-  languageName: node
-  linkType: hard
-
-"react-json-tree@npm:^0.13.0":
-  version: 0.13.0
-  resolution: "react-json-tree@npm:0.13.0"
-  dependencies:
-    "@types/prop-types": "npm:^15.7.3"
-    prop-types: "npm:^15.7.2"
-    react-base16-styling: "npm:^0.8.0"
-  peerDependencies:
-    "@types/react": ^16.3.18
-    react: ^16.3.0
-  checksum: 10/26588977de8a02c0786054aa2b00fc572e2c31664ebdfa2aceca4c94009ff62c4255f1555966d4fd76fe2c7305ab774890f68f0ed53893dd95cd3a88eb8e9c7c
   languageName: node
   linkType: hard
 
@@ -7550,92 +7418,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"redux-devtools-dock-monitor@npm:^1.2.0":
-  version: 1.2.0
-  resolution: "redux-devtools-dock-monitor@npm:1.2.0"
-  dependencies:
-    "@types/prop-types": "npm:^15.7.3"
-    parse-key: "npm:^0.2.1"
-    prop-types: "npm:^15.7.2"
-    react-dock: "npm:^0.3.0"
-  peerDependencies:
-    "@types/react": ^16.3.18
-    react: ^16.3.0
-    redux: ^3.4.0 || ^4.0.0
-    redux-devtools: ^3.4.0
-  checksum: 10/e867e469a4af0c2a698024bf2685042706b9767e1b6b2e85f2d94bc4e67c142b40617713121a083451594c74cb8607fd57f6cfd677e163b7219f03f09462a76b
-  languageName: node
-  linkType: hard
-
-"redux-devtools-filter-actions@npm:^1.2.2":
-  version: 1.2.2
-  resolution: "redux-devtools-filter-actions@npm:1.2.2"
-  dependencies:
-    lodash: "npm:^4.12.0"
-  peerDependencies:
-    react: ^0.14.9 || ^15.3.0
-    redux-devtools: ^3.4.0
-  checksum: 10/650e7aca46d8a620ae604e82f248d4fbebcfce1d55422da215e289b6b038a3f62c202d8bdb5dab8265a3caa10410cd5add043ac122d31558f837da34e0a92bda
-  languageName: node
-  linkType: hard
-
-"redux-devtools-instrument@npm:^1.10.0":
-  version: 1.10.0
-  resolution: "redux-devtools-instrument@npm:1.10.0"
-  dependencies:
-    lodash: "npm:^4.17.19"
-    symbol-observable: "npm:^1.2.0"
-  peerDependencies:
-    redux: ^3.4.0 || ^4.0.0
-  checksum: 10/d0ee887f6079aea666b65870e192fe728633513c6bbdf4290deccbbce40a01641dc73be54d89ace77799692a48fbc34b9358179d2ca2c90df4321d689717c550
-  languageName: node
-  linkType: hard
-
-"redux-devtools-log-monitor@npm:^2.1.0":
-  version: 2.1.0
-  resolution: "redux-devtools-log-monitor@npm:2.1.0"
-  dependencies:
-    "@types/lodash.debounce": "npm:^4.0.6"
-    "@types/prop-types": "npm:^15.7.3"
-    "@types/redux-devtools-themes": "npm:^1.0.0"
-    lodash.debounce: "npm:^4.0.8"
-    prop-types: "npm:^15.7.2"
-    react-json-tree: "npm:^0.13.0"
-    redux-devtools-themes: "npm:^1.0.0"
-  peerDependencies:
-    "@types/react": ^16.9.46
-    react: ^16.3.0
-    redux: ^4.0.5
-    redux-devtools: ^3.4.0
-  checksum: 10/f86643a6c32a45bdc2a0b6d50211d58fad3b1b473dd43193cb73ce7a6a53dfe954c86f7c3b4675702f89c1b147e85b88ee0e135c3241d6e6a372921161f51092
-  languageName: node
-  linkType: hard
-
-"redux-devtools-themes@npm:^1.0.0":
-  version: 1.0.0
-  resolution: "redux-devtools-themes@npm:1.0.0"
-  dependencies:
-    base16: "npm:^1.0.0"
-  checksum: 10/d96865c97af8d7146f4d6665059b5070fe07e1c6cf86498e59fc4654cb2bf263979983a8769e9927564cfe62513832eddd51706ccc703cf90eedaccd86b42050
-  languageName: node
-  linkType: hard
-
-"redux-devtools@npm:^3.7.0":
-  version: 3.7.0
-  resolution: "redux-devtools@npm:3.7.0"
-  dependencies:
-    "@types/prop-types": "npm:^15.7.3"
-    lodash: "npm:^4.17.19"
-    prop-types: "npm:^15.7.2"
-    redux-devtools-instrument: "npm:^1.10.0"
-  peerDependencies:
-    react: ^0.14.9 || ^15.3.0 || ^16.0.0
-    react-redux: ^4.0.0 || ^5.0.0 || ^6.0.0 || ^7.0.0
-    redux: ^3.5.2 || ^4.0.0
-  checksum: 10/d992dd94b7c0ec3e066c4e1d8446940c476c1923a51b11ffe4c2f3e16fc5551d9953bdf6259e7a97de6b240d6fe7596507ef633bf32a6dd4ce1d580add2fddfd
-  languageName: node
-  linkType: hard
-
 "redux-ignore@npm:^1.2.5":
   version: 1.2.5
   resolution: "redux-ignore@npm:1.2.5"
@@ -7730,28 +7512,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"redux@npm:^3.3.1":
-  version: 3.7.2
-  resolution: "redux@npm:3.7.2"
-  dependencies:
-    lodash: "npm:^4.2.1"
-    lodash-es: "npm:^4.2.1"
-    loose-envify: "npm:^1.1.0"
-    symbol-observable: "npm:^1.0.3"
-  checksum: 10/7ea6b8e60b230297fa650f9244c81ba82d3bcfc543800f2798a1e675d007aa6deece9baa26112736b21c9184d661c0a79bf102dc575eb7ea7410d9c356dc7eac
-  languageName: node
-  linkType: hard
-
-"redux@npm:^3.6.0 || ^4.0.0, redux@npm:^4.0.1":
-  version: 4.2.1
-  resolution: "redux@npm:4.2.1"
-  dependencies:
-    "@babel/runtime": "npm:^7.9.2"
-  checksum: 10/371e4833b671193303a7dea7803c8fdc8e0d566740c78f580e0a3b77b4161da25037626900a2205a5d616117fa6ad09a4232e5a110bd437186b5c6355a041750
-  languageName: node
-  linkType: hard
-
-"redux@npm:^5.0.1":
+"redux@npm:^5":
   version: 5.0.1
   resolution: "redux@npm:5.0.1"
   checksum: 10/a373f9ed65693ead58bea5ef61c1d6bef39da9f2706db3be6f84815f3a1283230ecd1184efb1b3daa7f807d8211b0181564ca8f336fc6ee0b1e2fa0ba06737c2
@@ -8734,13 +8495,6 @@ __metadata:
   peerDependencies:
     react: ">=17.0"
   checksum: 10/45a8bde7fb4192d8fe5504ebbad4206381d4312257a873179278f8ec8b713e58a30053fa03fd52f4281ee2ad3eb96608fc70d6189d28f6c5f9c563d67ca22903
-  languageName: node
-  linkType: hard
-
-"symbol-observable@npm:^1.0.3, symbol-observable@npm:^1.2.0":
-  version: 1.2.0
-  resolution: "symbol-observable@npm:1.2.0"
-  checksum: 10/4684327a2fef2453dcd4238b5bd8f69c460a4708fb8c024a824c6a707ca644b2b2a586e36e5197d0d1162ff48e288299a48844a8c46274ffcfd9260e03df7692
   languageName: node
   linkType: hard
 

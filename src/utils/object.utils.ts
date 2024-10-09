@@ -1,3 +1,5 @@
+import type { EntityId } from "@reduxjs/toolkit";
+
 export function pick<T extends object, K extends keyof T>(obj: T, ...keys: readonly K[]): Pick<T, K> {
 	const result = {} as T;
 	for (const key of keys) {
@@ -39,8 +41,7 @@ function shallowCompareWithKeys<T extends object, K extends keyof T>(o1: T, o2: 
 }
 
 /**
- * Compare 1-level deep in objects.
- * Returns true if the items are identical
+ * Compare 1-level deep in objects. Returns true if the items are identical
  */
 export function shallowCompare<T extends object, K extends keyof T>(o1: T, o2: T, keys: K[]) {
 	if (keys) {
@@ -58,7 +59,7 @@ export function hasPropChanged<T extends object, K extends keyof T>(oldProps: Re
 	return oldProps[key] !== newProps[key];
 }
 
-export function compareExceptId(actual: { id: string }[], expected: { id: string }[]) {
+export function compareExceptId<T extends { id: EntityId }>(actual: T[], expected: T[]) {
 	const actualClone = actual.map((ev) => {
 		const clone = omit({ ...ev }, "id");
 		return clone;

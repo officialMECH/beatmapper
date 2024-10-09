@@ -24,8 +24,7 @@ export function floorToNearest(number: number, nearest: number) {
 
 /**
  * I often find myself needing to normalize values.
- * Say I have a value, 15, out of a range between 0 and 30.
- * I might want to know what that is on a scale of 1-5 instead.
+ * Say I have a value, 15, out of a range between 0 and 30. I might want to know what that is on a scale of 1-5 instead.
  */
 export function normalize(number: number, currentScaleMin: number, currentScaleMax: number, newScaleMin = 0, newScaleMax = 1) {
 	// First, normalize the value between 0 and 1.
@@ -35,8 +34,7 @@ export function normalize(number: number, currentScaleMin: number, currentScaleM
 }
 
 export function getInterpolatedValue(y1: number, y2: number, ratio: number) {
-	// We're assuming that `ratio` is a value between 0 and 1.
-	// If this were a graph, it'd be our `x`, and we're trying to solve for `y`.
+	// We're assuming that `ratio` is a value between 0 and 1. If this were a graph, it'd be our `x`, and we're trying to solve for `y`.
 	// First, find the slope of our line.
 	const slope = y2 - y1;
 

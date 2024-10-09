@@ -67,7 +67,7 @@ const SpeedTrack = ({ trackId, width, height, startBeat, numOfBeatsToShow, curso
 	);
 
 	const handlePointerDown: PointerEventHandler = (ev) => {
-		if (!cursorAtBeat) return;
+		if (cursorAtBeat === null) return;
 		if (isDisabled) {
 			return;
 		}

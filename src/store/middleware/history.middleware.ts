@@ -19,8 +19,7 @@ function jumpToEarliestNote(args: { earlierNotes: Json.Note[]; laterNotes: Json.
 	const relevantEntities = [relevantNotes, relevantObstacles].find((entity) => entity.length > 0) ?? [];
 
 	// For now, assume that the first entity is the earliest.
-	// Might make sense to sort them, so that if I delete a selected
-	// cluster it brings me to the start of that cluster?
+	// Might make sense to sort them, so that if I delete a selected cluster it brings me to the start of that cluster?
 	const earliestEntity = relevantEntities[0];
 
 	// Is this note within our visible range? If not, jump to it.
@@ -70,12 +69,9 @@ function switchEventPagesIfNecessary(args: { earlierEvents: App.Event[]; current
 }
 
 /**
- * I use redux-undo to manage undo/redo stuff, but this comes with one
- * limitation: I want to scroll the user to the right place, when
- * undoing/redoing.
+ * I use redux-undo to manage undo/redo stuff, but this comes with one limitation: I want to scroll the user to the right place, when undoing/redoing.
  *
- * This middleware listens for undo events, and handles updating the
- * cursor position in response to these actions.
+ * This middleware listens for undo events, and handles updating the cursor position in response to these actions.
  */
 export default function createHistoryMiddleware() {
 	const instance = createListenerMiddleware<RootState>();

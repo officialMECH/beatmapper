@@ -72,9 +72,7 @@ const PlacementGrid = ({ gridPosition }: Props) => {
 			const direction = getDirectionForDrag(initialPosition, currentPosition, mappingMode, ev.metaKey);
 
 			if (typeof direction === "number" && direction !== cachedDirection.current) {
-				// Mousemoves register very quickly; dozens of identical events might
-				// be submitted if we don't stop it, causing a backlog to accumulate
-				// on the main thread.
+				// Mousemoves register very quickly; dozens of identical events might be submitted if we don't stop it, causing a backlog to accumulate on the main thread.
 				if (cachedDirection.current === direction) {
 					return;
 				}
@@ -82,8 +80,7 @@ const PlacementGrid = ({ gridPosition }: Props) => {
 				const effectiveColIndex = convertGridColumn(colIndex, numCols, colWidth);
 				const effectiveRowIndex = convertGridRow(rowIndex, numRows, rowHeight);
 
-				// If this is the first move event that creates this tentative block,
-				// delete any pre-existing block in this cell
+				// If this is the first move event that creates this tentative block, delete any pre-existing block in this cell
 				dispatch(clearCellOfNotes({ rowIndex: effectiveRowIndex, colIndex: effectiveColIndex }));
 
 				evenMoreTentativeBlock = {
@@ -150,7 +147,7 @@ const PlacementGrid = ({ gridPosition }: Props) => {
 							defaultObstacleDuration={defaultObstacleDuration}
 							selectionMode={selectionMode}
 							setHoveredCell={setHoveredCell}
-							clickPlacementGrid={(rowIndex, colIndex) => dispatch(clickPlacementGrid({ rowIndex, colIndex }))}
+							clickPlacementGrid={(rowIndex, colIndex) => dispatch(clickPlacementGrid({ rowIndex, colIndex, tool: selectedTool }))}
 							createNewObstacle={(obstacle) => dispatch(createNewObstacle({ obstacle }))}
 						/>
 					);

@@ -56,9 +56,7 @@ const SongDetails = () => {
 
 	useMount(() => {
 		// We want to stop & reset the song when the user goes to edit it.
-		// In addition to seeming like a reasonable idea, it helps prevent any
-		// weirdness around editing the audio file when it's in a non-zero
-		// position.
+		// In addition to seeming like a reasonable idea, it helps prevent any weirdness around editing the audio file when it's in a non-zero position.
 		dispatch(stopPlaying({ offset: song.offset }));
 
 		if (song.songFilename) {
@@ -90,12 +88,9 @@ const SongDetails = () => {
 			...songData,
 		};
 
-		// When the user selects a file from their local machine, we store a File
-		// object type. BUT, when the user uploads a pre-existing map, the file is
-		// actually a Blob. They're similar in many ways, but they don't have a
-		// filename, and that breaks things. So, we should only try and save the
-		// cover art IF it's a proper file. If it's a blob, it can't have changed
-		// anyway.
+		// When the user selects a file from their local machine, we store a File object type. BUT, when the user uploads a pre-existing map, the file is actually a Blob.
+		// They're similar in many ways, but they don't have a filename, and that breaks things.
+		// So, we should only try and save the cover art IF it's a proper file. If it's a blob, it can't have changed anyway.
 		const shouldSaveCoverArt = coverArtFile?.name;
 
 		if (shouldSaveCoverArt) {
@@ -123,8 +118,8 @@ const SongDetails = () => {
 
 		setIsDirty(false);
 
-		// It can take a bit of time to update.
-		// HACK: I don't have a simple way to do that since it all happens in a redux middleware. The right solution is to track it in redux, but that feels like clutter and I lazy.
+		// HACK: It can take a bit of time to update. I don't have a simple way to do that since it all happens in a redux middleware.
+		// The right solution is to track it in redux, but that feels like clutter and I lazy.
 		// Waiting a couple secs should suffice.
 		window.setTimeout(() => {
 			setStatus("idle");

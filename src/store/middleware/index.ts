@@ -3,12 +3,12 @@ import { SAVE, type StorageEngine, createMiddleware as createStorageMiddleware }
 
 import { downloadMapFiles, pausePlaying, startPlaying, stopPlaying, togglePlaying } from "$/store/actions";
 
-import createBackupMiddleware from "./backup";
-import createDemoMiddleware from "./demo";
-import createHistoryMiddleware from "./history";
-import createPackagingMiddleware from "./packaging";
-import createSelectionMiddleware from "./selection";
-import createSongMiddleware from "./song";
+import createBackupMiddleware from "./backup.middleware";
+import createDemoMiddleware from "./demo.middleware";
+import createHistoryMiddleware from "./history.middleware";
+import createPackagingMiddleware from "./packaging.middleware";
+import createSelectionMiddleware from "./selection.middleware";
+import createSongMiddleware from "./song.middleware";
 
 export function createAllSharedMiddlewares(engine: StorageEngine) {
 	const stateSyncMiddleware = createStateSyncMiddleware({

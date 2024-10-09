@@ -38,24 +38,18 @@ const SongBlocks = () => {
 	const zPosition = -SONG_OFFSET + (cursorPositionInBeats ?? 0) * beatDepth;
 
 	// I can click on a block to start selecting it.
-	// If I hold the mouse down, I can drag to select (or deselect) many notes
-	// at a time.
-	// For this to work, I need to know when they start clicking and stop
-	// clicking. For starting clicking, I can use the `SELECT_NOTE` action,
-	// triggered when clicking a block... but they might not be over a block
-	// when they release the mouse. So instead I need to use a mouseUp handler
-	// up here.
+	// If I hold the mouse down, I can drag to select (or deselect) many notes at a time.
+	// For this to work, I need to know when they start clicking and stop clicking.
+	// For starting clicking, I can use the `SELECT_NOTE` action, triggered when clicking a block... but they might not be over a block when they release the mouse.
+	// So instead I need to use a mouseUp handler up here.
 	useEffect(() => {
 		if (!selectionMode) {
 			return;
 		}
 
 		const handleMouseUp = () => {
-			// Wait 1 frame before wrapping up. This is to prevent the selection
-			// mode from changing before all event-handlers have been processed.
-			// Without the delay, the user might accidentally add notes to the
-			// placement grid - further up in the React tree - if they release the
-			// mouse while over a grid tile.
+			// Wait 1 frame before wrapping up. This is to prevent the selection mode from changing before all event-handlers have been processed.
+			// Without the delay, the user might accidentally add notes to the placement grid - further up in the React tree - if they release the mouse while over a grid tile.
 			window.requestAnimationFrame(() => dispatch(finishManagingNoteSelection()));
 		};
 

@@ -22,7 +22,7 @@ import {
 import { type EventTool, type ISelectionBox, View } from "$/types";
 
 const initialState = {
-	zoomLevel: 4,
+	zoomLevel: 2,
 	isLockedToCurrentWindow: false,
 	areLasersLocked: false,
 	showLightingPreview: false,

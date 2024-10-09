@@ -23,11 +23,10 @@ import { deriveDefaultModSettingsFromBeatmap, getArchiveVersion, getDifficultyRa
 const LIGHTSHOW_FILENAME = "EasyLightshow.dat";
 
 export function createInfoContent(song: Omit<App.Song, "id" | "songFilename" | "coverArtFilename" | "createdAt" | "lastOpenedAt">, meta = { version: 2 }) {
-	const difficultyIds = sortDifficultyIds(Object.keys(song.difficultiesById) as Difficulty[]);
+	const difficultyIds = sortDifficultyIds(Object.keys(song.difficultiesById));
 	const difficulties = difficultyIds.map((id) => song.difficultiesById[id]);
 
-	// We need to make sure we store numbers as numbers.
-	// This SHOULD be done at a higher level, but may not be.
+	// We need to make sure we store numbers as numbers. This SHOULD be done at a higher level, but may not be.
 	const bpm = Number(song.bpm);
 	const offset = Number(song.offset);
 
@@ -43,7 +42,7 @@ export function createInfoContent(song: Omit<App.Song, "id" | "songFilename" | "
 		modSettings: song.modSettings,
 	};
 
-	// biome-ignore lint/suspicious/noImplicitAnyLet: too lazy
+	// biome-ignore lint/suspicious/noImplicitAnyLet: awaiting rewrite
 	let contents;
 	if (meta.version === 1) {
 		contents = {
@@ -79,7 +78,7 @@ export function createInfoContent(song: Omit<App.Song, "id" | "songFilename" | "
 							_editorOffset: offset,
 							_requirements: requirements,
 						},
-					} as Json.Beatmap;
+					} as Json.BeatmapDifficulty;
 
 					if (difficulty.customLabel) {
 						difficultyData._customData ??= {};
@@ -163,9 +162,7 @@ export function createInfoContent(song: Omit<App.Song, "id" | "songFilename" | "
 }
 
 /**
- * This method takes JSON-formatted entities and produces a JSON string to be
- * saved to the persistence system as a file. This is for the beatmap itself,
- * eg. 'Expert.dat'.
+ * This method takes JSON-formatted entities and produces a JSON string to be saved to the persistence system as a file. This is for the beatmap itself, eg. 'Expert.dat'.
  */
 export function createBeatmapContents(
 	{ notes = [], obstacles = [], events = [], bookmarks = [] }: { notes?: Json.Note[]; obstacles?: Json.Obstacle[]; events: Json.Event[]; bookmarks?: Json.Bookmark[] },
@@ -176,11 +173,10 @@ export function createBeatmapContents(
 	swing?: number,
 	swingPeriod?: number,
 ) {
-	// biome-ignore lint/suspicious/noImplicitAnyLet: too lazy
+	// biome-ignore lint/suspicious/noImplicitAnyLet: awaiting rewrite
 	let contents;
 
-	// We need to sort all notes, obstacles, and events, since the game can be
-	// funny when things aren't in order.
+	// We need to sort all notes, obstacles, and events, since the game can be funny when things aren't in order.
 	function sortByTime<T extends { _time: number }>(a: T, b: T) {
 		return a._time - b._time;
 	}
@@ -200,11 +196,8 @@ export function createBeatmapContents(
 	let sortedObstacles = [...obstacles].sort(sortByTime);
 	let sortedEvents = [...events].sort(sortByTime);
 
-	// Annoyingly sometimes we can end up with floating-point issues on
-	// lineIndex and lineLayer. Usually I deal with this in the helpers, but
-	// notes don't have a helper yet.
-	// Also, now that 'cutDirection' can be 360 degrees, it also needs to be
-	// rounded
+	// Annoyingly sometimes we can end up with floating-point issues on lineIndex and lineLayer. Usually I deal with this in the helpers, but notes don't have a helper yet.
+	// Also, now that 'cutDirection' can be 360 degrees, it also needs to be rounded
 	sortedNotes = sortedNotes.map((note) => ({
 		...note,
 		_lineIndex: Math.round(note._lineIndex),
@@ -260,8 +253,7 @@ export function createBeatmapContentsFromState(state: RootState, song: Pick<App.
 	const obstacles = convertObstaclesToExportableJson(getObstacles(state));
 	const bookmarks = convertBookmarksToExportableJson(Object.values(state.bookmarks));
 
-	// It's important that notes are sorted by their _time property primarily,
-	// and then by _lineLayer secondarily.
+	// It's important that notes are sorted by their _time property primarily, and then by _lineLayer secondarily.
 
 	const shiftedNotes = shiftEntitiesByOffset(notes, song.offset, song.bpm);
 	const shiftedEvents = shiftEntitiesByOffset(events, song.offset, song.bpm);
@@ -276,8 +268,7 @@ export function createBeatmapContentsFromState(state: RootState, song: Pick<App.
 	const deselectedObstacles = shiftedObstacles.map(deselect);
 	const deselectedEvents = shiftedEvents.map(deselect);
 
-	// If the user has mapping extensions enabled, multiply the notes to sit in
-	// the 1000+ range.
+	// If the user has mapping extensions enabled, multiply the notes to sit in the 1000+ range.
 	if (get(song, "modSettings.mappingExtensions.isEnabled")) {
 		deselectedNotes = convertNotesToMappingExtensions(deselectedNotes);
 	}
@@ -312,7 +303,7 @@ export const zipFiles = async (song: App.Song, songFile: Blob, coverArtFile: Blo
 
 	const difficultyContents = await Promise.all(
 		Object.keys(song.difficultiesById).map((difficulty) =>
-			getFile<string>(getFilenameForThing(song.id, FileType.BEATMAP, { difficulty: difficulty as Difficulty })).then((fileContents) => ({
+			getFile<string>(getFilenameForThing(song.id, FileType.BEATMAP, { difficulty: difficulty })).then((fileContents) => ({
 				difficulty,
 				fileContents,
 			})),
@@ -324,12 +315,8 @@ export const zipFiles = async (song: App.Song, songFile: Blob, coverArtFile: Blo
 		if (version === 2 && fileContents) {
 			zip.file(`${difficulty}.dat`, fileContents, { binary: false });
 		} else {
-			// Our files are stored on disk as v2, since this is the modern actually-
-			// used format.
-
-			// I also need to save the v1 difficulties so that folks can edit their
-			// map in other mapping software, and this is annoying because it
-			// requires totally different info.
+			// Our files are stored on disk as v2, since this is the modern actually-used format.
+			// I also need to save the v1 difficulties so that folks can edit their map in other mapping software, and this is annoying because it requires totally different info.
 			const beatmapData = JSON.parse(fileContents);
 
 			const legacyFileContents = createBeatmapContents(
@@ -376,10 +363,8 @@ export const zipFiles = async (song: App.Song, songFile: Blob, coverArtFile: Blo
 		});
 };
 
-// If the user uploads a legacy song, we first need to convert it to our
-// modern file format. To make life simpler, this method creates a new ZIP
-// as if this is the work that the user selected, except its contents are in
-// v2 format.
+// If the user uploads a legacy song, we first need to convert it to our modern file format.
+// To make life simpler, this method creates a new ZIP as if this is the work that the user selected, except its contents are in v2 format.
 export async function convertLegacyArchive(archive: JSZip) {
 	const zip = new JSZip();
 
@@ -468,8 +453,7 @@ export async function processImportedMap(zipFile: Parameters<typeof JSZip.loadAs
 		archive = await convertLegacyArchive(archive);
 	}
 
-	// Zipped contents are always treated as binary. We need to convert the
-	// Info.dat into something readable
+	// Zipped contents are always treated as binary. We need to convert the Info.dat into something readable
 	const info = getFileFromArchive(archive, "Info.dat");
 	if (!info) throw new Error("No info file.");
 	const infoDatString = await info.async("string");
@@ -485,8 +469,7 @@ export async function processImportedMap(zipFile: Parameters<typeof JSZip.loadAs
 		}
 	}
 
-	// Save the Info.dat (Not 100% sure that this is necessary, but better to
-	// have and not need)
+	// Save the Info.dat (Not 100% sure that this is necessary, but better to have and not need)
 	const infoFilename = getFilenameForThing(songId, FileType.INFO);
 	await saveFile(infoFilename, infoDatString);
 
@@ -503,23 +486,20 @@ export async function processImportedMap(zipFile: Parameters<typeof JSZip.loadAs
 	const [coverArtFilename, coverArtFile] = await saveCoverArtFromBlob(songId, uncompressedCoverArtFile, infoDatJson._coverImageFilename);
 
 	// Tackle the difficulties and their entities (notes, obstacles, events).
-	// We won't load any of them into redux; instead we'll write it all to
-	// disk using our local persistence layer, so that it can be loaded like any
-	// other song from the list.
-	//
+	// We won't load any of them into redux; instead we'll write it all to disk using our local persistence layer, so that it can be loaded like any other song from the list.
+
 	// While we can export lightshow maps, we don't actually load them.
 	const beatmapSet = infoDatJson._difficultyBeatmapSets.find((set: { _beatmapCharacteristicName: string }) => set._beatmapCharacteristicName === "Standard");
 
-	// We do check if a lightshow exists only so we can store that setting, to
-	// include lightmaps when exporting
+	// We do check if a lightshow exists only so we can store that setting, to include lightmaps when exporting
 	const enabledLightshow = infoDatJson._difficultyBeatmapSets.some((set: { _beatmapCharacteristicName: string }) => set._beatmapCharacteristicName === "Lightshow");
 
 	const difficultyFiles = await Promise.all(
-		beatmapSet._difficultyBeatmaps.map(async (beatmap: Json.Beatmap) => {
+		beatmapSet._difficultyBeatmaps.map(async (beatmap: Json.BeatmapDifficulty) => {
 			const file = getFileFromArchive(archive, beatmap._beatmapFilename);
 			if (!file) throw new Error(`No level file for ${beatmap._beatmapFilename}`);
 			const fileContents = await file.async("string");
-			// TODO: Should I do any cleanup, to verify that the data is legic?
+			// TODO: Should I do any cleanup, to verify that the data is legit?
 			const beatmapFilename = getFilenameForThing(songId, FileType.BEATMAP, {
 				difficulty: beatmap._difficulty,
 			});
@@ -529,8 +509,7 @@ export async function processImportedMap(zipFile: Parameters<typeof JSZip.loadAs
 				noteJumpSpeed: beatmap._noteJumpMovementSpeed,
 				startBeatOffset: beatmap._noteJumpStartBeatOffset,
 
-				// TODO: Am I actually using `data` for anything?
-				// I don't think I am
+				// TODO: Am I actually using `data` for anything? I don't think I am
 				data: JSON.parse(fileContents),
 			} as App.Beatmap;
 			if (beatmap._customData?._difficultyLabel) {

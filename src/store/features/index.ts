@@ -1,14 +1,14 @@
 import { combineReducers } from "@reduxjs/toolkit";
 
-import bookmarks from "./bookmarks";
-import clipboard from "./clipboard";
+import bookmarks from "./bookmarks.slice";
+import clipboard from "./clipboard.slice";
 import editor from "./editor";
 import entities from "./entities";
-import global from "./global";
-import navigation from "./navigation";
-import songs from "./songs";
-import user from "./user";
-import waveform from "./waveform";
+import global from "./global.slice";
+import navigation from "./navigation.slice";
+import songs from "./songs.slice";
+import user from "./user.slice";
+import waveform from "./waveform.slice";
 
 const reducer = combineReducers({
 	songs: songs.reducer,

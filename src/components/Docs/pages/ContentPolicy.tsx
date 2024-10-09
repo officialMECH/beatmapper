@@ -1,4 +1,4 @@
-import Doc, { frontMatter, tableOfContents } from "../../../docs/content-policy.mdx";
+import Doc, { frontMatter, tableOfContents } from "$/docs/content-policy.mdx";
 
 import DocPage from "../DocPage";
 

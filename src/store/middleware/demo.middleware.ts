@@ -1,8 +1,3 @@
-/**
- * This middleware exists only to load (and possibly manage) the demo song
- * that comes with this app.
- */
-
 import { createListenerMiddleware } from "@reduxjs/toolkit";
 
 import { demoFileUrl } from "$/assets";
@@ -11,6 +6,9 @@ import { importExistingSong, loadDemoMap } from "$/store/actions";
 import { getIsNewUser } from "$/store/selectors";
 import type { RootState } from "$/store/setup";
 
+/**
+ * This middleware exists only to load (and possibly manage) the demo song that comes with this app.
+ */
 export default function createDemoMiddleware() {
 	const instance = createListenerMiddleware<RootState>();
 
@@ -26,7 +24,7 @@ export default function createDemoMiddleware() {
 				const songData = await processImportedMap(blob, []);
 				songData.demo = true;
 				await api.dispatch(importExistingSong({ songData }));
-				// HACK: Should pull data from demoSong
+				// TODO: Should pull data from demoSong
 				window.location.href = "/edit/only-now/Normal/notes";
 			}
 		},

@@ -95,9 +95,7 @@ const EventsGrid = ({ contentWidth }: Props) => {
 				bottom: Math.max(mouseDownAt.y, currentMousePosition.y),
 			};
 
-			// Selection boxes need to include their cartesian values, in pixels, but
-			// we should also encode the values in business terms: start/end beat,
-			// and start/end track
+			// Selection boxes need to include their cartesian values, in pixels, but we should also encode the values in business terms: start/end beat, and start/end track
 			const startTrackIndex = Math.floor(newSelectionBox.top / rowHeight);
 			const endTrackIndex = Math.floor(newSelectionBox.bottom / rowHeight);
 
@@ -118,7 +116,7 @@ const EventsGrid = ({ contentWidth }: Props) => {
 		if (hoveringOverBeatNum !== selectedBeat) dispatch(moveMouseAcrossEventsGrid({ selectedBeat: hoveringOverBeatNum }));
 	});
 
-	const mousePositionInPx = selectedBeat ? normalize(selectedBeat - startBeat, 0, beatNums.length, 0, innerGridWidth) : 0;
+	const mousePositionInPx = selectedBeat !== null ? normalize(selectedBeat - startBeat, 0, beatNums.length, 0, innerGridWidth) : 0;
 
 	const handlePointerDown: PointerEventHandler = (ev) => {
 		if (ev.button === 0) {
@@ -146,8 +144,7 @@ const EventsGrid = ({ contentWidth }: Props) => {
 			<PrefixColumn
 				style={{ width: PREFIX_WIDTH }}
 				onContextMenu={(ev) => {
-					// I often accidentally right-click the prefix when trying to
-					// delete notes near the start of the window. Avoid this problem.
+					// I often accidentally right-click the prefix when trying to delete notes near the start of the window. Avoid this problem.
 					ev.preventDefault();
 				}}
 			>

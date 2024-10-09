@@ -1,3 +1,5 @@
+import { type EffectCallback, useEffect } from "react";
+
 /**
  * ~~~ WARNING ~~~
  * This hook is almost never a good idea. Generally, you don't want to think
@@ -11,9 +13,6 @@
  *
  * Use with caution.
  */
-
-import { type EffectCallback, useEffect } from "react";
-
 export function useMount(callback: EffectCallback) {
 	useEffect(callback, []);
 }

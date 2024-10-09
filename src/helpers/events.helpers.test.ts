@@ -120,7 +120,7 @@ describe("Event helpers", () => {
 			];
 
 			const actualResult = convertEventsToRedux(events);
-			const expectedResult = [
+			const expectedResult: App.Event[] = [
 				{
 					id: "abc",
 					trackId: App.TrackId[4],
@@ -183,7 +183,7 @@ describe("Event helpers", () => {
 			];
 
 			const actualResult = convertEventsToRedux(events);
-			const expectedResult = [
+			const expectedResult: App.Event[] = [
 				{
 					id: "abc",
 					trackId: App.TrackId[9],
@@ -200,12 +200,14 @@ describe("Event helpers", () => {
 					id: "abc",
 					trackId: App.TrackId[12],
 					beatNum: 2,
+					type: App.EventType.VALUE,
 					laserSpeed: 8,
 				},
 				{
 					id: "abc",
 					trackId: App.TrackId[13],
 					beatNum: 2,
+					type: App.EventType.VALUE,
 					laserSpeed: 2,
 				},
 			];

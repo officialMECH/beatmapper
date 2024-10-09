@@ -1,7 +1,6 @@
 // TODO: Accessibility. There are a lot of a11y things for modals, and this component isn't doing any of them :/
 // TODO: Use a portal to render this at the top-level, to avoid any z-index issues?
 
-import { Spring } from "@react-spring/core";
 import { Fragment, type PropsWithChildren, PureComponent } from "react";
 import { Icon } from "react-icons-kit";
 import { x } from "react-icons-kit/feather/x";
@@ -11,7 +10,6 @@ import styled from "styled-components";
 import { COLORS } from "$/constants";
 import { hasPropChanged } from "$/utils";
 
-import { type SpringValue, animated } from "@react-spring/web";
 import ScrollDisabler from "../ScrollDisabler";
 import UnstyledButton from "../UnstyledButton";
 
@@ -42,10 +40,8 @@ class Modal extends PureComponent<Props> {
 	}
 
 	componentWillReceiveProps(nextProps: Props) {
-		// When the modal is dismissed, we want to render the "stale" children for
-		// a couple hundred milliseconds, until the modal has fully closed.
-		// This is to prevent the underlying component from changing as it fades
-		// away.
+		// When the modal is dismissed, we want to render the "stale" children for a couple hundred milliseconds, until the modal has fully closed.
+		// This is to prevent the underlying component from changing as it fades away.
 		if (hasPropChanged(this.props, nextProps, "isVisible")) {
 			if (nextProps.isVisible) {
 				this.setState({ outdatedChildren: null });
@@ -85,24 +81,20 @@ class Modal extends PureComponent<Props> {
 
 						const inTransit = transitionState === "entering" || transitionState === "exiting";
 						return (
-							<Spring from={{ translateY: transitionState === "entered" ? 50 : 0, opacity: inTransit ? 1 : 0 }} to={{ translateY: transitionState === "entered" ? 0 : 50, opacity: inTransit ? 0 : 1 }}>
-								{(interpolated) => (
-									<Wrapper opacity={interpolated.opacity} clickable={!inTransit} alignment={alignment}>
-										<Backdrop onClick={clickBackdropToDismiss ? onDismiss : undefined} />
+							<Wrapper opacity={isVisible ? 1 : 0} clickable={!inTransit} alignment={alignment}>
+								<Backdrop onClick={clickBackdropToDismiss ? onDismiss : undefined} />
 
-										<PaneWrapper width={width} height={height} alignment={alignment} translateY={interpolated.translateY}>
-											<div onMouseLeave={() => this.setState({ showBackdropX: true })} onMouseEnter={() => this.setState({ showBackdropX: false })}>
-												{outdatedChildren || children}
-											</div>
-											{showBackdropX && (
-												<ManualDismiss onClick={onDismiss}>
-													<Icon icon={x} size={32} />
-												</ManualDismiss>
-											)}
-										</PaneWrapper>
-									</Wrapper>
-								)}
-							</Spring>
+								<PaneWrapper width={width} height={height} alignment={alignment}>
+									<div onMouseLeave={() => this.setState({ showBackdropX: true })} onMouseEnter={() => this.setState({ showBackdropX: false })}>
+										{outdatedChildren || children}
+									</div>
+									{showBackdropX && (
+										<ManualDismiss onClick={onDismiss}>
+											<Icon icon={x} size={32} />
+										</ManualDismiss>
+									)}
+								</PaneWrapper>
+							</Wrapper>
 						);
 					}}
 				</Transition>
@@ -111,9 +103,9 @@ class Modal extends PureComponent<Props> {
 	}
 }
 
-const Wrapper = styled(animated.div).attrs<Pick<Props, "clickable" | "alignment"> & { opacity: SpringValue<number> }>((props) => ({
+const Wrapper = styled.div.attrs<Pick<Props, "clickable" | "alignment"> & { opacity: number }>((props) => ({
 	style: {
-		opacity: props.opacity.get(),
+		opacity: props.opacity,
 		pointerEvents: props.clickable ? "auto" : "none",
 		alignItems: props.alignment === "center" ? "center" : "flex-start",
 	},
@@ -145,11 +137,10 @@ const Backdrop = styled.div`
   background: rgba(0, 0, 0, 0.8);
 `;
 
-const PaneWrapper = styled(animated.div).attrs<Pick<Props, "width" | "height" | "alignment"> & { translateY: SpringValue<number> }>((props) => ({
+const PaneWrapper = styled.div.attrs<Pick<Props, "width" | "height" | "alignment">>((props) => ({
 	style: {
 		width: props.width,
 		height: props.height,
-		transform: `translateY(${props.translateY}px)`,
 		top: props.alignment === "top" ? "20%" : undefined,
 	},
 }))`

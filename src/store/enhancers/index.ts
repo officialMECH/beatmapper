@@ -1,1 +1,1 @@
-export { enhancer as storage } from "./storage";
+export { enhancer as storage } from "./storage.enhancer";

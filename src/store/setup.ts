@@ -1,5 +1,4 @@
 import { type DevToolsEnhancerOptions, configureStore } from "@reduxjs/toolkit";
-import { createLoader } from "redux-storage";
 
 import { tick } from "./actions";
 import { storage } from "./enhancers";
@@ -21,12 +20,6 @@ function createStore() {
 		middleware: (native) => native({ serializableCheck: false, immutableCheck: false }).concat(...middleware),
 		enhancers: (native) => native().concat(storage(engine)),
 	});
-
-	const load = createLoader(engine);
-	load(store).then(
-		() => {},
-		(err) => console.error("Failed to load previous state", err),
-	);
 
 	return store;
 }

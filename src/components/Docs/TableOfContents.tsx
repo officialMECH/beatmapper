@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Icon } from "react-icons-kit";
 import { externalLink } from "react-icons-kit/feather/externalLink";
+import type { TocEntry } from "remark-mdx-toc";
 import styled from "styled-components";
 
 import { COLORS } from "$/constants";
@@ -15,23 +16,15 @@ function useActiveHeading(headings: TocEntry[]) {
 	useEffect(() => {
 		const handleScroll = throttle(() => {
 			// If we're all the way at the top, there is no active heading.
-			// This is done because "Introduction", the first link in the TOC, will
-			// be active if `heading` is `null`.
+			// This is done because "Introduction", the first link in the TOC, will be active if `heading` is `null`.
 			if (window.scrollY === 0) {
 				return setActiveHeading(null);
 			}
 
-			// There HAS to be a better single-step algorithm for this, but I can't
-			// think of it. So I'm doing this in 2 steps:
-			//
-			// 1. Are there any headings in the viewport right now? If so, pick the
-			//    top one.
-			// 2. If there are no headings in the viewport, are there any above
-			//    the viewport? If so, pick the last one (most recently scrolled out
-			//    of view)
-			//
-			// If neither condition is met, I'll assume I'm still in the intro,
-			// although this would have to be a VERY long intro to ever be true.
+			// There HAS to be a better single-step algorithm for this, but I can't think of it. So I'm doing this in 2 steps:
+			// 1. Are there any headings in the viewport right now? If so, pick the top one.
+			// 2. If there are no headings in the viewport, are there any above the viewport? If so, pick the last one (most recently scrolled out of view)
+			// If neither condition is met, I'll assume I'm still in the intro, although this would have to be a VERY long intro to ever be true.
 			const headingBoxes = headings.map(({ value: title }) => {
 				const id = slugify(title);
 				const elem = document.querySelector(`#${id}`);
@@ -43,8 +36,7 @@ function useActiveHeading(headings: TocEntry[]) {
 				return box && box.bottom > 0 && box.top < window.innerHeight;
 			});
 
-			// If there is no heading in the viewport, check and see if there are any
-			// above the viewport.
+			// If there is no heading in the viewport, check and see if there are any above the viewport.
 			if (!firstHeadingInViewport) {
 				const reversedBoxes = [...headingBoxes].reverse();
 

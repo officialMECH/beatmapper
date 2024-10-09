@@ -13,7 +13,8 @@ interface Props {
 
 const CoverArtPicker = ({ height, coverArtFile, setCoverArtFile }: Props) => {
 	// HACK: After selecting a file, for a brief moment (a couple frames), the "broken image" border is shown.
-	// My useEffect hook SHOULD fire the moment a file is selected, so I'm not sure why it's so problematic... but if I treat it as "always loading when an image isn't visible", the problem goes away.
+	// My useEffect hook SHOULD fire the moment a file is selected, so I'm not sure why it's so problematic...
+	// but if I treat it as "always loading when an image isn't visible", the problem goes away.
 	const [loadingCoverArtImage, setLoadingCoverArtImage] = useState(true);
 	const [coverArtPreview, setCoverArtPreview] = useState<string | null>(null);
 

@@ -1,5 +1,6 @@
 import { Fragment, type PropsWithChildren, useEffect } from "react";
 import { Helmet } from "react-helmet";
+import type { TocEntry } from "remark-mdx-toc";
 import styled from "styled-components";
 
 import { COLORS, UNIT } from "$/constants";
@@ -13,11 +14,11 @@ import TableOfContents from "./TableOfContents";
  * When loading a new route, we want to scroll the user to the top of the page.
  * Unless a hash is explicitly provided, in which case we scroll them to the appropriate section.
  */
-const useScrollOnLoad = () => {
+function useScrollOnLoad() {
 	useEffect(() => {
 		window.scrollTo({ top: 0 });
 	}, []);
-};
+}
 
 interface Props extends PropsWithChildren {
 	title: string;

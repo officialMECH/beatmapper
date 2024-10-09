@@ -101,7 +101,7 @@ const SmallRings = ({ song, isPlaying }: Props) => {
 		}
 	}, lastZoomEventId);
 
-	// TODO: Custom hook that is shared with LArgeRings
+	// TODO: Custom hook that is shared with LargeRings
 	useOnChange(() => {
 		if (!isPlaying || !lastRotationEventId) {
 			return;

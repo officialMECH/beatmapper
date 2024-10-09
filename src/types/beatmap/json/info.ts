@@ -1,7 +1,7 @@
 import type { Accept } from "../../utils";
 import type { Difficulty } from "../shared";
 
-export interface Beatmap {
+export interface BeatmapDifficulty {
 	_difficulty: Difficulty;
 	_difficultyRank: Accept<1 | 3 | 5 | 7 | 9, number>;
 	_beatmapFilename: string;
@@ -12,5 +12,5 @@ export interface Beatmap {
 }
 
 export interface BeatmapSet {
-	_difficultyBeatmaps: Beatmap[];
+	_difficultyBeatmaps: BeatmapDifficulty[];
 }

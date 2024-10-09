@@ -1,7 +1,7 @@
 import { combineReducers } from "@reduxjs/toolkit";
 
-import beatmap from "./beatmap";
-import lightshow from "./lightshow";
+import beatmap from "./beatmap.slice";
+import lightshow from "./lightshow.slice";
 
 const reducer = combineReducers({
 	notes: beatmap.reducer,

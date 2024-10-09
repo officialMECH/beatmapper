@@ -25,7 +25,7 @@ export function convertGridColumn(colIndex: number, numCols: number, colWidth: n
 	return newValue;
 }
 
-// NOTE: `numRows` is unused and should be removed
+// TODO: `numRows` is unused and should be removed
 export function convertGridRow(rowIndex: number, numRows: number, rowHeight: number) {
 	return rowIndex * rowHeight;
 }
@@ -35,9 +35,8 @@ export function convertGridRow(rowIndex: number, numRows: number, rowHeight: num
  * - The normal game system, which has columns from 0-3, rows from 0-2
  * - Our custom grid, which can have any number of columns or rows.
  *
- * For example, in an 8x3 grid (2 extra columns on each side), the top-left
- * corner would have a position of [0,2] in our custom grid, but that
- * translates to a position of [-2,2] in our natural game grid.
+ * For example, in an 8x3 grid (2 extra columns on each side), the top-left corner would have a position of [0,2] in our custom grid,
+ * but that translates to a position of [-2,2] in our natural game grid.
  *
  * This function converts from our custom grid [0,2] to a standard grid [-2,2]
  */

@@ -55,13 +55,13 @@ const BlockTrack = ({ trackId, width, height, startBeat, numOfBeatsToShow, curso
 	}, [areLasersLocked, selectedColorType, selectedTool, trackId]);
 
 	const handleClickTrack = () => {
-		if (cursorAtBeat) dispatch(placeEvent({ beatNum: cursorAtBeat, ...getPropsForPlacedEvent() }));
+		if (cursorAtBeat !== null) dispatch(placeEvent({ beatNum: cursorAtBeat, ...getPropsForPlacedEvent() }));
 	};
 
 	useEffect(() => {
 		if (selectedEditMode === EventEditMode.PLACE && mouseButtonDepressed === "left") {
-			// TODO: Technically this should be a new action, bulkPlaceEVent, so that they can all be undoed in 1 step
-			if (cursorAtBeat) dispatch(placeEvent({ beatNum: cursorAtBeat, ...getPropsForPlacedEvent() }));
+			// TODO: Technically this should be a new action, bulkPlaceEvent, so that they can all be undoed in 1 step
+			if (cursorAtBeat !== null) dispatch(placeEvent({ beatNum: cursorAtBeat, ...getPropsForPlacedEvent() }));
 		}
 	}, [dispatch, getPropsForPlacedEvent, cursorAtBeat, mouseButtonDepressed, selectedEditMode]);
 

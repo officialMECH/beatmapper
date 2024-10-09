@@ -41,8 +41,7 @@ const BeatmapSettings = ({ song, difficultyId }: Props) => {
 
 		renderImperativePrompt(modalProps, (triggerSuccess) => <CopyDifficultyForm song={song} idToCopy={difficultyId} afterCopy={triggerSuccess} copyDifficulty={(songId, fromDifficultyId, toDifficultyId, afterCopy) => dispatch(copyDifficulty({ songId, fromDifficultyId, toDifficultyId, afterCopy }))} />).then(
 			(copiedToDifficultyId) => {
-				// Redirect the user to this new difficulty, so that when they go to
-				// edit it, they're editing the right difficulty.
+				// Redirect the user to this new difficulty, so that when they go to edit it, they're editing the right difficulty.
 				navigate(`/edit/${song.id}/${copiedToDifficultyId}/details`);
 			},
 		);
@@ -68,8 +67,7 @@ const BeatmapSettings = ({ song, difficultyId }: Props) => {
 			return;
 		}
 
-		// If the user is currently editing the difficulty that they're trying to
-		// delete, let's redirect them to the next difficulty.
+		// If the user is currently editing the difficulty that they're trying to delete, let's redirect them to the next difficulty.
 		const nextDifficultyId = remainingDifficultyIds[0];
 
 		dispatch(deleteBeatmap({ songId: song.id, difficulty: difficultyId }));

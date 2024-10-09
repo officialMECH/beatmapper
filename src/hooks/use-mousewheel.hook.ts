@@ -1,3 +1,7 @@
+import { useEffect } from "react";
+
+import { throttle } from "$/utils";
+
 /**
  * A hook that handles scrolling on a specified element WITHOUT scrolling the
  * page. Needs to be in a hook since you can't call ev.preventDefault() on
@@ -5,11 +9,6 @@
  *
  * Use sparingly.
  */
-
-import { useEffect } from "react";
-
-import { throttle } from "$/utils";
-
 export function useMousewheel(handleMouseWheel: (event: WheelEvent) => void) {
 	useEffect(() => {
 		const throttledHandler = throttle(handleMouseWheel, 100);

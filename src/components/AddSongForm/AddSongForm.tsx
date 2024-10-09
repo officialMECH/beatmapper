@@ -60,8 +60,7 @@ const AddSongForm = () => {
 		const songId = getSongIdFromName(name);
 
 		// Song IDs must be unique, and song IDs are generated from the name.
-		// TODO: I could probably just append a `-2` or something, if this
-		// constraint turns out to be annoying in some cases
+		// TODO: I could probably just append a `-2` or something, if this constraint turns out to be annoying in some cases
 		const isUnique = !currentSongIds.some((id) => id === songId);
 		if (!isUnique) {
 			alert("You already have a song with this name. Please choose a unique name.");
@@ -75,8 +74,7 @@ const AddSongForm = () => {
 
 			createNewSong({ coverArtFilename, coverArtFile, songFilename, songFile, songId, name, subName, artistName, bpm, offset, selectedDifficulty });
 
-			// Wait for the `createNewSong` action to flush, and then redirect the
-			// user to the new song page!
+			// Wait for the `createNewSong` action to flush, and then redirect the user to the new song page!
 			window.requestAnimationFrame(() => {
 				navigate(`/edit/${songId}/${selectedDifficulty}/notes`);
 			});

@@ -21,7 +21,6 @@ export const KeyIcon = ({ size = "medium", type, children }: Props) => {
 
 	let derivedType = type;
 	if (!derivedType) {
-		// prettier-ignore
 		derivedType = children === "Space" ? "spacebar" : Children.count(children) > 1 || typeof children !== "string" ? "wide" : "square";
 	}
 

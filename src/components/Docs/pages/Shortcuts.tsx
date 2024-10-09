@@ -1,4 +1,4 @@
-import Doc, { frontMatter, tableOfContents } from "../../../docs/keyboard-shortcuts.mdx";
+import Doc, { frontMatter, tableOfContents } from "$/docs/keyboard-shortcuts.mdx";
 
 import DocPage from "../DocPage";
 

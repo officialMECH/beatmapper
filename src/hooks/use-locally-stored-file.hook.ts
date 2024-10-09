@@ -9,13 +9,10 @@ function getFileReaderMethodName(readAs: "dataUrl" | "arrayBuffer" | "text") {
 	throw new Error("Unsupported method.");
 }
 
-// Create a simple cache for locally-retrieved files, so that files don't have
-// to be re-retrieved every time from indexeddb.
+// Create a simple cache for locally-retrieved files, so that files don't have to be re-retrieved every time from indexeddb.
 // To avoid stale cache issues, we will never simply return what's in the cache.
-// We always check in indexedDb. But, while we're checking, we'll serve up
-// what's in the cache.
-// TODO: If I ensure that filenames are unique, maybe I don't have to worry
-// about stale caches?
+// We always check in indexedDb. But, while we're checking, we'll serve up what's in the cache.
+// TODO: If I ensure that filenames are unique, maybe I don't have to worry about stale caches?
 const cache: Record<string, string | ArrayBuffer | null> = {};
 
 export function useLocallyStoredFile<T extends string | ArrayBuffer>(filename: string, readAs: "dataUrl" | "arrayBuffer" | "text" = "dataUrl") {

@@ -7,16 +7,10 @@ export function isLightEvent(event: App.Event): event is App.LightingEvent {
 	return LIGHTING_TRACKS.includes(event.trackId);
 }
 
-/**
- * WARNING: This method mutates the `events` array supplied.
- * This is done because it is called within an Immer `produce` call, which uses
- * proxies to avoid actually doing mutation.
- * But, if you call this from a foreign context, you won't get that, so be
- * wary.
- *
- * This is the kind of thing I'm doing only because this isn't a shared
- * codebase :D
- */
+// NOTE: This method mutates the `events` array supplied.
+// This is done because it is called within an Immer `produce` call, which uses proxies to avoid actually doing mutation.
+// But, if you call this from a foreign context, you won't get that, so be wary.
+// This is the kind of thing I'm doing only because this isn't a shared codebase :D
 export function nudgeEvents<T extends App.Event>(direction: "forwards" | "backwards", amount: number, events: T[]) {
 	const sign = direction === "forwards" ? 1 : -1;
 
@@ -30,8 +24,7 @@ export function nudgeEvents<T extends App.Event>(direction: "forwards" | "backwa
 }
 
 function convertLightingEventToJson<T extends App.LightingEvent>(event: T): Json.Event {
-	// `Off` events have no color attribute, since there is no way to tell when
-	// importing whether it was supposed to be red or blue.
+	// `Off` events have no color attribute, since there is no way to tell when importing whether it was supposed to be red or blue.
 	const value = event.colorType ? LIGHT_EVENT_TYPES[event.colorType][event.type] : 0;
 
 	return {
@@ -89,7 +82,7 @@ export function convertEventsToRedux<T extends Json.Event>(events: T[]): App.Eve
 				beatNum,
 				type: lightingType,
 				colorType,
-			};
+			} as App.LightingEvent;
 		}
 		if (trackId === App.TrackId[8] || trackId === App.TrackId[9]) {
 			return {

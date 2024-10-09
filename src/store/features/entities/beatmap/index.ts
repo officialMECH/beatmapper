@@ -20,8 +20,9 @@ import {
 	toggleNoteColor,
 	undoNotes,
 } from "$/store/actions";
-import notes from "./notes";
-import obstacles from "./obstacles";
+
+import notes from "./notes.slice";
+import obstacles from "./obstacles.slice";
 
 const reducer = combineReducers({
 	notes: notes.reducer,

@@ -59,8 +59,7 @@ const ObstacleBox = ({ obstacle, color, beatDepth, snapTo, handleDelete, handleR
 				// Check how many "steps" away this is from the mouse-down position
 				const numOfSteps = Math.floor(delta / RESIZE_THRESHOLD);
 
-				// If this number is different from our current value, dispatch a
-				// resize event
+				// If this number is different from our current value, dispatch a resize event
 				let newBeatDuration = obstacle.beatDuration + snapTo * numOfSteps;
 
 				// Ignore negative beat durations
@@ -87,7 +86,8 @@ const ObstacleBox = ({ obstacle, color, beatDepth, snapTo, handleDelete, handleR
 		};
 	}, [mouseDownAt, obstacle, snapTo, handleResize]);
 
-	const font = new Font(oswaldGlyphs as unknown as Pick<Font, "data">["data"]);
+	// @ts-ignore false positive + augmentation hell = time to sin
+	const font = new Font(oswaldGlyphs);
 	const textGeometryOptions = {
 		font,
 		size: 0.4,
