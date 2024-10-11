@@ -16,14 +16,7 @@ const SAMPLE_PROPRIETARY_DATA = [
 
 const SAMPLE_REDUX_DATA = [
 	{ id: "a", beatStart: 2, beatDuration: 4, lane: 0, type: App.ObstacleType.FULL, colspan: 2 },
-	{
-		id: "b",
-		beatStart: 4,
-		beatDuration: 0,
-		lane: 2,
-		type: App.ObstacleType.TOP,
-		colspan: 2,
-	},
+	{ id: "b", beatStart: 4, beatDuration: 0, lane: 2, type: App.ObstacleType.TOP, colspan: 2 },
 	{ id: "c", beatStart: 4, beatDuration: 4, lane: 0, type: App.ObstacleType.FULL, colspan: 1 },
 ];
 
@@ -31,35 +24,22 @@ describe("Obstacles helpers", () => {
 	it("converts an array of objects to redux", () => {
 		const actualResult = convertObstaclesToRedux(SAMPLE_PROPRIETARY_DATA);
 
-		// The method adds random IDs to every entity.
-		// We can't compare them directly since we don't know the IDs.
-		const actualWithoutIds = actualResult.map((r) => {
-			const copy = omit(r, "id");
-			return copy;
-		});
-
 		// Do verify that IDs are added though!
 		for (const result of actualResult) {
 			expect(typeof result.id).toEqual("string");
 		}
 
 		const expectedResult = [
-			{ beatStart: 0, beatDuration: 1, lane: 0, type: App.ObstacleType.FULL, colspan: 1 },
-			{ beatStart: 2, beatDuration: 2, lane: 1, type: App.ObstacleType.FULL, colspan: 1 },
-			{ beatStart: 9, beatDuration: 1, lane: 0, type: App.ObstacleType.FULL, colspan: 2 },
-			{ beatStart: 11, beatDuration: 1, lane: 2, type: App.ObstacleType.FULL, colspan: 1 },
-			{
-				beatStart: 14,
-				beatDuration: 1,
-				lane: 0,
-				type: App.ObstacleType.TOP,
-				colspan: 4,
-			},
-			{ beatStart: 17, beatDuration: 1, lane: 0, type: App.ObstacleType.FULL, colspan: 4 },
-			{ beatStart: 17, beatDuration: 1, lane: 2, type: App.ObstacleType.FULL, colspan: 2 },
+			{ id: "a", beatStart: 0, beatDuration: 1, lane: 0, type: App.ObstacleType.FULL, colspan: 1 },
+			{ id: "b", beatStart: 2, beatDuration: 2, lane: 1, type: App.ObstacleType.FULL, colspan: 1 },
+			{ id: "c", beatStart: 9, beatDuration: 1, lane: 0, type: App.ObstacleType.FULL, colspan: 2 },
+			{ id: "d", beatStart: 11, beatDuration: 1, lane: 2, type: App.ObstacleType.FULL, colspan: 1 },
+			{ id: "e", beatStart: 14, beatDuration: 1, lane: 0, type: App.ObstacleType.TOP, colspan: 4 },
+			{ id: "f", beatStart: 17, beatDuration: 1, lane: 0, type: App.ObstacleType.FULL, colspan: 4 },
+			{ id: "g", beatStart: 17, beatDuration: 1, lane: 2, type: App.ObstacleType.FULL, colspan: 2 },
 		];
 
-		expect(actualWithoutIds).toEqual(expectedResult);
+		expect(actualResult.map((x) => omit(x, "id"))).toEqual(expectedResult.map((x) => omit(x, "id")));
 	});
 
 	it("converts from redux to proprietary", () => {

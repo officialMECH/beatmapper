@@ -1,5 +1,5 @@
 import { App } from "$/types";
-import { compareExceptId } from "$/utils";
+import { omit } from "$/utils";
 import { describe, expect, it } from "vitest";
 import { convertEventsToExportableJson, convertEventsToRedux } from "./events.helpers";
 
@@ -120,6 +120,9 @@ describe("Event helpers", () => {
 			];
 
 			const actualResult = convertEventsToRedux(events);
+			for (const result of actualResult) {
+				expect(typeof result.id).toEqual("string");
+			}
 			const expectedResult: App.Event[] = [
 				{
 					id: "abc",
@@ -130,7 +133,7 @@ describe("Event helpers", () => {
 				},
 			];
 			// We can't just compare actual to expected because IDs are randomly generated within the method :/
-			expect(compareExceptId(actualResult, expectedResult)).toBeTruthy();
+			expect(actualResult.map((x) => omit(x, "id"))).toEqual(expectedResult.map((x) => omit(x, "id")));
 		});
 
 		it("converts multiple lighting event", () => {
@@ -142,6 +145,9 @@ describe("Event helpers", () => {
 			];
 
 			const actualResult = convertEventsToRedux(events);
+			for (const result of actualResult) {
+				expect(typeof result.id).toEqual("string");
+			}
 			const expectedResult = [
 				{
 					id: "abc",
@@ -171,7 +177,7 @@ describe("Event helpers", () => {
 				},
 			];
 
-			expect(compareExceptId(actualResult, expectedResult)).toBeTruthy();
+			expect(actualResult.map((x) => omit(x, "id"))).toEqual(expectedResult.map((x) => omit(x, "id")));
 		});
 
 		it("converts laser speed and rotation events", () => {
@@ -183,6 +189,9 @@ describe("Event helpers", () => {
 			];
 
 			const actualResult = convertEventsToRedux(events);
+			for (const result of actualResult) {
+				expect(typeof result.id).toEqual("string");
+			}
 			const expectedResult: App.Event[] = [
 				{
 					id: "abc",
@@ -211,7 +220,7 @@ describe("Event helpers", () => {
 					laserSpeed: 2,
 				},
 			];
-			expect(compareExceptId(actualResult, expectedResult)).toBeTruthy();
+			expect(actualResult.map((x) => omit(x, "id"))).toEqual(expectedResult.map((x) => omit(x, "id")));
 		});
 	});
 });

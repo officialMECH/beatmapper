@@ -72,9 +72,9 @@ export function formatColorForMods(element: App.BeatmapColorKey, hex: string, ov
 	const rgb = Color(hex).rgb().unitArray();
 
 	return {
-		r: (rgb[0] / 255) * overdriveMultiple,
-		g: (rgb[1] / 255) * overdriveMultiple,
-		b: (rgb[2] / 255) * overdriveMultiple,
+		r: rgb[0] * overdriveMultiple,
+		g: rgb[1] * overdriveMultiple,
+		b: rgb[2] * overdriveMultiple,
 	};
 }
 
