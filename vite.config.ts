@@ -6,6 +6,7 @@ import { default as mdx } from "@mdx-js/rollup";
 import { default as react } from "@vitejs/plugin-react";
 import { VitePWA as pwa } from "vite-plugin-pwa";
 
+import { default as rehypeMdxImportMedia } from "rehype-mdx-import-media";
 import { default as rehypeSlug } from "rehype-slug";
 import { default as remarkFrontmatter } from "remark-frontmatter";
 import { default as remarkGfm } from "remark-gfm";
@@ -26,6 +27,7 @@ function markdown() {
 			],
 			rehypePlugins: [
 				rehypeSlug,
+				rehypeMdxImportMedia,
 				//
 			],
 		}),

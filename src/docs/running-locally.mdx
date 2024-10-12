@@ -28,7 +28,7 @@ Beatmapper is [hosted on GitHub](https://github.com/bsmg/beatmapper), an online 
 
 GitHub lets you download a .zip of all the files you'll need:
 
-![](/src/docs/images/download-from-github.gif "If you happen to already know Git, then you should probably fork and clone instead.")
+![](./images/download-from-github.gif "If you happen to already know Git, then you should probably fork and clone instead.")
 
 Unzip the .zip archive. It doesn't really matter where you put it, but for the purposes of this guide, we'll assume you've extracted it on the desktop. You should have a `beatmapper-master` folder on the desktop.
 
@@ -38,11 +38,11 @@ This is where things get a bit tricky, for those without a tinkering-with-comput
 
 Your computer should come with a terminal application. On MacOS, it's simply called "terminal", and it looks like this:
 
-![](/src/docs/images/mac-terminal.png)
+![](./images/mac-terminal.png)
 
 On Windows 10, it's called "Command prompt". It looks slightly different:
 
-![](/src/docs/images/windows-terminal.png)
+![](./images/windows-terminal.png)
 
 While different operating systems feature different terminal environments, the good news is that all the commands we'll need for this process are the same across all common operating systems (Windows, MacOS, Linux).
 
@@ -50,7 +50,7 @@ The terminal is an alternative UI for navigating the operating system; unlike th
 
 Our first order of business is to move into the directory we just created. By default, your terminal should put you in your home directory. If you type `ls`, it should show you a list of the current directory's contents:
 
-![](/src/docs/images/mac-ls.png)
+![](./images/mac-ls.png)
 
 We need to navigate to the folder we downloaded from GitHub. Assuming that you placed the `beatmapper-master` folder on the desktop, you should be able to get there by typing:
 
@@ -62,7 +62,7 @@ cd Desktop/beatmapper-master
 
 Once you're in the correct folder, you can run `ls` again to see a list of the Beatmapper files. It should look something like this:
 
-![](/src/docs/images/beatmapper-contents.png)
+![](./images/beatmapper-contents.png)
 
 ## Building the project
 
@@ -87,7 +87,7 @@ npm run build
 
 This will also take a couple minutes, and you may see a few scary-looking warnings. Pay no attention to them. The final output should look like:
 
-![](/src/docs/images/built-output.png)
+![](./images/built-output.png)
 
 We've successfully compiled our application!
 
@@ -107,7 +107,7 @@ Once that finishes, you can run:
 serve -s build
 ```
 
-![](/src/docs/images/serve.png)
+![](./images/serve.png)
 
 This command creates a mini webserver, and allows you to access your local version of Beatmapper by visiting http://localhost:5000.
 

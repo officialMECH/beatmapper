@@ -11,11 +11,11 @@ The Events view lets you customize the lighting and ring motion. These backgroun
 
 To navigate to the Events view, click the sun-shaped icon in the left sidebar:
 
-![](/src/docs/images/events-view-icon.png)
+![](../images/events-view-icon.png)
 
 The Events view takes inspiration from MIDI piano rolls in audio editing software. It looks like this:
 
-![](/src/docs/images/default-events-view.png)
+![](../images/default-events-view.png)
 
 > This view can look a little weird/overwhelming, especially if you're coming from another mapping editor like MediocreMapper. Once you get the hang of it, though, this interface will let you create beautiful, advanced lighting patterns really quickly and easily. Give it a chance!
 
@@ -33,19 +33,19 @@ The events view collects the 9 tracks in a **table**. The table shows a specific
 
 A thick vertical yellow bar represents the song's current position. When you press `Space` to play the song, the yellow bar moves through the window, and will automatically advance to the next window:
 
-![](/src/docs/images/events-yellow-bar.gif)
+![](../images/events-yellow-bar.gif)
 
 Unlike the "placement grid" in the notes view, however, events are not placed based on the yellow bar's position, instead, a thin white bar shows the cursor's current position:
 
-![](/src/docs/images/cursor-line.gif)
+![](../images/cursor-line.gif)
 
 This white bar tracks the mouse position, but it snaps to the nearest "snapping interval". This is the same snapping interval from the notes view, located in the bottom left corner of the screen:
 
-![](/src/docs/images/snapping-interval.png)
+![](../images/snapping-interval.png)
 
 Finally, above the tracks you'll find a suite of **controls**. These controls change what happens when you interact with the tracks. We'll learn more about them below.
 
-![](/src/docs/images/event-controls.png)
+![](../images/event-controls.png)
 
 ## Navigating time
 
@@ -59,13 +59,13 @@ The media keys on either side of the "play" button take on a slightly different 
 
 Finally, you can click within the beat numbers along the top to scrub the current window:
 
-![](/src/docs/images/top-scrub.gif)
+![](../images/top-scrub.gif)
 
 ### Zooming
 
 You can also change the size of the window using the **zoom buttons**. These are found on the right edge of the controls:
 
-![](/src/docs/images/zoom-controls.png)
+![](../images/zoom-controls.png)
 
 This changes the number of beats that fit in the window. You can zoom out to fit 32 beats, or zoom in to fit as few as 4 beats in the window. You can use the keyboard shortcuts `-` and `+`.
 
@@ -75,7 +75,7 @@ There are 3 distinct track types, and they're a little distinct in how they func
 
 ### Lighting tracks
 
-![](/src/docs/images/light-track.png)
+![](../images/light-track.png)
 
 Lighting tracks control lighting - they're responsible for turning the 5 available lights on and off, and changing their colors. In Beatmapper, you control these lights by adding "lighting events".
 
@@ -83,11 +83,11 @@ A lighting event is represented by a vertical box. This box takes on characteris
 
 One last unique feature of these tracks: Background colors indicate the current track status. For example, below you can see a translucent red background between the on and off events:
 
-![](/src/docs/images/track-bg.png)
+![](../images/track-bg.png)
 
 Here's a complete collection of lighting events:
 
-![](/src/docs/images/light-event-types.png "'On' and 'flash' events leave the light on, so they create a background afterwards.")
+![](../images/light-event-types.png "'On' and 'flash' events leave the light on, so they create a background afterwards.")
 
 The 5 lighting tracks are:
 
@@ -101,7 +101,7 @@ The 5 lighting tracks are:
 
 ### Ring tracks
 
-![](/src/docs/images/ring-track.png)
+![](../images/ring-track.png)
 
 At the bottom of the table, you'll find two ring tracks, _Large ring_ and _small ring_.
 
@@ -111,7 +111,7 @@ In terms of the Beatmapper tracks, they work like limited subsets of the lightin
 
 ### Laser speed tracks
 
-![](/src/docs/images/speed-track.png)
+![](../images/speed-track.png)
 
 By default in Beat Saber, the left and right lasers stay fixed in place, criss-crossing into a large "X" in the distance. The final set of tracks allows you to cause these lasers to sweep through the environment.
 
@@ -131,7 +131,7 @@ Different tracks support different event types. For speed tracks and ring tracks
 
 For lighting tracks, you can select the _color_ and _type_ of the lighting event. By default, clicking a lighting track will turn a red light on, but you can modify the color and type through the controls at the top:
 
-![](/src/docs/images/light-track-controls.png "In this case, blue flash events will be created on click")
+![](../images/light-track-controls.png "In this case, blue flash events will be created on click")
 
 Manually clicking the controls is tedious, so it is recommended to use the keyboard shortcuts:
 
@@ -144,17 +144,17 @@ Manually clicking the controls is tedious, so it is recommended to use the keybo
 
 For laser and ring tracks, you can quickly place multiple events by clicking and dragging:
 
-![](/src/docs/images/bulk-place-events.gif)
+![](../images/bulk-place-events.gif)
 
 Note that the rate at which events are placed depends on the current _snapping interval_. By tweaking this value, you can quickly create strobes and other effects:
 
-![](/src/docs/images/strobe-place.gif)
+![](../images/strobe-place.gif)
 
 ### Placing events on Speed tracks
 
 Because there are 9 possible speeds, it can be difficult to click precisely on the speed you're looking for. To make this process easier, you can click and drag to select the exact speed you desire:
 
-![](/src/docs/images/place-speed-event.gif)
+![](../images/place-speed-event.gif)
 
 ## Previewing your work
 
@@ -164,7 +164,7 @@ It takes a while to build up an intuition to be able to picture what a "Flash" e
 
 At the very bottom of the editor, you'll see a toggle and a couple sliders:
 
-![](/src/docs/images/bottom-light-config.png)
+![](../images/bottom-light-config.png)
 
 The toggle enables **background lights**. This allows you to view the lights at the same time as you edit the grid!
 
@@ -190,7 +190,7 @@ Add mode works great for quickly placing events, but it's not so great for makin
 
 **Select mode** turns your cursor into a crosshair, and it lets you draw boxes to select all events within its perimeter:
 
-![](/src/docs/images/select-all-events.gif)
+![](../images/select-all-events.gif)
 
 As in the notes view, events can be selected, and selected events glow yellow to indicate their status.
 
@@ -230,7 +230,7 @@ Beat Saber features two symmetrical lasers: left and right. Both lasers have the
 
 The "laser lock" disables the `Right laser` and `Right laser speed` tracks, and copies all actions you make in the left-laser tracks to the corresponding right-laser ones.
 
-![](/src/docs/images/lock-lasers.gif)
+![](../images/lock-lasers.gif)
 
 You can toggle it on or off with the `X` key.
 
