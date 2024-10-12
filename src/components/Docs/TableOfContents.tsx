@@ -64,11 +64,6 @@ function useActiveHeading(headings: TocEntry[]) {
 
 function getGithubLink(pathname: string) {
 	const prefix = "https://github.com/bsmg/beatmapper/edit/master/src";
-
-	if (pathname === "/docs") {
-		return `${prefix + pathname}/intro.mdx`;
-	}
-
 	return `${prefix + pathname}.mdx`;
 }
 

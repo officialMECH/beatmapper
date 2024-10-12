@@ -2,12 +2,13 @@ import { type PointerEventHandler, useCallback, useState } from "react";
 import styled from "styled-components";
 
 import { COLORS } from "$/constants";
+import { convertMillisecondsToBeats } from "$/helpers/audio.helpers";
 import { useMousePositionOverElement, usePointerUpHandler } from "$/hooks";
 import { changeLaserSpeed } from "$/store/actions";
 import { useAppDispatch, useAppSelector } from "$/store/hooks";
-import { getSelectedEventEditMode, getTrackSpeedAtBeat, makeGetEventsForTrack } from "$/store/selectors";
+import { getDurationInBeats, getSelectedEventEditMode, getSelectedSong, getTrackSpeedAtBeat, makeGetEventsForTrack } from "$/store/selectors";
 import { type App, EventEditMode } from "$/types";
-import { normalize, range } from "$/utils";
+import { clamp, normalize, range } from "$/utils";
 import { getYForSpeed } from "./EventsGrid.helpers";
 
 import SpeedTrackEvent from "./SpeedTrackEvent";
@@ -33,6 +34,8 @@ interface Props {
 
 const SpeedTrack = ({ trackId, width, height, startBeat, numOfBeatsToShow, cursorAtBeat, isDisabled, areLasersLocked }: Props) => {
 	const getEventsForTrack = makeGetEventsForTrack(trackId);
+	const song = useAppSelector(getSelectedSong);
+	const duration = useAppSelector(getDurationInBeats);
 	const events = useAppSelector(getEventsForTrack) as App.LaserSpeedEvent[];
 	const startSpeed = useAppSelector((state) => getTrackSpeedAtBeat(state, trackId, startBeat));
 	const endSpeed = useAppSelector((state) => getTrackSpeedAtBeat(state, trackId, startBeat + numOfBeatsToShow));
@@ -76,9 +79,12 @@ const SpeedTrack = ({ trackId, width, height, startBeat, numOfBeatsToShow, curso
 			return;
 		}
 
+		const offset = convertMillisecondsToBeats(-song.offset, song.bpm);
+		const beatNum = clamp(cursorAtBeat, offset, (duration ?? cursorAtBeat) + offset);
+
 		setTentativeEvent({
 			...tentativeEvent,
-			beatNum: cursorAtBeat,
+			beatNum: beatNum,
 			visible: true,
 		});
 	};

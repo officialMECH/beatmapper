@@ -4,7 +4,7 @@ import { UNIT } from "$/constants";
 import { useMount } from "$/hooks";
 import { downloadMapFiles, pausePlaying } from "$/store/actions";
 import { useAppDispatch, useAppSelector } from "$/store/hooks";
-import { getIsPlaying } from "$/store/selectors";
+import { getIsPlaying, getSelectedSong } from "$/store/selectors";
 
 import Button from "../Button";
 import Heading from "../Heading";
@@ -13,6 +13,7 @@ import Paragraph from "../Paragraph";
 import Spacer from "../Spacer";
 
 const Download = () => {
+	const song = useAppSelector(getSelectedSong);
 	const isPlaying = useAppSelector(getIsPlaying);
 	const dispatch = useAppDispatch();
 
@@ -22,6 +23,16 @@ const Download = () => {
 			pausePlaying();
 		}
 	});
+
+	if (song.demo) {
+		return (
+			<Wrapper>
+				<Heading size={1}>Download Map</Heading>
+				<Spacer size={UNIT * 2} />
+				<Paragraph>Unfortunately, the demo map is not available for download.</Paragraph>
+			</Wrapper>
+		);
+	}
 
 	return (
 		<Wrapper>

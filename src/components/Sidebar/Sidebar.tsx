@@ -61,7 +61,7 @@ const Sidebar = () => {
 							}}
 							isActive={false}
 						/>
-						<SidebarNavItem title="Help" icon={helpCircle} to="/docs" isActive={false} target="_blank" />
+						<SidebarNavItem title="Help" icon={helpCircle} to="/docs/intro" isActive={false} target="_blank" />
 					</SpacedChildren>
 				</Bottom>
 			</Wrapper>

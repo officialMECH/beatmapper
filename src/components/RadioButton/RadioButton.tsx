@@ -1,6 +1,4 @@
 import type { ComponentProps } from "react";
-import Icon from "react-icons-kit";
-import { x as checkedIcon } from "react-icons-kit/feather/x";
 import styled from "styled-components";
 
 interface Props extends ComponentProps<"input"> {}
@@ -10,7 +8,7 @@ const RadioButton = ({ name, value, checked, onChange, ...delegated }: Props) =>
 		<Wrapper>
 			<RealRadioButton name={name} value={value} onChange={onChange} {...delegated} type="radio" />
 			<FakeRadio>
-				<Dot icon={checkedIcon} size={16} style={{ transform: `scale(${checked ? 1 : 0})` }} />
+				<Dot style={{ transform: `scale(${checked ? 1 : 0})` }} />
 			</FakeRadio>
 		</Wrapper>
 	);
@@ -52,7 +50,7 @@ const FakeRadio = styled.div`
   }
 `;
 
-const Dot = styled(Icon)`
+const Dot = styled.span`
   width: 10px;
   height: 10px;
   background: rgba(0, 0, 0, 1);

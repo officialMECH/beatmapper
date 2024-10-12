@@ -10,7 +10,6 @@ import { capitalize } from "$/utils";
 
 import Heading from "../Heading";
 import Modal from "../Modal";
-import QuestionTooltip from "../QuestionTooltip";
 import RadioSet from "../RadioSet";
 import Spacer from "../Spacer";
 import TextInput from "../TextInput";
@@ -37,17 +36,8 @@ const SettingsModal = ({ isVisible, onDismiss }: Props) => {
 				<Spacer size={UNIT * 4} />
 
 				<TextInput
-					label={
-						<span>
-							Processing delay{" "}
-							<QuestionTooltip animateFill={false}>
-								Tweak the amount of time, in milliseconds, that the audio should be offset by, for it to seem synchronized.
-								<br />
-								<br />
-								Slower machines should experiment with larger numbers.
-							</QuestionTooltip>
-						</span>
-					}
+					label="Processing delay"
+					moreInfo="Tweak the amount of time, in milliseconds, that the audio should be offset by, for it to seem synchronized. Slower machines should experiment with larger numbers."
 					value={processingDelay}
 					onChange={(ev) => dispatch(updateProcessingDelay({ newDelay: Number(ev.target.value) }))}
 				/>

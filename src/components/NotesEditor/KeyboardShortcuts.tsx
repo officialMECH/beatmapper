@@ -57,10 +57,10 @@ const KeyboardShortcuts = () => {
 				keysDepressed.current.w = true;
 
 				if (keysDepressed.current.a) {
-					return dispatch(selectNoteDirection({ direction: Direction.UP_RIGHT }));
+					return dispatch(selectNoteDirection({ direction: Direction.UP_LEFT }));
 				}
 				if (keysDepressed.current.d) {
-					return dispatch(selectNoteDirection({ direction: Direction.UP_LEFT }));
+					return dispatch(selectNoteDirection({ direction: Direction.UP_RIGHT }));
 				}
 				return dispatch(selectNoteDirection({ direction: Direction.UP }));
 			}

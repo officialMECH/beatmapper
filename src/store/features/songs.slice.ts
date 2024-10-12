@@ -34,9 +34,9 @@ const initialState = {
 };
 
 type SelectedSong<A extends boolean> = A extends true ? App.Song : App.Song | undefined;
-function grabSelectedSong<A extends boolean>(assert: A) {
+function grabSelectedSong<A extends boolean>() {
 	return (state: typeof initialState) => {
-		if (state.selectedId && assert) return state.byId[state.selectedId];
+		if (state.selectedId) return state.byId[state.selectedId];
 		return undefined as SelectedSong<A>;
 	};
 }
@@ -55,15 +55,15 @@ const slice = createSlice({
 		getProcessingImport: (state) => state.processingImport,
 		getSongById: (state, songId: SongId) => state.byId[songId],
 		getSelectedSongId: (state) => state.selectedId,
-		getSelectedSong: grabSelectedSong(true),
-		getSelectedSongDifficultyIds: createSelector(grabSelectedSong(true), (song: App.Song) => {
+		getSelectedSong: grabSelectedSong<true>(),
+		getSelectedSongDifficultyIds: createSelector(grabSelectedSong<true>(), (song: App.Song) => {
 			const ids = Object.keys(song.difficultiesById) as Difficulty[];
 			return sortDifficultyIds(ids);
 		}),
 		getDemoSong: (state) => {
 			return Object.values(state.byId).find((song) => song.demo);
 		},
-		getGridSize: createSelector(grabSelectedSong(true), (song: App.Song) => {
+		getGridSize: createSelector(grabSelectedSong<true>(), (song: App.Song) => {
 			const mappingExtensions = song.modSettings.mappingExtensions;
 			// In legacy states, `mappingExtensions` was a boolean, and it was possible to not have the key at all.
 			const isLegacy = typeof mappingExtensions === "boolean" || !mappingExtensions;
@@ -76,24 +76,24 @@ const slice = createSlice({
 				rowHeight: mappingExtensions.rowHeight || DEFAULT_ROW_HEIGHT,
 			};
 		}),
-		getEnabledMods: createSelector(grabSelectedSong(true), (song: App.Song) => {
+		getEnabledMods: createSelector(grabSelectedSong<true>(), (song: App.Song) => {
 			return {
 				mappingExtensions: song.modSettings.mappingExtensions?.isEnabled,
 				customColors: song.modSettings.customColors?.isEnabled,
 			};
 		}),
-		getEnabledFastWalls: createSelector(grabSelectedSong(true), (song: App.Song) => {
+		getEnabledFastWalls: createSelector(grabSelectedSong<true>(), (song: App.Song) => {
 			return song.enabledFastWalls;
 		}),
-		getEnabledLightshow: createSelector(grabSelectedSong(true), (song: App.Song) => {
+		getEnabledLightshow: createSelector(grabSelectedSong<true>(), (song: App.Song) => {
 			return song.enabledLightshow;
 		}),
-		getCustomColors: createSelector(grabSelectedSong(true), (song: App.Song) => {
+		getCustomColors: createSelector(grabSelectedSong<true>(), (song: App.Song) => {
 			const colors = song.modSettings.customColors;
 			if (!colors) return DEFAULT_MOD_SETTINGS.customColors;
 			return { ...DEFAULT_MOD_SETTINGS.customColors, ...colors };
 		}),
-		getMappingMode: createSelector(grabSelectedSong(true), (song: App.Song) => {
+		getMappingMode: createSelector(grabSelectedSong<true>(), (song: App.Song) => {
 			return song.modSettings.mappingExtensions?.isEnabled ? ObjectPlacementMode.EXTENSIONS : ObjectPlacementMode.NORMAL;
 		}),
 	},
@@ -228,57 +228,57 @@ const slice = createSlice({
 		});
 		builder.addCase(toggleModForSong, (state, action) => {
 			const { mod } = action.payload;
-			const song = grabSelectedSong(false)(state);
-			if (!song) return;
+			const song = grabSelectedSong<false>()(state);
+			if (!song) return state;
 			// For a brief moment, modSettings was being set to an empty object, before the children were required. Update that now, if so.
-			song.modSettings ??= DEFAULT_MOD_SETTINGS;
+			if (!song.modSettings) song.modSettings ??= DEFAULT_MOD_SETTINGS;
 			// Also for a brief moment, modSettings didn't always have properties for each mod
 			// @ts-ignore false positive
-			song.modSettings[mod] ??= DEFAULT_MOD_SETTINGS[mod];
-			const isModEnabled = song.modSettings;
+			if (!song.modSettings[mod]) song.modSettings[mod] ??= DEFAULT_MOD_SETTINGS[mod];
+			const isModEnabled = song.modSettings[mod].isEnabled;
 			song.modSettings[mod].isEnabled = !isModEnabled;
 		});
 		builder.addCase(updateModColor, (state, action) => {
 			const { element, color } = action.payload;
-			const song = grabSelectedSong(false)(state);
+			const song = grabSelectedSong<false>()(state);
 			if (!song) return;
-			song.modSettings.customColors ??= DEFAULT_MOD_SETTINGS.customColors;
+			if (!song.modSettings.customColors) song.modSettings.customColors ??= DEFAULT_MOD_SETTINGS.customColors;
 			song.modSettings.customColors[element] = color;
 		});
 		builder.addCase(updateModColorOverdrive, (state, action) => {
 			const { element, overdrive } = action.payload;
-			const song = grabSelectedSong(false)(state);
+			const song = grabSelectedSong<false>()(state);
 			if (!song) return;
 			const elementOverdriveKey = `${element}Overdrive` as const;
-			song.modSettings.customColors ??= DEFAULT_MOD_SETTINGS.customColors;
+			if (!song.modSettings.customColors) song.modSettings.customColors ??= DEFAULT_MOD_SETTINGS.customColors;
 			song.modSettings.customColors[elementOverdriveKey] = overdrive;
 		});
 		builder.addCase(updateGrid, (state, action) => {
 			const { numRows, numCols, colWidth, rowHeight } = action.payload;
-			const song = grabSelectedSong(false)(state);
+			const song = grabSelectedSong<false>()(state);
 			if (!song) return;
-			song.modSettings.mappingExtensions ??= DEFAULT_MOD_SETTINGS.mappingExtensions;
+			if (!song.modSettings.mappingExtensions) song.modSettings.mappingExtensions ??= DEFAULT_MOD_SETTINGS.mappingExtensions;
 			song.modSettings.mappingExtensions.numRows = numRows;
 			song.modSettings.mappingExtensions.numCols = numCols;
 			song.modSettings.mappingExtensions.colWidth = colWidth;
 			song.modSettings.mappingExtensions.rowHeight = rowHeight;
 		});
 		builder.addCase(resetGrid, (state) => {
-			const song = grabSelectedSong(false)(state);
+			const song = grabSelectedSong<false>()(state);
 			if (!song) return;
-			song.modSettings.mappingExtensions ??= DEFAULT_MOD_SETTINGS.mappingExtensions;
+			if (!song.modSettings.mappingExtensions) song.modSettings.mappingExtensions ??= DEFAULT_MOD_SETTINGS.mappingExtensions;
 			song.modSettings.mappingExtensions = { ...song.modSettings.mappingExtensions, ...DEFAULT_GRID };
 		});
 		builder.addCase(loadGridPreset, (state, action) => {
 			const { grid } = action.payload;
-			const song = grabSelectedSong(false)(state);
+			const song = grabSelectedSong<false>()(state);
 			if (!song) return;
-			song.modSettings.mappingExtensions ??= DEFAULT_MOD_SETTINGS.mappingExtensions;
+			if (!song.modSettings.mappingExtensions) song.modSettings.mappingExtensions ??= DEFAULT_MOD_SETTINGS.mappingExtensions;
 			song.modSettings.mappingExtensions = { ...song.modSettings.mappingExtensions, ...grid };
 		});
 		builder.addCase(togglePropertyForSelectedSong, (state, action) => {
 			const { property } = action.payload;
-			const song = grabSelectedSong(false)(state);
+			const song = grabSelectedSong<false>()(state);
 			if (!song) return;
 			// @ts-ignore false positive
 			song[property] = !song[property];

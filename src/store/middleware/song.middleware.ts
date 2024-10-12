@@ -207,6 +207,10 @@ export default function createSongMiddleware() {
 				const currentTime = audioSample.getCurrentTime() * 1000;
 				const state = api.getState();
 				const song = getSelectedSong(state);
+				const duration = getDuration(state);
+				if (audioSample.isPlaying && duration && currentTime > duration) {
+					return api.dispatch(pausePlaying());
+				}
 				const processingDelay = getProcessingDelay(state);
 				const currentBeat = convertMillisecondsToBeats(currentTime - song.offset, song.bpm);
 				triggerTickerIfNecessary(state, currentBeat, lastBeat, ticker, processingDelay);
@@ -238,7 +242,9 @@ export default function createSongMiddleware() {
 			// Once we stop, we want to snap to the nearest beat.
 			const state = api.getState();
 			const song = getSelectedSong(state);
-			const roundedCursorPosition = snapToNearestBeat(newOffset, song.bpm, song.offset);
+			const duration = getDuration(state);
+			let roundedCursorPosition = snapToNearestBeat(newOffset, song.bpm, song.offset);
+			roundedCursorPosition = clamp(roundedCursorPosition, 0, duration ?? roundedCursorPosition);
 			// Dispatch this new cursor position, but also seek to this place in the audio, so that it is in sync.
 			api.dispatch(adjustCursorPosition({ newCursorPosition: roundedCursorPosition }));
 			audioSample.setCurrentTime(roundedCursorPosition / 1000);
@@ -270,7 +276,9 @@ export default function createSongMiddleware() {
 			const { selectedBeat } = action.payload;
 			const state = api.getState();
 			const song = getSelectedSong(state);
-			const newCursorPosition = convertBeatsToMilliseconds(selectedBeat, song.bpm) + song.offset;
+			const duration = getDuration(state);
+			let newCursorPosition = convertBeatsToMilliseconds(selectedBeat, song.bpm) + song.offset;
+			newCursorPosition = clamp(newCursorPosition, 0, duration ?? newCursorPosition);
 			api.dispatch(adjustCursorPosition({ newCursorPosition }));
 			audioSample.setCurrentTime(newCursorPosition / 1000);
 			api.subscribe();
@@ -297,7 +305,9 @@ export default function createSongMiddleware() {
 			const { beatNum, pauseTrack } = action.payload;
 			const state = api.getState();
 			const song = getSelectedSong(state);
-			const newCursorPosition = convertBeatsToMilliseconds(beatNum, song.bpm) + song.offset;
+			const duration = getDuration(state);
+			let newCursorPosition = convertBeatsToMilliseconds(beatNum, song.bpm) + song.offset;
+			newCursorPosition = clamp(newCursorPosition, 0, duration ?? newCursorPosition);
 			api.dispatch(adjustCursorPosition({ newCursorPosition }));
 			audioSample.setCurrentTime(newCursorPosition / 1000);
 			if (pauseTrack) {
@@ -380,9 +390,12 @@ export default function createSongMiddleware() {
 			// Once we stop, we want to snap to the nearest beat.
 			const state = api.getState();
 			const song = getSelectedSong(state);
+			const cursorPosition = getCursorPosition(state);
+			const duration = getDuration(state);
 			window.cancelAnimationFrame(animationFrameId);
 			audioSample.pause();
-			const roundedCursorPosition = snapToNearestBeat(state.navigation.cursorPosition, song.bpm, song.offset);
+			let roundedCursorPosition = snapToNearestBeat(cursorPosition, song.bpm, song.offset);
+			roundedCursorPosition = clamp(roundedCursorPosition, 0, duration ?? roundedCursorPosition);
 			// Dispatch this new cursor position, but also seek to this place in the audio, so that it is in sync.
 			api.dispatch(adjustCursorPosition({ newCursorPosition: roundedCursorPosition }));
 			audioSample.setCurrentTime(roundedCursorPosition / 1000);

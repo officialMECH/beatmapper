@@ -2,11 +2,13 @@ import { memo, useCallback, useEffect, useState } from "react";
 import styled from "styled-components";
 
 import { COLORS } from "$/constants";
+import { convertMillisecondsToBeats } from "$/helpers/audio.helpers";
 import { usePointerUpHandler } from "$/hooks";
 import { placeEvent } from "$/store/actions";
 import { useAppDispatch, useAppSelector } from "$/store/hooks";
-import { getSelectedEventColor, getSelectedEventEditMode, getSelectedEventTool, getSelectedSong, makeGetEventsForTrack, makeGetInitialTrackLightingColorType } from "$/store/selectors";
+import { getDurationInBeats, getSelectedEventColor, getSelectedEventEditMode, getSelectedEventTool, getSelectedSong, makeGetEventsForTrack, makeGetInitialTrackLightingColorType } from "$/store/selectors";
 import { App, EventEditMode, EventTool } from "$/types";
+import { clamp } from "$/utils";
 import { getBackgroundBoxes } from "./BlockTrack.helpers";
 
 import BackgroundBox from "./BackgroundBox";
@@ -27,6 +29,7 @@ const BlockTrack = ({ trackId, width, height, startBeat, numOfBeatsToShow, curso
 	const getEventsForTrack = makeGetEventsForTrack(trackId);
 	const getInitialTrackLightingColorType = makeGetInitialTrackLightingColorType(trackId);
 	const song = useAppSelector(getSelectedSong);
+	const duration = useAppSelector(getDurationInBeats);
 	const events = useAppSelector(getEventsForTrack);
 	const selectedEditMode = useAppSelector(getSelectedEventEditMode);
 	const selectedTool = useAppSelector(getSelectedEventTool);
@@ -55,15 +58,22 @@ const BlockTrack = ({ trackId, width, height, startBeat, numOfBeatsToShow, curso
 	}, [areLasersLocked, selectedColorType, selectedTool, trackId]);
 
 	const handleClickTrack = () => {
-		if (cursorAtBeat !== null) dispatch(placeEvent({ beatNum: cursorAtBeat, ...getPropsForPlacedEvent() }));
+		if (cursorAtBeat === null) return;
+		const offset = convertMillisecondsToBeats(-song.offset, song.bpm);
+		const beatNum = clamp(cursorAtBeat, offset, (duration ?? cursorAtBeat) + offset);
+		return dispatch(placeEvent({ beatNum: beatNum, ...getPropsForPlacedEvent() }));
 	};
 
 	useEffect(() => {
 		if (selectedEditMode === EventEditMode.PLACE && mouseButtonDepressed === "left") {
 			// TODO: Technically this should be a new action, bulkPlaceEvent, so that they can all be undoed in 1 step
-			if (cursorAtBeat !== null) dispatch(placeEvent({ beatNum: cursorAtBeat, ...getPropsForPlacedEvent() }));
+			if (cursorAtBeat !== null) {
+				const offset = convertMillisecondsToBeats(-song.offset, song.bpm);
+				const beatNum = clamp(cursorAtBeat, offset, (duration ?? cursorAtBeat) + offset);
+				dispatch(placeEvent({ beatNum: beatNum, ...getPropsForPlacedEvent() }));
+			}
 		}
-	}, [dispatch, getPropsForPlacedEvent, cursorAtBeat, mouseButtonDepressed, selectedEditMode]);
+	}, [dispatch, getPropsForPlacedEvent, cursorAtBeat, duration, song.offset, song.bpm, mouseButtonDepressed, selectedEditMode]);
 
 	const backgroundBoxes = getBackgroundBoxes(events, trackId, initialTrackLightingColorType ?? null, startBeat, numOfBeatsToShow);
 

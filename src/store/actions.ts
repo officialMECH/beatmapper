@@ -10,6 +10,7 @@ import {
 	getAllEventsAsArray,
 	getCopiedData,
 	getCursorPositionInBeats,
+	getDurationInBeats,
 	getGridSize,
 	getIsPlaying,
 	getNotes,
@@ -146,6 +147,8 @@ export const clickPlacementGrid = createAsyncThunk("CLICK_PLACEMENT_GRID", (args
 	const selectedTool = getSelectedNoteTool(state);
 	const cursorPositionInBeats = getCursorPositionInBeats(state);
 	if (cursorPositionInBeats === null) return api.rejectWithValue("Invalid beat number.");
+	const duration = getDurationInBeats(state);
+	if (cursorPositionInBeats < 0 || (duration && cursorPositionInBeats > duration)) return api.rejectWithValue("Cannot place objects out-of-bounds.");
 	const adjustedCursorPosition = adjustNoteCursorPosition(cursorPositionInBeats, state);
 	return api.fulfillWithValue({ ...args, cursorPositionInBeats: adjustedCursorPosition, direction: selectedDirection, tool: selectedTool });
 });

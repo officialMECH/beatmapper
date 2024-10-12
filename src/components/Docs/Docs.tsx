@@ -22,7 +22,7 @@ const Docs = () => {
 	return (
 		<Layout>
 			<Routes>
-				<Route path="/" element={<Intro />} />
+				<Route path="/intro" element={<Intro />} />
 				<Route path="/song-prep" element={<SongPrep />} />
 				<Route path="/keyboard-shortcuts" element={<Shortcuts />} />
 				<Route path="/manual/getting-started" element={<ManualGettingStarted />} />

@@ -2,12 +2,13 @@ import { type PointerEventHandler, useCallback, useEffect, useRef, useState } fr
 import styled from "styled-components";
 
 import { COLORS, EVENT_TRACKS, UNIT } from "$/constants";
+import { convertMillisecondsToBeats } from "$/helpers/audio.helpers";
 import { useMousePositionOverElement, usePointerUpHandler } from "$/hooks";
 import { clearSelectionBox, commitSelection, drawSelectionBox, moveMouseAcrossEventsGrid } from "$/store/actions";
 import { useAppDispatch, useAppSelector } from "$/store/hooks";
-import { getAreLasersLocked, getIsLoading, getRowHeight, getSelectedEventBeat, getSelectedEventEditMode, getSelectionBox, getSnapTo, getStartAndEndBeat } from "$/store/selectors";
+import { getAreLasersLocked, getDurationInBeats, getIsLoading, getRowHeight, getSelectedEventBeat, getSelectedEventEditMode, getSelectedSong, getSelectionBox, getSnapTo, getStartAndEndBeat } from "$/store/selectors";
 import { App, EventEditMode, TrackType } from "$/types";
-import { normalize, range, roundToNearest } from "$/utils";
+import { clamp, normalize, range, roundToNearest } from "$/utils";
 
 import BackgroundLines from "./BackgroundLines";
 import BlockTrack from "./BlockTrack";
@@ -41,10 +42,16 @@ interface Props {
 }
 
 const EventsGrid = ({ contentWidth }: Props) => {
+	const song = useAppSelector(getSelectedSong);
+	const duration = useAppSelector(getDurationInBeats);
 	const { startBeat, endBeat } = useAppSelector(getStartAndEndBeat);
 	const numOfBeatsToShow = endBeat - startBeat;
 	const selectedEditMode = useAppSelector(getSelectedEventEditMode);
-	const selectedBeat = useAppSelector(getSelectedEventBeat);
+	const selectedBeat = useAppSelector((state) => {
+		const selectedBeat = getSelectedEventBeat(state);
+		const offset = convertMillisecondsToBeats(-song.offset, song.bpm);
+		return selectedBeat !== null ? clamp(selectedBeat, offset, (duration ?? selectedBeat) + offset) : null;
+	});
 	const isLoading = useAppSelector(getIsLoading);
 	const areLasersLocked = useAppSelector(getAreLasersLocked);
 	const snapTo = useAppSelector(getSnapTo);

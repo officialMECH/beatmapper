@@ -19,7 +19,7 @@ const BarMarkers = () => {
 	const surfaceDepth = SURFACE_DEPTHS[graphicsLevel];
 	const numToRender = surfaceDepth / beatDepth;
 
-	const totalNumOfBeats = Math.ceil(convertMillisecondsToBeats(duration ?? 0, bpm ?? 120));
+	const totalNumOfBeats = Math.ceil(convertMillisecondsToBeats((duration ?? 0) - song.offset, bpm ?? 120));
 
 	const linesArray = useMemo(() => range(totalNumOfBeats * 4), [totalNumOfBeats]);
 

@@ -71,8 +71,7 @@ const slice = createSlice({
 				console.warn("Tried to add a double-note in the same spot. Rejected.");
 				return state;
 			}
-			console.log(selectedTool);
-			if (!selectedDirection || !selectedTool) return state;
+			if (selectedDirection === null || selectedTool === null) return state;
 			return [...state, { _time: cursorPositionInBeats, _lineIndex: colIndex, _lineLayer: rowIndex, _type: getItemType(selectedTool), _cutDirection: selectedDirection }];
 		});
 		builder.addCase(clearCellOfNotes.fulfilled, (state, action) => {

@@ -1,6 +1,6 @@
 import { type DevToolsEnhancerOptions, configureStore } from "@reduxjs/toolkit";
 
-import { tick } from "./actions";
+import { moveMouseAcrossEventsGrid, tick } from "./actions";
 import { storage } from "./enhancers";
 import root from "./features";
 import { createAllSharedMiddlewares } from "./middleware";
@@ -11,7 +11,7 @@ function createStore() {
 	const middleware = createAllSharedMiddlewares(engine);
 
 	const devTools: DevToolsEnhancerOptions = {
-		actionsDenylist: [tick.type],
+		actionsDenylist: [tick.type, moveMouseAcrossEventsGrid.type],
 	};
 
 	const store = configureStore({

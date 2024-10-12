@@ -14,7 +14,7 @@ const Sidebar = () => {
 			</Header>
 			<Navigation>
 				<NavGroup>
-					<NavLink to="/docs">About</NavLink>
+					<NavLink to="/docs/intro">About</NavLink>
 					<NavLink to="/docs/song-prep">Song prep</NavLink>
 					<NavLink to="/docs/keyboard-shortcuts">Keyboard shortcuts</NavLink>
 				</NavGroup>
@@ -66,6 +66,10 @@ const NavLink = styled(NavLinkRaw)`
   &:hover {
     color: ${COLORS.blueGray[400]};
   }
+
+	&.active {
+		color: ${COLORS.blue[500]};
+	}
 `;
 
 const Header = styled.header`

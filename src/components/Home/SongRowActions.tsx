@@ -4,7 +4,8 @@ import { chevronDown } from "react-icons-kit/feather/chevronDown";
 import styled from "styled-components";
 
 import { deleteSong, downloadMapFiles } from "$/store/actions";
-import { useAppDispatch } from "$/store/hooks";
+import { useAppDispatch, useAppSelector } from "$/store/hooks";
+import { getSongById } from "$/store/selectors";
 
 import MiniButton from "../MiniButton";
 
@@ -14,6 +15,7 @@ interface Props {
 }
 
 const SongRowActions = ({ songId, size }: Props) => {
+	const song = useAppSelector((state) => getSongById(state, songId));
 	const dispatch = useAppDispatch();
 
 	const handleDelete = () => {
@@ -27,7 +29,7 @@ const SongRowActions = ({ songId, size }: Props) => {
 	};
 
 	return (
-		<MiniButton as="div" style={{ height: size, width: size }}>
+		<MiniButton style={{ height: size, width: size }}>
 			<Icon icon={chevronDown} />
 			<Select
 				style={{ height: size, width: size }}
@@ -46,9 +48,9 @@ const SongRowActions = ({ songId, size }: Props) => {
 				}}
 			>
 				<option />
-				<option value="copy">Copy</option>
+				{!song.demo && <option value="copy">Copy</option>}
 				<option value="delete">Delete</option>
-				<option value="download">Download</option>
+				{!song.demo && <option value="download">Download</option>}
 			</Select>
 		</MiniButton>
 	);

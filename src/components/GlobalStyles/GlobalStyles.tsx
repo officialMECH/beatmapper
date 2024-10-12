@@ -76,6 +76,9 @@ const GlobalStyles = createGlobalStyle`
     background: ${COLORS.gray[900]} !important;
   }
 
+  .tippy-tooltip [x-circle] {
+    display: none;
+  }
 
   .tippy-popper {
     pointer-events: auto !important;
@@ -97,6 +100,9 @@ const GlobalStyles = createGlobalStyle`
     font-style: italic
   }
 
+  option {
+    color: black;
+  }
 `;
 
 export default GlobalStyles;
