@@ -12,7 +12,7 @@ const Header = () => {
 			<MaxWidthWrapper>
 				<Contents>
 					<Logo />
-					<DocLink to="/docs/intro">Documentation</DocLink>
+					<DocLink to="/docs">Documentation</DocLink>
 				</Contents>
 			</MaxWidthWrapper>
 		</Wrapper>

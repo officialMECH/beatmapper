@@ -21,7 +21,7 @@ export const KeyIcon = ({ size = "medium", type, children }: Props) => {
 
 	let derivedType = type;
 	if (!derivedType) {
-		derivedType = children === "Space" ? "spacebar" : Children.count(children) > 1 || typeof children !== "string" ? "wide" : "square";
+		derivedType = children === "Space" ? "spacebar" : Children.count(children) > 1 || typeof children !== "string" || children.length > 1 ? "slightly-wide" : "square";
 	}
 
 	const Component = componentTypeMap[derivedType];
@@ -101,10 +101,13 @@ export const OrWrapper = styled.div`
 
 const PlusWrapper = styled.div`
   display: flex;
+  margin-inline: 0.25em;
+  align-items: center;
   justify-content: center;
+  transform: translate(-2px, -4px);
 `;
 
-const Key = styled.div<Props>`
+export const Key = styled.kbd<Props>`
   height: ${(props) => (props.size === "medium" ? 27 : 18)}px;
   display: inline-flex;
   justify-content: center;
@@ -116,6 +119,8 @@ const Key = styled.div<Props>`
   border-radius: 3px;
   font-size: ${(props) => (props.size === "medium" ? 12 : 10)}px;
   color: ${COLORS.gray[900]};
+  transform: translateY(-2px);
+  margin-inline: 0.25em;
   cursor: default;
 `;
 

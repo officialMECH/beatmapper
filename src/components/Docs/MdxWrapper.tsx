@@ -7,6 +7,7 @@ import { COLORS } from "$/constants";
 import BaseLink from "../BaseLink";
 import YoutubeEmbed from "../YoutubeEmbed";
 import HorizontalRule from "./HorizontalRule";
+import { MetaKey } from "./ShortcutHelpers";
 
 interface ImageProps extends ComponentProps<"img"> {
 	caption?: string;
@@ -41,6 +42,7 @@ const components: ComponentProps<typeof MDXProvider>["components"] = {
 	a: ({ href, ...props }) => <BaseLink {...props} to={href} />,
 	img: Image,
 	hr: HorizontalRule,
+	MetaKey: MetaKey,
 	pre: Pre,
 	Subtle: Subtle,
 	YoutubeEmbed,

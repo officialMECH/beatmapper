@@ -1,4 +1,4 @@
-import Doc, { frontMatter, tableOfContents } from "$/docs/release-notes.mdx";
+import Doc, { frontMatter, tableOfContents } from "$/docs/releases/0.2.mdx";
 
 import DocPage from "../DocPage";
 

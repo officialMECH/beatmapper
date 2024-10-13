@@ -15,7 +15,6 @@ const Sidebar = () => {
 			<Navigation>
 				<NavGroup>
 					<NavLink to="/docs/intro">About</NavLink>
-					<NavLink to="/docs/song-prep">Song prep</NavLink>
 					<NavLink to="/docs/keyboard-shortcuts">Keyboard shortcuts</NavLink>
 				</NavGroup>
 				<NavGroup title="User Manual" showByDefault>
@@ -36,8 +35,9 @@ const Sidebar = () => {
 					<NavLink to="/docs/content-policy">Content policy</NavLink>
 					<NavLink to="/docs/privacy">Privacy</NavLink>
 				</NavGroup>
-				<NavGroup>
-					<NavLink to="/docs/release-notes">Release notes</NavLink>
+				<NavGroup title="Release Notes">
+					<NavLink to="/docs/releases/0.2">v0.2</NavLink>
+					<NavLink to="/docs/releases/0.3">v0.3</NavLink>
 				</NavGroup>
 			</Navigation>
 		</Wrapper>

@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 
 import Layout from "./Layout";
 import ContentPolicy from "./pages/ContentPolicy";
@@ -13,7 +13,8 @@ import ManualNotes from "./pages/ManualNotes";
 import Migrating from "./pages/Migrating";
 import Mods from "./pages/Mods";
 import Privacy from "./pages/Privacy";
-import ReleaseNotes from "./pages/ReleaseNotes";
+import ReleaseNotes020 from "./pages/ReleaseNotes020";
+import ReleaseNotes030 from "./pages/ReleaseNotes030";
 import RunningLocally from "./pages/RunningLocally";
 import Shortcuts from "./pages/Shortcuts";
 import SongPrep from "./pages/SongPrep";
@@ -22,6 +23,7 @@ const Docs = () => {
 	return (
 		<Layout>
 			<Routes>
+				<Route path="/" element={<Navigate to={"/docs/intro"} />} />
 				<Route path="/intro" element={<Intro />} />
 				<Route path="/song-prep" element={<SongPrep />} />
 				<Route path="/keyboard-shortcuts" element={<Shortcuts />} />
@@ -35,7 +37,8 @@ const Docs = () => {
 				<Route path="/mods" element={<Mods />} />
 				<Route path="/fast-walls" element={<FastWalls />} />
 				<Route path="/running-locally" element={<RunningLocally />} />
-				<Route path="/release-notes" element={<ReleaseNotes />} />
+				<Route path="/releases/0.2" element={<ReleaseNotes020 />} />
+				<Route path="/releases/0.3" element={<ReleaseNotes030 />} />
 				<Route path="/privacy" element={<Privacy />} />
 				<Route path="/content-policy" element={<ContentPolicy />} />
 			</Routes>

@@ -29,6 +29,7 @@ const Wrapper = styled.div`
   position: relative;
   display: inline-block;
   align-self: center;
+  margin-inline: 0;
 `;
 
 const Cable = styled.svg`
