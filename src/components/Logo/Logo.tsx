@@ -3,10 +3,10 @@ import { Canvas } from "@react-three/fiber";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import type { Vector3Tuple } from "three";
 
 import { UNIT } from "$/constants";
 
-import type { Vector3Tuple } from "three";
 import Block from "../Block";
 import Spacer from "../Spacer";
 

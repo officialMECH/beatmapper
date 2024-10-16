@@ -1,4 +1,3 @@
-import type { App } from "$/types";
 import { Tooltip } from "react-tippy";
 import styled from "styled-components";
 
@@ -6,6 +5,7 @@ import { COLORS, DIFFICULTIES, DIFFICULTY_COLORS, UNIT } from "$/constants";
 import { getLabelForDifficulty } from "$/helpers/song.helpers";
 import { changeSelectedDifficulty } from "$/store/actions";
 import { useAppDispatch } from "$/store/hooks";
+import type { App } from "$/types";
 
 import CoverArtImage from "../CoverArtImage";
 import MiniButton from "../MiniButton";

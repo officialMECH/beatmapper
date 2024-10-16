@@ -1,5 +1,9 @@
 /// <reference types="vite/client" />
 
+interface ImportMetaEnv {
+	VITE_ENABLE_DEVTOOLS: boolean;
+}
+
 declare module "*.mdx" {
 	import type { TocEntry } from "remark-mdx-toc";
 	/** `remark-mdx-frontmatter` */

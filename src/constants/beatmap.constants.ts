@@ -9,7 +9,7 @@ export const HUMANIZED_DIRECTIONS = Object.freeze(Object.values(App.Direction));
 
 export const TRACK_ID_MAP = Object.freeze(
 	Object.entries(App.TrackId).reduce(
-		(acc, [index, value]) => {
+		(acc: Record<App.TrackId, number>, [index, value]) => {
 			acc[`${value}`] = Number(index);
 			return acc;
 		},
