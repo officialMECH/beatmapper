@@ -206,7 +206,7 @@ const GlobalShortcuts = ({ view }: Props) => {
 				}
 
 				ev.preventDefault();
-				if (song.demo) return alert("Unfortunately, the demo map is not available for download.");
+				if (import.meta.env.PROD && song.demo) return alert("Unfortunately, the demo map is not available for download.");
 				return dispatch(downloadMapFiles({ version: 2 }));
 			}
 

@@ -24,7 +24,7 @@ const Download = () => {
 		}
 	});
 
-	if (song.demo) {
+	if (import.meta.env.PROD && song.demo) {
 		return (
 			<Wrapper>
 				<Heading size={1}>Download Map</Heading>

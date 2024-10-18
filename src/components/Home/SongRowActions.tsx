@@ -48,9 +48,9 @@ const SongRowActions = ({ songId, size }: Props) => {
 				}}
 			>
 				<option />
-				{!song.demo && <option value="copy">Copy</option>}
+				{(import.meta.env.DEV || !song.demo) && <option value="copy">Copy</option>}
 				<option value="delete">Delete</option>
-				{!song.demo && <option value="download">Download</option>}
+				{(import.meta.env.DEV || !song.demo) && <option value="download">Download</option>}
 			</Select>
 		</MiniButton>
 	);
