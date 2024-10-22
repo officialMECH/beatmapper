@@ -87,10 +87,18 @@ describe("packaging.service", () => {
 				_shufflePeriod: 0.5,
 				_previewStartTime: DEFAULT_SONG.previewStartTime,
 				_previewDuration: DEFAULT_SONG.previewDuration,
-				_songFilename: "song.egg",
+				_songFilename: "song.ogg",
 				_coverImageFilename: "cover.jpg",
 				_environmentName: DEFAULT_SONG.environment,
-				_customData: { _editor: "beatmapper", _editorSettings: { modSettings: {} } },
+				_allDirectionsEnvironmentName: "GlassDesertEnvironment",
+				_customData: {
+					_editors: {
+						_lastEditedBy: "Beatmapper",
+						Beatmapper: {
+							version: version,
+						},
+					},
+				},
 				_difficultyBeatmapSets: [
 					{
 						_beatmapCharacteristicName: "Standard",
@@ -101,10 +109,7 @@ describe("packaging.service", () => {
 								_beatmapFilename: "Hard.dat",
 								_noteJumpMovementSpeed: DEFAULT_SONG.difficultiesById.Hard.noteJumpSpeed,
 								_noteJumpStartBeatOffset: DEFAULT_SONG.difficultiesById.Hard.startBeatOffset,
-								_customData: {
-									_editorOffset: DEFAULT_SONG.offset,
-									_requirements: [],
-								},
+								_customData: {},
 							},
 							{
 								_difficulty: "Expert",
@@ -114,10 +119,7 @@ describe("packaging.service", () => {
 								_beatmapFilename: "Expert.dat",
 								_noteJumpMovementSpeed: DEFAULT_SONG.difficultiesById.Expert.noteJumpSpeed,
 								_noteJumpStartBeatOffset: DEFAULT_SONG.difficultiesById.Expert.startBeatOffset,
-								_customData: {
-									_editorOffset: DEFAULT_SONG.offset,
-									_requirements: [],
-								},
+								_customData: {},
 							},
 						],
 					},
@@ -146,8 +148,6 @@ describe("packaging.service", () => {
 			const createdSong = JSON.parse(createInfoContent(moddedSong, { version: 2 }));
 
 			const expectedCustomData = {
-				_editorOffset: moddedSong.offset,
-				_requirements: [],
 				_colorLeft: { r: 0, g: 1, b: 1 },
 				_colorRight: { r: 1, g: 0, b: 1 },
 				_envColorLeft: { r: 0, g: 1, b: 0 },
@@ -177,10 +177,7 @@ describe("packaging.service", () => {
 
 			const createdSong = JSON.parse(createInfoContent(moddedSong, { version: 2 }));
 
-			const expectedCustomData = {
-				_editorOffset: moddedSong.offset,
-				_requirements: [],
-			};
+			const expectedCustomData = {};
 
 			for (const difficulty of createdSong._difficultyBeatmapSets[0]._difficultyBeatmaps) {
 				expect(difficulty._customData).toEqual(expectedCustomData);

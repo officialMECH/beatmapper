@@ -45,7 +45,7 @@ const SongPicker = ({ height, songFile, setSongFile }: Props) => {
 			onSelectFile={(file) => {
 				// Couple things make this weird:
 				// - Firefox treats all ogg files as video/ogg instead of audio/ogg
-				// - Sometimes, file extensions are changed to .egg, for reasons I don't fully understand.
+				// - Sometimes, file extensions are changed to .egg for BeatSaver compatibility.
 				const isValid = file.type === "audio/ogg" || file.type === "video/ogg" || file.name.match(/\.egg$/);
 
 				if (!isValid) {

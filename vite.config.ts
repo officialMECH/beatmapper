@@ -1,6 +1,6 @@
 import { fileURLToPath } from "node:url";
 import type { Pluggable } from "unified";
-import { type Plugin, defineConfig } from "vite";
+import { type Plugin, type UserConfig, defineConfig } from "vite";
 
 import { default as mdx } from "@mdx-js/rollup";
 import { default as react } from "@vitejs/plugin-react";
@@ -12,6 +12,8 @@ import { default as remarkFrontmatter } from "remark-frontmatter";
 import { default as remarkGfm } from "remark-gfm";
 import { default as remarkMdxFrontmatter } from "remark-mdx-frontmatter";
 import { remarkMdxToc } from "remark-mdx-toc";
+
+import packageJson from "./package.json";
 
 function markdown() {
 	return {
@@ -35,23 +37,28 @@ function markdown() {
 }
 
 // https://vitejs.dev/config/
-export default defineConfig({
-	plugins: [react(), markdown(), pwa({ registerType: "autoUpdate" })],
-	define: { global: "window" },
-	resolve: {
-		alias: {
-			$: fileURLToPath(new URL("./src", import.meta.url)),
+export default defineConfig((ctx) => {
+	return {
+		plugins: [react(), markdown(), pwa({ registerType: "autoUpdate" })],
+		define: {
+			global: "window",
+			version: `\"${packageJson.version}\"`,
 		},
-	},
-	assetsInclude: ["**/*.glsl"],
-	build: {
-		commonjsOptions: { transformMixedEsModules: true }, // Change
-	},
-	optimizeDeps: {
-		esbuildOptions: {
-			loader: {
-				".js": "jsx",
+		resolve: {
+			alias: {
+				$: fileURLToPath(new URL("./src", import.meta.url)),
 			},
 		},
-	},
+		assetsInclude: ["**/*.glsl"],
+		build: {
+			commonjsOptions: { transformMixedEsModules: true }, // Change
+		},
+		optimizeDeps: {
+			esbuildOptions: {
+				loader: {
+					".js": "jsx",
+				},
+			},
+		},
+	} as UserConfig;
 });

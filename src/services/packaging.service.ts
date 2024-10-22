@@ -16,7 +16,7 @@ import { getSongIdFromName, sortDifficultyIds } from "$/helpers/song.helpers";
 import { getAllEventsAsArray, getNotes, getObstacles, getSelectedSong, getSelectedSongDifficultyIds } from "$/store/selectors";
 import type { RootState } from "$/store/setup";
 import { App, Difficulty, type Json, type SongId } from "$/types";
-import { omit } from "$/utils";
+import { isEmpty, omit } from "$/utils";
 import { FileType, getFile, getFilenameForThing, saveCoverArtFromBlob, saveFile, saveSongFile } from "./file.service";
 import { deriveDefaultModSettingsFromBeatmap, getArchiveVersion, getDifficultyRankForDifficulty, getFileFromArchive, shiftEntitiesByOffset } from "./packaging.service.nitty-gritty";
 
@@ -39,7 +39,7 @@ export function createInfoContent(song: Omit<App.Song, "id" | "songFilename" | "
 
 	const editorSettings = {
 		enabledFastWalls: song.enabledFastWalls,
-		modSettings: song.modSettings,
+		modSettings: !isEmpty(song.modSettings) ? song.modSettings : undefined,
 	};
 
 	// biome-ignore lint/suspicious/noImplicitAnyLet: awaiting rewrite
@@ -75,8 +75,8 @@ export function createInfoContent(song: Omit<App.Song, "id" | "songFilename" | "
 						_noteJumpMovementSpeed: difficulty.noteJumpSpeed,
 						_noteJumpStartBeatOffset: difficulty.startBeatOffset,
 						_customData: {
-							_editorOffset: offset,
-							_requirements: requirements,
+							_editorOffset: offset !== 0 ? offset : undefined,
+							_requirements: requirements.length > 1 ? requirements : undefined,
 						},
 					} as Json.BeatmapDifficulty;
 
@@ -101,8 +101,8 @@ export function createInfoContent(song: Omit<App.Song, "id" | "songFilename" | "
 						_noteJumpMovementSpeed: 16,
 						_noteJumpStartBeatOffset: 0,
 						_customData: {
-							_editorOffset: offset,
-							_requirements: requirements,
+							_editorOffset: offset !== 0 ? offset : undefined,
+							_requirements: requirements.length > 1 ? requirements : undefined,
 							_difficultyLabel: "Lightshow",
 						},
 					},
@@ -122,12 +122,18 @@ export function createInfoContent(song: Omit<App.Song, "id" | "songFilename" | "
 			_shufflePeriod: 0.5,
 			_previewStartTime: song.previewStartTime,
 			_previewDuration: song.previewDuration,
-			_songFilename: "song.egg",
+			_songFilename: "song.ogg",
 			_coverImageFilename: "cover.jpg",
 			_environmentName: song.environment,
+			_allDirectionsEnvironmentName: "GlassDesertEnvironment",
 			_customData: {
-				_editor: "beatmapper",
-				_editorSettings: editorSettings,
+				_editors: {
+					_lastEditedBy: "Beatmapper",
+					Beatmapper: {
+						version: version,
+						editorSettings: isEmpty(editorSettings) ? editorSettings : undefined,
+					},
+				},
 			},
 			_difficultyBeatmapSets: beatmapSets,
 		};
@@ -291,13 +297,11 @@ export const zipFiles = async (song: App.Song, songFile: Blob, coverArtFile: Blo
 
 	const infoContent = createInfoContent(song, { version });
 
+	zip.file("song.ogg", songFile, { binary: true });
+	zip.file("cover.jpg", coverArtFile, { binary: true });
 	if (version === 2) {
-		zip.file("song.egg", songFile, { binary: true });
-		zip.file("cover.jpg", coverArtFile, { binary: true });
 		zip.file("Info.dat", infoContent, { binary: false });
 	} else {
-		zip.file("song.ogg", songFile, { binary: true });
-		zip.file("cover.jpg", coverArtFile, { binary: true });
 		zip.file("info.json", infoContent, { binary: false });
 	}
 
@@ -387,7 +391,7 @@ export async function convertLegacyArchive(archive: JSZip) {
 	const song = getFileFromArchive(archive, audioPath);
 	if (!song) throw new Error("No song file.");
 	const songFile = await song.async("blob");
-	zip.file("song.egg", songFile, { binary: true });
+	zip.file("song.ogg", songFile, { binary: true });
 
 	const bpm = infoDatJson.beatsPerMinute;
 
@@ -534,9 +538,9 @@ export async function processImportedMap(zipFile: Parameters<typeof JSZip.loadAs
 		realOffset = infoDatJson._difficultyBeatmapSets[0]._difficultyBeatmaps[0]._customData._editorOffset || 0;
 	} catch (e) {}
 
-	const wasCreatedInBeatmapper = get(infoDatJson, "_customData._editor") === "beatmapper";
+	const wasCreatedInBeatmapper = infoDatJson._customData?._lastEditedBy === "Beatmapper";
 
-	const persistedData = wasCreatedInBeatmapper ? infoDatJson._customData._editorSettings : {};
+	const persistedData = infoDatJson._customData?._editors?.Beatmapper && wasCreatedInBeatmapper ? infoDatJson._customData._editors.Beatmapper.editorSettings : {};
 
 	const modSettings = persistedData.modSettings || deriveDefaultModSettingsFromBeatmap(beatmapSet);
 
