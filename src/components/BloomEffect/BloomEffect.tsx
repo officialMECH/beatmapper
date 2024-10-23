@@ -16,7 +16,7 @@ export function Bloom({ children }: Props) {
 		composer.current.addPass(new RenderPass(scene.current, camera));
 		const bloomPass = new UnrealBloomPass(new Vector2(size.width, size.height), 1.5, 0.4, 0.85);
 
-		gl.toneMappingExposure = 2.5;
+		gl.toneMappingExposure = 1;
 		bloomPass.threshold = 0;
 		bloomPass.strength = 4;
 		bloomPass.radius = 0.75;

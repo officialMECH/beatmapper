@@ -1,6 +1,6 @@
 import { App, Difficulty, Environment } from "$/types/beatmap";
 import { TrackType } from "$/types/editor";
-import { DEFAULT_BLUE, DEFAULT_RED } from "./theme.constants";
+import { DEFAULT_BLUE, DEFAULT_LIGHT_BLUE, DEFAULT_LIGHT_RED, DEFAULT_OBSTACLE, DEFAULT_RED } from "./theme.constants";
 import { EVENT_TRACKS } from "./tracks.constants";
 
 export const DIFFICULTIES = Object.freeze(Object.values(Difficulty));
@@ -77,11 +77,11 @@ export const DEFAULT_MOD_SETTINGS = {
 		colorLeftOverdrive: 0,
 		colorRight: DEFAULT_BLUE,
 		colorRightOverdrive: 0,
-		envColorLeft: DEFAULT_RED,
+		envColorLeft: DEFAULT_LIGHT_RED,
 		envColorLeftOverdrive: 0,
-		envColorRight: DEFAULT_BLUE,
+		envColorRight: DEFAULT_LIGHT_BLUE,
 		envColorRightOverdrive: 0,
-		obstacleColor: DEFAULT_RED,
+		obstacleColor: DEFAULT_OBSTACLE,
 		obstacleColorOverdrive: 0,
 	},
 	mappingExtensions: {

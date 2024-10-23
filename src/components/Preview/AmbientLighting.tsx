@@ -11,7 +11,7 @@ const AmbientLighting = ({ includeSpotlight }: Props) => {
 
 	return (
 		<Fragment>
-			<ambientLight intensity={1} />
+			<ambientLight intensity={3} />
 			{includeSpotlight && (
 				<Fragment>
 					<primitive object={midLightTarget} />

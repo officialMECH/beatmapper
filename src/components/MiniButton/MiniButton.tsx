@@ -17,13 +17,13 @@ interface Props extends ComponentProps<typeof UnfocusedButton> {
 const MiniButton = ({ ref, children, color, hoverColor, as, width, style = {}, to, ...delegated }: Props) => {
 	if (to) {
 		return (
-			<ButtonElem as={Link} to={to} color={color} hover-color={hoverColor} style={{ ...style, width }}>
+			<ButtonElem as={Link} to={to} color={color} hoverColor={hoverColor} style={{ ...style, width }}>
 				{typeof children === "string" ? <PixelShifter y={-1}>{children}</PixelShifter> : children}
 			</ButtonElem>
 		);
 	}
 	return (
-		<ButtonElem {...delegated} color={color} hover-color={hoverColor} style={{ ...style, width }}>
+		<ButtonElem {...delegated} color={color} hoverColor={hoverColor} style={{ ...style, width }}>
 			{typeof children === "string" ? <PixelShifter y={-1}>{children}</PixelShifter> : children}
 		</ButtonElem>
 	);

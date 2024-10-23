@@ -5,7 +5,6 @@
 import { formatDate } from "date-fns/format";
 import { saveAs } from "file-saver";
 import JSZip from "jszip";
-import get from "lodash.get";
 
 import { convertBookmarksToExportableJson } from "$/helpers/bookmarks.helpers";
 import { formatColorForMods } from "$/helpers/colors.helpers";
@@ -32,7 +31,7 @@ export function createInfoContent(song: Omit<App.Song, "id" | "songFilename" | "
 
 	// Has this song enabled any mod support?
 	const requirements: string[] = [];
-	const mappingExtensionsEnabled = !!get(song, "modSettings.mappingExtensions.isEnabled");
+	const mappingExtensionsEnabled = !!song.modSettings.mappingExtensions?.isEnabled;
 	if (mappingExtensionsEnabled) {
 		requirements.push("Mapping Extensions");
 	}
@@ -76,7 +75,7 @@ export function createInfoContent(song: Omit<App.Song, "id" | "songFilename" | "
 						_noteJumpStartBeatOffset: difficulty.startBeatOffset,
 						_customData: {
 							_editorOffset: offset !== 0 ? offset : undefined,
-							_requirements: requirements.length > 1 ? requirements : undefined,
+							_requirements: requirements.length > 0 ? requirements : undefined,
 						},
 					} as Json.BeatmapDifficulty;
 
@@ -131,7 +130,7 @@ export function createInfoContent(song: Omit<App.Song, "id" | "songFilename" | "
 					_lastEditedBy: "Beatmapper",
 					Beatmapper: {
 						version: version,
-						editorSettings: isEmpty(editorSettings) ? editorSettings : undefined,
+						editorSettings: !isEmpty(editorSettings) ? editorSettings : undefined,
 					},
 				},
 			},
@@ -139,7 +138,7 @@ export function createInfoContent(song: Omit<App.Song, "id" | "songFilename" | "
 		};
 
 		// If the user has enabled custom colors, we need to include that as well
-		const enabledCustomColors = get(song, "modSettings.customColors.isEnabled");
+		const enabledCustomColors = !!song.modSettings.customColors?.isEnabled;
 		if (enabledCustomColors && song.modSettings.customColors) {
 			const colors = song.modSettings.customColors;
 
@@ -253,7 +252,7 @@ export function createBeatmapContents(
 	return JSON.stringify(contents, null, 2);
 }
 
-export function createBeatmapContentsFromState(state: RootState, song: Pick<App.Song, "offset" | "bpm">) {
+export function createBeatmapContentsFromState(state: RootState, song: Pick<App.Song, "offset" | "bpm" | "modSettings">) {
 	const notes = getNotes(state);
 	const events = convertEventsToExportableJson(getAllEventsAsArray(state));
 	const obstacles = convertObstaclesToExportableJson(getObstacles(state));
@@ -275,7 +274,7 @@ export function createBeatmapContentsFromState(state: RootState, song: Pick<App.
 	const deselectedEvents = shiftedEvents.map(deselect);
 
 	// If the user has mapping extensions enabled, multiply the notes to sit in the 1000+ range.
-	if (get(song, "modSettings.mappingExtensions.isEnabled")) {
+	if (song.modSettings.mappingExtensions?.isEnabled) {
 		deselectedNotes = convertNotesToMappingExtensions(deselectedNotes);
 	}
 
@@ -562,7 +561,6 @@ export async function processImportedMap(zipFile: Parameters<typeof JSZip.loadAs
 		previewDuration: infoDatJson._previewDuration,
 		environment: infoDatJson._environmentName,
 		difficultiesById,
-		...persistedData,
 		modSettings,
 		enabledLightshow,
 	};

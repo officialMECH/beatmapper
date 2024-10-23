@@ -21,7 +21,7 @@ const Lighting = () => {
 			<directionalLight intensity={0.5} position={[50, 50, SONG_OFFSET - 30]} target={midLightTarget} />
 			<directionalLight intensity={0.5} position={[-50, 50, SONG_OFFSET - 30]} target={midLightTarget} />
 
-			<ambientLight intensity={1} />
+			<ambientLight intensity={3} />
 		</Fragment>
 	);
 };

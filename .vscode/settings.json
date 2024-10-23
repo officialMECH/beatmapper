@@ -10,13 +10,14 @@
 		"*.tsx": "${capture}.ts",
 		".gitignore": "*ignore",
 		"package.json": "yarn.lock, .yarnrc.yml, biome.json, lefthook.yml",
-		"README.md": "*.md, AUTHORS*, BACKERS*, CHANGELOG*, CODEOWNERS*, CONTRIBUTING*, CONTRIBUTORS*, CODE_OF_CONDUCT*, GOVERNANCE*, HISTORY*, LICENSE*, MAINTAINERS*, SECURITY*, SPONSORS*, TODO*",
+		"README.md": "*.md, AUTHORS*, BACKERS*, CHANGELOG*, CODEOWNERS*, CONTRIBUTING*, CONTRIBUTORS*, CODE_OF_CONDUCT*, GOVERNANCE*, HISTORY*, LICENSE*, MAINTAINERS*, SECURITY*, SPONSORS*, TODO*, *.todo",
 		"tsconfig.json": "tsconfig.*.json",
 		"vite.config.ts": "*.config.js, *.config.cjs, *.config.mjs, *.config.ts"
 	},
 	"files.exclude": {
 		"**/.git": true,
-		"**/.yarn": true,
+		"**/.yarn/install-state.gz": true,
+		"**/.yarn/releases": true,
 		"**/node_modules": true,
 		"**/yarn.lock": true
 	},

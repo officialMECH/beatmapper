@@ -31,13 +31,13 @@ const Sidebar = () => {
 					<NavLink to="/docs/fast-walls">Fast walls</NavLink>
 					<NavLink to="/docs/running-locally">Running locally</NavLink>
 				</NavGroup>
-				<NavGroup title="Legal">
-					<NavLink to="/docs/content-policy">Content policy</NavLink>
-					<NavLink to="/docs/privacy">Privacy</NavLink>
-				</NavGroup>
 				<NavGroup title="Release Notes">
 					<NavLink to="/docs/releases/0.2">v0.2</NavLink>
 					<NavLink to="/docs/releases/0.3">v0.3</NavLink>
+				</NavGroup>
+				<NavGroup title="Legal">
+					<NavLink to="/docs/content-policy">Content policy</NavLink>
+					<NavLink to="/docs/privacy">Privacy</NavLink>
 				</NavGroup>
 			</Navigation>
 		</Wrapper>

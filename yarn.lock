@@ -2537,22 +2537,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/lodash.get@npm:^4.4.9":
-  version: 4.4.9
-  resolution: "@types/lodash.get@npm:4.4.9"
-  dependencies:
-    "@types/lodash": "npm:*"
-  checksum: 10/d7e071d267e3d1bab58db14b6ce63fc51ca3c9c9697d3548cd5c0f16c08a7ce2188cff75dff1858b5623c3bd070836857211ebef4f364c53b82e31f3190fe0b4
-  languageName: node
-  linkType: hard
-
-"@types/lodash@npm:*":
-  version: 4.14.144
-  resolution: "@types/lodash@npm:4.14.144"
-  checksum: 10/3ca53fd05b6224d6a4944f8943e6d6b06d8a798d6c26044f90a63b0d2159e4580472b7391654f62a886f5b814eb1070b827860c2049053e6b392836060d72f23
-  languageName: node
-  linkType: hard
-
 "@types/mdast@npm:^3.0.0":
   version: 3.0.15
   resolution: "@types/mdast@npm:3.0.15"
@@ -3168,7 +3152,6 @@ __metadata:
     "@types/color": "npm:^3.0.6"
     "@types/file-saver": "npm:^2.0.7"
     "@types/howler": "npm:^2.2.11"
-    "@types/lodash.get": "npm:^4.4.9"
     "@types/node": "npm:^22.5.4"
     "@types/react": "npm:^18.3.5"
     "@types/react-color": "npm:^3.0.12"
@@ -3190,7 +3173,6 @@ __metadata:
     jszip: "npm:^3.10.1"
     lefthook: "npm:^1.7.15"
     localforage: "npm:^1.10.0"
-    lodash.get: "npm:^4.4.2"
     postprocessing: "npm:^6.36.1"
     react: "npm:^18.3.1"
     react-color: "npm:^2.19.3"
@@ -5643,7 +5625,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lodash.get@npm:^4.1.2, lodash.get@npm:^4.4.2":
+"lodash.get@npm:^4.1.2":
   version: 4.4.2
   resolution: "lodash.get@npm:4.4.2"
   checksum: 10/2a4925f6e89bc2c010a77a802d1ba357e17ed1ea03c2ddf6a146429f2856a216663e694a6aa3549a318cbbba3fd8b7decb392db457e6ac0b83dc745ed0a17380

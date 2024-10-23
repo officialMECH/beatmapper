@@ -113,7 +113,6 @@ const Text = styled.div`
 `;
 
 const Description = styled.div`
-  width: 150px;
   padding-left: ${UNIT}px;
 `;
 

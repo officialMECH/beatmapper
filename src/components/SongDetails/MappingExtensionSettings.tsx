@@ -1,4 +1,3 @@
-import get from "lodash.get";
 import styled from "styled-components";
 
 import { toggleModForSong } from "$/store/actions";
@@ -13,7 +12,7 @@ const MappingExtensionSettings = () => {
 	const song = useAppSelector(getSelectedSong);
 	const dispatch = useAppDispatch();
 
-	const isModEnabled = get(song, "modSettings.mappingExtensions.isEnabled") || false;
+	const isModEnabled = !!song.modSettings.mappingExtensions?.isEnabled;
 
 	return (
 		<Wrapper>

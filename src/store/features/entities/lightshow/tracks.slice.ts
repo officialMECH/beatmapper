@@ -135,7 +135,7 @@ const slice = createSlice({
 				acc[event.trackId].push(event);
 				return acc;
 			}, initialState);
-			return { ...state, tracks };
+			return { ...state, ...tracks };
 		});
 		builder.addCase(placeEvent, (state, action) => {
 			const { id, trackId, beatNum, eventType, eventColorType, areLasersLocked } = action.payload;

@@ -54,7 +54,7 @@ const LightingPreview = () => {
 	const environment = (
 		<Fragment>
 			<StaticEnvironment />
-			<AmbientLighting includeSpotlight={!isBlooming} />
+			<AmbientLighting includeSpotlight />
 		</Fragment>
 	);
 
